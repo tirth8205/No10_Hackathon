@@ -453,12 +453,25 @@ def audit(record: str | None = None):
     return store.list_audit(record)
 
 
+SCOREBOARD_SETS = {"synthetic": "syn-v3-final", "style": "style-v3", "gold": "gold-v3-final"}
+
+
 @app.get("/api/scoreboard")
 def scoreboard():
-    p = Path(__file__).resolve().parent.parent / "eval" / "results" / "latest.json"
-    if not p.exists():
-        return {"available": False}
-    return {"available": True, **json.loads(p.read_text())["summary"]}
+    """Summaries of the three result sets (synthetic, unseen style, MoJ gold) plus the latest run."""
+    results = Path(__file__).resolve().parent.parent / "eval" / "results"
+    out = {"available": False, "sets": {}}
+    for key, name in SCOREBOARD_SETS.items():
+        f = results / f"{name}.json"
+        if f.exists():
+            out["sets"][key] = json.loads(f.read_text())["summary"]
+            out["available"] = True
+    latest = results / "latest.json"
+    if latest.exists():
+        out["latest"] = json.loads(latest.read_text())["summary"]
+        out["available"] = True
+    out["target"] = {"agreement": "0.90 to 0.95 (MoJ success criterion)", "false_approval_rate": "as close to 0 as possible"}
+    return out
 
 
 # --------------------------------------------------------------------------- #

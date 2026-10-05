@@ -16,6 +16,7 @@ Things the rules or test labels assume that an expert should confirm. Each affec
 | 10 | What retention applies to case records, submissions and audit logs? | Data protection before any live use | Documents are held in memory only (TTL); verdicts, quotes and audit kept in SQLite for the demo |
 | 11 | Was the rest of the promised data pack available (application form, police reports, injunctions, MARAC referrals, expired or poor-quality evidence, caseworker feedback)? | Testing paragraphs 1 to 10 against real documents | Synthetic cases only |
 | 12 | Can LAA staff spot-check a sample of the synthetic labels? | The labels reflect our reading of the guidance | Not yet checked |
+| 13 | MoJ's accepted paragraph 11 example has no signature, profession or registration number in the text. Was the real letter on practice letterhead? | The engine sends an unsigned health letter to a caseworker rather than passing it; this is the one gold-set disagreement | Kept: `appropriate_health_professional` → unclear when the author cannot be identified from the document |
 
 Source notes from the guidance (v15, 15 June 2026) found while writing the rules:
 - Section numbers in our first scaffold were wrong for most paragraphs; `rules/*.yaml` now carries the corrected `guidance_ref`.
