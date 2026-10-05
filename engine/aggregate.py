@@ -58,16 +58,25 @@ def name_match(a: str | None, b: str | None, threshold: int) -> str:
     return "far"
 
 
-def majority(votes: list[Assessment], rule: Rule) -> tuple[list[ElementResult], list[str]]:
+def majority(votes: list[Assessment], rule: Rule, failed: int = 0) -> tuple[list[ElementResult], list[str]]:
+    """Strict majority over k = len(votes) + failed votes.
+
+    A vote that errored or was refused is not dropped: it counts as "unclear" for every
+    element, so one surviving vote out of three cannot decide on its own and the tally a
+    caseworker sees adds up to the number of votes that were asked for.
+    """
     flags: list[str] = []
     results: list[ElementResult] = []
-    n = len(votes)
+    n = len(votes) + failed
     for el in rule.elements:
         per_vote = [next((e for e in v.elements if e.element_id == el.id), None) for v in votes]
         per_vote = [e for e in per_vote if e is not None]
         counts = Counter(e.status for e in per_vote)
+        said_unclear = counts.get("unclear", 0)
+        if failed:
+            counts["unclear"] += failed
         tally = {"included": counts.get("included", 0), "missing": counts.get("missing", 0), "unclear": counts.get("unclear", 0)}
-        if not per_vote:
+        if not per_vote and not failed:
             status = "unclear"
         else:
             status, top = counts.most_common(1)[0]
@@ -78,6 +87,8 @@ def majority(votes: list[Assessment], rule: Rule) -> tuple[list[ElementResult], 
         agreeing = [e for e in per_vote if e.status == status] or per_vote
         quote = next((e.quote for e in agreeing if e.quote), None) if status == "included" else None
         reasoning = next((e.reasoning for e in agreeing if e.reasoning), "")
+        if failed and status == "unclear" and not said_unclear:
+            reasoning = f"Only {len(per_vote)} of {n} model assessments completed, so there is no majority. {reasoning}".strip()
         fix = None if status == "included" else next((e.fix for e in agreeing if e.fix), None) or el.fix
         results.append(ElementResult(element_id=el.id, label=el.label, status=status, quote=quote, votes=tally, reasoning=reasoning, fix=fix,
                                      client_hint=None if status == "included" else el.client_hint))

@@ -36,7 +36,7 @@ Eval: `.venv/bin/python -m eval.run_eval --set synthetic` (143 cases); `--set go
 | Element status | `included` · `missing` · `unclear` |
 | Document verdict | `meets` · `needs_change` · `needs_caseworker` · `not_prescribed` |
 | Case verdict | `meets` · `needs_change` · `needs_caseworker` · `no_evidence_yet` |
-| Flags | `quote_not_found` `quote_fuzzy_match` `quote_multi_span` `vote_disagreement` `hedge` `injection` `non_english` `name_mismatch` `victim_name_mismatch` `classification_low_confidence` `model_refusal` `illegible` `unfilled_placeholder` |
+| Flags | `quote_not_found` `quote_fuzzy_match` `quote_multi_span` `vote_disagreement` `hedge` `injection` `non_english` `name_mismatch` `victim_name_mismatch` `classification_low_confidence` `model_refusal` `model_error` `illegible` `unfilled_placeholder` |
 
 Suggested labels: Meets the requirements (green) · Needs a change (yellow) · Needs a caseworker check (blue) · Not an accepted evidence type (grey). Never show "rejected", "fail" or "approved" to the applicant.
 
@@ -73,7 +73,7 @@ Link 1 (applicant ↔ solicitor), all under `/api`:
 | GET | `/cases/{id}/status` | Small payload for 2-second polling: case verdict, per-document status/verdict/summary |
 | POST | `/cases/{id}/documents` (multipart) · `/cases/{id}/documents/text` (JSON) | Fields: `file`/`text`, `claimed_para`, `uploaded_by` (`client`/`provider`), `replaces_document_id` (new version). Returns 202; check runs in the background |
 | GET | `/cases/{id}/documents/{doc}?highlight=true` | Result plus `highlights: [{element_id, start, end}]` offsets into the text for `<mark>` |
-| GET | `/cases/{id}/documents/{doc}/text` | Document text while still held in memory (TTL `GC_DOC_TTL_MIN`) |
+| GET | `/cases/{id}/documents/{doc}/text` | Document text while still held (410 once purged or past the TTL `GC_DOC_TTL_MIN`) |
 | POST | `/cases/{id}/documents/{doc}/recheck?claimed_para=17` | Re-run under a different paragraph (the "switch paragraph" button) |
 | GET | `/cases/{id}/documents/{doc}/request-letter` | Drafted letter to the author (text) |
 | POST | `/cases/{id}/documents/{doc}/requests` → `/requests/{rid}/sent` | Record that the solicitor sent it; posts a tracker event |
@@ -86,9 +86,9 @@ Link 2 (solicitor ↔ LAA):
 
 | Method | Path | Notes |
 |---|---|---|
-| POST | `/cases/{id}/submissions` | `{document_ids, notes, submit_anyway_reason, resubmission_of}`. Freezes the chosen document versions + checklists into `snapshot`; issues `laa_ref`. Returns 422 with a warning if nothing meets and no reason is given. Never blocks otherwise. Kicks off the LAA's independent re-check |
+| POST | `/cases/{id}/submissions` | `{document_ids, notes, submit_anyway_reason, resubmission_of}`. Freezes the chosen document versions, checklists and text (`snapshot.documents[*].snapshot_text`) into `snapshot`; issues `laa_ref`. Returns 422 with a warning if nothing meets and no reason is given. Never blocks otherwise. Kicks off the LAA's independent re-check of the pack (`app.core.laa_check`, shared with `/web`) |
 | GET | `/submissions?status=submitted` | Caseworker queue, sorted meets → needs_caseworker → needs_change, then age. Includes `differences` count |
-| GET | `/submissions/{id}` | Snapshot, text + highlights, `laa_check`, `differences` (element-level diff provider vs LAA), drafted `return_note` |
+| GET | `/submissions/{id}` | Snapshot, frozen text + highlights, `laa_check`, `differences` (element-level diff provider vs LAA), drafted `return_note` |
 | GET | `/submissions/{id}/return-note` | Text |
 | POST | `/submissions/{id}/decision` | `{action: accept\|return\|refer, note, caseworker}`. Logs whether the caseworker agreed with the tool. Posts a hidden tracker event the solicitor can release |
 
@@ -104,14 +104,21 @@ The React app in `web/` types its data in `web/src/lib/types.ts` (`pass/fail/ref
 | Evidence `onSelectionChange` | `PUT /web/cases/{id}/selection {documentIds}` |
 | Client tab link on/off | `POST` / `DELETE /web/cases/{id}/client-link` |
 | Details `onSave` | `PATCH /web/cases/{id}` (a name change re-checks every letter) |
-| Submit `onDownload(reason)` | `POST /web/cases/{id}/submit {documentIds, reason}` → `{case, documents, summary, filename}` |
+| Submit `onDownload(reason)` | `POST /web/cases/{id}/submit {documentIds, reason}` → `{case, documents, summary, filename, submissionId}`; freezes the pack and schedules the LAA's independent check |
 | Client `/client/:token` | `GET /web/client/{token}` → `{firstName, firmName, askLabel, linkExpiresAt, latestDocument, state}`; 404 when expired or revoked |
 | Client `onFiles` | `POST /web/client/{token}/upload` → `{documentId}`; poll `GET /web/client/{token}/documents/{doc}` → `{document, state}` where state is `change | ready | check | other` |
-| Caseworker queue, review, `onDecide` | `GET /web/queue` (submitted, undecided, submitted documents only), `GET /web/queue/{id}`, `POST /web/queue/{id}/decision {action, note}` → `Decision` with `agreedWithTool` |
+| Caseworker queue, review, `onDecide` | `GET /web/queue` (one row per undecided submission, built from its frozen snapshot; `case.submissionId`, `case.laaCheck: {done, differences}`), `GET /web/queue/{id}` (`id` = submission id, LAA ref, or case id → its latest submitted one), `POST /web/queue/{id}/decision {action, note, submissionId?}` → `Decision` with `agreedWithTool` and `submissionId` |
+| Pack download | `GET /web/submissions/{id}/pack.zip`: the submitted files (or their frozen text as `.txt`) plus `verification-summary.txt` |
 | Inbox `onDraft` | `POST /web/inbox` (multipart `email`, `files`) → `{email, firm, documents, reply}` (runs the check before returning) |
 | `DocumentPage.url` | `GET /web/documents/{doc}/file/{page}` while the file is still held in memory |
 
+Roles (`app/webmap.py`, `role=` on every mapper): the **provider** gets the full shapes. The **caseworker** gets the frozen submission, with the LAA reference as `case.ref` and never `clientToken`, `tokenExpiresAt`, `askLabel`, `selectedDocumentIds` or `selectionTouched`. The **client** gets the reduced document: no `text`, and a `CheckResult` of only `matchedPara`, `outcome`, `reason` (the client message), `elements[{key, status, clientHint, fix}]`, `shortOrg`, `authorName` (always null), `letterDate`, `rulesVersion`, `checkedAt`. Tests assert the forbidden keys are absent per role.
+
 Dev wiring: run the API on :8000 and add to `web/vite.config.ts` `server: { proxy: { "/web": "http://localhost:8000" } }`, or set `VITE_API_BASE=http://localhost:8000`. CORS is open.
+
+## Data handling
+
+Uploaded bytes live only in memory. The extracted text is kept, in memory and on the document row in SQLite, for `GC_DOC_TTL_MIN` minutes (default 60) or until `POST /api/cases/{id}/purge`, whichever comes first: `store.document_text` returns `None` after that and the sweep nulls the row's text (verdicts, quotes and the audit log stay). Submitted packs keep their text: `create_submission` copies it into `snapshot.documents[*].snapshot_text`, which is what the LAA received and what the caseworker queue, review, decision and `pack.zip` are built from, so a later re-check, name change, purge or expiry on the live case changes nothing on link 2. Nothing uploaded is ever written to disk.
 
 ## Layout
 

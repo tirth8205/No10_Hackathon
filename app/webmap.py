@@ -4,6 +4,14 @@
 Vocabulary: meets -> pass, needs_change -> fail, needs_caseworker -> refer,
 not_prescribed -> fail with matchedPara null; included/missing -> met/not_met.
 Flags are human-readable sentences there, so codes are translated here.
+
+Roles (who the JSON is for):
+  provider    the solicitor on link 1: everything, including the client link and the selection
+  caseworker  the LAA on link 2: built from the frozen submission snapshot, LAA reference as `ref`,
+              no client link, ask label or selection (those never cross to the LAA)
+  client      the applicant on link 1: plain words only. No document text, quotes, reasoning,
+              flags, names, agreement or verification; just outcome, paragraph, the client
+              message, the asks in plain words, a short organisation name and the letter date.
 """
 from __future__ import annotations
 
@@ -18,6 +26,14 @@ OUTCOME = {"meets": "pass", "needs_change": "fail", "needs_caseworker": "refer",
 STATUS = {"included": "met", "missing": "not_met", "unclear": "unclear"}
 STATE = {"pass": "ready", "fail": "change", "refer": "check", "not_prescribed": "other"}
 
+ROLES = ("provider", "caseworker", "client")
+# What each role must never receive. Tests assert these keys are absent.
+CASEWORKER_HIDDEN_CASE_KEYS = frozenset({"clientToken", "tokenExpiresAt", "askLabel", "selectedDocumentIds", "selectionTouched"})
+CLIENT_HIDDEN_RESULT_KEYS = frozenset({"flags", "agreement", "victimName", "otherPartyName", "verification", "authorOrg", "authorRole"})
+CLIENT_HIDDEN_ELEMENT_KEYS = frozenset({"quote", "explanation", "label"})
+CLIENT_HIDDEN_DOCUMENT_KEYS = frozenset({"text"})
+CLIENT_ERROR_MESSAGE = "We could not check this document automatically. Your solicitor will look at it."
+
 FLAG_TEXT = {
     "hedge": "Hedged wording",
     "injection": "Document contains instructions to the reviewer",
@@ -26,6 +42,7 @@ FLAG_TEXT = {
     "victim_name_mismatch": "Applicant's name does not match the application",
     "classification_low_confidence": "Evidence type uncertain",
     "model_refusal": "The checker could not assess this document",
+    "model_error": "The check could not be completed reliably; some model assessments failed",
     "illegible": "Document could not be read",
     "unfilled_placeholder": "Template placeholder left unfilled",
     "quote_not_found": "A quoted passage could not be found in the document",
@@ -101,7 +118,32 @@ def flag_sentences(result: dict) -> list[str]:
     return out
 
 
-def to_check_result(r: dict) -> dict:
+def _check_role(role: str) -> str:
+    if role not in ROLES:
+        raise ValueError(f"unknown role {role!r}; expected one of {ROLES}")
+    return role
+
+
+def to_check_result(r: dict, role: str = "provider") -> dict:
+    """CheckResult for the given role. The client gets the reduced shape (see client_result)."""
+    full = _full_check_result(r)
+    return client_result(full, r) if _check_role(role) == "client" else full
+
+
+def client_result(full: dict, r: dict) -> dict:
+    """Link 1, applicant side. The client screens use outcome, matchedPara, shortOrg, clientHint and fix;
+    `reason` is the plain client message, never the provider summary, and authorName is null so the
+    message to the letter writer never carries a name onto a phone someone else may read."""
+    return {
+        "matchedPara": full["matchedPara"], "outcome": full["outcome"],
+        "reason": r.get("client_message") or "",
+        "elements": [{"key": e["key"], "status": e["status"], "clientHint": e.get("clientHint"), "fix": e.get("fix")} for e in full["elements"]],
+        "shortOrg": full["shortOrg"], "authorName": None, "letterDate": full["letterDate"],
+        "rulesVersion": full["rulesVersion"], "checkedAt": full["checkedAt"],
+    }
+
+
+def _full_check_result(r: dict) -> dict:
     cls, parties = r.get("classification") or {}, r.get("parties") or {}
     verdict = r["verdict"]
     return {
@@ -126,7 +168,10 @@ def to_check_result(r: dict) -> dict:
     }
 
 
-def error_result(message: str) -> dict:
+def error_result(message: str, role: str = "provider") -> dict:
+    if _check_role(role) == "client":
+        return {"matchedPara": None, "outcome": "refer", "reason": CLIENT_ERROR_MESSAGE, "elements": [], "shortOrg": None, "authorName": None,
+                "letterDate": None, "rulesVersion": "", "checkedAt": now_iso()}
     return {"matchedPara": None, "outcome": "refer", "reason": f"The check could not be completed ({message}). A caseworker will look at it.",
             "elements": [], "flags": ["The checker could not assess this document"], "authorOrg": None, "shortOrg": None, "authorName": None,
             "authorRole": None, "letterDate": None, "victimName": None, "otherPartyName": None, "agreement": "not checked", "verification": [],
@@ -149,24 +194,43 @@ def client_state(result: dict | None) -> str | None:
     return STATE.get(key) if key != "checking" else None
 
 
-def to_document(store: Store, d: dict, base_url: str = "") -> dict:
-    held = store.docs.get(d["id"])
-    pages = d.get("pages") or [{"filename": d["filename"], "contentType": content_type(d["filename"])}]
-    pages = [dict(p) for p in pages]
+def _pages(store: Store, doc_id: str, pages: list[dict] | None, filename: str, base_url: str) -> list[dict]:
+    pages = [dict(p) for p in (pages or [{"filename": filename, "contentType": content_type(filename)}])]
+    held = store.docs.get(doc_id)
     if held and getattr(held, "files", None):
         for i, p in enumerate(pages[: len(held.files)]):
-            p["url"] = f"{base_url}/web/documents/{d['id']}/file/{i}"
+            p["url"] = f"{base_url}/web/documents/{doc_id}/file/{i}"
+    return pages
+
+
+def _result_for(r: dict, text: str, role: str) -> dict:
+    """Full result, quotes anchored to the text the reader will see, then reduced for the role."""
+    full = _full_check_result(r)
+    if text:
+        _anchor_quotes(full, text)
+    return client_result(full, r) if role == "client" else full
+
+
+def _document(doc_id: str, case_id: str, pages: list[dict], text: str, uploaded_by: str, uploaded_at: str, result: dict | None, role: str) -> dict:
+    out = {"id": doc_id, "caseId": case_id, "pages": pages, "text": text, "uploadedBy": uploaded_by, "uploadedAt": uploaded_at, "result": result}
+    if role == "client":
+        for k in CLIENT_HIDDEN_DOCUMENT_KEYS:
+            out.pop(k, None)
+    return out
+
+
+def to_document(store: Store, d: dict, base_url: str = "", role: str = "provider") -> dict:
+    """CaseDocument from the live document row (link 1). The caseworker's copy comes from the submission snapshot instead."""
+    _check_role(role)
     text = store.document_text(d["id"]) or ""
     if d["status"] == "done" and d.get("result"):
-        result = to_check_result(d["result"])
-        if text:
-            _anchor_quotes(result, text)
+        result = _result_for(d["result"], text, role)
     elif d["status"] == "error":
-        result = error_result(d.get("error") or "error")
+        result = error_result(d.get("error") or "error", role)
     else:
         result = None
-    return {"id": d["id"], "caseId": d["case_id"], "pages": pages, "text": text,
-            "uploadedBy": d["uploaded_by"], "uploadedAt": d["uploaded_at"], "result": result}
+    return _document(d["id"], d["case_id"], _pages(store, d["id"], d.get("pages"), d["filename"], base_url), text,
+                     d["uploaded_by"], d["uploaded_at"], result, role)
 
 
 def _anchor_quotes(result: dict, text: str) -> None:
@@ -204,13 +268,23 @@ def default_selection(documents: list[dict]) -> list[str]:
     return [passing[0]["id"]]
 
 
-def to_case(store: Store, c: dict, documents: list[dict]) -> dict:
+def to_decision(d: dict | None) -> dict | None:
+    if not d:
+        return None
+    return {"action": d["action"], "note": d.get("note") or "", "toolVerdict": d.get("tool_verdict") or "",
+            "agreedWithTool": bool(d.get("agreed_with_tool")), "at": d["created_at"]}
+
+
+def to_case(store: Store, c: dict, documents: list[dict], role: str = "provider") -> dict:
+    """Case for the solicitor (link 1) from the live row. A caseworker's case is built from the
+    submission snapshot by case_from_submission; this only strips what must not cross if asked."""
+    _check_role(role)
     link = store.latest_client_link(c["id"])
     sub = store.latest_submission(c["id"])
     decision = sub["decisions"][-1] if sub and sub.get("decisions") else None
     touched = bool(c.get("selection_touched"))
     selected = json.loads(c["selected_json"]) if touched and c.get("selected_json") else default_selection(documents)
-    return {
+    out = {
         "id": c["id"], "ref": c["ref"], "firm": c.get("firm_name") or "",
         "applicantName": c.get("applicant_name") or "", "otherPartyName": c.get("other_party_name") or "",
         "caseType": c.get("case_type") or "", "createdAt": c["created_at"],
@@ -220,17 +294,74 @@ def to_case(store: Store, c: dict, documents: list[dict]) -> dict:
         "submittedAt": sub["submitted_at"] if sub else None,
         "submittedDocumentIds": sub["document_ids"] if sub else [],
         "submitReason": sub.get("submit_anyway_reason") if sub else None,
-        "decision": {"action": decision["action"], "note": decision.get("note") or "", "toolVerdict": decision.get("tool_verdict") or "",
-                     "agreedWithTool": bool(decision.get("agreed_with_tool")), "at": decision["created_at"]} if decision else None,
+        "decision": to_decision(decision),
+        # the solicitor's handle on their own latest submission: the pack for Civil Apply is
+        # GET /web/submissions/{submissionId}/pack.zip (null until the case is submitted)
+        "submissionId": sub["id"] if sub else None,
     }
+    if role == "caseworker":
+        out["laaCheck"] = laa_check_summary(sub) if sub else None
+        out["ref"] = sub["laa_ref"] if sub else ""
+        for k in CASEWORKER_HIDDEN_CASE_KEYS:
+            out.pop(k, None)
+    return out
 
 
-def case_with_documents(store: Store, c: dict, only_ids: list[str] | None = None, base_url: str = "") -> dict:
+def case_with_documents(store: Store, c: dict, only_ids: list[str] | None = None, base_url: str = "", role: str = "provider") -> dict:
+    """CaseWithDocuments from live data (link 1). For the caseworker, use submission_with_documents:
+    the LAA sees the frozen pack, never the live case."""
+    _check_role(role)
     rows = store.list_documents(c["id"])
     if only_ids is not None:
         rows = [r for r in rows if r["id"] in set(only_ids)]
-    documents = [to_document(store, d, base_url) for d in rows]
-    return {"case": to_case(store, c, documents), "documents": documents}
+    documents = [to_document(store, d, base_url, role) for d in rows]
+    return {"case": to_case(store, c, documents, role), "documents": documents}
+
+
+# --------------------------------------------------------------------------- #
+# link 2: the frozen submission
+# --------------------------------------------------------------------------- #
+def laa_check_summary(sub: dict) -> dict:
+    """{done, differences}: whether the LAA's independent check has run and how many element or verdict differences it found."""
+    return {"done": sub.get("laa_check") is not None, "differences": len(sub.get("differences") or [])}
+
+
+def snapshot_document(store: Store, sub: dict, d: dict, base_url: str = "", role: str = "caseworker") -> dict:
+    """CaseDocument from one snapshot entry: the result and text as they were when submitted. A later
+    re-check, name change, purge or TTL expiry on the live document changes nothing here. Snapshots
+    made before snapshot_text existed fall back to the held text; the live row supplies only metadata."""
+    doc_id = d["document_id"]
+    live = store.get_document(doc_id) if ("uploaded_at" not in d or "pages" not in d) else None
+    text = d["snapshot_text"] if "snapshot_text" in d else store.document_text(doc_id)
+    text = text or ""
+    result = _result_for(d["result"], text, role) if d.get("result") else None
+    pages = _pages(store, doc_id, d.get("pages") or (live or {}).get("pages"), d["filename"], base_url)
+    return _document(doc_id, sub["case_id"], pages, text, d.get("uploaded_by") or (live or {}).get("uploaded_by") or "provider",
+                     d.get("uploaded_at") or (live or {}).get("uploaded_at") or sub["submitted_at"], result, role)
+
+
+def case_from_submission(sub: dict, documents: list[dict]) -> dict:
+    """The caseworker's Case: names and case type from the snapshot, the LAA reference as `ref`, this
+    submission's decision, and nothing from link 1 (no case ref, client link, ask label or selection)."""
+    app_ = sub["snapshot"].get("application") or {}
+    decision = sub["decisions"][-1] if sub.get("decisions") else None
+    return {
+        "id": sub["case_id"], "ref": sub["laa_ref"], "firm": sub.get("firm_name") or "",
+        "applicantName": app_.get("applicant_name") or "", "otherPartyName": app_.get("other_party_name") or "",
+        "caseType": app_.get("case_type") or "", "createdAt": sub["submitted_at"],
+        "documentIds": [d["id"] for d in documents],
+        "submittedAt": sub["submitted_at"], "submittedDocumentIds": list(sub.get("document_ids") or []),
+        "submitReason": sub.get("submit_anyway_reason"), "decision": to_decision(decision),
+        "submissionId": sub["id"], "laaCheck": laa_check_summary(sub),
+    }
+
+
+def submission_with_documents(store: Store, sub: dict, role: str = "caseworker", base_url: str = "") -> dict:
+    """CaseWithDocuments for one submission, entirely from its frozen snapshot. Used for the caseworker
+    queue, the review screen, the decision and the pack download."""
+    _check_role(role)
+    documents = [snapshot_document(store, sub, d, base_url, role) for d in sub["snapshot"].get("documents", [])]
+    return {"case": case_from_submission(sub, documents), "documents": documents}
 
 
 def verification_summary(case: dict, documents: list[dict]) -> str:

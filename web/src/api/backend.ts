@@ -38,17 +38,38 @@ export class ApiError extends Error {
   }
 }
 
+/** Shown when the back end refuses a file type without saying which types it takes. */
+export const UNSUPPORTED_FILE_MESSAGE = "This file type is not supported: use PDF, Word or a photo";
+/** Shown when the request never reached the back end. */
+export const UNREACHABLE_MESSAGE = "Could not reach the back end. Check that it is running, then try again.";
+
+/** The sentence a screen shows for a failed response: the back end's detail where it has one. */
+export function describeFailure(status: number, detail: string | null, statusText = ""): string {
+  const text = (detail ?? "").trim();
+  if (status === 415) {
+    // The back end names the accepted formats ("...; use PDF, Word, a photo (JPG, PNG, HEIC), email or text"); pass that through.
+    return text ? text.charAt(0).toUpperCase() + text.slice(1) : UNSUPPORTED_FILE_MESSAGE;
+  }
+  if (text) return text;
+  return statusText ? `${statusText} (${status})` : `The request failed (${status})`;
+}
+
 async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
-  const res = await fetch(`${BASE}/web${path}`, { ...init, headers: { Accept: "application/json", ...(init.headers ?? {}) } });
+  let res: Response;
+  try {
+    res = await fetch(`${BASE}/web${path}`, { ...init, headers: { Accept: "application/json", ...(init.headers ?? {}) } });
+  } catch {
+    throw new ApiError(0, UNREACHABLE_MESSAGE);
+  }
   if (!res.ok) {
-    let detail = res.statusText;
+    let detail: string | null = null;
     try {
       const body = await res.json();
       detail = typeof body.detail === "string" ? body.detail : JSON.stringify(body.detail ?? body);
     } catch {
-      /* keep statusText */
+      /* no JSON body */
     }
-    throw new ApiError(res.status, detail);
+    throw new ApiError(res.status, describeFailure(res.status, detail, res.statusText));
   }
   return (await res.json()) as T;
 }
@@ -99,9 +120,15 @@ export const getDocument = (caseId: string, documentId: string) => request<CaseD
 export const createClientLink = (caseId: string) => request<Case>(`/cases/${caseId}/client-link`, { method: "POST" });
 export const revokeClientLink = (caseId: string) => request<Case>(`/cases/${caseId}/client-link`, { method: "DELETE" });
 
-/** Freezes the chosen documents as a submission and returns the verification summary text to download. */
+/**
+ * Freezes the chosen documents as a submission. The returned case carries `submissionId`, whose pack
+ * (letters plus summary, one zip) is at `submissionPackUrl`; `summary` is the text alone as a fallback.
+ */
 export const submitCase = (caseId: string, documentIds: string[], reason: string | null) =>
   request<SubmitResult>(`/cases/${caseId}/submit`, json("POST", { documentIds, reason }));
+
+/** The pack for Civil Apply, built by the back end. Opened by the browser, not fetched. */
+export const submissionPackUrl = (submissionId: string) => `${BASE}/web/submissions/${encodeURIComponent(submissionId)}/pack.zip`;
 
 // ---------------------------------------------------------------- client (one-time link)
 export const clientView = (token: string) => request<ClientView>(`/client/${token}`);
@@ -124,9 +151,11 @@ export async function waitForDocument(poll: () => Promise<CaseDocument>, interva
 // ---------------------------------------------------------------- caseworker
 /** Submitted, undecided cases with their submitted documents only. */
 export const queue = () => request<CaseWithDocuments[]>("/queue");
-export const review = (caseId: string) => request<CaseWithDocuments>(`/queue/${caseId}`);
-export const decide = (caseId: string, action: DecisionAction, note: string) =>
-  request<Decision>(`/queue/${caseId}/decision`, json("POST", { action, note }));
+/** `id` is a submission id (what a queue row carries as case.submissionId), an LAA reference or a case id (its latest submission). */
+export const review = (id: string) => request<CaseWithDocuments>(`/queue/${id}`);
+/** Decides exactly the submission on screen when `submissionId` is given; otherwise the one `id` resolves to. */
+export const decide = (id: string, action: DecisionAction, note: string, submissionId?: string | null) =>
+  request<Decision & { submissionId?: string }>(`/queue/${id}/decision`, json("POST", submissionId ? { action, note, submissionId } : { action, note }));
 
 /** Inbox mode: the check runs before this returns (one request, up to a minute). */
 export const draftInboxReply = (email: string, files: File[]) =>

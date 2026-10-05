@@ -9,8 +9,12 @@ Two links, two kinds of record:
          versions, paragraphs and checklists), LAA independent check, Decision.
          A later upload never changes an earlier submission.
 
-Document bytes and text live only in memory with a TTL. SQLite keeps verdicts,
-quotes, snapshots and the audit log. Nothing uploaded is ever written to disk.
+Document bytes live only in memory with a TTL. The extracted text is held (in memory
+and on the document row) for GC_DOC_TTL_MIN minutes or until the case is purged; after
+that `document_text` returns None and the row's text is nulled. The one copy that
+outlives it is `snapshot_text` inside a submission: the pack the LAA received, frozen
+at submission time. SQLite keeps verdicts, quotes, snapshots and the audit log.
+Nothing uploaded is ever written to disk.
 """
 from __future__ import annotations
 
@@ -36,6 +40,11 @@ def neutral_ref(prefix: str = "LA") -> str:
 
 def now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
+
+
+def iso_ago(seconds: float) -> str:
+    """ISO timestamp `seconds` before now, in the same format as now() so rows compare as strings."""
+    return datetime.fromtimestamp(time.time() - seconds, tz=timezone.utc).isoformat(timespec="seconds")
 
 
 SCHEMA = """
@@ -90,7 +99,8 @@ class Store:
                 self.conn.execute(ddl)
             except sqlite3.OperationalError:
                 pass
-        self.docs = DocStore(ttl_seconds=settings.doc_ttl_min * 60)
+        self.text_ttl_seconds = settings.doc_ttl_min * 60
+        self.docs = DocStore(ttl_seconds=self.text_ttl_seconds, on_sweep=self.sweep_expired_text)
 
     # ---------------------------------------------------------------- helpers
     def _exec(self, sql: str, params: tuple = ()) -> sqlite3.Cursor:
@@ -152,8 +162,12 @@ class Store:
         link = self._one("SELECT * FROM client_links WHERE case_id=? AND revoked=0 ORDER BY created_at DESC LIMIT 1", (case_id,))
         return link if link and link["expires_at"] >= now() else None
 
-    def latest_submission(self, case_id: str) -> dict | None:
-        row = self._one("SELECT id FROM submissions WHERE case_id=? ORDER BY submitted_at DESC LIMIT 1", (case_id,))
+    def latest_submission(self, case_id: str, status: str | None = None) -> dict | None:
+        """The case's newest submission; with `status`, the newest one in that state (e.g. 'submitted' = awaiting a decision)."""
+        if status:
+            row = self._one("SELECT id FROM submissions WHERE case_id=? AND status=? ORDER BY submitted_at DESC, rowid DESC LIMIT 1", (case_id, status))
+        else:
+            row = self._one("SELECT id FROM submissions WHERE case_id=? ORDER BY submitted_at DESC, rowid DESC LIMIT 1", (case_id,))
         return self.get_submission(row["id"]) if row else None
 
     # ---------------------------------------------------------------- documents
@@ -186,6 +200,7 @@ class Store:
                        result.get("provider_summary", ""), "service")
 
     def get_document(self, document_id: str) -> dict | None:
+        self.sweep_expired_text()
         d = self._one("SELECT * FROM documents WHERE id=?", (document_id,))
         if d:
             d["result"] = json.loads(d.pop("result_json")) if d.get("result_json") else None
@@ -194,12 +209,26 @@ class Store:
         return d
 
     def document_text(self, document_id: str) -> str | None:
-        """Extracted text: from memory if held (freshest after transcription), else the row, until purged."""
+        """Extracted text: from memory if held (freshest after transcription), else the row.
+        None once purged or once uploaded_at + GC_DOC_TTL_MIN has passed; a submission's snapshot_text is the only copy kept."""
+        self.sweep_expired_text()
         item = self.docs.get(document_id)
         if item and item.text:
             return item.text
-        row = self._one("SELECT text FROM documents WHERE id=? AND purged=0", (document_id,))
+        row = self._one("SELECT text FROM documents WHERE id=? AND purged=0 AND uploaded_at >= ?", (document_id, iso_ago(self.text_ttl_seconds)))
         return row["text"] if row and row.get("text") else None
+
+    def sweep_expired_text(self) -> int:
+        """Null the extracted text of every document past the TTL (results, quotes and the audit stay). Returns how many."""
+        cutoff = iso_ago(self.text_ttl_seconds)
+        with self._lock:
+            cur = self.conn.execute("UPDATE documents SET text=NULL WHERE text IS NOT NULL AND uploaded_at < ?", (cutoff,))
+            n = cur.rowcount
+            if n:
+                self.conn.commit()
+                for d in self._all("SELECT id FROM documents WHERE uploaded_at < ?", (cutoff,)):
+                    self.docs.drop(d["id"])
+        return n
 
     def set_document_text(self, document_id: str, text: str) -> None:
         self.docs.set_text(document_id, text)
@@ -275,9 +304,12 @@ class Store:
         case = self.get_case(case_id)
         docs = [self.get_document(d) for d in document_ids]
         docs = [d for d in docs if d and d["case_id"] == case_id and d["result"]]
+        # The pack the LAA receives: names, checklists and the document text as they were at submission.
+        # snapshot_text is the one copy of the text that outlives the TTL and a purge.
         snapshot = {"application": {"applicant_name": case["applicant_name"], "other_party_name": case["other_party_name"], "case_type": case["case_type"], "application_date": case.get("application_date")},
                     "documents": [{"document_id": d["id"], "filename": d["filename"], "version": d["version"], "claimed_para": d["claimed_para"],
-                                   "result": d["result"]} for d in docs],
+                                   "uploaded_by": d["uploaded_by"], "uploaded_at": d["uploaded_at"], "pages": d.get("pages"),
+                                   "result": d["result"], "snapshot_text": self.document_text(d["id"])} for d in docs],
                     "rules_version": docs[0]["result"].get("rules_version") if docs else None, "frozen_at": now()}
         verdicts = [d["result"]["verdict"] for d in docs]
         case_verdict = "meets" if "meets" in verdicts else "needs_caseworker" if "needs_caseworker" in verdicts else "needs_change" if "needs_change" in verdicts else "no_evidence_yet"
@@ -309,7 +341,7 @@ class Store:
 
     def list_submissions(self) -> list[dict]:
         order = {"meets": 0, "needs_caseworker": 1, "needs_change": 2, "no_evidence_yet": 3}
-        subs = [self.get_submission(r["id"]) for r in self._all("SELECT id FROM submissions ORDER BY submitted_at")]
+        subs = [self.get_submission(r["id"]) for r in self._all("SELECT id FROM submissions ORDER BY submitted_at, rowid")]
         subs.sort(key=lambda s: (0 if s["status"] == "submitted" else 1, order.get(s["case_verdict"], 9), s["submitted_at"]))
         return subs
 
@@ -357,12 +389,15 @@ class _Doc:
 
 
 class DocStore:
-    """Document bytes and text in memory only, dropped after the TTL."""
+    """Document bytes and text in memory only, dropped after the TTL. `on_sweep` (the Store's
+    SQLite text expiry) runs with each sweep so both copies of the text go at the same time."""
 
-    def __init__(self, ttl_seconds: int):
+    def __init__(self, ttl_seconds: int, on_sweep=None):
         self.ttl = ttl_seconds
         self._items: dict[str, _Doc] = {}
         self._lock = threading.Lock()
+        self._on_sweep = on_sweep
+        self._sweeping = False
 
     def put(self, doc_id: str, data: bytes | None, text: str | None) -> None:
         with self._lock:
@@ -389,3 +424,9 @@ class DocStore:
         with self._lock:
             for k in [k for k, v in self._items.items() if v.expires_at < t]:
                 del self._items[k]
+        if self._on_sweep and not self._sweeping:  # the Store's sweep calls back into drop(): guard against recursion
+            self._sweeping = True
+            try:
+                self._on_sweep()
+            finally:
+                self._sweeping = False

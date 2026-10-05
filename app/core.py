@@ -6,7 +6,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from app.store import Store
+from app.store import Store, now
 from engine.ingest import Ingested
 from engine.llm import get_llm
 from engine.models import Application
@@ -56,6 +56,36 @@ async def recheck_case(case: dict) -> None:
         if text:
             store._exec("UPDATE documents SET status='checking' WHERE id=?", (d["id"],))
             await run_check(case, d, text)
+
+
+async def laa_check(submission: dict) -> None:
+    """Link 2: the LAA runs its own check on the pack it received (the submission snapshot, not the
+    live case) and records every element or verdict that differs from the provider's result.
+    Never raises: a document that cannot be checked is recorded as an error. Both /api and /web
+    submissions schedule this in the background."""
+    snap = submission["snapshot"]
+    app_ = Application(**snap["application"])
+    results, diffs = [], []
+    for d in snap["documents"]:
+        text = d["snapshot_text"] if "snapshot_text" in d else store.document_text(d["document_id"])
+        if not text:
+            results.append({"document_id": d["document_id"], "error": "text no longer held"})
+            continue
+        try:
+            res = await check_text(text, d["filename"], app_, rules=rules(), llm=state["llm"], claimed_para=d.get("claimed_para"), document_id=d["document_id"])
+        except Exception as e:
+            results.append({"document_id": d["document_id"], "error": f"{type(e).__name__}: {e}"})
+            continue
+        r = res.model_dump()
+        results.append(r)
+        prov = {e["element_id"]: e["status"] for e in d["result"].get("elements", [])}
+        laa = {e["element_id"]: e["status"] for e in r["elements"]}
+        for k in sorted(set(prov) | set(laa)):
+            if prov.get(k) != laa.get(k):
+                diffs.append({"document_id": d["document_id"], "element_id": k, "provider": prov.get(k), "laa": laa.get(k)})
+        if d["result"]["verdict"] != r["verdict"]:
+            diffs.append({"document_id": d["document_id"], "element_id": None, "provider": d["result"]["verdict"], "laa": r["verdict"]})
+    store.set_laa_check(submission["id"], {"documents": results, "checked_at": now()}, diffs)
 
 
 def case_verdict(docs: list[dict]) -> str:

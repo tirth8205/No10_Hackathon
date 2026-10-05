@@ -10,19 +10,26 @@ one endpoint per callback in web/src/sample/routes.tsx.
               POST /web/cases/{id}/documents       multipart files[] (pages of one letter), replaces? -> CaseDocument (result null while checking)
               GET  /web/cases/{id}/documents/{doc} -> CaseDocument (poll until result is set)
               POST /web/cases/{id}/client-link     -> Case   DELETE -> Case
-              POST /web/cases/{id}/submit          {documentIds, reason} -> {case, documents, summary, filename}
+              POST /web/cases/{id}/submit          {documentIds, reason} -> {case, documents, summary, filename, submissionId}
+                                                   (freezes the pack and schedules the LAA's independent check; case.submissionId is
+                                                   set from here on, and the pack is GET /web/submissions/{submissionId}/pack.zip)
   Client      GET  /web/client/{token}             -> {firstName, firmName, askLabel, linkExpiresAt, latestDocument, state}
               POST /web/client/{token}/upload      multipart files[] -> {documentId}
               GET  /web/client/{token}/documents/{doc} -> {document, state}
-  Caseworker  GET  /web/queue                      -> CaseWithDocuments[] (submitted, undecided; submitted documents only)
-              GET  /web/queue/{id}                 -> CaseWithDocuments
-              POST /web/queue/{id}/decision        {action, note} -> Decision
+              Client documents are the reduced shape: no text, quotes, reasoning, flags, names or verification.
+  Caseworker  GET  /web/queue                      -> CaseWithDocuments[] (one per undecided submission, from its frozen snapshot;
+                                                   case.ref is the LAA reference, case.submissionId and case.laaCheck are set)
+              GET  /web/queue/{id}                 -> CaseWithDocuments ({id} = submission id, LAA ref, or case id -> its latest submission)
+              POST /web/queue/{id}/decision        {action, note, submissionId?} -> Decision (acts on that submission, else the latest submitted)
+              GET  /web/submissions/{id}/pack.zip  -> the submitted files (or their text) plus verification-summary.txt
               POST /web/inbox                      multipart email, files[] -> {email, firm, documents, reply}
   Files       GET  /web/documents/{doc}/file/{page} -> the uploaded file while it is still held in memory
 """
 from __future__ import annotations
 
+import io
 import re
+import zipfile
 from pathlib import PurePath
 
 from fastapi import APIRouter, BackgroundTasks, File, Form, HTTPException, Request, UploadFile
@@ -65,6 +72,7 @@ class DecisionIn(BaseModel):
     action: str = Field(pattern="^(accept|return|refer)$")
     note: str = ""
     caseworker: str = "caseworker"
+    submissionId: str | None = None  # exactly this submission; otherwise the case's latest submitted one
 
 
 def _case(case_id: str) -> dict:
@@ -195,7 +203,7 @@ def revoke_client_link(case_id: str, request: Request):
 
 
 @router.post("/cases/{case_id}/submit", status_code=201)
-def submit(case_id: str, body: Submit, request: Request):
+def submit(case_id: str, body: Submit, request: Request, background: BackgroundTasks):
     c = _case(case_id)
     docs = [store.get_document(d) for d in body.documentIds]
     docs = [d for d in docs if d and d["case_id"] == c["id"]]
@@ -203,10 +211,12 @@ def submit(case_id: str, body: Submit, request: Request):
         raise HTTPException(400, "choose at least one document")
     if any(d["status"] == "checking" for d in docs):
         raise HTTPException(409, "a chosen document is still being checked")
-    store.create_submission(c["id"], [d["id"] for d in docs], None, body.reason, "provider")
+    sub = store.create_submission(c["id"], [d["id"] for d in docs], None, body.reason, "provider")
+    background.add_task(core.laa_check, sub)  # link 2: the LAA re-checks the frozen pack independently
     out = webmap.case_with_documents(store, c, only_ids=[d["id"] for d in docs], base_url=_base(request))
     out["summary"] = webmap.verification_summary(out["case"], out["documents"])
     out["filename"] = f"Gateway Check {c['ref']}.txt"
+    out["submissionId"] = sub["id"]
     return out
 
 
@@ -222,9 +232,10 @@ def _client_case(token: str) -> dict:
 
 @router.get("/client/{token}")
 def client_view(token: str, request: Request):
+    """Applicant view: first name, plain messages, the reduced document shape. No legal reasoning, no LAA detail."""
     c = _client_case(token)
     link = store.latest_client_link(c["id"])
-    docs = [webmap.to_document(store, d, _base(request)) for d in store.list_documents(c["id"]) if d["uploaded_by"] == "client"]
+    docs = [webmap.to_document(store, d, _base(request), role="client") for d in store.list_documents(c["id"]) if d["uploaded_by"] == "client"]
     latest = docs[-1] if docs else None
     return {"firstName": c.get("applicant_first_name") or "", "firmName": webmap.firm_short(c.get("firm_name")),
             "askLabel": c.get("ask_label") or "", "linkExpiresAt": link["expires_at"] if link else None,
@@ -245,26 +256,33 @@ def client_document(token: str, document_id: str, request: Request):
     d = store.get_document(document_id)
     if not d or d["case_id"] != c["id"]:
         raise HTTPException(404, "document not found")
-    doc = webmap.to_document(store, d, _base(request))
+    doc = webmap.to_document(store, d, _base(request), role="client")
     return {"document": doc, "state": webmap.client_state(doc["result"])}
 
 
 # --------------------------------------------------------------------------- #
-# caseworker
+# caseworker: everything here comes from the frozen submission snapshot (link 2),
+# never from the live case, so a later re-check, name change or purge cannot
+# change what the caseworker sees or decides on.
 # --------------------------------------------------------------------------- #
-def _queue_items(request: Request, only_case: str | None = None) -> list[dict]:
-    items = []
-    for s in store.list_submissions():
-        if s["status"] != "submitted" and only_case is None:
-            continue
-        c = store.get_case(s["case_id"])
-        if not c or (only_case and c["id"] != only_case and c["ref"] != only_case and s["id"] != only_case):
-            continue
-        # one row per case: its latest submission
-        if any(i["case"]["id"] == c["id"] for i in items):
-            continue
-        items.append(webmap.case_with_documents(store, c, only_ids=s["document_ids"], base_url=_base(request)))
-    return items
+def _submission(ident: str) -> dict:
+    """{ident} is a submission id or LAA reference, else a case id or case ref (its latest submitted
+    submission, or failing that its latest one, so a decided case can still be opened)."""
+    sub = store.get_submission(ident)
+    if sub:
+        return sub
+    c = store.get_case(ident)
+    if c:
+        sub = store.latest_submission(c["id"], status="submitted") or store.latest_submission(c["id"])
+    if not sub:
+        raise HTTPException(404, "no submission for that case")
+    return sub
+
+
+def _queue_items(request: Request) -> list[dict]:
+    """One row per undecided submission, each from its own snapshot and carrying its submissionId."""
+    return [webmap.submission_with_documents(store, s, "caseworker", base_url=_base(request))
+            for s in store.list_submissions() if s["status"] == "submitted"]
 
 
 @router.get("/queue")
@@ -272,23 +290,59 @@ def queue(request: Request):
     return _queue_items(request)
 
 
-@router.get("/queue/{case_id}")
-def review(case_id: str, request: Request):
-    items = _queue_items(request, only_case=case_id)
-    if not items:
-        raise HTTPException(404, "no submission for that case")
-    return items[0]
+@router.get("/queue/{ident}")
+def review(ident: str, request: Request):
+    return webmap.submission_with_documents(store, _submission(ident), "caseworker", base_url=_base(request))
 
 
-@router.post("/queue/{case_id}/decision", status_code=201)
-def decide(case_id: str, body: DecisionIn):
-    c = _case(case_id)
-    sub = store.latest_submission(c["id"])
-    if not sub:
-        raise HTTPException(404, "no submission for that case")
+@router.post("/queue/{ident}/decision", status_code=201)
+def decide(ident: str, body: DecisionIn):
+    """Decide exactly one submission: body.submissionId if given, else the one {ident} names (a submission id,
+    or a case id -> its latest submitted submission)."""
+    if body.submissionId:
+        sub = store.get_submission(body.submissionId)
+        if not sub:
+            raise HTTPException(404, "submission not found")
+        c = store.get_case(ident)
+        if sub["id"] != ident and sub["laa_ref"] != ident and not (c and c["id"] == sub["case_id"]):
+            raise HTTPException(409, "that submission belongs to a different case")
+    else:
+        sub = _submission(ident)
     d = store.add_decision(sub["id"], body.caseworker, body.action, body.note or None)
-    return {"action": d["action"], "note": d.get("note") or "", "toolVerdict": d.get("tool_verdict") or "",
-            "agreedWithTool": bool(d.get("agreed_with_tool")), "at": d["created_at"]}
+    return {**webmap.to_decision(d), "submissionId": sub["id"]}
+
+
+@router.get("/submissions/{ident}/pack.zip")
+def submission_pack(ident: str):
+    """The pack as the LAA received it: each submitted file (from memory while still held, else the frozen
+    text as .txt) plus verification-summary.txt. Built from the snapshot, with the LAA reference."""
+    sub = _submission(ident)
+    view = webmap.submission_with_documents(store, sub, "caseworker")
+    buf = io.BytesIO()
+    used: set[str] = set()
+
+    def name(n: str) -> str:
+        n = PurePath(n).name or "document"
+        stem, suffix = PurePath(n).stem, PurePath(n).suffix
+        out, i = n, 2
+        while out in used:
+            out, i = f"{stem} ({i}){suffix}", i + 1
+        used.add(out)
+        return out
+
+    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
+        for snap_doc, doc in zip(sub["snapshot"].get("documents", []), view["documents"]):
+            held = store.docs.get(doc["id"])
+            files = getattr(held, "files", None) if held else None
+            if files:
+                for page, (data, _media) in zip(doc["pages"], files):
+                    z.writestr(name(page["filename"]), data)
+            else:
+                z.writestr(name(f"{PurePath(snap_doc['filename']).stem}.txt"), (doc.get("text") or "").encode("utf-8"))
+        z.writestr("verification-summary.txt", webmap.verification_summary(view["case"], view["documents"]).encode("utf-8"))
+    store.audit("caseworker", "submission.pack", sub["id"], {"laa_ref": sub["laa_ref"]})
+    return Response(content=buf.getvalue(), media_type="application/zip",
+                    headers={"Content-Disposition": f'attachment; filename="Gateway Check {sub["laa_ref"]}.zip"', "Cache-Control": "no-store"})
 
 
 @router.post("/inbox", status_code=201)

@@ -6,7 +6,6 @@ Docs: http://localhost:8000/docs
 """
 from __future__ import annotations
 
-import asyncio
 import json
 from pathlib import Path
 
@@ -21,8 +20,6 @@ from app.web_api import router as web_router
 from engine import outputs
 from engine.config import settings
 from engine.ingest import UnsupportedFile, ingest
-from engine.models import Application
-from engine.pipeline import check_text
 from engine.rules import RuleLoadError, load_rules
 from engine.verify import spans
 
@@ -359,35 +356,8 @@ async def create_submission(case_id: str, body: SubmissionIn, background: Backgr
                                   "verdicts": {d["id"]: d["result"]["verdict"] for d in docs}})
     sub = store.create_submission(c["id"], [d["id"] for d in docs], body.notes, body.submit_anyway_reason, body.actor, body.resubmission_of)
     if independent_check:
-        background.add_task(_laa_check, sub)
+        background.add_task(core.laa_check, sub)  # the LAA's independent re-check of the pack (app.core.laa_check)
     return sub
-
-
-async def _laa_check(sub: dict):
-    """The LAA runs its own check on what was submitted and records any difference."""
-    snap = sub["snapshot"]
-    app_ = Application(**snap["application"])
-    results, diffs = [], []
-    for d in snap["documents"]:
-        text = store.document_text(d["document_id"])
-        if text is None:
-            results.append({"document_id": d["document_id"], "error": "text no longer held"})
-            continue
-        try:
-            res = await check_text(text, d["filename"], app_, rules=rules(), llm=state["llm"], claimed_para=d["claimed_para"], document_id=d["document_id"])
-        except Exception as e:
-            results.append({"document_id": d["document_id"], "error": str(e)})
-            continue
-        r = res.model_dump()
-        results.append(r)
-        prov = {e["element_id"]: e["status"] for e in d["result"]["elements"]}
-        laa = {e["element_id"]: e["status"] for e in r["elements"]}
-        for k in set(prov) | set(laa):
-            if prov.get(k) != laa.get(k):
-                diffs.append({"document_id": d["document_id"], "element_id": k, "provider": prov.get(k), "laa": laa.get(k)})
-        if d["result"]["verdict"] != r["verdict"]:
-            diffs.append({"document_id": d["document_id"], "element_id": None, "provider": d["result"]["verdict"], "laa": r["verdict"]})
-    store.set_laa_check(sub["id"], {"documents": results, "checked_at": store.get_submission(sub["id"])["submitted_at"]}, diffs)
 
 
 @app.get("/api/submissions")
@@ -409,7 +379,8 @@ def get_submission(submission_id: str, highlight: bool = True):
         raise HTTPException(404, "submission not found")
     if highlight:
         for d in s["snapshot"]["documents"]:
-            d["text"] = store.document_text(d["document_id"])
+            # the pack as submitted: snapshot_text outlives the TTL and a purge; older snapshots fall back to the held text
+            d["text"] = d["snapshot_text"] if "snapshot_text" in d else store.document_text(d["document_id"])
             d["highlights"] = _highlights({"result": d["result"]}, d["text"]) if d["text"] else []
     s["return_note"] = "\n\n".join(outputs.return_note(_as_doc_result(d["result"]), rules().get(d["result"].get("rule_id") or ""))
                                    for d in s["snapshot"]["documents"] if d["result"]["verdict"] != "meets") or None

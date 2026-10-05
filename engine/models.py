@@ -132,6 +132,7 @@ class DocumentResult(BaseModel):
     rules_version: str = ""
     model: str = ""
     votes: int = 0
+    votes_failed: int = Field(default=0, description="Model assessments that errored or were refused; each counts as 'unclear' in every element tally")
     latency_ms: int = 0
 
 
@@ -162,5 +163,6 @@ FLAG_VICTIM_MISMATCH = "victim_name_mismatch"
 FLAG_REGISTRATION_UNVERIFIED = "registration_unverified"
 FLAG_LOW_CONFIDENCE = "classification_low_confidence"
 FLAG_REFUSAL = "model_refusal"
+FLAG_MODEL_ERROR = "model_error"  # fewer than half the votes completed, so the check is not reliable
 FLAG_ILLEGIBLE = "illegible"
 FLAG_PLACEHOLDER = "unfilled_placeholder"

@@ -5,6 +5,7 @@ import { useEffect, type ReactNode } from "react";
 import { Link } from "react-router";
 import { useGovukComponent } from "../hooks/govuk";
 import { paths } from "../paths";
+import { ActionErrorBanner } from "./ErrorBanner";
 import { cx, ExitThisPage, PhaseBanner } from "./govuk";
 
 function SkipLink() {
@@ -119,6 +120,7 @@ export function ProviderLayout({ children, beforeContent, firm }: ShellProps & {
         <PhaseBanner />
         {beforeContent}
         <main className="govuk-main-wrapper" id="main-content">
+          <ActionErrorBanner />
           {children}
         </main>
       </div>
@@ -153,6 +155,7 @@ export function CaseworkerLayout({ children, beforeContent, active }: ShellProps
         <PhaseBanner />
         {beforeContent}
         <main className="govuk-main-wrapper" id="main-content">
+          <ActionErrorBanner />
           {children}
         </main>
       </div>
@@ -208,6 +211,7 @@ export function ClientLayout({ children }: { children: ReactNode }) {
         <PhaseBanner />
         <ExitThisPage href={EXIT_URL} />
         <main className="govuk-main-wrapper govuk-!-padding-top-4" id="main-content">
+          <ActionErrorBanner />
           {children}
         </main>
       </div>
@@ -224,6 +228,7 @@ export function PlainLayout({ children }: { children: ReactNode }) {
       <div className="govuk-width-container">
         <PhaseBanner />
         <main className="govuk-main-wrapper" id="main-content">
+          <ActionErrorBanner />
           {children}
         </main>
       </div>

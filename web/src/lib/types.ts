@@ -103,6 +103,11 @@ export interface Case {
   submittedDocumentIds: string[];
   submitReason: string | null;
   decision: Decision | null;
+  /** Set once the case is submitted (null before): the pack for Civil Apply is GET /web/submissions/{submissionId}/pack.zip.
+   *  On a caseworker queue row it is the submission that row shows; review and decide by it, not by the case. */
+  submissionId?: string | null;
+  /** The LAA's own run of the check on the submitted pack, compared with the provider's. Absent until it exists. */
+  laaCheck?: { done: boolean; differences: number } | null;
 }
 
 export interface CaseWithDocuments {

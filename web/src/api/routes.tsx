@@ -1,10 +1,15 @@
 // Connects each screen to the backend (/web API) and to the next screen in the flow.
 // The screens themselves only take props; this file loads data, polls while a
 // check is running, and calls the API from the callbacks.
+//
+// Every callback that calls the API runs through `useActionError().run`, so a refused
+// upload or a failed save shows as an error summary at the top of the screen (the
+// layouts render it) instead of failing silently. The next successful action clears it.
 
 import { useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router";
-import { downloadText } from "../components/CopyButton";
+import { downloadText, downloadUrl } from "../components/CopyButton";
+import { ActionErrorProvider } from "../components/ErrorBanner";
 import { groupEvidence } from "../lib/evidence";
 import { clientRequestMessage } from "../lib/outputs";
 import type { Case, CaseDocument, CaseWithDocuments, DecisionAction } from "../lib/types";
@@ -26,7 +31,7 @@ import { Review } from "../pages/caseworker/Review";
 import { NotFound } from "../pages/HowTheCheckWorks";
 import { paths } from "../paths";
 import * as api from "./backend";
-import { useAsync, usePolling } from "./useAsync";
+import { useActionError, useAsync, usePolling } from "./useAsync";
 
 /** The demo firm. The backend stores it on each case; the screens show it in the header. */
 export const FIRM = "Hartley & Webb Solicitors";
@@ -67,21 +72,27 @@ function clientCase(firstName: string, firm: string): Case {
 export function ClientUploadRoute() {
   const { token = "" } = useParams();
   const navigate = useNavigate();
+  const act = useActionError();
   const view = useAsync(() => api.clientView(token), [token]);
   if (view.loading) return <Loading />;
   const v = view.data;
   const expires = v?.linkExpiresAt;
   if (view.error || !v || !expires) return <ClientExpired />;
   return (
-    <ClientUpload
-      firstName={v.firstName}
-      firmName={v.firmName}
-      askLabel={v.askLabel}
-      linkExpiresAt={expires}
-      onFiles={(files) => {
-        void api.clientUpload(token, files).then(({ documentId }) => navigate(`${paths.clientChecking(token)}?doc=${documentId}`));
-      }}
-    />
+    <ActionErrorProvider message={act.message}>
+      <ClientUpload
+        firstName={v.firstName}
+        firmName={v.firmName}
+        askLabel={v.askLabel}
+        linkExpiresAt={expires}
+        onFiles={(files) =>
+          void act.run(async () => {
+            const { documentId } = await api.clientUpload(token, files);
+            navigate(`${paths.clientChecking(token)}?doc=${documentId}`);
+          })
+        }
+      />
+    </ActionErrorProvider>
   );
 }
 
@@ -137,36 +148,49 @@ function useCase(caseId: string) {
 
 export function ProviderCasesRoute() {
   const navigate = useNavigate();
+  const act = useActionError();
   const cases = useAsync(() => api.listCases(), []);
   usePolling(Boolean(cases.data?.some((c) => stillChecking(c.documents))), cases.reload);
   if (cases.loading) return <Loading />;
   if (cases.error) return <Failed error={cases.error} />;
   return (
-    <ProviderCases
-      firm={FIRM}
-      cases={cases.data ?? []}
-      onDropLetter={(files) => {
-        void api.createCaseFromLetter(files).then((created) => navigate(paths.caseDocument(created.case.id, created.documentId)));
-      }}
-      firstTimeRight={{ yours: 7, outOf: 10 }}
-    />
+    <ActionErrorProvider message={act.message}>
+      <ProviderCases
+        firm={FIRM}
+        cases={cases.data ?? []}
+        onDropLetter={(files) =>
+          void act.run(async () => {
+            const created = await api.createCaseFromLetter(files);
+            navigate(paths.caseDocument(created.case.id, created.documentId));
+          })
+        }
+        firstTimeRight={{ yours: 7, outOf: 10 }}
+      />
+    </ActionErrorProvider>
   );
 }
 
 export function ProviderNewCaseRoute() {
   const navigate = useNavigate();
+  const act = useActionError();
   return (
-    <ProviderNewCase
-      firm={FIRM}
-      onCreate={(input) => {
-        void api.createCase(input).then((created) => navigate(paths.caseClient(created.case.id)));
-      }}
-    />
+    <ActionErrorProvider message={act.message}>
+      <ProviderNewCase
+        firm={FIRM}
+        onCreate={(input) =>
+          void act.run(async () => {
+            const created = await api.createCase(input);
+            navigate(paths.caseClient(created.case.id));
+          })
+        }
+      />
+    </ActionErrorProvider>
   );
 }
 
 export function CaseEvidenceRoute() {
   const { caseId = "" } = useParams();
+  const act = useActionError();
   const data = useCase(caseId);
   if (data.loading) return <Loading />;
   if (data.error || !data.data) return <NotFound />;
@@ -175,53 +199,68 @@ export function CaseEvidenceRoute() {
   const c = data.data.case;
   const key = c.selectionTouched ? caseId : `${caseId}:${c.selectedDocumentIds.join(",")}`;
   return (
-    <CaseEvidence
-      key={key}
-      data={data.data}
-      onSelectionChange={(ids) => void api.setSelection(caseId, ids)}
-      onAddDocument={(files) => {
-        void api.addDocument(caseId, files).then(() => data.reload());
-      }}
-    />
+    <ActionErrorProvider message={act.message}>
+      <CaseEvidence
+        key={key}
+        data={data.data}
+        onSelectionChange={(ids) => void act.run(() => api.setSelection(caseId, ids))}
+        onAddDocument={(files) =>
+          void act.run(async () => {
+            await api.addDocument(caseId, files);
+            await data.reload();
+          })
+        }
+      />
+    </ActionErrorProvider>
   );
 }
 
 export function CaseClientRoute() {
   const { caseId = "" } = useParams();
+  const act = useActionError();
   const data = useCase(caseId);
   if (data.loading) return <Loading />;
   if (data.error || !data.data) return <NotFound />;
   const c = data.data.case;
   const update = (next: Case) => data.set({ case: next, documents: data.data!.documents });
   return (
-    <CaseClient
-      data={data.data}
-      clientLinkUrl={c.clientToken && c.tokenExpiresAt ? `${window.location.origin}${paths.client(c.clientToken)}` : null}
-      onTurnOffLink={() => void api.revokeClientLink(caseId).then(update)}
-      onCreateLink={() => void api.createClientLink(caseId).then(update)}
-    />
+    <ActionErrorProvider message={act.message}>
+      <CaseClient
+        data={data.data}
+        clientLinkUrl={c.clientToken && c.tokenExpiresAt ? `${window.location.origin}${paths.client(c.clientToken)}` : null}
+        onTurnOffLink={() => void act.run(async () => update(await api.revokeClientLink(caseId)))}
+        onCreateLink={() => void act.run(async () => update(await api.createClientLink(caseId)))}
+      />
+    </ActionErrorProvider>
   );
 }
 
 export function CaseDetailsRoute() {
   const { caseId = "" } = useParams();
   const navigate = useNavigate();
+  const act = useActionError();
   const data = useCase(caseId);
   if (data.loading) return <Loading />;
   if (data.error || !data.data) return <NotFound />;
   return (
-    <CaseDetails
-      c={data.data.case}
-      onSave={(input) => {
-        void api.updateCase(caseId, input).then(() => navigate(paths.caseClient(caseId)));
-      }}
-    />
+    <ActionErrorProvider message={act.message}>
+      <CaseDetails
+        c={data.data.case}
+        onSave={(input) =>
+          void act.run(async () => {
+            await api.updateCase(caseId, input);
+            navigate(paths.caseClient(caseId));
+          })
+        }
+      />
+    </ActionErrorProvider>
   );
 }
 
 export function DocumentCheckRoute() {
   const { caseId = "", docId = "" } = useParams();
   const navigate = useNavigate();
+  const act = useActionError();
   const data = useCase(caseId);
   if (data.loading) return <Loading />;
   const doc = data.data?.documents.find((d) => d.id === docId);
@@ -229,15 +268,20 @@ export function DocumentCheckRoute() {
   const group = groupEvidence(data.data.documents).find((g) => g.items.some((i) => i.doc.id === doc.id));
   const newest = group?.items[0]?.doc;
   return (
-    <DocumentCheck
-      key={docId}
-      c={data.data.case}
-      doc={doc}
-      replacedBy={newest && newest.id !== doc.id ? newest : null}
-      onUploadCorrected={(files) => {
-        void api.addDocument(caseId, files, { replaces: docId }).then(() => navigate(paths.caseEvidence(caseId)));
-      }}
-    />
+    <ActionErrorProvider message={act.message}>
+      <DocumentCheck
+        key={docId}
+        c={data.data.case}
+        doc={doc}
+        replacedBy={newest && newest.id !== doc.id ? newest : null}
+        onUploadCorrected={(files) =>
+          void act.run(async () => {
+            await api.addDocument(caseId, files, { replaces: docId });
+            navigate(paths.caseEvidence(caseId));
+          })
+        }
+      />
+    </ActionErrorProvider>
   );
 }
 
@@ -254,25 +298,33 @@ export function CaseSubmitRoute() {
   const { caseId = "" } = useParams();
   const [search] = useSearchParams();
   const [done, setDone] = useState(false);
+  const act = useActionError();
   const data = useCase(caseId);
   if (data.loading) return <Loading />;
   if (data.error || !data.data) return <NotFound />;
   const param = search.get("selected");
   const selectedIds = param !== null ? param.split(",").filter(Boolean) : data.data.case.selectedDocumentIds;
   return (
-    <CaseSubmit
-      data={data.data}
-      selectedIds={selectedIds}
-      done={done}
-      onDownload={(reason) => {
-        void api.submitCase(caseId, selectedIds, reason).then((pack) => {
-          downloadText(pack.filename, pack.summary);
-          setDone(true);
-          window.scrollTo(0, 0);
-          void data.reload();
-        });
-      }}
-    />
+    <ActionErrorProvider message={act.message}>
+      <CaseSubmit
+        data={data.data}
+        selectedIds={selectedIds}
+        done={done}
+        onDownload={(reason) =>
+          void act.run(async () => {
+            const pack = await api.submitCase(caseId, selectedIds, reason);
+            // The real pack (letters plus verification summary, one zip) is built by the back end.
+            // Without a submission id, fall back to the summary text alone.
+            const submissionId = pack.case.submissionId;
+            if (submissionId) downloadUrl(api.submissionPackUrl(submissionId), `${pack.case.ref} submission pack.zip`);
+            else downloadText(pack.filename, pack.summary);
+            setDone(true);
+            window.scrollTo(0, 0);
+            void data.reload();
+          })
+        }
+      />
+    </ActionErrorProvider>
   );
 }
 
@@ -304,34 +356,44 @@ export function ReviewRoute() {
   const { caseId = "" } = useParams();
   const [search] = useSearchParams();
   const navigate = useNavigate();
+  const act = useActionError();
   const data = useAsync(() => api.review(caseId), [caseId]);
   if (data.loading) return <Loading />;
   if (data.error || !data.data) return <NotFound />;
   const d = data.data;
   const activeDocId = search.get("doc") ?? d.documents[0]?.id ?? "";
-  const onDecide = (action: DecisionAction, note: string) => {
-    void api.decide(caseId, action, note).then((decision) =>
-      navigate(`${paths.queue}?decided=${d.case.ref}&action=${decision.action}&agreed=${decision.agreedWithTool ? 1 : 0}`),
-    );
-  };
-  return <Review key={caseId} data={d} activeDocId={activeDocId} onDecide={onDecide} />;
+  const onDecide = (action: DecisionAction, note: string) =>
+    void act.run(async () => {
+      const decision = await api.decide(caseId, action, note, d.case.submissionId); // this submission, not the case's latest
+      navigate(`${paths.queue}?decided=${d.case.ref}&action=${decision.action}&agreed=${decision.agreedWithTool ? 1 : 0}`);
+    });
+  return (
+    <ActionErrorProvider message={act.message}>
+      <Review key={caseId} data={d} activeDocId={activeDocId} onDecide={onDecide} />
+    </ActionErrorProvider>
+  );
 }
 
 export function InboxRoute() {
   const [draft, setDraft] = useState<InboxDraft | null>(null);
   const [busy, setBusy] = useState(false);
+  const act = useActionError();
   if (busy) return <Loading what="Checking the attachments" />;
   return (
-    <Inbox
-      key={draft ? "drafted" : "empty"}
-      draft={draft}
-      onDraft={(email, files) => {
-        setBusy(true);
-        void api
-          .draftInboxReply(email, files)
-          .then((r) => setDraft({ email: r.email, documents: r.documents, reply: r.reply }))
-          .finally(() => setBusy(false));
-      }}
-    />
+    <ActionErrorProvider message={act.message}>
+      <Inbox
+        key={draft ? "drafted" : "empty"}
+        draft={draft}
+        onDraft={(email, files) => {
+          setBusy(true);
+          void act
+            .run(async () => {
+              const r = await api.draftInboxReply(email, files);
+              setDraft({ email: r.email, documents: r.documents, reply: r.reply });
+            })
+            .finally(() => setBusy(false));
+        }}
+      />
+    </ActionErrorProvider>
   );
 }

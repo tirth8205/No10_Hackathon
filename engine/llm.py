@@ -42,7 +42,12 @@ class LLM(Protocol):
 
     async def classify(self, doc_text: str, rules: RuleSet) -> ClassifyResponse: ...
 
-    async def assess(self, doc_text: str, rule: Rule, applicant: str | None, other_party: str | None, hedge_terms: list[str], application_date: str | None = None) -> Assessment: ...
+    async def assess(self, doc_text: str, rule: Rule, applicant: str | None, other_party: str | None, hedge_terms: list[str],
+                     application_date: str | None = None, *, vote: int = 0) -> Assessment:
+        """One of k independent votes on the same document. `vote` is the index within the
+        check (0..k-1): providers ignore it, the cache keys on it so each vote is recorded
+        and replayed on its own rather than one answer being served k times."""
+        ...
 
     async def transcribe(self, data: bytes, media_type: str) -> Transcription: ...
 
@@ -91,7 +96,7 @@ class AnthropicLLM:
     async def classify(self, doc_text: str, rules: RuleSet) -> ClassifyResponse:
         return await self._parse(prompts.classify_prompt(doc_text, rules), ClassifyResponse)
 
-    async def assess(self, doc_text, rule, applicant, other_party, hedge_terms, application_date=None) -> Assessment:
+    async def assess(self, doc_text, rule, applicant, other_party, hedge_terms, application_date=None, *, vote: int = 0) -> Assessment:
         return await self._parse(prompts.assess_prompt(doc_text, rule, applicant, other_party, hedge_terms, application_date), Assessment)
 
     async def transcribe(self, data: bytes, media_type: str) -> Transcription:
@@ -146,7 +151,7 @@ class OpenAILLM:
     async def classify(self, doc_text: str, rules: RuleSet) -> ClassifyResponse:
         return await self._parse(prompts.classify_prompt(doc_text, rules), ClassifyResponse)
 
-    async def assess(self, doc_text, rule, applicant, other_party, hedge_terms, application_date=None) -> Assessment:
+    async def assess(self, doc_text, rule, applicant, other_party, hedge_terms, application_date=None, *, vote: int = 0) -> Assessment:
         return await self._parse(prompts.assess_prompt(doc_text, rule, applicant, other_party, hedge_terms, application_date), Assessment)
 
     async def transcribe(self, data: bytes, media_type: str) -> Transcription:
@@ -207,7 +212,7 @@ class OfflineLLM:
             parties=Parties(victim_name=victim, other_party_name=perp, dates_mentioned=re.findall(r"\b\d{1,2}(?:st|nd|rd|th)? [A-Z][a-z]+ \d{4}\b", doc_text)[:5]),
         )
 
-    async def assess(self, doc_text, rule, applicant, other_party, hedge_terms, application_date=None) -> Assessment:
+    async def assess(self, doc_text, rule, applicant, other_party, hedge_terms, application_date=None, *, vote: int = 0) -> Assessment:
         sents = _sentences(doc_text)
         low = doc_text.lower()
         results, hedged = [], False
@@ -292,6 +297,12 @@ class CachedLLM:
 
     mode "on": read-through, write on miss. mode "replay": read only; on a miss
     fall back to `fallback` (the offline stub) so the demo never blocks.
+
+    Each of the k votes in a check is keyed on its vote index, so a replay returns
+    the same k distinct answers the live run produced, not one answer k times.
+    Vote 0 keeps the key used before votes were indexed, so recordings made
+    earlier still replay; in replay mode a missing vote 1..k-1 falls back to that
+    single recording (the pre-index behaviour) before it falls back to the stub.
     """
 
     def __init__(self, inner: LLM, cache_dir: Path, mode: str = "on", fallback: LLM | None = None):
@@ -304,11 +315,13 @@ class CachedLLM:
         h = hashlib.sha256("\x1f".join([kind, getattr(self.inner, "name", ""), ph, *parts]).encode()).hexdigest()[:24]
         return self.dir / f"{kind}-{h}.json"
 
-    async def _cached(self, kind: str, model: type[BaseModel], parts: list[str], call):
+    async def _cached(self, kind: str, model: type[BaseModel], parts: list[str], call, *, legacy: list[str] | None = None):
         p = self._path(kind, *parts)
         if p.exists():
             return model.model_validate_json(p.read_text())
         if self.mode == "replay":
+            if legacy is not None and (lp := self._path(kind, *legacy)).exists():
+                return model.model_validate_json(lp.read_text())
             if self.fallback is None:
                 raise RuntimeError(f"cache miss in replay mode for {kind}")
             return await call(self.fallback)
@@ -320,9 +333,12 @@ class CachedLLM:
         ids = ",".join(sorted(r.id for r in rules.enabled()))
         return await self._cached("classify", ClassifyResponse, [doc_text, ids], lambda l: l.classify(doc_text, rules))
 
-    async def assess(self, doc_text, rule, applicant, other_party, hedge_terms, application_date=None):
-        parts = [doc_text, rule.prompt_fingerprint(), applicant or "", other_party or "", ",".join(hedge_terms), application_date or ""]
-        return await self._cached("assess", Assessment, parts, lambda l: l.assess(doc_text, rule, applicant, other_party, hedge_terms, application_date))
+    async def assess(self, doc_text, rule, applicant, other_party, hedge_terms, application_date=None, *, vote: int = 0):
+        base = [doc_text, rule.prompt_fingerprint(), applicant or "", other_party or "", ",".join(hedge_terms), application_date or ""]
+        parts = base if vote == 0 else [*base, f"vote={vote}"]  # vote 0 keeps the pre-index key
+        return await self._cached("assess", Assessment, parts,
+                                  lambda l: l.assess(doc_text, rule, applicant, other_party, hedge_terms, application_date, vote=vote),
+                                  legacy=base if vote else None)
 
     async def transcribe(self, data, media_type):
         return await self._cached("transcribe", Transcription, [hashlib.sha256(data).hexdigest(), media_type], lambda l: l.transcribe(data, media_type))

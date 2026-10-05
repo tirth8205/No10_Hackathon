@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import asyncio
+import math
 import time
 
 from engine import aggregate, outputs
@@ -13,6 +14,7 @@ from engine.ingest import Ingested, ingest
 from engine.llm import LLM, RefusalError, get_llm
 from engine.models import (
     FLAG_ILLEGIBLE,
+    FLAG_MODEL_ERROR,
     FLAG_REFUSAL,
     NOT_PRESCRIBED,
     Application,
@@ -33,22 +35,37 @@ def rule_for_paragraph(rules: RuleSet, paragraph: str | None) -> Rule | None:
     return next((r for r in rules.enabled() if r.paragraph.upper() == p), None)
 
 
-async def _votes(llm: LLM, text: str, rule: Rule, application: Application, rules: RuleSet, k: int) -> list[Assessment]:
+def quorum(k: int) -> int:
+    """Votes that must complete before a check can be trusted: half of k, rounded up."""
+    return math.ceil(k / 2)
+
+
+async def _votes(llm: LLM, text: str, rule: Rule, application: Application, rules: RuleSet, k: int) -> tuple[list[Assessment], int]:
+    """Run k independent assessments in parallel. Returns (completed votes, number that failed).
+
+    A failed vote is never dropped: the count goes to aggregation, where it counts as "unclear"
+    for every element, so one surviving vote out of three cannot decide for the other two.
+    Each call carries its vote index so a record/replay cache keeps the votes apart.
+    Only when every vote failed and the model refused is a RefusalError raised; the caller
+    turns that into the model_refusal route.
+    """
     hedges = rules.gateway.hedge_terms
     results = await asyncio.gather(
-        *[llm.assess(text, rule, application.applicant_name, application.other_party_name, hedges, application.application_date) for _ in range(k)],
+        *[llm.assess(text, rule, application.applicant_name, application.other_party_name, hedges, application.application_date, vote=i) for i in range(k)],
         return_exceptions=True,
     )
     good = [r for r in results if isinstance(r, Assessment)]
-    errors = [r for r in results if isinstance(r, Exception)]
+    failed = len(results) - len(good)
     if not good:
-        raise errors[0] if errors else RuntimeError("no assessments")
-    return good
+        refusal = next((r for r in results if isinstance(r, RefusalError)), None)
+        if refusal is not None:
+            raise refusal
+    return good, failed
 
 
 def _assemble(text: str, rule: Rule, votes: list[Assessment], classification: Classification, parties: Parties,
-              application: Application, rules: RuleSet) -> tuple[list, list[str], str]:
-    elements, flags = aggregate.majority(votes, rule)
+              application: Application, rules: RuleSet, failed: int = 0) -> tuple[list, list[str], str]:
+    elements, flags = aggregate.majority(votes, rule, failed=failed)
     flags += aggregate.verify_quotes(elements, text, rules.gateway)
     party_flags, severity = aggregate.party_checks(parties, application, rule, rules.gateway, elements)
     flags += party_flags
@@ -98,23 +115,31 @@ async def check_text(text: str, filename: str, application: Application, *, rule
                       client_message=outputs.client_message("not_prescribed"))
 
     try:
-        votes_ = await _votes(llm, text, rule, application, rules, k)
+        good, failed = await _votes(llm, text, rule, application, rules, k)
     except RefusalError as e:
         return finish(verdict="needs_caseworker", flags=[FLAG_REFUSAL], classification=classification, parties=parties,
-                      rule_id=rule.id, paragraph=rule.paragraph, rule_name=rule.name, legal_ref=rule.legal_ref,
+                      rule_id=rule.id, paragraph=rule.paragraph, rule_name=rule.name, legal_ref=rule.legal_ref, votes_failed=k,
                       provider_summary=f"The model declined to assess this document ({e}). A caseworker must review it.",
                       client_message=outputs.client_message("needs_caseworker"))
-    elements, flags, verdict = _assemble(text, rule, votes_, classification, parties, application, rules)
+    elements, flags, verdict = _assemble(text, rule, good, classification, parties, application, rules, failed=failed)
+
+    # Fewer than half the votes completed: whatever the survivors said, the check is not
+    # reliable enough to act on. A person decides, and the summary says why.
+    unreliable = len(good) < quorum(k)
+    if unreliable:
+        verdict = "needs_caseworker"
+        flags = [FLAG_MODEL_ERROR, *flags]
 
     # If the provider claimed a paragraph the document does not meet, see whether the
     # classifier's suggestion does better and offer the switch.
     recategorise_to = None
-    if claimed and suggested and suggested.id != claimed.id and verdict != "meets":
+    if not unreliable and claimed and suggested and suggested.id != claimed.id and verdict != "meets":
         try:
-            alt_votes = await _votes(llm, text, suggested, application, rules, k)
-            _, _, alt_verdict = _assemble(text, suggested, alt_votes, classification, parties, application, rules)
-            if alt_verdict == "meets":
-                recategorise_to = suggested.id
+            alt_good, alt_failed = await _votes(llm, text, suggested, application, rules, k)
+            if len(alt_good) >= quorum(k):
+                _, _, alt_verdict = _assemble(text, suggested, alt_good, classification, parties, application, rules, failed=alt_failed)
+                if alt_verdict == "meets":
+                    recategorise_to = suggested.id
         except RefusalError:
             pass
 
@@ -123,14 +148,20 @@ async def check_text(text: str, filename: str, application: Application, *, rule
     except Exception:  # checks help a person; they never block the result
         verification = []
 
+    if unreliable:
+        summary = (f"The check could not be completed reliably: {failed} of {k} model assessments failed. "
+                   "A caseworker must review this document.")
+    else:
+        summary = outputs.provider_summary(rule, elements, verdict) + (
+            f" This letter appears to meet paragraph {suggested.paragraph} ({suggested.short_name.lower()}) instead." if recategorise_to else "")
     return finish(
         verdict=verdict, flags=flags, elements=elements, classification=classification, parties=parties, verification=verification,
-        rule_id=rule.id, paragraph=rule.paragraph, rule_name=rule.name, legal_ref=rule.legal_ref,
+        rule_id=rule.id, paragraph=rule.paragraph, rule_name=rule.name, legal_ref=rule.legal_ref, votes_failed=failed,
         claimed_rule_id=claimed.id if claimed else None, recategorise_to=recategorise_to,
-        provider_summary=outputs.provider_summary(rule, elements, verdict) + (
-            f" This letter appears to meet paragraph {suggested.paragraph} ({suggested.short_name.lower()}) instead." if recategorise_to else ""),
+        provider_summary=summary,
         client_message=outputs.client_message(verdict),
-        request_letter=outputs.request_letter(rule, elements, application, classification.author_name, classification.author_org) if verdict in ("needs_change", "needs_caseworker") else None,
+        request_letter=outputs.request_letter(rule, elements, application, classification.author_name, classification.author_org)
+        if verdict in ("needs_change", "needs_caseworker") and not unreliable else None,
     )
 
 

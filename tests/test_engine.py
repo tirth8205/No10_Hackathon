@@ -160,3 +160,33 @@ def test_rules_version_recorded():
     res = _run("MOJ-P14-accepted-01")
     assert res.rules_version == RULES.gateway.rules_version
     assert res.paragraph == "14"
+
+
+def test_invented_short_fragment_fails_the_whole_quote():
+    """A genuine sentence cannot carry an invented two-word passage through verification."""
+    from engine.verify import fragments, spans
+
+    text = ("Dear Sir or Madam,\n\nRe: Jane Doe\n\nI am writing in support of Jane Doe. I can confirm that our organisation is situated in England and Wales. "
+            "We have supported Jane Doe since March 2026 following her disclosure of domestic abuse by John Doe.\n\nYours sincerely,\nA Smith\nWomen's Aid")
+    stitched = "I can confirm that our organisation is situated in England and Wales. Abuse confirmed."
+    assert fragments(stitched) == ["I can confirm that our organisation is situated in England and Wales.", "Abuse confirmed."]
+    assert spans(stitched, text) == []
+    assert not check_quote(stitched, text).verified
+    # the same stitched quote against a document shorter than the quote itself
+    assert not check_quote(stitched, "I can confirm that our organisation is situated in England and Wales.").verified
+    # a lone invented two-word quote fails
+    lone = check_quote("Abuse confirmed.", text)
+    assert not lone.verified and not lone.exact
+    # a genuine two-passage quote whose second passage is only two words still verifies, as multi-span
+    genuine = check_quote("I am writing in support of Jane Doe ... Yours sincerely", text)
+    assert genuine.verified and genuine.exact and genuine.multi
+    assert [text[a:b] for a, b in genuine.spans] == ["I am writing in support of Jane Doe", "Yours sincerely"]
+    # fuzzy fallback: every passage must clear the threshold on its own, so a close first passage
+    # (one letter dropped) does not rescue an invented second one
+    noisy = check_quote("I am writing in suport of Jane Doe ... Abuse confirmed.", text)
+    assert not noisy.verified
+    close = check_quote("I am writing in suport of Jane Doe ... Yours sincerly", text)
+    assert close.verified and not close.exact and close.multi
+    # only empty strings are dropped when splitting
+    assert fragments("Abuse confirmed. ... \n\n") == ["Abuse confirmed."]
+    assert fragments("") == []

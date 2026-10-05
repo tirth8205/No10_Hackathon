@@ -35,9 +35,15 @@ export function CopyButton({ text, label, variant }: { text: string; label: stri
 /** Saves text as a file in the browser. */
 export function downloadText(filename: string, text: string) {
   const url = URL.createObjectURL(new Blob([text], { type: "text/plain;charset=utf-8" }));
+  downloadUrl(url, filename);
+  URL.revokeObjectURL(url);
+}
+
+/** Downloads a file the server builds (or a blob URL) by clicking a hidden link to it. */
+export function downloadUrl(url: string, filename?: string) {
   const a = document.createElement("a");
   a.href = url;
-  a.download = filename;
+  if (filename) a.download = filename;
+  a.rel = "noopener";
   a.click();
-  URL.revokeObjectURL(url);
 }

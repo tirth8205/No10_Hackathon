@@ -3,6 +3,8 @@ import json
 import os
 import tempfile
 
+import pytest
+
 from app import webmap
 from app.store import Store
 
@@ -66,8 +68,10 @@ def test_case_and_documents_from_store():
     out = webmap.case_with_documents(store, store.get_case(c["id"]))
     case, docs = out["case"], out["documents"]
     assert set(case) == {"id", "ref", "firm", "applicantName", "otherPartyName", "caseType", "createdAt", "clientToken", "tokenExpiresAt",
-                         "askLabel", "documentIds", "selectedDocumentIds", "selectionTouched", "submittedAt", "submittedDocumentIds", "submitReason", "decision"}
+                         "askLabel", "documentIds", "selectedDocumentIds", "selectionTouched", "submittedAt", "submittedDocumentIds", "submitReason", "decision",
+                         "submissionId"}
     assert case["clientToken"] and case["tokenExpiresAt"] and case["askLabel"] == "Letter from your GP"
+    assert case["submissionId"] is None and "laaCheck" not in case          # nothing submitted yet; the LAA's check never crosses back to link 1
     assert case["selectedDocumentIds"] == [d2["id"]] and case["selectionTouched"] is False   # default: latest passing document
     assert set(docs[0]) == {"id", "caseId", "pages", "text", "uploadedBy", "uploadedAt", "result"}
     assert docs[0]["pages"][1]["filename"] == "refuge (2).jpg" and docs[0]["text"] == "text one"
@@ -78,6 +82,7 @@ def test_case_and_documents_from_store():
     store.add_decision(sub["id"], "Priya", "accept", "")
     case3 = webmap.case_with_documents(store, store.get_case(c["id"]))["case"]
     assert case3["submittedAt"] and case3["submittedDocumentIds"] == [d2["id"]]
+    assert case3["submissionId"] == sub["id"] and "laaCheck" not in case3   # the frontend downloads /web/submissions/{submissionId}/pack.zip
     assert case3["decision"]["action"] == "accept" and case3["decision"]["agreedWithTool"] is True
     assert "Case: " + case3["ref"] in webmap.verification_summary(case3, docs)
 
@@ -113,3 +118,119 @@ def test_verification_links_are_http_only():
 
     assert VerificationCheck(id="x", label="x", status="unknown", detail="d", link="javascript:alert(1)").link is None
     assert VerificationCheck(id="x", label="x", status="unknown", detail="d", link=" https://example.org/a ").link == "https://example.org/a"
+
+
+# --------------------------------------------------------------------------- #
+# roles: each party gets only what crosses its link
+# --------------------------------------------------------------------------- #
+def test_client_result_is_reduced_to_plain_words():
+    r = webmap.to_check_result({**RESULT, "client_message": "This document may need a little more detail."}, role="client")
+    assert set(r) == {"matchedPara", "outcome", "reason", "elements", "shortOrg", "authorName", "letterDate", "rulesVersion", "checkedAt"}
+    assert not (set(r) & webmap.CLIENT_HIDDEN_RESULT_KEYS)
+    assert r["outcome"] == "fail" and r["matchedPara"] == "18" and r["shortOrg"] == "Brookfield" and r["letterDate"] == "2026-09-28"
+    assert r["reason"] == "This document may need a little more detail."     # the client message, never the provider summary
+    assert r["authorName"] is None                                           # the classifier knew "John Smith"; the client's phone does not
+    assert [set(e) for e in r["elements"]] == [{"key", "status", "clientHint", "fix"}] * 2
+    assert r["elements"][0] == {"key": "perpetrator_named", "status": "not_met", "clientHint": "name the person you needed to get away from", "fix": "Name the other party."}
+    assert webmap.to_check_result(RESULT) == webmap.to_check_result(RESULT, role="provider") == webmap.to_check_result(RESULT, role="caseworker")
+    err = webmap.error_result("KeyError: x", role="client")
+    assert err["reason"] == webmap.CLIENT_ERROR_MESSAGE and "KeyError" not in str(err) and not (set(err) & webmap.CLIENT_HIDDEN_RESULT_KEYS)
+    with pytest.raises(ValueError):
+        webmap.to_check_result(RESULT, role="auditor")
+
+
+def test_client_document_has_no_text_and_the_caseworker_case_has_no_link_1_fields():
+    store = Store(os.path.join(tempfile.mkdtemp(), "t.sqlite3"))
+    c = store.create_case("Jane Doe", "John Doe", "Child arrangements", "provider", firm_name="Hartley & Webb Solicitors")
+    store.create_client_link(c["id"], 7)
+    d = store.add_document(c["id"], "refuge.txt", "client", None, None, "on 28th September 2026 she was refused")
+    store.set_document_result(d["id"], RESULT)
+    client_doc = webmap.to_document(store, store.get_document(d["id"]), role="client")
+    assert set(client_doc) == {"id", "caseId", "pages", "uploadedBy", "uploadedAt", "result"}
+    assert not (set(client_doc) & webmap.CLIENT_HIDDEN_DOCUMENT_KEYS)
+    assert webmap.to_document(store, store.get_document(d["id"]))["text"] == "on 28th September 2026 she was refused"
+    sub = store.create_submission(c["id"], [d["id"]], None, "reason", "provider")
+    docs = [webmap.to_document(store, store.get_document(d["id"]))]
+    cw = webmap.to_case(store, store.get_case(c["id"]), docs, role="caseworker")
+    assert not (set(cw) & webmap.CASEWORKER_HIDDEN_CASE_KEYS)
+    assert cw["ref"] == sub["laa_ref"] and cw["submissionId"] == sub["id"] and cw["laaCheck"] == {"done": False, "differences": 0}
+    prov = webmap.to_case(store, store.get_case(c["id"]), docs)
+    assert prov["ref"] == c["ref"] and prov["clientToken"] and "laaCheck" not in prov
+
+
+def test_submission_with_documents_is_the_frozen_pack():
+    store = Store(os.path.join(tempfile.mkdtemp(), "t.sqlite3"))
+    c = store.create_case("Jane Doe", "John Doe", "Child arrangements", "provider", firm_name="Hartley & Webb Solicitors")
+    text = "Dear Jane Doe, on 28th September 2026 you were refused admission to the refuge."
+    d = store.add_document(c["id"], "refuge.txt", "provider", "18", None, text, pages=[{"filename": "refuge.pdf", "contentType": "application/pdf"}])
+    store.set_document_result(d["id"], RESULT)
+    sub = store.create_submission(c["id"], [d["id"]], None, "reason", "provider")
+    snap = sub["snapshot"]["documents"][0]
+    assert snap["snapshot_text"] == text and snap["uploaded_by"] == "provider" and snap["pages"][0]["filename"] == "refuge.pdf"
+
+    # the live case moves on: new names, a new result, the text purged
+    store.update_case(c["id"], applicant_name="Someone Else", other_party_name=None)
+    store.set_document_result(d["id"], {**RESULT, "verdict": "meets", "elements": [RESULT["elements"][1]], "flags": []})
+    store.purge_case_documents(c["id"], "provider")
+    assert store.document_text(d["id"]) is None
+
+    out = webmap.submission_with_documents(store, store.get_submission(sub["id"]), "caseworker", base_url="http://x")
+    case, docs = out["case"], out["documents"]
+    assert set(case) == {"id", "ref", "firm", "applicantName", "otherPartyName", "caseType", "createdAt", "documentIds", "submittedAt",
+                         "submittedDocumentIds", "submitReason", "decision", "submissionId", "laaCheck"}
+    assert case["id"] == c["id"] and case["ref"] == sub["laa_ref"] and case["submissionId"] == sub["id"]
+    assert case["applicantName"] == "Jane Doe" and case["otherPartyName"] == "John Doe" and case["firm"] == "Hartley & Webb Solicitors"
+    assert case["submitReason"] == "reason" and case["decision"] is None and case["laaCheck"] == {"done": False, "differences": 0}
+    assert len(docs) == 1 and docs[0]["text"] == text and docs[0]["caseId"] == c["id"] and docs[0]["pages"] == [{"filename": "refuge.pdf", "contentType": "application/pdf"}]
+    assert docs[0]["result"]["outcome"] == "fail" and [e["status"] for e in docs[0]["result"]["elements"]] == ["not_met", "met"]
+    assert docs[0]["result"]["elements"][1]["quote"] == "on 28th September 2026"
+
+    store.set_laa_check(sub["id"], {"documents": [], "checked_at": "now"}, [{"document_id": d["id"], "element_id": "x", "provider": "missing", "laa": "included"},
+                                                                             {"document_id": d["id"], "element_id": None, "provider": "needs_change", "laa": "meets"}])
+    store.add_decision(sub["id"], "Priya", "return", "Name the other party")
+    case2 = webmap.submission_with_documents(store, store.get_submission(sub["id"]), "caseworker")["case"]
+    assert case2["laaCheck"] == {"done": True, "differences": 2} and case2["decision"]["action"] == "return"
+    assert "Case: " + sub["laa_ref"] in webmap.verification_summary(case2, docs)
+
+
+def test_snapshot_without_snapshot_text_falls_back_to_the_held_text():
+    """Submissions made before snapshot_text existed (older demo databases)."""
+    store = Store(os.path.join(tempfile.mkdtemp(), "t.sqlite3"))
+    c = store.create_case("Jane Doe", "John Doe", "Child arrangements", "provider")
+    d = store.add_document(c["id"], "refuge.txt", "client", None, None, "held text")
+    store.set_document_result(d["id"], RESULT)
+    sub = store.create_submission(c["id"], [d["id"]], None, None, "provider")
+    for k in ("snapshot_text", "uploaded_by", "uploaded_at", "pages"):
+        sub["snapshot"]["documents"][0].pop(k)
+    store._exec("UPDATE submissions SET snapshot_json=? WHERE id=?", (json.dumps(sub["snapshot"]), sub["id"]))
+    doc = webmap.submission_with_documents(store, store.get_submission(sub["id"]))["documents"][0]
+    assert doc["text"] == "held text" and doc["uploadedBy"] == "client" and doc["pages"][0]["filename"] == "refuge.txt"
+
+
+# --------------------------------------------------------------------------- #
+# the text TTL
+# --------------------------------------------------------------------------- #
+def test_document_text_expires_after_the_ttl_and_only_the_snapshot_keeps_it():
+    from app.store import iso_ago
+
+    store = Store(os.path.join(tempfile.mkdtemp(), "t.sqlite3"))
+    store.text_ttl_seconds = store.docs.ttl = 600
+    c = store.create_case("Jane Doe", "John Doe", "Child arrangements", "provider")
+    d = store.add_document(c["id"], "refuge.txt", "provider", None, b"bytes", "the text")
+    store.set_document_result(d["id"], RESULT)
+    sub = store.create_submission(c["id"], [d["id"]], None, None, "provider")
+    assert store.document_text(d["id"]) == "the text" and store.get_document(d["id"])["text_available"] is True
+
+    store._exec("UPDATE documents SET uploaded_at=? WHERE id=?", (iso_ago(601), d["id"]))
+    assert store.document_text(d["id"]) is None                                   # expired on access
+    assert store._one("SELECT text, purged FROM documents WHERE id=?", (d["id"],)) == {"text": None, "purged": 0}
+    assert store.docs.get(d["id"]) is None and store.get_document(d["id"])["text_available"] is False
+    assert store.get_document(d["id"])["result"]["verdict"] == "needs_change"      # the result stays
+    assert store.get_submission(sub["id"])["snapshot"]["documents"][0]["snapshot_text"] == "the text"
+
+    fresh = store.add_document(c["id"], "later.txt", "provider", None, None, "fresh text")
+    assert store.sweep_expired_text() == 0 and store.document_text(fresh["id"]) == "fresh text"
+    store.docs.sweep()                                                            # the memory sweep also runs the SQLite sweep
+    store._exec("UPDATE documents SET uploaded_at=? WHERE id=?", (iso_ago(601), fresh["id"]))
+    store.docs.sweep()
+    assert store._one("SELECT text FROM documents WHERE id=?", (fresh["id"],))["text"] is None
