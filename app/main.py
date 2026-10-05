@@ -9,33 +9,28 @@ from __future__ import annotations
 import asyncio
 import json
 from pathlib import Path
-from typing import Any
 
 from fastapi import BackgroundTasks, FastAPI, File, Form, HTTPException, Query, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import PlainTextResponse
 from pydantic import BaseModel, Field
 
-from app.store import Store
+from app import core
+from app.core import rules, run_check, state, store
+from app.web_api import router as web_router
 from engine import outputs
 from engine.config import settings
 from engine.ingest import UnsupportedFile, ingest
-from engine.llm import get_llm
 from engine.models import Application
 from engine.pipeline import check_text
-from engine.rules import RuleLoadError, RuleSet, load_rules
+from engine.rules import RuleLoadError, load_rules
 from engine.verify import spans
 
 app = FastAPI(title="Gateway Check API", version="0.1.0",
               description="Checks domestic abuse evidence for legal aid against Schedule 1. Prototype: synthetic data only.")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
-store = Store()
-state: dict[str, Any] = {"rules": load_rules(), "llm": get_llm()}
-
-
-def rules() -> RuleSet:
-    return state["rules"]
+app.include_router(web_router)
 
 
 # --------------------------------------------------------------------------- #
@@ -205,18 +200,7 @@ async def upload_text(case_id: str, body: TextDocIn, background: BackgroundTasks
 
 
 async def _run_check(case: dict, doc: dict, text: str, needs_transcription: bool, data: bytes | None, media_type: str | None):
-    llm = state["llm"]
-    try:
-        if needs_transcription and data:
-            tr = await llm.transcribe(data, media_type)
-            if tr.text.strip():
-                text = tr.text
-                store.docs.set_text(doc["id"], text)
-        res = await check_text(text, doc["filename"], Application(applicant_name=case["applicant_name"], other_party_name=case["other_party_name"], case_type=case["case_type"], application_date=case.get("application_date")),
-                               rules=rules(), llm=llm, claimed_para=doc["claimed_para"], document_id=doc["id"])
-        store.set_document_result(doc["id"], res.model_dump())
-    except Exception as e:  # surface, never hang the UI
-        store.set_document_result(doc["id"], None, f"{type(e).__name__}: {e}")
+    await run_check(case, doc, text, needs_transcription, [(data, media_type)] if (needs_transcription and data) else None)
 
 
 @app.get("/api/cases/{case_id}/documents/{document_id}")
@@ -490,14 +474,7 @@ def _doc(case: dict, document_id: str) -> dict:
 
 
 def _case_verdict(docs: list[dict]) -> str:
-    verdicts = [d["verdict"] for d in docs if d.get("verdict")]
-    if "meets" in verdicts:
-        return "meets"
-    if "needs_caseworker" in verdicts:
-        return "needs_caseworker"
-    if "needs_change" in verdicts:
-        return "needs_change"
-    return "no_evidence_yet"
+    return core.case_verdict(docs)
 
 
 def _highlights(d: dict, text: str | None = None) -> list[dict]:

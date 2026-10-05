@@ -21,6 +21,8 @@ class Element(BaseModel):
     accept_if: str
     reject_if: str
     fix: str
+    # Plain words for the client, e.g. "say why you needed their help". Optional.
+    client_hint: str | None = None
     # "flag" elements never make the document fail; they only add a warning.
     kind: str = Field(default="required", pattern="^(required|flag)$")
     # If the element cannot be confirmed from the text alone (e.g. a registration
@@ -55,6 +57,14 @@ class Rule(BaseModel):
     @property
     def required_elements(self) -> list[Element]:
         return [e for e in self.elements if e.kind == "required"]
+
+    def prompt_fingerprint(self) -> str:
+        """Only what the assessment prompt sees; cosmetic fields (labels, hints, fixes) do not invalidate caches."""
+        import json
+
+        return json.dumps({"id": self.id, "name": self.name, "legal_ref": self.legal_ref, "guidance_ref": self.guidance_ref,
+                           "hedge_terms": self.hedge_terms,
+                           "elements": [[e.id, e.requirement, e.accept_if, e.reject_if] for e in self.elements]}, sort_keys=True)
 
 
 class Gateway(BaseModel):

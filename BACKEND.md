@@ -81,6 +81,27 @@ Link 2 (solicitor ↔ LAA):
 | GET | `/submissions/{id}/return-note` | Text |
 | POST | `/submissions/{id}/decision` | `{action: accept\|return\|refer, note, caseworker}`. Logs whether the caseworker agreed with the tool. Posts a hidden tracker event the solicitor can release |
 
+## Frontend-shaped API: `/web`
+
+The React app in `web/` types its data in `web/src/lib/types.ts` (`pass/fail/refer`, `met/not_met/unclear`, camelCase, flags as sentences). `app/web_api.py` serves exactly those shapes, one endpoint per callback in `web/src/sample/routes.tsx`; `app/webmap.py` does the mapping (`meets→pass`, `needs_change→fail`, `needs_caseworker→refer`, `not_prescribed→fail` with `matchedPara: null`). A typed client lives in `web/src/api/backend.ts`.
+
+| Screen callback | Call |
+|---|---|
+| `/provider` list, `onDropLetter` | `GET /web/cases`, `POST /web/cases/from-letter` (multipart `files`) |
+| `/provider/new` `onCreate` | `POST /web/cases {applicantName, otherPartyName, caseType, askLabel}` → case with `clientToken` |
+| Evidence `onAddDocument`, `onUploadCorrected` | `POST /web/cases/{id}/documents` (multipart `files` = pages of one letter, `replaces`) → `CaseDocument` with `result: null`; poll `GET /web/cases/{id}/documents/{doc}` |
+| Evidence `onSelectionChange` | `PUT /web/cases/{id}/selection {documentIds}` |
+| Client tab link on/off | `POST` / `DELETE /web/cases/{id}/client-link` |
+| Details `onSave` | `PATCH /web/cases/{id}` (a name change re-checks every letter) |
+| Submit `onDownload(reason)` | `POST /web/cases/{id}/submit {documentIds, reason}` → `{case, documents, summary, filename}` |
+| Client `/client/:token` | `GET /web/client/{token}` → `{firstName, firmName, askLabel, linkExpiresAt, latestDocument, state}`; 404 when expired or revoked |
+| Client `onFiles` | `POST /web/client/{token}/upload` → `{documentId}`; poll `GET /web/client/{token}/documents/{doc}` → `{document, state}` where state is `change | ready | check | other` |
+| Caseworker queue, review, `onDecide` | `GET /web/queue` (submitted, undecided, submitted documents only), `GET /web/queue/{id}`, `POST /web/queue/{id}/decision {action, note}` → `Decision` with `agreedWithTool` |
+| Inbox `onDraft` | `POST /web/inbox` (multipart `email`, `files`) → `{email, firm, documents, reply}` (runs the check before returning) |
+| `DocumentPage.url` | `GET /web/documents/{doc}/file/{page}` while the file is still held in memory |
+
+Dev wiring: run the API on :8000 and add to `web/vite.config.ts` `server: { proxy: { "/web": "http://localhost:8000" } }`, or set `VITE_API_BASE=http://localhost:8000`. CORS is open.
+
 ## Layout
 
 ```

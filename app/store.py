@@ -42,12 +42,13 @@ SCHEMA = """
 CREATE TABLE IF NOT EXISTS cases (
   id TEXT PRIMARY KEY, ref TEXT UNIQUE, applicant_name TEXT, applicant_first_name TEXT, other_party_name TEXT,
   case_type TEXT, work_type TEXT, created_by TEXT, created_at TEXT, status TEXT DEFAULT 'open',
-  safe_contact_method TEXT, safe_contact_value TEXT, safe_times TEXT, firm_id TEXT, firm_name TEXT, application_date TEXT
+  safe_contact_method TEXT, safe_contact_value TEXT, safe_times TEXT, firm_id TEXT, firm_name TEXT, application_date TEXT,
+  ask_label TEXT, selected_json TEXT, selection_touched INTEGER DEFAULT 0
 );
 CREATE TABLE IF NOT EXISTS documents (
   id TEXT PRIMARY KEY, case_id TEXT, filename TEXT, uploaded_by TEXT, uploaded_at TEXT, claimed_para TEXT,
   replaces_document_id TEXT, version INTEGER DEFAULT 1, status TEXT, verdict TEXT, result_json TEXT, error TEXT,
-  text_quality TEXT, purged INTEGER DEFAULT 0
+  text_quality TEXT, purged INTEGER DEFAULT 0, pages_json TEXT
 );
 CREATE TABLE IF NOT EXISTS tracker_events (
   id TEXT PRIMARY KEY, case_id TEXT, event_type TEXT, applicant_text TEXT, solicitor_text TEXT,
@@ -82,10 +83,13 @@ class Store:
         self.conn = sqlite3.connect(self.path, check_same_thread=False)
         self.conn.row_factory = sqlite3.Row
         self.conn.executescript(SCHEMA)
-        try:  # older demo databases
-            self.conn.execute("ALTER TABLE cases ADD COLUMN application_date TEXT")
-        except sqlite3.OperationalError:
-            pass
+        for ddl in ("ALTER TABLE cases ADD COLUMN application_date TEXT", "ALTER TABLE cases ADD COLUMN ask_label TEXT",
+                    "ALTER TABLE cases ADD COLUMN selected_json TEXT", "ALTER TABLE cases ADD COLUMN selection_touched INTEGER DEFAULT 0",
+                    "ALTER TABLE documents ADD COLUMN pages_json TEXT"):
+            try:  # older demo databases
+                self.conn.execute(ddl)
+            except sqlite3.OperationalError:
+                pass
         self.docs = DocStore(ttl_seconds=settings.doc_ttl_min * 60)
 
     # ---------------------------------------------------------------- helpers
@@ -109,14 +113,15 @@ class Store:
     # ---------------------------------------------------------------- cases
     def create_case(self, applicant_name: str, other_party_name: str | None, case_type: str | None, created_by: str,
                     work_type: str | None = None, safe_contact_method: str | None = None, safe_contact_value: str | None = None,
-                    safe_times: str | None = None, firm_name: str | None = None, application_date: str | None = None) -> dict:
+                    safe_times: str | None = None, firm_name: str | None = None, application_date: str | None = None,
+                    ask_label: str | None = None) -> dict:
         cid = secrets.token_hex(8)
         ref = neutral_ref()
         self._exec(
             "INSERT INTO cases(id, ref, applicant_name, applicant_first_name, other_party_name, case_type, work_type, created_by, created_at,"
-            " safe_contact_method, safe_contact_value, safe_times, firm_name, application_date) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-            (cid, ref, applicant_name, applicant_name.split()[0], other_party_name, case_type, work_type, created_by, now(),
-             safe_contact_method, safe_contact_value, safe_times, firm_name, application_date))
+            " safe_contact_method, safe_contact_value, safe_times, firm_name, application_date, ask_label) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            (cid, ref, applicant_name, (applicant_name.split() or [""])[0], other_party_name, case_type, work_type, created_by, now(),
+             safe_contact_method, safe_contact_value, safe_times, firm_name, application_date, ask_label))
         self.audit(created_by, "case.create", cid, {"ref": ref})
         self.add_event(cid, "case_created", "Your case has been set up.", f"Case {ref} created.", created_by)
         return self.get_case(cid)
@@ -128,22 +133,38 @@ class Store:
         return self._all("SELECT * FROM cases ORDER BY created_at DESC")
 
     def update_case(self, case_id: str, **fields) -> dict | None:
-        allowed = {"applicant_name", "other_party_name", "case_type", "work_type", "status", "safe_contact_method", "safe_contact_value", "safe_times", "firm_name", "application_date"}
+        allowed = {"applicant_name", "other_party_name", "case_type", "work_type", "status", "safe_contact_method", "safe_contact_value", "safe_times", "firm_name", "application_date", "ask_label"}
         cols = [k for k in fields if k in allowed]
         if cols:
             self._exec(f"UPDATE cases SET {', '.join(f'{c}=?' for c in cols)} WHERE id=?", (*[fields[c] for c in cols], case_id))
+        if "applicant_name" in fields and fields["applicant_name"] is not None:
+            self._exec("UPDATE cases SET applicant_first_name=? WHERE id=?", ((fields["applicant_name"].split() or [""])[0], case_id))
         return self.get_case(case_id)
+
+    def set_selection(self, case_id: str, document_ids: list[str], actor: str) -> dict | None:
+        self._exec("UPDATE cases SET selected_json=?, selection_touched=1 WHERE id=?", (json.dumps(document_ids), case_id))
+        self.audit(actor, "selection.set", case_id, {"document_ids": document_ids})
+        return self.get_case(case_id)
+
+    def latest_client_link(self, case_id: str) -> dict | None:
+        link = self._one("SELECT * FROM client_links WHERE case_id=? AND revoked=0 ORDER BY created_at DESC LIMIT 1", (case_id,))
+        return link if link and link["expires_at"] >= now() else None
+
+    def latest_submission(self, case_id: str) -> dict | None:
+        row = self._one("SELECT id FROM submissions WHERE case_id=? ORDER BY submitted_at DESC LIMIT 1", (case_id,))
+        return self.get_submission(row["id"]) if row else None
 
     # ---------------------------------------------------------------- documents
     def add_document(self, case_id: str, filename: str, uploaded_by: str, claimed_para: str | None,
-                     data: bytes | None, text: str | None, replaces: str | None = None) -> dict:
+                     data: bytes | None, text: str | None, replaces: str | None = None, pages: list[dict] | None = None) -> dict:
         did = secrets.token_hex(8)
         version = 1
         if replaces:
             prev = self.get_document(replaces)
             version = (prev["version"] + 1) if prev else 1
-        self._exec("INSERT INTO documents(id, case_id, filename, uploaded_by, uploaded_at, claimed_para, replaces_document_id, version, status)"
-                   " VALUES (?,?,?,?,?,?,?,?,?)", (did, case_id, filename, uploaded_by, now(), claimed_para, replaces, version, "checking"))
+        self._exec("INSERT INTO documents(id, case_id, filename, uploaded_by, uploaded_at, claimed_para, replaces_document_id, version, status, pages_json)"
+                   " VALUES (?,?,?,?,?,?,?,?,?,?)", (did, case_id, filename, uploaded_by, now(), claimed_para, replaces, version, "checking",
+                                                    json.dumps(pages) if pages else None))
         self.docs.put(did, data, text)
         self.audit(uploaded_by, "document.upload", did, {"case_id": case_id, "filename": filename, "version": version})
         who = "You" if uploaded_by == "client" else "Your solicitor"
@@ -155,6 +176,7 @@ class Store:
         if result is None:
             self._exec("UPDATE documents SET status='error', error=? WHERE id=?", (error, document_id))
             return
+        result = {**result, "checked_at": now()}
         self._exec("UPDATE documents SET status='done', verdict=?, result_json=? WHERE id=?",
                    (result["verdict"], json.dumps(result, ensure_ascii=False), document_id))
         doc = self.get_document(document_id)
@@ -165,6 +187,7 @@ class Store:
         d = self._one("SELECT * FROM documents WHERE id=?", (document_id,))
         if d:
             d["result"] = json.loads(d.pop("result_json")) if d.get("result_json") else None
+            d["pages"] = json.loads(d.pop("pages_json")) if d.get("pages_json") else None
             d["text_available"] = self.docs.has(document_id)
         return d
 
@@ -316,6 +339,7 @@ class _Doc:
     data: bytes | None
     text: str | None
     expires_at: float
+    files: list | None = None  # [(bytes, media_type)] per page, for the file links
 
 
 class DocStore:

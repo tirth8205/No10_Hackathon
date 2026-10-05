@@ -277,7 +277,14 @@ def _line_with(sents: list[str], name: str, allow_surname_only: bool = True) -> 
 # --------------------------------------------------------------------------- #
 import inspect as _inspect
 
-_PROMPTS_HASH = hashlib.sha256(_inspect.getsource(prompts).encode()).hexdigest()[:12]
+def _prompt_hash(*fns) -> str:
+    src = prompts.SYSTEM + "".join(_inspect.getsource(f) for f in fns)
+    return hashlib.sha256(src.encode()).hexdigest()[:12]
+
+
+_HASH_CLASSIFY = _prompt_hash(prompts.classify_prompt)
+_HASH_ASSESS = _prompt_hash(prompts.assess_prompt)
+_HASH_TRANSCRIBE = hashlib.sha256(prompts.TRANSCRIBE.encode()).hexdigest()[:12]
 
 
 class CachedLLM:
@@ -293,7 +300,8 @@ class CachedLLM:
         self.name = f"{inner.name}+cache:{mode}"
 
     def _path(self, kind: str, *parts: str) -> Path:
-        h = hashlib.sha256("\x1f".join([kind, getattr(self.inner, "name", ""), _PROMPTS_HASH, *parts]).encode()).hexdigest()[:24]
+        ph = {"classify": _HASH_CLASSIFY, "assess": _HASH_ASSESS, "transcribe": _HASH_TRANSCRIBE}[kind]
+        h = hashlib.sha256("\x1f".join([kind, getattr(self.inner, "name", ""), ph, *parts]).encode()).hexdigest()[:24]
         return self.dir / f"{kind}-{h}.json"
 
     async def _cached(self, kind: str, model: type[BaseModel], parts: list[str], call):
@@ -313,7 +321,7 @@ class CachedLLM:
         return await self._cached("classify", ClassifyResponse, [doc_text, ids], lambda l: l.classify(doc_text, rules))
 
     async def assess(self, doc_text, rule, applicant, other_party, hedge_terms, application_date=None):
-        parts = [doc_text, rule.model_dump_json(), applicant or "", other_party or "", ",".join(hedge_terms), application_date or ""]
+        parts = [doc_text, rule.prompt_fingerprint(), applicant or "", other_party or "", ",".join(hedge_terms), application_date or ""]
         return await self._cached("assess", Assessment, parts, lambda l: l.assess(doc_text, rule, applicant, other_party, hedge_terms, application_date))
 
     async def transcribe(self, data, media_type):

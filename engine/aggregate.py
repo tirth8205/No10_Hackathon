@@ -79,7 +79,8 @@ def majority(votes: list[Assessment], rule: Rule) -> tuple[list[ElementResult], 
         quote = next((e.quote for e in agreeing if e.quote), None) if status == "included" else None
         reasoning = next((e.reasoning for e in agreeing if e.reasoning), "")
         fix = None if status == "included" else next((e.fix for e in agreeing if e.fix), None) or el.fix
-        results.append(ElementResult(element_id=el.id, label=el.label, status=status, quote=quote, votes=tally, reasoning=reasoning, fix=fix))
+        results.append(ElementResult(element_id=el.id, label=el.label, status=status, quote=quote, votes=tally, reasoning=reasoning, fix=fix,
+                                     client_hint=None if status == "included" else el.client_hint))
     return results, flags
 
 

@@ -30,6 +30,9 @@ class Classification(BaseModel):
     document_kind: DocumentKind
     author_name: str | None = None
     author_org: str | None = None
+    author_role: str | None = Field(default=None, description="Author's job title or profession as written, e.g. 'General Practitioner', 'IDVA'")
+    short_org: str | None = Field(default=None, description="Short, safe name for the organisation that a client could use, e.g. 'Brookfield' for 'Brookfield Women's Support Service'; full name for a GP practice, hospital, council or police force")
+    letter_date: str | None = Field(default=None, description="Date of the letter or document in ISO format YYYY-MM-DD, or null if none")
     language: str = Field(description="ISO 639-1 code of the document language, e.g. 'en'")
     rationale: str = Field(description="One or two sentences")
 
@@ -79,6 +82,7 @@ class ElementResult(BaseModel):
     votes: dict[str, int] = Field(default_factory=lambda: {"included": 0, "missing": 0, "unclear": 0})
     reasoning: str = ""
     fix: str | None = None
+    client_hint: str | None = None
 
 
 class DocumentResult(BaseModel):

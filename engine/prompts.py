@@ -33,7 +33,7 @@ Evidence types you can choose from (use the id exactly):
 {catalogue}
 - not_prescribed: the document is not one of the above (for example a character reference, a solicitor's attendance note, the client's own statement, a court listing with no order, or a letter from a type of author the regulations do not recognise).
 
-Also extract the parties: the victim or client named, the other party (alleged perpetrator) if named, and any dates mentioned (as written). Report the document's language as an ISO 639-1 code.
+Also extract: the author's name, job title or profession as written, and organisation; a short, safe name for the organisation that a client could use (for example 'Brookfield' for 'Brookfield Women's Support Service'; use the full name for a GP practice, hospital, council or police force); the date of the letter as YYYY-MM-DD (null if none); the parties: the victim or client named, the other party (alleged perpetrator) if named, and any dates mentioned (as written). Report the document's language as an ISO 639-1 code.
 
 <document>
 {doc_text}
