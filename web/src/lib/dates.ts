@@ -23,14 +23,14 @@ export function longDate(iso: string): string {
   return `${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
 }
 
-/** "today at 10:42", "yesterday at 16:05" or "2 October". */
+/** "today at 10:42", "yesterday at 16:05" or "on 2 October", to follow a verb such as "Uploaded". */
 export function when(iso: string, now: Date = new Date()): string {
   const d = new Date(iso);
   if (sameDay(d, now)) return `today at ${time(d)}`;
   const yesterday = new Date(now);
   yesterday.setDate(now.getDate() - 1);
   if (sameDay(d, yesterday)) return `yesterday at ${time(d)}`;
-  return dayMonth(iso);
+  return `on ${dayMonth(iso)}`;
 }
 
 /** "Today, 10:42", "Yesterday" or "2 Oct" for table cells. */

@@ -79,7 +79,7 @@ export function Inbox({ draft, onDraft }: InboxProps) {
                   return (
                     <li key={d.id}>
                       <span className="govuk-!-font-weight-bold govuk-!-display-block">{d.pages[0]?.filename}</span>
-                      <span className="govuk-body-s app-secondary-text">
+                      <span className="govuk-body-s app-secondary-text govuk-!-display-block govuk-!-margin-bottom-1">
                         {[para ? `${para.singular} · Para ${para.number}` : "Not matched", d.result?.agreement].filter(Boolean).join(" · ")}
                       </span>
                       <VerdictTag verdict={docVerdict(d.result)} />

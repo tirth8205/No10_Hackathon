@@ -26,6 +26,7 @@ export interface EvidenceGroup {
 const pretty = (filename: string) =>
   filename
     .replace(/\.[a-z0-9]+$/i, "")
+    .replace(/\s*\(\d+\)$/, "")
     .replace(/[-_]+/g, " ")
     .replace(/^\w/, (c) => c.toUpperCase());
 
