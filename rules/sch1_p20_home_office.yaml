@@ -1,0 +1,45 @@
+id: sch1_p20_home_office
+gateway: da
+enabled: true
+paragraph: "20"
+legal_ref: "Civil Legal Aid (Procedure) Regulations 2012, Schedule 1, paragraph 20"
+guidance_ref: "LAA Evidence Requirements v15, paragraph 2.86"
+name: "Letter from the Secretary of State for the Home Department confirming leave to enter or remain in the United Kingdom as a victim of domestic abuse"
+short_name: "Home Office leave letter"
+names_other_party_required: false
+applicant_must_be_victim: true
+always_needs_caseworker: false
+accepted_formats: ["letter"]
+classification_hints:
+  - "letter from the Home Office or UK Visas and Immigration (UKVI), often 'on behalf of the Secretary of State for the Home Department', usually with a Home Office reference number"
+  - "says the applicant's application for leave to enter or (indefinite) leave to remain has been granted or approved, with a decision or effective date"
+  - "the basis is domestic abuse: 'as a victim of domestic abuse', 'Appendix Victim of Domestic Abuse' (Appendix VDA), 'DVILR' or the former domestic violence rules"
+  - "an acknowledgement that an application is still being considered, or a grant on another basis such as an Appendix FM partner, is not this evidence"
+elements:
+  - id: from_home_office
+    label: "Letter from the Home Office"
+    requirement: "The letter is from the Secretary of State for the Home Department, that is from the Home Office or UK Visas and Immigration acting on the Secretary of State's behalf."
+    accept_if: "The letterhead, signature block or wording shows the Home Office, UK Visas and Immigration (UKVI), the Immigration and Nationality Directorate, or 'on behalf of the Secretary of State for the Home Department'. A Home Office or UKVI reference number supports this."
+    reject_if: "The author is not the Home Office: a solicitor or immigration adviser summarising the decision, the applicant's own statement, a letter from a local authority or charity, a biometric residence permit or eVisa printout with no decision letter, or a letter from another department. If the letter appears to come from the Home Office but the sender cannot be confirmed from the text, use unclear rather than missing."
+    fix: "Provide the Home Office (UK Visas and Immigration) decision letter itself, issued on behalf of the Secretary of State for the Home Department, rather than a summary by someone else."
+  - id: applicant_named
+    label: "Applicant named"
+    requirement: "The applicant (A) is named as the person granted leave to enter or remain."
+    accept_if: "The applicant's name appears as the addressee or as the person whose application was granted, in any form (full name, or title and surname), and matches the applicant on the legal aid application."
+    reject_if: "No name; only a Home Office reference number; only an unfilled placeholder; or the person granted leave is someone else (for example a dependant, child or the other party). Under paragraph 20 the person granted leave must be the applicant, so a letter about another family member does not count. A different spelling, maiden name or transliteration is unclear rather than missing."
+    fix: "Name {applicant_name} as the person granted leave to enter or remain in the United Kingdom."
+  - id: leave_as_da_victim
+    label: "Leave granted as domestic abuse victim"
+    requirement: "The letter specifies that the applicant was granted leave to enter or leave to remain in the United Kingdom as a victim of domestic abuse."
+    accept_if: "The grant is expressed as being on the domestic abuse route: 'as a victim of domestic abuse', 'under Appendix Victim of Domestic Abuse' (Appendix VDA), 'under section DVILR of Appendix FM' or 'paragraphs 289A to 289D' (the former domestic violence rules), or 'indefinite leave to remain as a victim of domestic violence'. Leave to enter or leave to remain, limited or indefinite, all count."
+    reject_if: "Leave was granted on another basis: as a partner or spouse under Appendix FM, as a parent, on the family or private life route, on human rights or asylum grounds, as a worker or student, under the EU Settlement Scheme, or with no basis stated. Where the only basis given is the Migrant Victims of Domestic Abuse Concession (formerly the Destitution Domestic Violence Concession), or the basis is described in words you cannot map to the domestic abuse route, use unclear rather than missing so a caseworker can decide."
+    fix: "State that {applicant_name} was granted leave to enter or leave to remain in the United Kingdom as a victim of domestic abuse (for example under Appendix Victim of Domestic Abuse)."
+  - id: granted_on_or_before_application
+    label: "Granted on or before application date"
+    requirement: "Leave has actually been granted, and the grant was made on or before the date the application for legal aid was made."
+    accept_if: "The letter confirms the decision has been made ('has been approved', 'you have been granted', 'leave is granted with effect from [date]') and the decision or effective date is on or before the legal aid application date. Where the grant is in the past tense and no separate date is given, the date of the letter can be taken as the date of grant."
+    reject_if: "The letter only acknowledges receipt of an application, says it is 'being considered', 'under review' or 'pending', or asks for further information or biometrics (no leave has been granted); leave was refused; or the date of grant is after the legal aid application date. If the legal aid application date has not been given to you, or the letter carries no date at all, use unclear rather than missing so a caseworker can compare the dates."
+    fix: "Confirm that leave has been granted to {applicant_name} and give the date of the decision, which must be on or before the date the legal aid application was made."
+hedge_terms: []
+gov_template_url: null
+test_cases_min: 5

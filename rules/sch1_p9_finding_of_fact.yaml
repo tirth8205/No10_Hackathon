@@ -1,0 +1,48 @@
+id: sch1_p9_finding_of_fact
+gateway: da
+enabled: true
+paragraph: "9"
+legal_ref: "Civil Legal Aid (Procedure) Regulations 2012, Schedule 1, paragraph 9"
+guidance_ref: "LAA Evidence Requirements v15, paragraphs 2.45 to 2.48"
+name: "Finding of fact, made in proceedings in the United Kingdom, that there has been domestic abuse by B"
+short_name: "Finding of fact"
+names_other_party_required: true
+applicant_must_be_victim: false
+always_needs_caseworker: false
+accepted_formats:
+  - "court order recording the findings"
+  - "judgment or approved transcript of judgment"
+  - "other court or tribunal document recording the finding"
+classification_hints:
+  - "a court order or judgment headed with the court, case number and parties, often 'Order following fact-finding hearing' or a judgment given after a fact-finding hearing under Practice Direction 12J"
+  - "uses the language of findings: 'the court finds', 'found proved on the balance of probabilities', 'I find that', usually against numbered or lettered allegations"
+  - "made by a named judge, district judge or magistrates and dated; may refer to a Scott Schedule of allegations that were determined"
+  - "a case management order merely listing a fact-finding hearing, a Scott Schedule of allegations, a position statement, or a divorce petition or decree nisi is not a finding of fact"
+elements:
+  - id: court_document
+    label: "Court judgment or order"
+    requirement: "The evidence is a judgment or other court or tribunal document from proceedings in the United Kingdom."
+    accept_if: "An order, judgment, approved transcript or other document issued by a court or tribunal in England, Wales, Scotland or Northern Ireland, showing the court or tribunal name and a case number, judge or seal; family, civil, criminal and tribunal proceedings all count."
+    reject_if: "The document comes from somewhere other than a UK court or tribunal: a solicitor's or party's summary of what the judge said, a position statement, a Scott Schedule, a Cafcass or social work report describing findings, a police document, or a decision of a court outside the United Kingdom."
+    fix: "Provide the court's own order or judgment recording the finding, not a summary or report of it."
+  - id: specific_finding_by_other_party
+    label: "Specific finding of abuse by B"
+    requirement: "The court or tribunal made a specific finding of fact that B committed domestic abuse against the victim."
+    accept_if: "A clear finding, expressed as a finding, that B did a specific act or pattern of behaviour amounting to domestic abuse: violence or threats, controlling or coercive behaviour, sexual, economic, psychological or emotional abuse (for example 'the court finds proved that the respondent grabbed the applicant by the throat'). The words 'domestic abuse' need not appear if what is found plainly is domestic abuse. A finding on some but not all allegations is enough."
+    reject_if: "No finding has yet been made: the document only records allegations, a Scott Schedule, or that a fact-finding hearing is listed, adjourned or vacated; the allegations were found not proved, dismissed, withdrawn or not pursued; the finding is against someone other than B, or is a general finding that both parties behaved badly with nothing specific found against B; or the document is an undefended divorce petition, decree nisi or conditional order based on unreasonable behaviour, which involves no formal finding of fact even if the allegations were not refuted (2.48). Remarks that the court 'is concerned about', 'accepts there may have been' or 'notes allegations of' abuse are not findings."
+    fix: "Provide the order or judgment in which the court made a specific finding that {other_party_name} committed domestic abuse, setting out the allegations found proved."
+  - id: made_before_application
+    label: "Finding made before the application"
+    requirement: "Where this is the only evidence, the finding must have been made before the date of the legal aid application; it may have been made at any time before that date."
+    accept_if: "The date of the fact-finding hearing, judgment or order is on or before the date of the legal aid application. There is no limit on how long before the application the finding was made."
+    reject_if: "The finding is dated after the application date: a finding made after the application only counts as additional proof alongside other valid evidence and cannot stand alone (2.47). If the document carries no date from which this can be decided, use 'unclear' rather than 'missing'."
+    fix: "Provide a dated order or judgment showing the finding was made on or before the date of the legal aid application."
+  - id: victim_named
+    label: "Victim named and related to B"
+    requirement: "The person found to have been abused is named and is the applicant or another person with whom B is or was in a family relationship."
+    accept_if: "The victim is named (as applicant, petitioner, mother or father, or by name in the findings) and the document or the application shows a family relationship with B: partner, former partner, spouse, civil partner, parents of the same child, child or other relative. Where the finding concerns B's child and B's relationship to the child is clear, the child counts."
+    reject_if: "The victim is not named anywhere in the document (only 'the Applicant' or 'the mother' with no name), the name is redacted or an unfilled placeholder, or the person abused has no family relationship with B. Where the victim is named but is not the applicant and the relationship with B is stated nowhere, use 'unclear' rather than 'missing'."
+    fix: "Name the person the court found {other_party_name} abused, usually {applicant_name}, and make their relationship to {other_party_name} clear."
+hedge_terms: []
+gov_template_url: null
+test_cases_min: 5

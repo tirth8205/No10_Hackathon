@@ -159,9 +159,15 @@ class OfflineLLM:
         for el in rule.elements:
             status, quote, why = "missing", None, "offline stub: no matching sentence"
             eid = el.id
-            if ("perpetrator" in eid or "other_party" in eid or "respondent" in eid or "given_by" in eid or "bound_over" in eid) and other_party:
-                # full name only: spouses share surnames, so a surname match proves nothing here
-                hit = _line_with(sents, other_party, allow_surname_only=False)
+            if "perpetrator" in eid or "other_party" in eid or "respondent" in eid or "given_by" in eid or "bound_over" in eid:
+                # a perpetrator element needs an actual name: either the other party from the
+                # application (full name only: spouses share surnames) or a named person in the text
+                hit = _line_with(sents, other_party, allow_surname_only=False) if other_party else None
+                if not hit:
+                    m = re.search(r"(?:name of perpetrator|respondent|other party|defendant|person to whom this notice is given)\s*:\s*([A-Z][\w'-]+(?: [A-Z][\w'-]+)+)"
+                                  r"|(?:abuse|violence|harm|harassment)\s+(?:by|from)\s+([A-Z][\w'-]+ [A-Z][\w'-]+)", doc_text)
+                    if m:
+                        hit = next((s for s in sents if (m.group(1) or m.group(2)) in s), m.group(0))
                 if hit:
                     status, quote, why = "included", hit, "offline stub: other party named"
             elif ("applicant_named" in eid or "victim_named" in eid or "beneficiary" in eid or "protected_party" in eid) and applicant:

@@ -1,0 +1,47 @@
+id: sch1_p8_undertaking
+gateway: da
+enabled: true
+paragraph: "8"
+legal_ref: "Civil Legal Aid (Procedure) Regulations 2012, Schedule 1, paragraph 8"
+guidance_ref: "LAA Evidence Requirements v15, paragraphs 2.43 to 2.44"
+name: "Undertaking given by B under section 46 or 63E of the Family Law Act 1996, with no cross-undertaking relating to domestic abuse by A"
+short_name: "Undertaking given by B"
+names_other_party_required: true
+applicant_must_be_victim: false
+always_needs_caseworker: false
+accepted_formats:
+  - "General Form of Undertaking (form N117)"
+  - "any other court document recording the undertaking, such as an order or court record"
+classification_hints:
+  - "headed 'General Form of Undertaking' or 'N117', or a court order recording that a party 'gave an undertaking to the court' or 'undertakes'"
+  - "promises not to use or threaten violence against, not to contact, or not to go to the home of a named person, usually accepted by the court in place of a non-molestation or occupation order"
+  - "names the court, case number, applicant and respondent and the judge before whom the undertaking was given, often with a warning that breach may be contempt of court"
+  - "cites section 46 or 63E of the Family Law Act 1996; a sealed order with prohibitions is an injunction (paragraph 7), not an undertaking"
+elements:
+  - id: given_by_other_party
+    label: "Undertaking given by B"
+    requirement: "The undertaking was given by B, the other party to the case."
+    accept_if: "B is named as the person who gave the undertaking ('the Respondent, [B], undertakes', 'undertaking given by [B]', '[B] promised the court'), in any name form."
+    reject_if: "The undertaking was given by the applicant rather than B (the applicant is the person who undertakes and B is the person protected); nobody is identified as giving it; or the giver's name is redacted or an unfilled placeholder."
+    fix: "Confirm that it was {other_party_name} who gave the undertaking to the court."
+  - id: correct_statutory_basis
+    label: "Given under section 46 or 63E"
+    requirement: "The undertaking was given in England and Wales under section 46 or section 63E of the Family Law Act 1996, or in Scotland or Northern Ireland in place of a protective injunction."
+    accept_if: "The document cites section 46 or section 63E of the Family Law Act 1996; or is a form N117 given in family proceedings; or says the court accepted the undertaking in place of a non-molestation, occupation or forced marriage protection order; or, for Scotland or Northern Ireland, says it was given in place of an interdict or protective injunction."
+    reject_if: "The undertaking was given under some other power or in other proceedings (for example a county court undertaking in a harassment, possession or money claim, or a promise in a contract, mediation agreement or solicitors' correspondence) with nothing to show it stood in place of a protective injunction; or no court, section or Act is given at all. Where the undertaking is plainly a court undertaking in family proceedings but the section is not quoted, use 'unclear' rather than 'missing'."
+    fix: "State that the undertaking was given to the court under section 46 (or section 63E) of the Family Law Act 1996, or that it was given in Scotland or Northern Ireland in place of a protective injunction."
+  - id: beneficiary_named
+    label: "Protected person named and related"
+    requirement: "The person the undertaking protects is named and is the applicant or another person with whom B is or was in a family relationship."
+    accept_if: "The protected person is named in the terms of the undertaking ('not to use or threaten violence against [name]') or as the applicant in the heading, in any name form. A Family Law Act undertaking can only be given between associated persons, so the family relationship with B may be inferred; where the protected person is not the applicant, the relationship should be stated."
+    reject_if: "No protected person is named, or the name is redacted or an unfilled placeholder; or the person protected is B (the undertaking protects the other party from the applicant); or the protected person is someone with no family relationship to B."
+    fix: "Name the person the undertaking protects, usually {applicant_name}, in the terms of the undertaking and state their relationship to {other_party_name}."
+  - id: no_relevant_cross_undertaking
+    label: "No domestic abuse cross-undertaking by A"
+    requirement: "The applicant did not give a cross-undertaking relating to domestic abuse."
+    accept_if: "The document records that no undertaking was given by the applicant, or records none (an N117 or order sets out every undertaking given, so silence counts), or records an applicant's undertaking about something unrelated to domestic abuse, for example keeping a child at the same school, returning belongings, paying a bill or attending mediation (2.44)."
+    reject_if: "The applicant also gave an undertaking not to use or threaten violence, not to intimidate, harass or pester, not to contact or communicate with B, or not to go to B's home or workplace. A mutual or cross-undertaking of that kind relates to domestic abuse and defeats this evidence even though B gave the main undertaking."
+    fix: "Confirm that {applicant_name} gave no cross-undertaking relating to domestic abuse; an undertaking about an unrelated matter such as a child's schooling does not count against the applicant."
+hedge_terms: []
+gov_template_url: null
+test_cases_min: 5

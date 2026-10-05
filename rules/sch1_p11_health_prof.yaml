@@ -1,0 +1,51 @@
+id: sch1_p11_health_prof
+gateway: da
+enabled: true
+paragraph: "11"
+legal_ref: "Civil Legal Aid (Procedure) Regulations 2012, Schedule 1, paragraph 11"
+guidance_ref: "LAA Evidence Requirements v15, paragraphs 2.52 to 2.60"
+name: "Letter or report from an appropriate health professional"
+short_name: "Health professional letter"
+share_of_applications: 0.09
+names_other_party_required: false
+applicant_must_be_victim: true
+always_needs_caseworker: false
+accepted_formats:
+  - "letter on practice, NHS or hospital letterhead"
+  - "report"
+  - "email that includes a GMC number, NMC PIN, GDC or HCPC registration number"
+  - "letter or email from a health professional based overseas naming the body they are registered and licensed with (must be in English or come with a translation and the original)"
+classification_hints:
+  - "written by a GP, hospital or A&E doctor, psychiatrist, nurse, health visitor, school nurse, midwife, dentist, paramedic, practitioner psychologist, radiographer or social worker"
+  - "quotes a GMC number, NMC PIN, GDC, HCPC, Social Work England or Social Care Wales registration, or names the registered body"
+  - "says the author examined, saw or assessed the client (in person, by telephone or by video) and refers to injuries or a condition"
+  - "contains 'consistent with being a victim of domestic abuse' or similar, often citing regulation 33 of the Civil Legal Aid (Procedure) Regulations 2012"
+elements:
+  - id: appropriate_health_professional
+    label: "Author is an appropriate health professional"
+    requirement: "The author (or the examining professional the author confirms for) is an appropriate health professional under Schedule 1 paragraph 22: a medical practitioner, nurse, midwife, dentist, paramedic, practitioner psychologist, radiographer or social worker, registered with the relevant body when they examined the applicant and when they wrote."
+    accept_if: "The author states a qualifying profession (GP, doctor, psychiatrist, A&E doctor, nurse, health visitor, school nurse, occupational health or mental health nurse, midwife, dentist, dental nurse, hygienist or therapist, paramedic, practitioner psychologist, radiographer, social worker) and gives their registered body or number (GMC, NMC PIN, GDC, HCPC, Social Work England, Social Care Wales), or writes a letter on practice, NHS or hospital letterhead. An email should quote the registration number (guidance checklist); an email from an NHS address with no number is 'unclear' rather than 'missing'. An overseas professional qualifies if they name the body they are registered and licensed with in that country. Checking the registration number is the LAA's job, not the assessor's."
+    reject_if: "The author is a counsellor (including BACP or UKCP registered), psychotherapist, therapist, pharmacist, physiotherapist, optometrist, care worker, support worker or any other role not in the Schedule 1 paragraph 22 list. Use 'unclear' rather than 'missing' when the text alone cannot decide: an email from a personal address (for example gmail) with no GMC, NMC, GDC or HCPC number and no identified practice; a stated profession whose registration cannot be confirmed from the text; or a letter not in English with no translation supplied."
+    fix: "State your profession and your registration number with the relevant body (GMC, NMC PIN, GDC, HCPC, Social Work England or Social Care Wales), or write on practice letterhead or from your NHS email address; a counsellor or therapist cannot provide this letter."
+    unverifiable_to_caseworker: true
+  - id: examined_applicant
+    label: "Applicant was examined"
+    requirement: "The letter confirms that the author, or another appropriate health professional, examined the applicant in person, by telephone or by video conference."
+    accept_if: "A statement that the applicant was examined, seen, assessed or consulted by the health professional, in person, by telephone or by video, ideally with the date. If a different professional carried out the examination, the author must say they have access to the applicant's medical records and the examining professional is unavailable (guidance 2.55); the letter can then rely on the recorded examination."
+    reject_if: "The author says they have not seen or examined the applicant; the letter is based only on an online form, questionnaire, telephone message, letter from the applicant or what the applicant wrote; or the author relies on records without saying they have access to the applicant's medical records. 'Unclear' if the key sentence is illegible or the letter is untranslated."
+    fix: "Confirm that you (or a named appropriate health professional whose medical records you have access to) examined {applicant_name} in person, by telephone or by video conference, and give the date."
+  - id: consistent_with_domestic_abuse
+    label: "Injuries or condition consistent with abuse"
+    requirement: "In the reasonable professional judgement of the author or the examining professional, the applicant has, or has had, injuries or a condition consistent with being a victim of domestic abuse."
+    accept_if: "An unqualified statement that the applicant's injuries or condition are, or were, consistent with being a victim of domestic abuse ('consistent with domestic abuse', 'consistent with those of a victim of domestic abuse'). The exact form of words is not required but the meaning must be clear (guidance 2.56). Past injuries ('has had') count."
+    reject_if: "The judgement is hedged: 'might be consistent', 'may possibly be consistent', 'could be consistent', 'may be', 'possibly', 'I cannot rule out'. The MoJ rejected a letter whose only change from the accepted template was 'might be consistent with' in place of 'is consistent with'. Also fails if the letter only reports what the applicant said ('she told me the injuries were caused by her partner') with no judgement of the author's own, or if no injuries or condition are mentioned. 'Unclear' if the sentence is illegible (poor scan) or untranslated."
+    fix: "State without qualification that, in your reasonable professional judgement, {applicant_name} has, or has had, injuries or a condition consistent with being a victim of domestic abuse; do not write 'might', 'may' or 'possibly'."
+  - id: applicant_named
+    label: "Applicant named"
+    requirement: "The applicant (A) is named as the person examined; the perpetrator does not need to be named (guidance 2.57)."
+    accept_if: "The applicant's name appears as the patient or person examined, in any form (full name, title and surname, or a 'Re:' line with date of birth)."
+    reject_if: "No name, or only an unfilled placeholder such as [name of applicant] or [patient name]. Do not fail this element because the perpetrator is not named. If the name differs from the application, use 'unclear' and refer to the caseworker."
+    fix: "Name {applicant_name} as the person you examined."
+hedge_terms: []
+gov_template_url: "https://www.gov.uk/government/publications/get-medical-proof-of-domestic-abuse"
+test_cases_min: 5

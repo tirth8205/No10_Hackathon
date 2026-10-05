@@ -1,0 +1,44 @@
+id: sch1_p6a_dapn
+gateway: da
+enabled: true
+paragraph: "6A"
+legal_ref: "Civil Legal Aid (Procedure) Regulations 2012, Schedule 1, paragraph 6A"
+guidance_ref: "LAA Evidence Requirements v15, paragraphs 2.35 to 2.37"
+name: "Domestic abuse protection notice given under section 22 of the Domestic Abuse Act 2021 against B"
+short_name: "Domestic abuse protection notice"
+names_other_party_required: true
+applicant_must_be_victim: false
+always_needs_caseworker: false
+accepted_formats:
+  - "copy of the DAPN given by the police (including the British Transport Police)"
+  - "letter or email from the police, CPS or Witness Care Unit confirming the DAPN"
+  - "email from a pnn.police.uk address"
+  - "court document detailing the DAPN"
+classification_hints:
+  - "headed 'Domestic Abuse Protection Notice' and cites section 22 of, or Part 3 of, the Domestic Abuse Act 2021"
+  - "given by a police force in England and Wales, the British Transport Police or the Ministry of Defence Police, authorised by a senior officer, with the date and time it was given"
+  - "names the person the notice is given to and the person to be protected; prohibits being abusive towards, contacting or approaching the protected person or their home"
+  - "says an application for a Domestic Abuse Protection Order will be made to a magistrates' court within 48 hours; a DAPO (the order itself) is a protective injunction assessed under paragraph 7, not here"
+elements:
+  - id: perpetrator_named
+    label: "B named as person given notice"
+    requirement: "The notice was given to B, the other party to the case, who is named as the person it was given to."
+    accept_if: "B's name appears as the person to whom the notice is given, the person served, the respondent or the person prohibited, in any form (full name, or title and surname). A police or court document confirming that a DAPN was given to B also counts."
+    reject_if: "The recipient's name is missing, redacted or an unfilled placeholder; the recipient is someone other than B; or the roles are reversed, so the notice was given to the applicant and names B as the person to be protected."
+    fix: "Confirm that the notice was given to {other_party_name} as the person against whom it was made."
+  - id: protected_party_named
+    label: "Protected person named and related"
+    requirement: "The notice names the person it protects, who must be the applicant or another person aged 16 or over with whom B is or was in a family relationship."
+    accept_if: "A named protected person. Where it is the applicant, the family relationship with B may be taken from the application; where it is someone else, the notice or covering letter should describe them as B's partner, former partner, spouse, child, parent or other family member."
+    reject_if: "No protected person is named, or the name is redacted or a placeholder; or the protected person is described as having no family relationship with B (for example a neighbour, colleague or stranger). If the protected person is not the applicant and the relationship with B is not stated anywhere, use 'unclear' rather than 'missing'."
+    fix: "Name the person the notice protects, usually {applicant_name}, and if it is not the applicant state how they are, or were, in a family relationship with {other_party_name}."
+  - id: valid_notice
+    label: "Genuine DAPN from a pilot force"
+    requirement: "The document is a DAPN given by the police under section 22 of the Domestic Abuse Act 2021, by a force operating the DAPN pilot, or a police, CPS, Witness Care Unit or court document confirming that one was given."
+    accept_if: "The notice is headed as a domestic abuse protection notice, cites section 22 (or Part 3) of the Domestic Abuse Act 2021, is dated on or after 27 November 2024, and is given by a force in a pilot area: Greater Manchester Police; the Metropolitan Police for the London Boroughs of Bromley, Croydon and Sutton; Cleveland Police; North Wales Police; or the British Transport Police within those areas. A police, CPS, Witness Care Unit or court document confirming such a notice also counts."
+    reject_if: "The document is something else: a Domestic Abuse Protection Order made by a court (assess under paragraph 7), a Domestic Violence Protection Notice under the Crime and Security Act 2010 (paragraph 6), a police incident log, a warning letter or a bail notice; or it is dated before 27 November 2024, when no DAPN could have been given. Whether the issuing force is one that can give DAPNs is for a caseworker to verify: where the notice otherwise looks genuine but comes from a force outside the pilot areas (or from a Metropolitan Police unit outside Bromley, Croydon and Sutton), use 'unclear' rather than 'missing' so it is referred, not failed."
+    fix: "Provide a copy of the DAPN itself, or written confirmation from {author_org} on police letterhead or from a pnn.police.uk address that a notice under section 22 of the Domestic Abuse Act 2021 was given to {other_party_name}, showing which force gave it."
+    unverifiable_to_caseworker: true
+hedge_terms: []
+gov_template_url: null
+test_cases_min: 5

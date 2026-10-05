@@ -1,0 +1,52 @@
+id: sch1_p1_arrest
+gateway: da
+enabled: true
+paragraph: "1"
+legal_ref: "Civil Legal Aid (Procedure) Regulations 2012, Schedule 1, paragraph 1"
+guidance_ref: "LAA Evidence Requirements v15, paragraphs 2.8 to 2.13"
+name: "Evidence that B has been arrested for a relevant domestic abuse offence"
+short_name: "Arrest for domestic abuse offence"
+names_other_party_required: true
+applicant_must_be_victim: false
+always_needs_caseworker: false
+accepted_formats: ["copy of the police bail sheet", "letter or email from the police, CPS or Witness Care Unit", "email from a pnn.police.uk address", "email from the legal aid provider naming the police station and the officer spoken to", "newspaper clipping about the arrest", "letter or email from an overseas law enforcement agency"]
+classification_hints:
+  - "police email or letter, often from a pnn.police.uk address or a safeguarding / domestic abuse investigation team, quoting a crime reference number"
+  - "says a named person 'was arrested on suspicion of' an offence and names the victim and their relationship"
+  - "gives a current status: released on bail, bail conditions, released under investigation, awaiting a charging decision, or charged"
+  - "a bail sheet, custody record extract, or a solicitor's email reporting what a named officer at a named station confirmed"
+elements:
+  - id: perpetrator_named
+    label: "Other party named as arrested"
+    requirement: "The other party in the case (B) is named as the person who was arrested."
+    accept_if: "B's name appears as the person arrested, in any form (full name, or title and surname, with or without date of birth); 'Mr Hughes was arrested' is enough where the surname matches the other party."
+    reject_if: "The arrested person is only described as 'a suspect', 'a male' or 'the offender' and B is never named; the name is redacted or an unfilled placeholder; or the person arrested is the applicant rather than B. Where a name is given but does not match the other party on the application, use 'unclear' rather than 'missing' so a caseworker can check identity."
+    fix: "Name {other_party_name} as the person who was arrested."
+  - id: victim_named
+    label: "Victim named, family relationship to B"
+    requirement: "The victim of the offence is named and is, or was, in a family relationship with B; the victim may be the applicant or another person."
+    accept_if: "A named victim with a relationship to B that falls within the family relationship definition: partner, former partner, spouse, former spouse, cohabitant, former cohabitant, relative, or parent of the same child. If the named victim is the applicant, the family relationship is established by the application and need not be restated."
+    reject_if: "No victim is named; the victim is described only as 'the complainant' or 'a female'; or the named victim is a stranger, neighbour, colleague or member of the public with no family relationship to B. If the named victim is someone other than the applicant and no relationship to B is stated, use 'unclear' rather than 'missing'."
+    fix: "Name the victim (for example {applicant_name}) and state their relationship to {other_party_name}, such as former partner or spouse."
+  - id: da_offence
+    label: "Arrest for a listed DA offence"
+    requirement: "The arrest was for an offence on the gov.uk list of domestic violence and child abuse offences."
+    accept_if: "The offence named is on the gov.uk list, for example common assault, assault occasioning actual bodily harm, controlling or coercive behaviour, harassment, stalking, threats to kill, criminal damage, rape or sexual assault, with or without the section and Act."
+    reject_if: "The arrest was for an offence not on the list, for example a road traffic offence such as driving whilst disqualified, drug possession or a public order offence with no individual victim; or no offence is stated and the document refers only to 'an incident' or 'a domestic'. If an offence is named but you cannot tell whether it is on the gov.uk list, use 'unclear' rather than 'missing'."
+    fix: "State the specific offence {other_party_name} was arrested for, which must be on the gov.uk list of domestic violence and child abuse offences."
+  - id: arrest_current
+    label: "Still under investigation or charged"
+    requirement: "B was actually arrested and, at the date of the legal aid application, is still under investigation (including on bail or released under investigation) or has been charged."
+    accept_if: "A clear statement that B was arrested, together with a live status such as 'released on bail', 'on conditional bail until [date]', 'released under investigation', 'enquiries continue', 'awaiting a charging decision' or 'has been charged'. A bail date after the application date is fine."
+    reject_if: "Nobody was arrested: police attended, gave words of advice and took no further action, or the applicant called the police and no action was taken, or B attended a voluntary interview without arrest. Or B was arrested but the police have since decided to take no further action, closed the investigation, or the case has concluded, so B is no longer under investigation or charged at the application date. A hedged statement ('may have been arrested', 'I believe he is on bail') is not confirmation. If no status is stated, or the dates leave it unclear whether the investigation was still live at the application date, use 'unclear' rather than 'missing'."
+    fix: "Confirm that {other_party_name} was arrested and state their current status (on bail, released under investigation or charged) as at the date of the application."
+  - id: acceptable_source
+    label: "From an acceptable source"
+    requirement: "The evidence comes from the police, the CPS, a Witness Care Unit or a pnn.police.uk email address, or is a bail sheet, a newspaper clipping, or an email from the legal aid provider that names the police station and the officer who confirmed the arrest."
+    accept_if: "A letter on police, CPS or Witness Care Unit letterhead; an email from a pnn.police.uk or other police force address signed by an officer; a copy of the bail sheet; a newspaper clipping about the arrest; a letter or email from an overseas law enforcement agency; or a provider's email that gives both the police station and the name of the officer who confirmed the arrest."
+    reject_if: "Record 'missing' only where the document plainly comes from an unacceptable source: the applicant's own account, an undated or unsigned note with no identifiable author, or a document from an organisation that is not a law enforcement body, court or the CPS. A provider's email that reports what the police confirmed but gives no police station or officer name is 'unclear' rather than 'missing', so a caseworker can ask for those details (the guidance says the email should include them). Whether an email address or letterhead is genuine cannot be decided from the text alone, so also use 'unclear' when the source is plausible but unverifiable."
+    fix: "Send the confirmation from the police, CPS or Witness Care Unit (a pnn.police.uk address is acceptable) or, if writing as the provider, give the name of the police station and the officer who confirmed the arrest."
+    unverifiable_to_caseworker: true
+hedge_terms: []
+gov_template_url: null
+test_cases_min: 5

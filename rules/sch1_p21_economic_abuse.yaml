@@ -1,0 +1,46 @@
+id: sch1_p21_economic_abuse
+gateway: da
+enabled: true
+paragraph: "21"
+legal_ref: "Civil Legal Aid (Procedure) Regulations 2012, Schedule 1, paragraph 21"
+guidance_ref: "LAA Evidence Requirements v15, paragraphs 2.87 to 2.93"
+name: "Evidence which satisfies the Director that A has been, or is at risk of being, a victim of domestic abuse by B in the form of abuse relating to economic matters"
+short_name: "Economic abuse evidence"
+names_other_party_required: true
+applicant_must_be_victim: true
+always_needs_caseworker: true
+accepted_formats: ["narrative statement by the applicant", "bank, credit card, loan or mortgage statements and lender letters", "letters from a bank, employer, solicitor, mortgage provider or domestic abuse support organisation", "emails, text messages or a diary", "benefits, Universal Credit split payment, Child Maintenance Service fee exemption or foodbank correspondence"]
+classification_hints:
+  - "a narrative statement by the applicant, or a bundle of financial documents, about money, debt, benefits, property or maintenance rather than physical violence"
+  - "describes behaviour such as controlling the household income, running up loans or debt in the applicant's name, stopping the applicant working or claiming benefits, withholding mortgage or child maintenance payments, or tying maintenance to contact with children"
+  - "may attach or list exhibits: bank or credit card statements, a credit report, lender arrears letters, texts or emails about money, benefits or CMS letters, letters from a bank, employer or solicitor"
+  - "no other Schedule 1 paragraph fits; this is the Director's discretion, so the result is always referred to a caseworker"
+elements:
+  - id: perpetrator_named
+    label: "Other party named"
+    requirement: "The evidence names B, the other party to the legal aid application, as the person responsible for the economic abuse."
+    accept_if: "The other party's name appears as the person who carried out the behaviour described, for example 'Other party: John Doe', 'John controlled all of the household money', or lender or bank correspondence that shows B's conduct. The applicant must be the victim; the first-person author of a statement counts as A."
+    reject_if: "No perpetrator is named; the abuser is only described ('my ex', 'my husband', 'the respondent') with no name anywhere in the evidence; or the person named is not the other party on the application. A different name is unclear rather than missing if it could be a spelling variant, maiden name or alias."
+    fix: "Name {other_party_name} as the person responsible for the behaviour described."
+  - id: economic_behaviour_described
+    label: "Economic behaviour described"
+    requirement: "The evidence describes behaviour by B that has, or risks having, a substantial adverse effect on A's ability to acquire, use or maintain money or other property, or to obtain goods or services (section 1(4) Domestic Abuse Act 2021)."
+    accept_if: "Concrete behaviour of the kinds listed in the Home Office statutory guidance (guidance 2.91), for example: controlling the family income or making A account for all spending; wages paid into B's sole account; stopping A having a bank account, working, studying or claiming benefits; running up debts, loans, credit cards or contracts in A's name; coercing A to sign over property; gambling with A's money; stopping mortgage or maintenance payments that B used to make; hiding assets or frustrating the sale of a shared home; demanding money in exchange for time with the children. Behaviour after separation counts (2.89). A single incident may suffice if its effect was substantial."
+    reject_if: "No economic behaviour is described (the evidence is about physical or emotional abuse only); the behaviour described has no effect on money, property, goods or services; or the effect is trivial or hypothetical with nothing to show it affected A. If the behaviour is described only in general terms ('financial abuse', 'he controlled the money') with no particulars of what B did, use unclear rather than missing and ask for detail."
+    fix: "Describe what {other_party_name} did that affected {applicant_name}'s ability to acquire, use or keep money or property, or to obtain goods or services, with dates, amounts and examples where possible."
+  - id: pattern_of_power_or_control
+    label: "Shows intent to control, not dispute"
+    requirement: "The behaviour is shown to be domestic abuse, that is done with the intention of gaining power and control over A, rather than a reasonable limit on spending within a partnership or an ordinary dispute about finances on relationship breakdown (guidance 2.89 and 2.90)."
+    accept_if: "The description shows control, coercion, deceit or punishment: A had to ask permission for money, was kept dependent, was deceived (debts taken without A's knowledge, forged signatures), was threatened or punished financially, or B used money to force A's behaviour (for example paying maintenance only if given access to the children, or stopping the mortgage after separation to pressure A). A pattern over time is typical but a single serious incident can be enough, and economic abuse can continue after separation."
+    reject_if: "The evidence describes an ordinary disagreement about dividing assets, who keeps the car, how sale proceeds should be split, a disputed maintenance figure, or a reasonable household budget, with no element of coercion, deceit or control; or the behaviour is explained by hardship rather than intent (for example B lost their job and could not pay). Where control is arguable but the evidence does not say how the behaviour affected or constrained A, use unclear rather than missing, because whether the Director is satisfied is a caseworker's decision."
+    fix: "Explain how {other_party_name}'s behaviour was used to control or coerce {applicant_name}, and how it affected them, rather than describing a disagreement about money or property."
+  - id: corroboration_or_explanation
+    label: "Supporting documents or explanation why none"
+    requirement: "The evidence includes corroborating documents or, where none are available, a narrative statement setting out when the economic abuse began, its nature and duration, its impact on A and why no other documentary evidence is available (guidance 2.92 and 2.93)."
+    accept_if: "Either supporting documents are provided or listed as exhibits (bank or credit card statements, loan or contract documents, a credit report, letters from a bank, lender, mortgage provider, employer, solicitor or domestic abuse support organisation, emails, texts or a diary, benefits or Universal Credit split payment correspondence, a Child Maintenance Service fee exemption, foodbank evidence), or the statement gives a reason why no documents are available (for example B holds all the paperwork, the accounts were in B's sole name, A fled without documents, the bank will not release joint account records). Documents from more than one source taken together may be sufficient even if none is on its own (2.92)."
+    reject_if: "Whether the evidence as a whole is sufficient is the Director's decision, so use 'unclear' rather than 'missing' for this element: a narrative only, with no documents attached or listed and no explanation of why none are available, is 'unclear' (the caseworker will ask for documents or an explanation per guidance 2.93); so is a statement that refers to exhibits the assessor cannot see, or that gives an explanation a caseworker would need to weigh. Record 'missing' only where the evidence states that no supporting documents will be provided and gives no reason."
+    fix: "Attach or list the documents that support the account (for example bank statements, a credit report, lender letters, text messages) or explain why {applicant_name} cannot obtain any supporting documents."
+    unverifiable_to_caseworker: true
+hedge_terms: []
+gov_template_url: null
+test_cases_min: 5
