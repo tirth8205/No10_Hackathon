@@ -12,8 +12,8 @@
   "recategorisation_accuracy": null,
   "quote_validity": 1.0,
   "errors": 0,
-  "latency_ms_p50": 17750,
-  "latency_ms_p95": 26367,
+  "latency_ms_p50": 5,
+  "latency_ms_p95": 6,
   "by_paragraph": {
    "11": {
     "n": 2,
@@ -69,8 +69,8 @@
   "model": "gpt-5.4+cache:on",
   "votes": 3,
   "rules_version": "schedule1-v15-2026-06-15",
-  "run_at": "2026-10-05T14:15:17+00:00",
-  "wall_seconds": 50.2
+  "run_at": "2026-10-05T14:22:51+00:00",
+  "wall_seconds": 0.0
  },
  "runs": [
   {
@@ -124,7 +124,7 @@
      "flags": [],
      "reason_expected": "Accepted by MoJ.",
      "error": null,
-     "latency_ms": 16697,
+     "latency_ms": 4,
      "quotes_unverified": 0,
      "category": "gold"
     }
@@ -183,7 +183,7 @@
      ],
      "reason_expected": "Accepted by MoJ.",
      "error": null,
-     "latency_ms": 26367,
+     "latency_ms": 5,
      "quotes_unverified": 0,
      "category": "gold"
     }
@@ -237,10 +237,12 @@
      },
      "recategorise_expected": null,
      "recategorise_predicted": null,
-     "flags": [],
+     "flags": [
+      "quote_multi_span"
+     ],
      "reason_expected": "Accepted by MoJ.",
      "error": null,
-     "latency_ms": 33564,
+     "latency_ms": 6,
      "quotes_unverified": 0,
      "category": "gold"
     }
@@ -297,7 +299,7 @@
      "flags": [],
      "reason_expected": "'Victim testimony and referral' names the source of information, not the matters relied on.",
      "error": null,
-     "latency_ms": 19053,
+     "latency_ms": 6,
      "quotes_unverified": 0,
      "category": "gold"
     }
@@ -344,7 +346,7 @@
      ],
      "reason_expected": "Accepted by MoJ.",
      "error": null,
-     "latency_ms": 18003,
+     "latency_ms": 6,
      "quotes_unverified": 0,
      "category": "gold"
     }
@@ -373,7 +375,7 @@
       "applicant_named": "included"
      },
      "elements_predicted": {
-      "appropriate_health_professional": "unclear",
+      "appropriate_health_professional": "missing",
       "examined_applicant": "included",
       "consistent_with_domestic_abuse": "missing",
       "applicant_named": "included"
@@ -391,7 +393,7 @@
      ],
      "reason_expected": "Hedged judgement: 'might be consistent with'.",
      "error": null,
-     "latency_ms": 21567,
+     "latency_ms": 6,
      "quotes_unverified": 0,
      "category": "gold"
     }
@@ -436,7 +438,7 @@
      "flags": [],
      "reason_expected": "Accepted by MoJ.",
      "error": null,
-     "latency_ms": 16269,
+     "latency_ms": 6,
      "quotes_unverified": 0,
      "category": "gold"
     }
@@ -483,7 +485,7 @@
      ],
      "reason_expected": "'Might be a victim' is not an assessment.",
      "error": null,
-     "latency_ms": 23413,
+     "latency_ms": 6,
      "quotes_unverified": 0,
      "category": "gold"
     }
@@ -531,7 +533,7 @@
      "flags": [],
      "reason_expected": "Accepted by MoJ.",
      "error": null,
-     "latency_ms": 13587,
+     "latency_ms": 1,
      "quotes_unverified": 0,
      "category": "gold"
     }
@@ -579,7 +581,7 @@
      "flags": [],
      "reason_expected": "No perpetrator named, so the refusal can't be linked to abuse by B.",
      "error": null,
-     "latency_ms": 16981,
+     "latency_ms": 1,
      "quotes_unverified": 0,
      "category": "gold"
     }
@@ -623,7 +625,7 @@
      ],
      "reason_expected": "Accepted by MoJ.",
      "error": null,
-     "latency_ms": 11701,
+     "latency_ms": 1,
      "quotes_unverified": 0,
      "category": "gold"
     }
@@ -667,7 +669,7 @@
      ],
      "reason_expected": "MoJ rejected this; the only differences are 'we provided' vs 'I am providing'. Exact reason unconfirmed - ask MoJ.",
      "error": null,
-     "latency_ms": 17497,
+     "latency_ms": 1,
      "quotes_unverified": 0,
      "category": "gold"
     }
