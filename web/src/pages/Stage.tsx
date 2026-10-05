@@ -52,15 +52,18 @@ export function Stage() {
   return (
     <div style={{ height: "100vh", display: "flex", flexDirection: "column", padding: 12, boxSizing: "border-box", gap: 8, background: "#f3f2f1" }}>
       <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
-        <h1 className="govuk-heading-m" style={{ margin: 0 }}>Gateway Check — all three views</h1>
-        <label className="govuk-body-s" style={{ margin: 0 }}>
-          Case{" "}
-          <select className="govuk-select" style={{ minWidth: 220 }} value={caseId ?? ""} onChange={(e) => setCaseId(e.target.value)}>
-            {(state?.cases ?? []).map((c) => (
-              <option key={c.id} value={c.id}>{c.applicantName || "New case"} ({c.ref})</option>
-            ))}
-          </select>
-        </label>
+        <h1 className="govuk-heading-m" style={{ margin: 0 }}>Gateway Check{view === "all" ? " — all three views" : ""}</h1>
+        {/* The case picker drives the client and solicitor frames; the caseworker's queue shows every case. */}
+        {view !== "caseworker" && (
+          <label className="govuk-body-s" style={{ margin: 0 }}>
+            Case{" "}
+            <select className="govuk-select" style={{ minWidth: 220 }} value={caseId ?? ""} onChange={(e) => setCaseId(e.target.value)}>
+              {(state?.cases ?? []).map((c) => (
+                <option key={c.id} value={c.id}>{c.applicantName || "New case"} ({c.ref})</option>
+              ))}
+            </select>
+          </label>
+        )}
         <div role="group" aria-label="Which views to show" style={{ display: "flex", gap: 4 }}>
           {VIEWS.map(([v, label]) => (
             <button key={v} type="button" className={`govuk-button ${view === v ? "" : "govuk-button--secondary"}`} style={{ margin: 0 }}
