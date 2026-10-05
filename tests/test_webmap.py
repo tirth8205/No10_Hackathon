@@ -26,7 +26,7 @@ RESULT = {
 def test_check_result_shape_and_vocabulary():
     r = webmap.to_check_result(RESULT)
     assert set(r) == {"matchedPara", "outcome", "reason", "elements", "flags", "authorOrg", "shortOrg", "authorName", "authorRole",
-                      "letterDate", "victimName", "otherPartyName", "agreement", "rulesVersion", "checkedAt"}
+                      "letterDate", "victimName", "otherPartyName", "agreement", "verification", "rulesVersion", "checkedAt"}
     assert r["outcome"] == "fail" and r["matchedPara"] == "18"
     assert [e["status"] for e in r["elements"]] == ["not_met", "met"]
     assert set(r["elements"][0]) == {"key", "label", "status", "quote", "explanation", "fix", "clientHint"}

@@ -23,6 +23,7 @@ from engine.models import (
     Parties,
 )
 from engine.rules import Rule, RuleSet, load_rules
+from engine.verification import verify_document
 
 
 def rule_for_paragraph(rules: RuleSet, paragraph: str | None) -> Rule | None:
@@ -117,8 +118,13 @@ async def check_text(text: str, filename: str, application: Application, *, rule
         except RefusalError:
             pass
 
+    try:
+        verification = await asyncio.wait_for(verify_document(text, classification, parties, rule), timeout=8)
+    except Exception:  # checks help a person; they never block the result
+        verification = []
+
     return finish(
-        verdict=verdict, flags=flags, elements=elements, classification=classification, parties=parties,
+        verdict=verdict, flags=flags, elements=elements, classification=classification, parties=parties, verification=verification,
         rule_id=rule.id, paragraph=rule.paragraph, rule_name=rule.name, legal_ref=rule.legal_ref,
         claimed_rule_id=claimed.id if claimed else None, recategorise_to=recategorise_to,
         provider_summary=outputs.provider_summary(rule, elements, verdict) + (

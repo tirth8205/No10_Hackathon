@@ -21,6 +21,18 @@ export interface ElementResult {
   clientHint?: string | null;
 }
 
+export type VerificationStatus = "pass" | "warn" | "fail" | "unknown";
+
+/** A check on the author or organisation that helps a person verify the letter. Never changes the verdict. */
+export interface VerificationCheck {
+  id: string;
+  label: string;
+  status: VerificationStatus;
+  detail: string;
+  /** Where a person can check it themselves. */
+  link: string | null;
+}
+
 export interface CheckResult {
   /** Schedule 1 paragraph, or null when the document is not an accepted evidence type. */
   matchedPara: string | null;
@@ -38,6 +50,8 @@ export interface CheckResult {
   victimName: string | null;
   otherPartyName: string | null;
   agreement: string;
+  /** Verification checks on the author and organisation (optional; the back end adds them). */
+  verification?: VerificationCheck[];
   rulesVersion: string;
   checkedAt: string;
 }

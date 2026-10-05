@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import { DocumentText, HighlightKey } from "../../components/DocumentText";
+import { VerificationList } from "../../components/Verification";
 import { BackLink, ElementTag, WarningText } from "../../components/govuk";
 import { ProviderLayout } from "../../components/layout";
 import { useTitle } from "../../hooks/govuk";
@@ -99,6 +100,7 @@ export function DocumentFile({ c, doc }: { c: Case; doc: CaseDocument }) {
                   </li>
                 ))}
               </ol>
+              <VerificationList checks={r.verification} />
               {missing.length > 0 && (
                 <p className="govuk-body">
                   <Link className="govuk-link" to={paths.caseDocument(c.id, doc.id)}>

@@ -71,6 +71,21 @@ class Transcription(BaseModel):
 
 
 # --------------------------------------------------------------------------- #
+# Verification checks: help a person confirm the author and organisation.
+# They never change the verdict; they add evidence for the caseworker.
+# --------------------------------------------------------------------------- #
+VerificationStatus = Literal["pass", "warn", "fail", "unknown"]
+
+
+class VerificationCheck(BaseModel):
+    id: str = Field(description="e.g. official_domain, website_reachable, postcode_area, registration, charity_register, dapn_pilot, offence_listed")
+    label: str = Field(description="Short label for the screen, e.g. 'Email domain'")
+    status: VerificationStatus
+    detail: str = Field(description="One or two plain sentences saying what was found")
+    link: str | None = Field(default=None, description="Where a person can verify it themselves")
+
+
+# --------------------------------------------------------------------------- #
 # Engine results
 # --------------------------------------------------------------------------- #
 class ElementResult(BaseModel):
@@ -101,6 +116,7 @@ class DocumentResult(BaseModel):
     elements: list[ElementResult] = Field(default_factory=list)
     verdict: DocVerdict
     flags: list[str] = Field(default_factory=list)
+    verification: list[VerificationCheck] = Field(default_factory=list)
     provider_summary: str = ""
     client_message: str = ""
     request_letter: str | None = None

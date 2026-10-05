@@ -1,3 +1,4 @@
+import { VerificationList } from "../../components/Verification";
 import { useState } from "react";
 import { Link } from "react-router";
 import { DocumentText, HighlightKey } from "../../components/DocumentText";
@@ -141,6 +142,7 @@ export function Review({ data, activeDocId, onDecide }: ReviewProps) {
                 ))}
               </ol>
               <PartyCheck doc={doc} applicant={c.applicantName} otherParty={c.otherPartyName} />
+              <VerificationList checks={r.verification} />
             </section>
           </div>
         </div>

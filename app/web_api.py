@@ -23,6 +23,7 @@ one endpoint per callback in web/src/sample/routes.tsx.
 from __future__ import annotations
 
 import re
+from pathlib import PurePath
 
 from fastapi import APIRouter, BackgroundTasks, File, Form, HTTPException, Request, UploadFile
 from fastapi.responses import Response
@@ -90,8 +91,11 @@ async def _ingest_files(files: list[UploadFile]) -> tuple[str, bool, list[tuple[
         if ing.text.strip():
             texts.append(ing.text)
         needs = needs or ing.needs_transcription
-        held.append((data, ing.media_type or webmap.content_type(name)))
-        pages.append({"filename": name, "contentType": webmap.content_type(name)})
+        blob = ing.data or data
+        media = ing.media_type or webmap.content_type(name)
+        held.append((blob, media))
+        shown = name if blob is data else f"{PurePath(name).stem}.jpg"
+        pages.append({"filename": shown, "contentType": media if blob is not data else webmap.content_type(name)})
     return "\n\n".join(texts), needs, held, pages
 
 

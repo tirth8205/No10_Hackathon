@@ -120,6 +120,7 @@ def to_check_result(r: dict) -> dict:
         "victimName": parties.get("victim_name"),
         "otherPartyName": parties.get("other_party_name"),
         "agreement": agreement(r),
+        "verification": [{"id": v["id"], "label": v["label"], "status": v["status"], "detail": v["detail"], "link": v.get("link")} for v in r.get("verification", [])],
         "rulesVersion": r.get("rules_version") or "",
         "checkedAt": r.get("checked_at") or now_iso(),
     }
@@ -128,7 +129,7 @@ def to_check_result(r: dict) -> dict:
 def error_result(message: str) -> dict:
     return {"matchedPara": None, "outcome": "refer", "reason": f"The check could not be completed ({message}). A caseworker will look at it.",
             "elements": [], "flags": ["The checker could not assess this document"], "authorOrg": None, "shortOrg": None, "authorName": None,
-            "authorRole": None, "letterDate": None, "victimName": None, "otherPartyName": None, "agreement": "not checked",
+            "authorRole": None, "letterDate": None, "victimName": None, "otherPartyName": None, "agreement": "not checked", "verification": [],
             "rulesVersion": "", "checkedAt": now_iso()}
 
 
