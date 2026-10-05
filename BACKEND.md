@@ -2,7 +2,18 @@
 
 Checks domestic abuse evidence for legal aid against Schedule 1 (all 22 paragraphs). Rules are YAML, the model sits behind one adapter (OpenAI `gpt-5.4` by default; Claude and an offline stub also available), every "included" carries a quote that code verifies, and a person always decides.
 
-## Run
+## Run the whole system
+
+```bash
+uv sync && cp .env.example .env                      # add OPENAI_API_KEY
+.venv/bin/uvicorn app.main:app --port 8000           # API (engine-shaped /api and frontend-shaped /web)
+.venv/bin/python -m demo.seed_demo                   # 7 demo cases, 3 in the caseworker queue
+cd web && npm install && npm run dev                  # http://localhost:5173 (proxies /web to :8000)
+```
+
+Flow rehearsed in the browser on 5 Oct: provider list → Jane Doe → upload the corrected letter (`demo/files/case-a-support-letter-corrected.txt`) → "Meets the requirements, suggested" after ~20 s → submit → caseworker queue → review with highlighted quotes → accept → client link → client upload → "Your letter is ready".
+
+## Run the API only
 
 ```bash
 uv sync                                   # Python 3.12+, creates .venv
