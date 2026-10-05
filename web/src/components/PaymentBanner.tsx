@@ -26,7 +26,7 @@ export function FixFirstBanner() {
         <Figure
           value={minDaysIfReturned}
           prefix="At least"
-          label="if you submit now. It’s likely to be returned, and you’ll need a new letter before it can be approved."
+          label="working days (minimal) excluding additional delays caused by reprocessing"
           secondary
         />
       </div>
