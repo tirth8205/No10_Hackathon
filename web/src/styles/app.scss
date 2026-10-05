@@ -1,0 +1,585 @@
+// GOV.UK Frontend, configured for a service that is not on GOV.UK:
+// no GDS Transport (restricted to gov.uk domains).
+@use "govuk-frontend/dist/govuk" as govuk with (
+  $govuk-font-family: (arial, sans-serif),
+  $govuk-assets-path: "/govuk/assets/"
+);
+
+// ---------------------------------------------------------------------------
+// App styles: only what GOV.UK Frontend has no component for.
+// ---------------------------------------------------------------------------
+
+$app-secondary: govuk.govuk-functional-colour(secondary-text);
+$app-border: govuk.govuk-functional-colour(border);
+$app-text: govuk.govuk-functional-colour(text);
+$app-brand: govuk.govuk-functional-colour(brand);
+$app-light-grey: govuk.govuk-colour("black", $variant: "tint-95");
+
+.app-secondary-text {
+  color: $app-secondary;
+}
+
+.app-break-anywhere {
+  overflow-wrap: anywhere;
+}
+
+// Header: GOV.UK generic header in the brand blue, with who is signed in.
+.app-header {
+  background: $app-brand;
+
+  .govuk-generic-header__container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0 govuk.govuk-spacing(6);
+  }
+
+  .govuk-generic-header__homepage-link {
+    font-weight: 700;
+  }
+}
+
+.app-header-meta {
+  @include govuk.govuk-font($size: 16);
+  color: govuk.govuk-colour("white");
+}
+
+// Caseworker screens use more of the width for side-by-side reading.
+.app-width-container--wide {
+  max-width: 1280px;
+}
+
+.app-heading-with-tag {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: govuk.govuk-spacing(2) govuk.govuk-spacing(4);
+  margin-bottom: govuk.govuk-spacing(2);
+}
+
+.app-heading-with-action {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: govuk.govuk-spacing(4);
+  margin-bottom: govuk.govuk-spacing(6);
+}
+
+.app-table-wrapper {
+  overflow-x: auto;
+}
+
+// Key figures in the "Getting paid" banner.
+.app-key-figures {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: govuk.govuk-spacing(4) govuk.govuk-spacing(9);
+  margin-bottom: govuk.govuk-spacing(4);
+}
+
+.app-key-figure__number {
+  @include govuk.govuk-font($size: 80, $weight: bold, $line-height: 1);
+  display: block;
+}
+
+.app-key-figure--secondary {
+  color: $app-secondary;
+
+  .app-key-figure__number {
+    @include govuk.govuk-font($size: 48, $weight: bold, $line-height: 1);
+  }
+}
+
+.app-key-figure__label {
+  @include govuk.govuk-font($size: 19);
+  display: block;
+  max-width: 20em;
+  margin-top: govuk.govuk-spacing(2);
+}
+
+.app-key-figure__prefix {
+  @include govuk.govuk-font($size: 19, $weight: bold);
+  display: block;
+  margin-bottom: govuk.govuk-spacing(1);
+}
+
+// File pickers: a real file input, shown as a GOV.UK button or link.
+.app-file-button {
+  position: relative;
+}
+
+.app-file-button__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.app-file-button__label.govuk-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: govuk.govuk-spacing(2);
+}
+
+.app-file-button__input:focus + .govuk-button {
+  @include govuk.govuk-focused-box;
+  outline: 3px solid transparent;
+  color: govuk.govuk-functional-colour(focus-text);
+  background-color: govuk.govuk-functional-colour(focus);
+}
+
+.app-file-button--link {
+  display: inline;
+}
+
+.app-file-button__input:focus + .govuk-link {
+  @include govuk.govuk-focused-text;
+}
+
+.app-file-button--link .govuk-link {
+  cursor: pointer;
+}
+
+// The client's two upload buttons, full width on a phone.
+.app-phone-upload,
+.app-stacked-buttons {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: govuk.govuk-spacing(4);
+
+  .govuk-button {
+    width: 100%;
+    margin-bottom: govuk.govuk-spacing(3);
+  }
+}
+
+@include govuk.govuk-media-query($from: tablet) {
+  .app-phone-upload .govuk-button,
+  .app-stacked-buttons .govuk-button {
+    width: auto;
+  }
+
+  .app-phone-upload,
+  .app-stacked-buttons {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0 govuk.govuk-spacing(3);
+  }
+}
+
+// The "asked for" box on the client upload page.
+.app-ask {
+  margin-bottom: govuk.govuk-spacing(5);
+  border: 1px solid $app-border;
+}
+
+.app-ask__header {
+  padding: govuk.govuk-spacing(2) govuk.govuk-spacing(3);
+  border-bottom: 1px solid $app-border;
+  background: $app-light-grey;
+}
+
+.app-ask__body {
+  padding: govuk.govuk-spacing(3) govuk.govuk-spacing(3) govuk.govuk-spacing(4);
+}
+
+// The file being checked, on the client's checking screen.
+.app-file-card {
+  display: flex;
+  align-items: center;
+  gap: govuk.govuk-spacing(3);
+  margin-bottom: govuk.govuk-spacing(6);
+  padding: govuk.govuk-spacing(3);
+  background: $app-light-grey;
+}
+
+.app-thumb {
+  flex: none;
+  box-sizing: border-box;
+  width: 44px;
+  height: 58px;
+  padding: 9px 7px;
+  border: 1px solid $app-border;
+  background: govuk.govuk-colour("white");
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  span {
+    display: block;
+    height: 3px;
+    background: $app-border;
+  }
+
+  span:first-child {
+    width: 70%;
+  }
+
+  span:last-child {
+    width: 55%;
+  }
+}
+
+// Drop zone for the solicitor, in the style of the GOV.UK file upload.
+.app-drop-zone {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: govuk.govuk-spacing(3) govuk.govuk-spacing(5);
+  margin-bottom: govuk.govuk-spacing(5);
+  padding: govuk.govuk-spacing(6);
+  border: 2px dashed $app-border;
+
+  .govuk-button {
+    margin-bottom: 0;
+  }
+}
+
+.app-drop-zone--compact {
+  padding: govuk.govuk-spacing(4) govuk.govuk-spacing(5);
+}
+
+.app-drop-zone--over {
+  border-color: $app-text;
+  background: $app-light-grey;
+}
+
+.app-drop-zone__text {
+  flex: 1 1 260px;
+}
+
+// Evidence list on the solicitor's Evidence tab.
+.app-evidence-group {
+  margin-bottom: govuk.govuk-spacing(7);
+}
+
+.app-evidence-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid $app-border;
+}
+
+.app-evidence-item {
+  padding: govuk.govuk-spacing(4) 0;
+  border-bottom: 1px solid $app-border;
+
+  .govuk-checkboxes__item {
+    margin-bottom: 0;
+  }
+}
+
+// Lines up with the checkbox label text.
+.app-evidence-item__body {
+  padding-left: 59px;
+}
+
+.app-evidence-item__tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: govuk.govuk-spacing(2);
+  margin: govuk.govuk-spacing(1) 0 govuk.govuk-spacing(2);
+}
+
+.app-evidence-item__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: govuk.govuk-spacing(1) govuk.govuk-spacing(5);
+}
+
+// Selection summary under the evidence list.
+.app-selection-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: govuk.govuk-spacing(4) govuk.govuk-spacing(6);
+  margin-top: govuk.govuk-spacing(6);
+  padding-top: govuk.govuk-spacing(5);
+  border-top: 1px solid $app-border;
+
+  .govuk-button {
+    margin-bottom: 0;
+  }
+}
+
+// Sub navigation for the case tabs and the queue filters.
+.app-sub-nav {
+  margin-bottom: govuk.govuk-spacing(6);
+  border-bottom: 1px solid $app-border;
+}
+
+.app-sub-nav__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 govuk.govuk-spacing(6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.app-sub-nav__link {
+  @include govuk.govuk-font($size: 19);
+  display: block;
+  padding: govuk.govuk-spacing(2) 0;
+  border-bottom: 4px solid transparent;
+}
+
+.app-sub-nav__link[aria-current] {
+  margin-bottom: -1px;
+  border-bottom-color: $app-brand;
+  color: $app-text;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+// Sidebar blocks use the GOV.UK related-content top rule.
+.app-aside-block {
+  margin-bottom: govuk.govuk-spacing(6);
+  padding-top: govuk.govuk-spacing(3);
+  border-top: 2px solid $app-brand;
+}
+
+.app-meta-list {
+  margin: 0;
+
+  dt {
+    color: $app-secondary;
+  }
+
+  dd {
+    margin: 0 0 govuk.govuk-spacing(2);
+  }
+}
+
+// Drafted text to read, copy or download.
+.app-letter {
+  @include govuk.govuk-font($size: 16);
+  padding: govuk.govuk-spacing(4);
+  border: 1px solid $app-border;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+// Document text with the quotes the check relied on.
+.app-document {
+  @include govuk.govuk-font($size: 19);
+  margin-bottom: govuk.govuk-spacing(3);
+  padding: govuk.govuk-spacing(5);
+  border: 1px solid $app-border;
+  background: govuk.govuk-colour("white");
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.app-mark {
+  padding: 1px 3px;
+  color: $app-text;
+  background: govuk.govuk-colour("green", $variant: "tint-80");
+}
+
+.app-mark--problem {
+  background: govuk.govuk-colour("yellow", $variant: "tint-80");
+  box-shadow: inset 0 -3px 0 govuk.govuk-colour("yellow", $variant: "shade-50");
+}
+
+.app-mark__number {
+  display: inline-block;
+  flex: none;
+  min-width: 20px;
+  height: 20px;
+  margin-right: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: 2px;
+  color: govuk.govuk-colour("white");
+  background: govuk.govuk-colour("green", $variant: "shade-50");
+}
+
+.app-mark--problem .app-mark__number,
+.app-mark__number--problem {
+  background: govuk.govuk-colour("yellow", $variant: "shade-50");
+}
+
+.app-highlight-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: govuk.govuk-spacing(1) govuk.govuk-spacing(5);
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: govuk.govuk-spacing(2);
+  }
+}
+
+.app-highlight-key__swatch {
+  display: inline-block;
+  width: 22px;
+  height: 14px;
+  padding: 0;
+}
+
+// Numbered requirement list on the caseworker review.
+.app-findings {
+  margin: 0 0 govuk.govuk-spacing(6);
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid $app-border;
+}
+
+.app-findings__item {
+  display: flex;
+  gap: govuk.govuk-spacing(3);
+  padding: govuk.govuk-spacing(3) 0;
+  border-bottom: 1px solid $app-border;
+
+  .app-mark__number {
+    margin-top: 2px;
+  }
+}
+
+.app-findings__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.app-findings__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: govuk.govuk-spacing(1) govuk.govuk-spacing(3);
+  margin-bottom: govuk.govuk-spacing(1);
+}
+
+// Document tabs on the caseworker review.
+.app-doc-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: govuk.govuk-spacing(1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid $app-border;
+}
+
+.app-doc-tabs__link {
+  @include govuk.govuk-font($size: 19);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: govuk.govuk-spacing(2);
+  padding: govuk.govuk-spacing(3) govuk.govuk-spacing(4);
+  background: $app-light-grey;
+}
+
+.app-doc-tabs__link[aria-current] {
+  margin-bottom: -1px;
+  border: 1px solid $app-border;
+  border-bottom: 1px solid govuk.govuk-colour("white");
+  color: $app-text;
+  background: govuk.govuk-colour("white");
+  text-decoration: none;
+}
+
+.app-doc-panel {
+  margin-bottom: govuk.govuk-spacing(8);
+  padding: govuk.govuk-spacing(5);
+  border: 1px solid $app-border;
+  border-top: 0;
+}
+
+// Two columns side by side, stacking on narrow screens.
+.app-split {
+  display: flex;
+  flex-wrap: wrap;
+  gap: govuk.govuk-spacing(7);
+}
+
+.app-split > * {
+  flex: 1 1 420px;
+  min-width: 0;
+}
+
+.app-decision {
+  max-width: 860px;
+}
+
+// Timeline of what the client sent and was told.
+.app-timeline {
+  margin: 0 0 govuk.govuk-spacing(6);
+  padding: 0;
+  list-style: none;
+}
+
+.app-timeline__item {
+  position: relative;
+  margin-left: govuk.govuk-spacing(2);
+  padding: 0 0 govuk.govuk-spacing(6) govuk.govuk-spacing(6);
+  border-left: 3px solid $app-border;
+
+  &:last-child {
+    border-left-color: transparent;
+    padding-bottom: 0;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: -9px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: $app-secondary;
+  }
+}
+
+.app-timeline__item--success::before {
+  background: govuk.govuk-functional-colour(success);
+}
+
+// Inbox lists.
+.app-attachment-list li,
+.app-inbox-results li {
+  padding: govuk.govuk-spacing(2) 0;
+  border-bottom: 1px solid $app-border;
+}
+
+.app-inbox-results .govuk-tag {
+  margin-top: govuk.govuk-spacing(1);
+}
+
+// Spinner for checks in progress.
+.app-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: govuk.govuk-spacing(2);
+  border: 3px solid govuk.govuk-colour("blue", $variant: "tint-80");
+  border-top-color: $app-brand;
+  border-radius: 50%;
+  vertical-align: -2px;
+  animation: app-spin 0.9s linear infinite;
+}
+
+@keyframes app-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-spinner {
+    animation: none;
+  }
+}

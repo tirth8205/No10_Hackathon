@@ -1,0 +1,43 @@
+import { useEffect, useState } from "react";
+import { Button } from "./govuk";
+
+/** Copies text to the clipboard and says so, visibly and to screen readers. */
+export function CopyButton({ text, label, variant }: { text: string; label: string; variant?: "secondary" }) {
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (!copied) return;
+    const timer = setTimeout(() => setCopied(false), 4000);
+    return () => clearTimeout(timer);
+  }, [copied]);
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+    } catch {
+      setCopied(false);
+    }
+  };
+
+  return (
+    <>
+      <Button variant={variant} onClick={copy}>
+        {copied ? "Copied" : label}
+      </Button>
+      <span className="govuk-visually-hidden" aria-live="polite">
+        {copied ? "Copied to clipboard" : ""}
+      </span>
+    </>
+  );
+}
+
+/** Saves text as a file in the browser. */
+export function downloadText(filename: string, text: string) {
+  const url = URL.createObjectURL(new Blob([text], { type: "text/plain;charset=utf-8" }));
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
