@@ -652,3 +652,12 @@ $app-light-grey: govuk.govuk-colour("black", $variant: "tint-95");
   margin-bottom: govuk.govuk-spacing(3);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
 }
+
+// With the letter itself on the left, give it the larger share so an A4 page stays readable.
+.app-split > .app-split__document {
+  flex: 3 1 480px;
+}
+
+.app-split > .app-split__findings {
+  flex: 2 1 360px;
+}

@@ -44,7 +44,7 @@ function norm(s: string): string {
 }
 
 /** Which text items a quote covers on a page. Fragments of a stitched quote ("... ") are found separately. */
-function locate(items: TextItemLike[], quote: string): number[][] {
+export function locate(items: TextItemLike[], quote: string): number[][] {
   // One string for the page with a space between items, remembering which item each character came from.
   let page = "";
   const owner: number[] = [];

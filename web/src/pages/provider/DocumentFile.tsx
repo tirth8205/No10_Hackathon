@@ -52,7 +52,7 @@ export function DocumentFile({ c, doc }: { c: Case; doc: CaseDocument }) {
       {r && doc.text ? (
         <div className="app-doc-panel">
           <div className="app-split">
-            <section aria-labelledby="doc-text-title">
+            <section aria-labelledby="doc-text-title" className="app-split__document">
               <h2 className="govuk-heading-m govuk-!-margin-bottom-1" id="doc-text-title">
                 {pdfPage ? "The document" : photoPages.length > 0 ? "The photos" : "Text read from the document"}
               </h2>
@@ -77,7 +77,7 @@ export function DocumentFile({ c, doc }: { c: Case; doc: CaseDocument }) {
               <HighlightKey />
             </section>
 
-            <section aria-labelledby="doc-check-title">
+            <section aria-labelledby="doc-check-title" className="app-split__findings">
               <h2 className="govuk-heading-m govuk-!-margin-bottom-1" id="doc-check-title">
                 What matches and what is missing
               </h2>
