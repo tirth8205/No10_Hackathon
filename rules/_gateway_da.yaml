@@ -1,0 +1,51 @@
+id: da
+name: "Domestic abuse gateway (Schedule 1, Civil Legal Aid (Procedure) Regulations 2012)"
+rules_version: "schedule1-v15-2026-06-15"
+guidance_version: "LAA Evidence Requirements for Private Family Law Matters, version 15, 15 June 2026"
+
+# Party names on the document are compared with the application using
+# rapidfuzz token_sort_ratio. Below this score we flag a mismatch.
+name_match_threshold: 85
+
+# Quotes must appear verbatim after normalising whitespace and curly quotes.
+# If an exact match fails, a fuzzy partial match at or above this score is
+# accepted but flagged "quote_fuzzy_match" so a person can see it was not exact.
+quote_fuzzy_threshold: 90
+
+# Words that turn a confirmation or judgement into a possibility (v15 2.56:
+# exact words are not required "but the meaning must be clear").
+hedge_terms:
+  - "might be"
+  - "might have"
+  - "may be"
+  - "may have been"
+  - "may possibly"
+  - "possibly"
+  - "could be"
+  - "could have been"
+  - "appears to"
+  - "potentially"
+  - "seems"
+  - "it is possible"
+  - "likely to be"
+
+# Phrases that suggest the letter is talking to the reviewer or an AI.
+injection_markers:
+  - "ignore previous instructions"
+  - "ignore all previous"
+  - "ai reviewer"
+  - "to the ai"
+  - "mark this as"
+  - "mark as compliant"
+  - "meets all requirements"
+  - "this letter meets all"
+  - "system prompt"
+
+# Template placeholders left unfilled. Harmless unless they sit in a sentence
+# that carries a requirement (the MoJ accepted para 14 example has one).
+placeholder_patterns:
+  - "\\[name of applicant\\]"
+  - "\\[name of client\\]"
+  - "\\[applicant name\\]"
+  - "\\[insert[^\\]]*\\]"
+  - "\\[[A-Z][A-Z ]{3,}\\]"

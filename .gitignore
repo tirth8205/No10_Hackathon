@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.pytest_cache/
+eval/results/*.json
+!eval/results/latest.json
+*.sqlite3
+.DS_Store
