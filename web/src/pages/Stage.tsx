@@ -47,7 +47,7 @@ export function Stage() {
   );
 
   const current = state?.cases.find((c) => c.id === caseId) ?? null;
-  const token = state && caseId === state.caseId ? state.clientToken : null;
+  const token = current?.clientToken ?? null;
 
   return (
     <div style={{ height: "100vh", display: "flex", flexDirection: "column", padding: 12, boxSizing: "border-box", gap: 8, background: "#f3f2f1" }}>
@@ -79,7 +79,7 @@ export function Stage() {
         <div style={{ flex: 1, display: "flex", gap: 12, minHeight: 0, justifyContent: view === "client" ? "center" : "flex-start" }}>
           {(view === "all" || view === "client") && (token
             ? frame(`Client · ${current.applicantName.split(" ")[0]}'s phone`, paths.client(token), "390px")
-            : <section style={{ flex: "0 0 390px" }}><h2 className="govuk-heading-s">Client</h2><p className="govuk-body-s">Choose the Jane Doe case for the client link.</p></section>)}
+            : <section style={{ flex: "0 0 390px" }}><h2 className="govuk-heading-s">Client</h2><p className="govuk-body-s">This case has no client link.</p></section>)}
           {(view === "all" || view === "provider") && frame("Solicitor · Hartley & Webb", paths.caseEvidence(current.id), "1fr")}
           {(view === "all" || view === "caseworker") && frame("LAA caseworker · evidence queue", paths.queue, "34%")}
         </div>

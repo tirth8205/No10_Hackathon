@@ -26,6 +26,9 @@ eval/results/*
 !eval/results/syn-v3-final.json
 !eval/results/style-v3.json
 !eval/results/gold-v3-final.json
+!eval/results/syn-v3-live.json
+!eval/results/style-v3-live.json
+!eval/results/gold-v3-live.json
 !eval/results/failures.md
 
 # frontend

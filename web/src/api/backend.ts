@@ -168,7 +168,7 @@ export interface DemoState {
   applicantName: string;
   clientToken: string;
   queueCaseId: string | null;
-  cases: { id: string; ref: string; applicantName: string }[];
+  cases: { id: string; ref: string; applicantName: string; clientToken: string }[];
 }
 export const demo = () => request<DemoState>("/demo");
 export const resetDemo = () => request<{ ok: boolean; expected_cases: number }>("/demo/reset", { method: "POST" });

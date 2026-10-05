@@ -406,7 +406,7 @@ def audit(record: str | None = None):
     return store.list_audit(record)
 
 
-SCOREBOARD_SETS = {"synthetic": "syn-v3-final", "style": "style-v3", "gold": "gold-v3-final"}
+SCOREBOARD_SETS = {"synthetic": "syn-v3-live", "style": "style-v3-live", "gold": "gold-v3-live"}
 
 
 @app.get("/api/scoreboard")
@@ -464,3 +464,25 @@ def _as_doc_result(r: dict):
     from engine.models import DocumentResult
 
     return DocumentResult.model_validate(r)
+
+
+# --------------------------------------------------------------------------- #
+# Production: serve the built frontend (web/dist) from the same process, so one
+# URL hosts the app and the API, and client links work on a phone.
+# --------------------------------------------------------------------------- #
+_DIST = Path(__file__).resolve().parent.parent / "web" / "dist"
+if _DIST.exists():
+    from fastapi.responses import FileResponse
+    from fastapi.staticfiles import StaticFiles
+
+    app.mount("/assets", StaticFiles(directory=_DIST / "assets"), name="assets")
+
+    @app.get("/{path:path}", include_in_schema=False)
+    def spa(path: str):
+        if path.startswith(("api/", "web/", "docs", "openapi.json")):
+            raise HTTPException(404)
+        candidate = _DIST / path
+        if path and candidate.is_file():
+            return FileResponse(candidate)
+        headers = {"Cache-Control": "no-store"} if path.startswith("client") else {}
+        return FileResponse(_DIST / "index.html", headers=headers)

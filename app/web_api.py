@@ -412,9 +412,13 @@ def demo_state():
     c = next((x for x in cases if x["applicant_name"] == DEMO_APPLICANT), cases[-1])
     link = store.latest_client_link(c["id"]) or store.create_client_link(c["id"], 7)
     queue = [s for s in store.list_submissions() if s["status"] == "submitted"]
+    def token_for(case: dict) -> str:
+        return (store.latest_client_link(case["id"]) or store.create_client_link(case["id"], 7))["token"]
+
     return {"caseId": c["id"], "ref": c["ref"], "applicantName": c["applicant_name"], "clientToken": link["token"],
             "queueCaseId": queue[0]["case_id"] if queue else None,
-            "cases": [{"id": x["id"], "ref": x["ref"], "applicantName": x["applicant_name"]} for x in cases]}
+            "cases": [{"id": x["id"], "ref": x["ref"], "applicantName": x["applicant_name"], "clientToken": token_for(x)}
+                      for x in cases if x.get("created_by") != "inbox"]}
 
 
 @router.post("/demo/reset", status_code=202)
