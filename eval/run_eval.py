@@ -26,7 +26,8 @@ from engine.pipeline import check_text
 from engine.rules import load_rules
 
 ROOT = Path(__file__).resolve().parent.parent
-DATA = {"synthetic": ROOT / "data" / "synthetic_cases.json", "gold": ROOT / "data" / "moj_gold_cases.json"}
+DATA = {"synthetic": ROOT / "data" / "synthetic_cases.json", "gold": ROOT / "data" / "moj_gold_cases.json",
+        "style": ROOT / "data" / "style_shift_cases.json"}
 RESULTS = ROOT / "eval" / "results"
 
 OUTCOME = {"pass": "meets", "fail": "needs_change", "refer": "needs_caseworker"}
@@ -158,7 +159,7 @@ def failures_md(runs: list[dict]) -> str:
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--set", choices=["synthetic", "gold", "both"], default="synthetic")
+    ap.add_argument("--set", choices=["synthetic", "gold", "style", "both"], default="synthetic")
     ap.add_argument("--votes", type=int, default=None)
     ap.add_argument("--para", nargs="*")
     ap.add_argument("--ids", nargs="*")
