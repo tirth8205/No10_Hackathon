@@ -603,3 +603,61 @@ $app-light-grey: govuk.govuk-colour("black", $variant: "tint-95");
     animation: none;
   }
 }
+
+// A button that looks and reads like a link: for in-page filters that change nothing on the server.
+.app-link-button {
+  @include govuk.govuk-font($size: 19);
+  background: none;
+  border: 0;
+  padding-left: 0;
+  padding-right: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+// The uploaded file itself: PDF pages rendered by pdf.js with the check's marks drawn on them; photos as uploaded.
+.app-pdf__page {
+  position: relative;
+  margin-bottom: govuk.govuk-spacing(3);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  background: govuk.govuk-colour("white");
+  overflow: visible;
+}
+
+.app-pdf__page canvas {
+  display: block;
+}
+
+.app-pdf__mark {
+  position: absolute;
+  background: rgba(0, 112, 60, 0.28);
+  mix-blend-mode: multiply;
+  border-radius: 2px;
+}
+
+.app-pdf__mark--problem {
+  background: rgba(255, 221, 0, 0.55);
+  box-shadow: inset 0 -3px 0 govuk.govuk-colour("yellow", $variant: "shade-50");
+}
+
+.app-pdf__badge {
+  position: absolute;
+  left: -26px;
+  top: -2px;
+}
+
+.app-doc-photo {
+  display: block;
+  max-width: 100%;
+  margin-bottom: govuk.govuk-spacing(3);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+// With the letter itself on the left, give it the larger share so an A4 page stays readable.
+.app-split > .app-split__document {
+  flex: 3 1 480px;
+}
+
+.app-split > .app-split__findings {
+  flex: 2 1 360px;
+}

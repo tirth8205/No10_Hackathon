@@ -1,0 +1,324 @@
+{
+  "meta": {
+    "description": "The 12 real examples from MoJ's '2026-09-29_Hackathon Evidence Examples.docx', in the same schema as synthetic_cases.json. Overall labels are MoJ's; element-level labels for rejections are inferred by comparing each rejected letter with its accepted pair. Keep these as a held-out test set.",
+    "n_cases": 12
+  },
+  "cases": [
+    {
+      "id": "MOJ-P17-accepted-01",
+      "source": "moj_examples_doc",
+      "category": "gold",
+      "application": {"applicant": "Ms Jane Doe", "other_party": null, "relationship": null, "child": null, "application_date": null, "proceedings": null},
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "17",
+          "text": "I understand that Ms Jane Doe wishes to access legal aid for a family dispute as a victim of domestic violence. For this reason, I have been asked to provide a letter in accordance with regulation 33 and schedule 1 of the Civil Legal Aid (Procedure) Regulations 2012 (as amended).\n\nI can confirm that our organisation is situated in England and Wales and has been operating for an uninterrupted period of six months or more.\n\nI can confirm that we have provided Ms Doe support in relation to their needs as a victim, or person at risk of domestic violence.\n\nIn my reasonable professional judgement Ms Doe was a victim, or a person at risk of domestic violence.\n\nThe matters I have relied upon to support that judgement are: disclosures surrounding emotional, physical and psychological abuse with coercive and controlling behaviour.\n\nWe have provided Ms Doe with the following support: risk assessment, safety planning and referrals for emotional support.\n\nMs Doe needed this support because she is a victim, or a person at risk of domestic abuse from her ex-partner.",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "uk_situated": {"description": "Organisation confirms it is situated in the UK", "status": "met"},
+              "operating_six_months": {"description": "Organisation confirms it has operated for an uninterrupted 6 months or more", "status": "met"},
+              "supported_applicant": {"description": "Confirms it supported the applicant as a victim or person at risk", "status": "met"},
+              "professional_judgement": {"description": "Unhedged professional judgement that the applicant is or is at risk of being a victim", "status": "met"},
+              "specific_matters": {"description": "Description of the specific matters (what happened), not just the source of information", "status": "met"},
+              "support_description": {"description": "Description of the support provided", "status": "met"},
+              "reason_for_support": {"description": "Statement of why the applicant needed the support", "status": "met"},
+              "applicant_named": {"description": "Applicant named", "status": "met"}
+            },
+            "reason": "Accepted by MoJ.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass"
+    },
+    {
+      "id": "MOJ-P17-accepted-02",
+      "source": "moj_examples_doc",
+      "category": "gold",
+      "application": {"applicant": "Joe Bloggs", "other_party": null, "relationship": null, "child": null, "application_date": null, "proceedings": null},
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "17",
+          "text": "I understand that Joe Bloggs wishes to access legal aid for a family dispute as a victim of domestic violence. For this reason, I have been asked to provide a letter in accordance with regulation 33 and schedule 1 of the Civil Legal Aid (Procedure) Regulations 2012 (as amended).\n\nI can confirm that our organisation is situated in England and Wales and has been operating for an uninterrupted period of six months or more.\n\nI can confirm that we have provided Joe Bloggs with support in relation to their needs as a victim, or a person at risk, of domestic violence.\n\nIn my reasonable professional judgement, Joe Bloggs is, or is at risk of being, a victim of domestic violence.\n\nThe matters I have relied upon to support that judgement are; Refuge space being granted for Joe and their son following a referral taken and DASH score being 12 and current statements being given to the police in regards to the abuse that has happened, the hope of a court date and possible conviction for the perpetrator.\n\nWe have provided Joe Bloggs the following support: Support for health concerns and registering with GP, support to report the crimes and attend the station to give a statement, Domestic Violence education.\n\nJoe Bloggs needed this support because: They fled their home due to fear for their life. Joe is willing to accept support in other areas such as emotional wellbeing.",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "uk_situated": {"description": "Organisation confirms it is situated in the UK", "status": "met"},
+              "operating_six_months": {"description": "Organisation confirms it has operated for an uninterrupted 6 months or more", "status": "met"},
+              "supported_applicant": {"description": "Confirms it supported the applicant as a victim or person at risk", "status": "met"},
+              "professional_judgement": {"description": "Unhedged professional judgement that the applicant is or is at risk of being a victim", "status": "met"},
+              "specific_matters": {"description": "Description of the specific matters (what happened), not just the source of information", "status": "met"},
+              "support_description": {"description": "Description of the support provided", "status": "met"},
+              "reason_for_support": {"description": "Statement of why the applicant needed the support", "status": "met"},
+              "applicant_named": {"description": "Applicant named", "status": "met"}
+            },
+            "reason": "Accepted by MoJ.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass"
+    },
+    {
+      "id": "MOJ-P17-accepted-03",
+      "source": "moj_examples_doc",
+      "category": "gold",
+      "application": {"applicant": "Jane Smith", "other_party": null, "relationship": null, "child": null, "application_date": null, "proceedings": null},
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "17",
+          "text": "I understand Jane Smith wishes to access legal aid for a family dispute as a victim of domestic violence. For this reason, I have been asked to provide a letter in accordance with regulation 33 and schedule 1 of the Civil Legal Aid (Procedure) Regulations 2012 (as amended).\n\nI can confirm that our organisation is situated in England and Wales and has been operating for an uninterrupted period of six months or more.\n\nI can confirm that we have provided Jane Smith with support in relation to their needs as a victim, or person at risk, of domestic violence.\n\nIn my reasonable professional judgement Jane Smith is, or is at risk of being, a vicim of domestic violence.\n\nThe matters I have relied upon to support that judgement are:\n\n- Jane has told me that her ex would tell her about all the local mums he had slept with. When she did not respond he would tell her he hoped she dies in her sleep.\n\n- Jane has told me her ex was extremely controlling, his anger and controlling behaviour would get out of control and he would be shouting, calling her names and would belittle her.\n\n- Jane has told me that her ex did not like her working, he used to say how he did not liker her work colleagues or friends. He would say they were toxic and negative. She was not allowed to discussion anything to do with work in the home and she was prevented from discussing her home life in work.\n\n- She has told me that he made it clear he did not like her friends and would say they were toxic. He would check her phone daily and read her messages and question her about them. Jane stopped interacting with her friends and family as it was easier to not receive any to avoid being questioned and him getting angry and abusive. She felt isolated as a result.\n\n- Jane said she always felt on edge. She told me she lost herself trying to please him so he would not get angry or abusive with her in the home.\n\n- Jane has told me how her ex would demand sec and give her the silent treatment if she said no. Jane said that in the end he would ignore that she had said not to him. He would often want sex when she was asleep and ignore that she was asleep.\n\n- Jane has told me that he attended a funeral and afterwards drunk and smashed the house up which was witnessed by their daughter.\n\nWe have provided Jane Smith the following support: Helpline support and advice, including risk assessment, followed by ongoing attendance and engagement in a programme specialising in group support for recovery of adults who have experienced domestic abuse.\n\nJane Smith needed this support because they were identified as a victim of domestic abuse.",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "uk_situated": {"description": "Organisation confirms it is situated in the UK", "status": "met"},
+              "operating_six_months": {"description": "Organisation confirms it has operated for an uninterrupted 6 months or more", "status": "met"},
+              "supported_applicant": {"description": "Confirms it supported the applicant as a victim or person at risk", "status": "met"},
+              "professional_judgement": {"description": "Unhedged professional judgement that the applicant is or is at risk of being a victim", "status": "met"},
+              "specific_matters": {"description": "Description of the specific matters (what happened), not just the source of information", "status": "met"},
+              "support_description": {"description": "Description of the support provided", "status": "met"},
+              "reason_for_support": {"description": "Statement of why the applicant needed the support", "status": "met"},
+              "applicant_named": {"description": "Applicant named", "status": "met"}
+            },
+            "reason": "Accepted by MoJ.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass"
+    },
+    {
+      "id": "MOJ-P17-rejected-04",
+      "source": "moj_examples_doc",
+      "category": "gold",
+      "application": {"applicant": "Joe Bloggs", "other_party": null, "relationship": null, "child": null, "application_date": null, "proceedings": null},
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "17",
+          "text": "I understand that Joe Bloggs wishes to access legal aid for a family dispute as a victim of domestic violence. For this reason, I have been asked to provide a letter in accordance with regulation 33 and schedule 1 of the Civil Legal Aid (Procedure) Regulations 2012 (as amended).\n\nI can confirm that our organisation is situated in England and Wales and has been operating for an uninterrupted period of six months or more.\n\nI can confirm that we have provided Joe Bloggs with support in relation to their needs as a victim, or a person at risk, of domestic violence.\n\nIn my reasonable professional judgement Joe Bloggs is, or is at risk of being, a victim of domestic violence.\n\nThe matter I have relied upon to support that judgements are: Victim testimony and referral.\n\nWe have provided the following support: safety planning, signposting to relevant agencies, advocacy and ongoing support and guidance.\n\nJoe Bloggs need this support because they have been in an abusive relationship and requires professional support and guidance to end the cycle of abuse.",
+          "expected": {
+            "outcome": "fail",
+            "elements": {
+              "uk_situated": {"description": "Organisation confirms it is situated in the UK", "status": "met"},
+              "operating_six_months": {"description": "Organisation confirms it has operated for an uninterrupted 6 months or more", "status": "met"},
+              "supported_applicant": {"description": "Confirms it supported the applicant as a victim or person at risk", "status": "met"},
+              "professional_judgement": {"description": "Unhedged professional judgement that the applicant is or is at risk of being a victim", "status": "met"},
+              "specific_matters": {"description": "Description of the specific matters (what happened), not just the source of information", "status": "not_met"},
+              "support_description": {"description": "Description of the support provided", "status": "met"},
+              "reason_for_support": {"description": "Statement of why the applicant needed the support", "status": "met"},
+              "applicant_named": {"description": "Applicant named", "status": "met"}
+            },
+            "reason": "'Victim testimony and referral' names the source of information, not the matters relied on.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "fail"
+    },
+    {
+      "id": "MOJ-P11-accepted-01",
+      "source": "moj_examples_doc",
+      "category": "gold",
+      "application": {"applicant": "Jane Doe", "other_party": null, "relationship": null, "child": null, "application_date": null, "proceedings": null},
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "11",
+          "text": "I understand that Jane Doe wishes to access legal aid for a family dispute as a victim of domestic violence. For this reason I have been asked to provide a letter in accordance with regulation 33 of the Civil Legal Aid (Procedure) Regulations 2012.\n\nThe applicant has confirmed that the condition that she presented to me with today was caused by domestic abuse.\n\nI can confirm that I have examined Jane Doe and in my reasonable professional judgement, the condition that the applicant has is consistent with domestic abuse.\n\nI understand that this evidence is only required for a decision on whether or not to grant legal aid – it is not designed to provide evidence of domestic abuse for use in court.",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "appropriate_health_professional": {"description": "Author is a registered appropriate health professional (doctor, nurse, midwife, dentist, paramedic, psychologist, radiographer, social worker)", "status": "met"},
+              "examined_applicant": {"description": "Applicant was examined in person, by phone or by video", "status": "met"},
+              "consistent_with_domestic_abuse": {"description": "Clear (unhedged) judgement that injuries/condition are consistent with domestic abuse", "status": "met"},
+              "applicant_named": {"description": "Applicant is named (perpetrator need not be)", "status": "met"}
+            },
+            "reason": "Accepted by MoJ.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass"
+    },
+    {
+      "id": "MOJ-P11-rejected-02",
+      "source": "moj_examples_doc",
+      "category": "gold",
+      "application": {"applicant": "Jane Doe", "other_party": null, "relationship": null, "child": null, "application_date": null, "proceedings": null},
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "11",
+          "text": "I understand that Jane Doe wishes to access legal aid for a family dispute as a victim of domestic violence. For this reason I have been asked to provide a letter in accordance with regulation 33 of the Civil Legal Aid (Procedure) Regulations 2012.\n\nThe applicant has confirmed that the condition that she presented to me with today was caused by domestic abuse.\n\nI can confirm that I have examined Jane Doe and in my reasonable professional judgement, the condition that the applicant has might be consistent with domestic abuse.\n\nI understand that this evidence is only required for a decision on whether or not to grant legal aid – it is not designed to provide evidence of domestic abuse for use in court.",
+          "expected": {
+            "outcome": "fail",
+            "elements": {
+              "appropriate_health_professional": {"description": "Author is a registered appropriate health professional (doctor, nurse, midwife, dentist, paramedic, psychologist, radiographer, social worker)", "status": "met"},
+              "examined_applicant": {"description": "Applicant was examined in person, by phone or by video", "status": "met"},
+              "consistent_with_domestic_abuse": {"description": "Clear (unhedged) judgement that injuries/condition are consistent with domestic abuse", "status": "not_met"},
+              "applicant_named": {"description": "Applicant is named (perpetrator need not be)", "status": "met"}
+            },
+            "reason": "Hedged judgement: 'might be consistent with'.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "fail"
+    },
+    {
+      "id": "MOJ-P19-accepted-01",
+      "source": "moj_examples_doc",
+      "category": "gold",
+      "application": {"applicant": "Jane Doe", "other_party": "John Doe", "relationship": null, "child": null, "application_date": null, "proceedings": null},
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "19",
+          "text": "To whom it may concern\n\nName of perpetrator: John Doe\n\nName of applicant: Jane Doe\n\nI understand that Jane Doe wishes to access legal aid for a family dispute as a victim of domestic abuse. For this reason, I have been asked to provide a letter in accordance with regulation 33 and schedule 1 of the Civil Legal Aid (Procedure) Regulations 2012 (as amended).\n\nAccordingly, I can confirm that Jane Doe, a person with whom John Doe is or was in a family relationship with, was assessed as being, or at risk of being, a victim of domestic abuse by John Doe.\n\nMore information and guidance about the evidential requirements for legal aid can be found at: https://www.gov.uk/legal-aid/domestic-abuse\n\nYours sincerely,\n\nJohn Smith\n\nBath and Northeast Somerset Council",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "public_authority_named": {"description": "A public authority is identified", "status": "met"},
+              "victim_named": {"description": "Victim named and in a family relationship with B", "status": "met"},
+              "perpetrator_named": {"description": "B named", "status": "met"},
+              "assessed_victim_or_at_risk": {"description": "Confirms the victim was assessed as being, or at risk of being, a victim of domestic abuse by B", "status": "met"}
+            },
+            "reason": "Accepted by MoJ.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass"
+    },
+    {
+      "id": "MOJ-P19-rejected-02",
+      "source": "moj_examples_doc",
+      "category": "gold",
+      "application": {"applicant": "Jane Doe", "other_party": "John Doe", "relationship": null, "child": null, "application_date": null, "proceedings": null},
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "19",
+          "text": "To whom it may concern\n\nName of perpetrator: John Doe\n\nName of applicant: Jane Doe\n\nI understand that Jane Doe wishes to access legal aid for a family dispute as a victim of domestic abuse. For this reason, I have been asked to provide a letter in accordance with regulation 33 and schedule 1 of the Civil Legal Aid (Procedure) Regulations 2012 (as amended).\n\nAccordingly, I can confirm that Jane Doe, a person with whom John Doe is or was in a family relationship with, might be a victim of domestic abuse by John Doe.\n\nMore information and guidance about the evidential requirements for legal aid can be found at: https://www.gov.uk/legal-aid/domestic-abuse\n\nYours sincerely,\n\nJohn Smith\n\nBath and Northeast Somerset Council",
+          "expected": {
+            "outcome": "fail",
+            "elements": {
+              "public_authority_named": {"description": "A public authority is identified", "status": "met"},
+              "victim_named": {"description": "Victim named and in a family relationship with B", "status": "met"},
+              "perpetrator_named": {"description": "B named", "status": "met"},
+              "assessed_victim_or_at_risk": {"description": "Confirms the victim was assessed as being, or at risk of being, a victim of domestic abuse by B", "status": "not_met"}
+            },
+            "reason": "'Might be a victim' is not an assessment.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "fail"
+    },
+    {
+      "id": "MOJ-P18-accepted-01",
+      "source": "moj_examples_doc",
+      "category": "gold",
+      "application": {"applicant": "Jane Doe", "other_party": "John Doe", "relationship": null, "child": null, "application_date": null, "proceedings": null},
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "18",
+          "text": "To whom it may concern,\n\nName of perpetrator: John Doe\n\nName of applicant: Jane Doe\n\nI understand that Jane Doe wishes to access legal aid for a family dispute as a victim of domestic abuse. For this reason, I have been asked to provide a letter in accordance with regulation 33 and schedule 1 of the Civil Legal Aid (Procedure) Regulations 2012 (as amended).\n\nI can confirm that Jane Doe, with whom John Doe is or was in a family relationship, was refused admission to a refuge on 28th September 2026.\n\nI can confirm that Jane Doe sought admission to a refuge because of allegations of domestic abuse by John Doe.\n\nMore information and guidance about the evidential requirements for legal aid can be found at: https://www.gov.uk/legal-aid/domestic-abuse\n\nJohn Smith\n\nWomen’s Aid\n\nDomestic Abuse Support Officer",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "organisation_identified": {"description": "Domestic abuse support organisation is identified", "status": "met"},
+              "perpetrator_named": {"description": "B named", "status": "met"},
+              "victim_named": {"description": "Person refused is named and in a family relationship with B", "status": "met"},
+              "refusal_date": {"description": "Date admission was refused", "status": "met"},
+              "sought_because_of_abuse_by_other_party": {"description": "Sought admission because of allegations of domestic abuse by B", "status": "met"}
+            },
+            "reason": "Accepted by MoJ.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass"
+    },
+    {
+      "id": "MOJ-P18-rejected-02",
+      "source": "moj_examples_doc",
+      "category": "gold",
+      "application": {"applicant": "Jane Doe", "other_party": null, "relationship": null, "child": null, "application_date": null, "proceedings": null},
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "18",
+          "text": "To whom it may concern,\n\nName of applicant: Jane Doe\n\nI understand that Jane Doe wishes to access legal aid for a family dispute as a victim of domestic abuse. For this reason, I have been asked to provide a letter in accordance with regulation 33 and schedule 1 of the Civil Legal Aid (Procedure) Regulations 2012 (as amended).\n\nI can confirm that Jane Doe was refused admission to a refuge on 28th September 2026.\n\nI can confirm that Jane Doe sought admission to a refuge because of allegations of domestic abuse.\n\nMore information and guidance about the evidential requirements for legal aid can be found at: https://www.gov.uk/legal-aid/domestic-abuse\n\nJohn Smith\n\nWomen’s Aid\n\nDomestic Abuse Support Officer",
+          "expected": {
+            "outcome": "fail",
+            "elements": {
+              "organisation_identified": {"description": "Domestic abuse support organisation is identified", "status": "met"},
+              "perpetrator_named": {"description": "B named", "status": "not_met"},
+              "victim_named": {"description": "Person refused is named and in a family relationship with B", "status": "met"},
+              "refusal_date": {"description": "Date admission was refused", "status": "met"},
+              "sought_because_of_abuse_by_other_party": {"description": "Sought admission because of allegations of domestic abuse by B", "status": "unclear"}
+            },
+            "reason": "No perpetrator named, so the refusal can't be linked to abuse by B.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "fail"
+    },
+    {
+      "id": "MOJ-P14-accepted-01",
+      "source": "moj_examples_doc",
+      "category": "gold",
+      "application": {"applicant": "Jane Doe", "other_party": null, "relationship": null, "child": null, "application_date": null, "proceedings": null},
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "14",
+          "text": "To whom it may concern\n\nName of applicant: Jane Doe\n\nI understand that Jane Doe wishes to access legal aid for a family dispute as a victim of domestic abuse. For this reason, I have been asked to confirm that I am providing / have provided support to [name of applicant] in accordance with regulation 33 and schedule 1 of the Civil Legal Aid (Procedure) Regulations 2012 (as amended).\n\nI can confirm that I am providing Jane Doe with support.\n\nMore information and guidance about the evidential requirements for legal aid can be found at: https://www.gov.uk/legal-aid/domestic-abuse\n\nYours sincerely,\n\nJohn Smith\n\nIDVA",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "author_is_idva": {"description": "Author is an IDVA", "status": "met"},
+              "confirms_support": {"description": "IDVA personally confirms they are providing or have provided support", "status": "met"},
+              "applicant_named": {"description": "Applicant is named as the person supported", "status": "met"}
+            },
+            "reason": "Accepted by MoJ.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass"
+    },
+    {
+      "id": "MOJ-P14-rejected-02",
+      "source": "moj_examples_doc",
+      "category": "gold",
+      "application": {"applicant": "Jane Doe", "other_party": null, "relationship": null, "child": null, "application_date": null, "proceedings": null},
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "14",
+          "text": "To whom it may concern\n\nName of applicant: Jane Doe\n\nI understand that Jane Doe wishes to access legal aid for a family dispute as a victim of domestic abuse. For this reason, I have been asked to confirm that I am providing / have provided support to [name of applicant] in accordance with regulation 33 and schedule 1 of the Civil Legal Aid (Procedure) Regulations 2012 (as amended).\n\nI can confirm that we provided Jane Doe with support.\n\nMore information and guidance about the evidential requirements for legal aid can be found at: https://www.gov.uk/legal-aid/domestic-abuse\n\nYours sincerely,\n\nJohn Smith\n\nIDVA",
+          "expected": {
+            "outcome": "fail",
+            "elements": {
+              "author_is_idva": {"description": "Author is an IDVA", "status": "met"},
+              "confirms_support": {"description": "IDVA personally confirms they are providing or have provided support", "status": "not_met"},
+              "applicant_named": {"description": "Applicant is named as the person supported", "status": "met"}
+            },
+            "reason": "MoJ rejected this; the only differences are 'we provided' vs 'I am providing'. Exact reason unconfirmed - ask MoJ.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "fail"
+    }
+  ]
+}

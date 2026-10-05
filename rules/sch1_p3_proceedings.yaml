@@ -1,0 +1,51 @@
+id: sch1_p3_proceedings
+gateway: da
+enabled: true
+paragraph: "3"
+legal_ref: "Civil Legal Aid (Procedure) Regulations 2012, Schedule 1, paragraph 3"
+guidance_ref: "LAA Evidence Requirements v15, paragraphs 2.18 to 2.25"
+name: "Evidence of relevant criminal proceedings for a domestic abuse offence which have not concluded"
+short_name: "Ongoing criminal proceedings"
+names_other_party_required: true
+applicant_must_be_victim: false
+always_needs_caseworker: false
+accepted_formats: ["copy of the charge sheet from the police", "letter or email from the court confirming the case is listed", "letter or email from the police, CPS or Witness Care Unit", "email from a pnn.police.uk address", "email from the legal aid provider naming the police station and the officer spoken to", "newspaper clipping about the case", "letter or email from an overseas law enforcement agency"]
+classification_hints:
+  - "Witness Care Unit or CPS letter to the victim, or a police email, saying a named person 'has been charged with' an offence"
+  - "a charge sheet, postal requisition or court listing notice giving a court and hearing date"
+  - "quotes a case or crime reference and refers to a forthcoming first hearing, plea hearing or trial"
+  - "status is live (charged, listed, bailed to court, awaiting trial) rather than an outcome or sentencing letter"
+elements:
+  - id: perpetrator_named
+    label: "B named as person charged"
+    requirement: "The other party in the case (B) is named as the person charged with the offence."
+    accept_if: "B's name appears as the defendant or person charged, in any form (full name, or title and surname, with or without date of birth)."
+    reject_if: "No name for the person charged; the defendant is described only as 'the defendant' or 'the accused'; the name is redacted or an unfilled placeholder; or the person charged is the applicant rather than B. Where a name is given but does not match the other party on the application, use 'unclear' rather than 'missing' so a caseworker can check identity."
+    fix: "Name {other_party_name} as the person who has been charged."
+  - id: charged
+    label: "B formally charged"
+    requirement: "B has been formally charged with the offence; the case need not yet have been listed for hearing."
+    accept_if: "A clear statement that B 'has been charged', 'was charged with', 'faces a charge of', or has been sent a postal requisition or summons; or the case is listed for a hearing or trial, which confirms a charge. Listing is not required."
+    reject_if: "B has only been arrested, interviewed, bailed pending a charging decision or 'released under investigation' and no charging decision has been made; the file is 'with the CPS for a decision'; or police are 'considering charges'. Such a document may meet paragraph 1 (arrest) instead and should be recategorised there. A caution, community resolution or penalty notice is not a charge. A hedged statement ('I believe he has been charged', 'charges are likely') is not confirmation."
+    fix: "Confirm that {other_party_name} has been formally charged, giving the date of charge and the court if known."
+  - id: da_offence
+    label: "Charge is a listed DA offence"
+    requirement: "The charge is for an offence on the gov.uk list of domestic violence and child abuse offences."
+    accept_if: "The offence charged is on the gov.uk list, for example common assault, assault occasioning actual bodily harm, controlling or coercive behaviour, harassment, stalking, threats to kill, criminal damage, rape or sexual assault, with or without the section and Act."
+    reject_if: "The charge is for an offence not on the list, for example a drugs offence such as possession of a controlled drug, a road traffic offence or a public order offence with no individual victim; or no offence is stated. If an offence is named but you cannot tell whether it is on the gov.uk list, use 'unclear' rather than 'missing'."
+    fix: "State the specific offence {other_party_name} has been charged with, which must be on the gov.uk list of domestic violence and child abuse offences."
+  - id: not_concluded
+    label: "Proceedings not concluded"
+    requirement: "At the date of the legal aid application the criminal proceedings against B have not concluded."
+    accept_if: "The document shows the case is still live at the application date: awaiting a first hearing, plea hearing or trial, listed for a future date, adjourned, or B is bailed to attend court. A hearing date after the application date, or no outcome recorded, is sufficient."
+    reject_if: "The document records an outcome: the trial has taken place and B was found not guilty or acquitted; the case was dismissed, discontinued or withdrawn, or no evidence was offered; or B was convicted or sentenced (a conviction should be assessed under paragraph 4 instead). If the only hearing date given is before the application date and no outcome is stated, use 'unclear' rather than 'missing', since the proceedings may have concluded."
+    fix: "Confirm that the proceedings against {other_party_name} are ongoing and have not concluded, giving the next hearing date if there is one."
+  - id: victim_named
+    label: "Victim named"
+    requirement: "The victim of the offence is named (unless it is a sexual offence) and is, or was, in a family relationship with B; the victim may be the applicant or another person."
+    accept_if: "A named victim, for example 'in which you are the named victim' in a letter addressed to the applicant by name, or 'charged with [offence] against [name]'. If the named victim is the applicant, the family relationship is established by the application and need not be restated. For a sexual offence the victim need not be named."
+    reject_if: "No victim is named and the offence is not a sexual offence; the victim is described only as 'the complainant' or 'a witness'; or the named victim is a stranger, neighbour or member of the public with no family relationship to B. If the named victim is someone other than the applicant and no relationship to B is stated, use 'unclear' rather than 'missing'."
+    fix: "Name the victim (for example {applicant_name}) and state their relationship to {other_party_name}, unless the charge is a sexual offence."
+hedge_terms: []
+gov_template_url: null
+test_cases_min: 5

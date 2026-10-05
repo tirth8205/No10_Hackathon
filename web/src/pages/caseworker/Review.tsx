@@ -1,3 +1,4 @@
+import { VerificationList } from "../../components/Verification";
 import { useState } from "react";
 import { Link } from "react-router";
 import { DocumentText, HighlightKey } from "../../components/DocumentText";
@@ -8,7 +9,7 @@ import { when } from "../../lib/dates";
 import { documentTitle } from "../../lib/evidence";
 import { caseVerdict, docVerdict, paraOf } from "../../lib/labels";
 import { returnNote } from "../../lib/outputs";
-import type { CaseDocument, CaseWithDocuments, DecisionAction } from "../../lib/types";
+import type { Case, CaseDocument, CaseWithDocuments, DecisionAction } from "../../lib/types";
 import { paths } from "../../paths";
 
 export interface ReviewProps {
@@ -53,6 +54,14 @@ function PartyCheck({ doc, applicant, otherParty }: { doc: CaseDocument; applica
       />
     </>
   );
+}
+
+/** One line on the LAA's own run of the check (link 2 of the flow). Nothing until the back end reports one. */
+function LaaCheckLine({ check }: { check: Case["laaCheck"] }) {
+  if (!check) return null;
+  if (!check.done) return <InsetText>Independent LAA check: still running</InsetText>;
+  if (check.differences === 0) return <InsetText>Independent LAA check: agrees with the provider’s check</InsetText>;
+  return <WarningText>Independent LAA check: {check.differences === 1 ? "1 difference" : `${check.differences} differences`}</WarningText>;
 }
 
 /** The caseworker's co-pilot: the document with quotes highlighted, the tool's findings, and the decision. */
@@ -119,6 +128,7 @@ export function Review({ data, activeDocId, onDecide }: ReviewProps) {
               <p className="govuk-body-s app-secondary-text">
                 {[para && `Schedule 1, paragraph ${para.number}`, para?.guidance, r.agreement].filter(Boolean).join(" · ")}
               </p>
+              <LaaCheckLine check={c.laaCheck} />
               {r.flags.map((flag) => (
                 <WarningText key={flag}>{flag}</WarningText>
               ))}
@@ -141,6 +151,7 @@ export function Review({ data, activeDocId, onDecide }: ReviewProps) {
                 ))}
               </ol>
               <PartyCheck doc={doc} applicant={c.applicantName} otherParty={c.otherPartyName} />
+              <VerificationList checks={r.verification} />
             </section>
           </div>
         </div>

@@ -1,0 +1,1288 @@
+{
+ "summary": {
+  "documents": 24,
+  "cases": 24,
+  "agreement": 1.0,
+  "safe_agreement": 1.0,
+  "case_agreement": 1.0,
+  "false_approval_rate": 0.0,
+  "false_rejection_rate": 0.0,
+  "caseworker_routing_rate": 0.0,
+  "element_accuracy": 1.0,
+  "recategorisation_accuracy": null,
+  "quote_validity": 1.0,
+  "errors": 0,
+  "latency_ms_p50": 28190,
+  "latency_ms_p95": 57079,
+  "by_paragraph": {
+   "11": {
+    "n": 4,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "14": {
+    "n": 4,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "17": {
+    "n": 8,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "18": {
+    "n": 4,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "19": {
+    "n": 4,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   }
+  },
+  "by_category": {
+   "digital": {
+    "n": 12,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "scanned": {
+    "n": 12,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   }
+  },
+  "confusion": {
+   "meets->meets": 14,
+   "needs_change->needs_change": 10
+  },
+  "set": "gold-pdf",
+  "model": "gpt-5.4",
+  "votes": 3,
+  "rules_version": "schedule1-v15-2026-06-15",
+  "run_at": "2026-10-05T16:25:40+00:00",
+  "wall_seconds": 139.8
+ },
+ "runs": [
+  {
+   "id": "MOJ-P17-accepted-01-digital",
+   "category": "digital",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "17",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_description": "included",
+      "reason_for_support": "included",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "applicant_named": "included",
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_description": "included",
+      "reason_for_support": "included"
+     },
+     "element_matches": {
+      "uk_situated": true,
+      "operating_six_months": true,
+      "supported_applicant": true,
+      "professional_judgement": true,
+      "specific_matters": true,
+      "support_description": true,
+      "reason_for_support": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "Accepted by MoJ.",
+     "error": null,
+     "latency_ms": 27335,
+     "quotes_unverified": 0,
+     "category": "digital"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P17-accepted-01-scanned",
+   "category": "scanned",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "17",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_description": "included",
+      "reason_for_support": "included",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "applicant_named": "included",
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_description": "included",
+      "reason_for_support": "included"
+     },
+     "element_matches": {
+      "uk_situated": true,
+      "operating_six_months": true,
+      "supported_applicant": true,
+      "professional_judgement": true,
+      "specific_matters": true,
+      "support_description": true,
+      "reason_for_support": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "unfilled_placeholder"
+     ],
+     "reason_expected": "Accepted by MoJ.",
+     "error": null,
+     "latency_ms": 30849,
+     "quotes_unverified": 0,
+     "category": "scanned"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P17-accepted-02-digital",
+   "category": "digital",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "17",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_description": "included",
+      "reason_for_support": "included",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "applicant_named": "included",
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_description": "included",
+      "reason_for_support": "included"
+     },
+     "element_matches": {
+      "uk_situated": true,
+      "operating_six_months": true,
+      "supported_applicant": true,
+      "professional_judgement": true,
+      "specific_matters": true,
+      "support_description": true,
+      "reason_for_support": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "Accepted by MoJ.",
+     "error": null,
+     "latency_ms": 28577,
+     "quotes_unverified": 0,
+     "category": "digital"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P17-accepted-02-scanned",
+   "category": "scanned",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "17",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_description": "included",
+      "reason_for_support": "included",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "applicant_named": "included",
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_description": "included",
+      "reason_for_support": "included"
+     },
+     "element_matches": {
+      "uk_situated": true,
+      "operating_six_months": true,
+      "supported_applicant": true,
+      "professional_judgement": true,
+      "specific_matters": true,
+      "support_description": true,
+      "reason_for_support": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "hedge",
+      "unfilled_placeholder"
+     ],
+     "reason_expected": "Accepted by MoJ.",
+     "error": null,
+     "latency_ms": 56521,
+     "quotes_unverified": 0,
+     "category": "scanned"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P17-accepted-03-digital",
+   "category": "digital",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "17",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_description": "included",
+      "reason_for_support": "included",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "applicant_named": "included",
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_description": "included",
+      "reason_for_support": "included"
+     },
+     "element_matches": {
+      "uk_situated": true,
+      "operating_six_months": true,
+      "supported_applicant": true,
+      "professional_judgement": true,
+      "specific_matters": true,
+      "support_description": true,
+      "reason_for_support": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "Accepted by MoJ.",
+     "error": null,
+     "latency_ms": 34443,
+     "quotes_unverified": 0,
+     "category": "digital"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P17-accepted-03-scanned",
+   "category": "scanned",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "17",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_description": "included",
+      "reason_for_support": "included",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "applicant_named": "included",
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_description": "included",
+      "reason_for_support": "included"
+     },
+     "element_matches": {
+      "uk_situated": true,
+      "operating_six_months": true,
+      "supported_applicant": true,
+      "professional_judgement": true,
+      "specific_matters": true,
+      "support_description": true,
+      "reason_for_support": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "quote_multi_span"
+     ],
+     "reason_expected": "Accepted by MoJ.",
+     "error": null,
+     "latency_ms": 59159,
+     "quotes_unverified": 0,
+     "category": "scanned"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P17-rejected-04-digital",
+   "category": "digital",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "17",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "missing",
+      "support_description": "included",
+      "reason_for_support": "included",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "applicant_named": "included",
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "missing",
+      "support_description": "included",
+      "reason_for_support": "included"
+     },
+     "element_matches": {
+      "uk_situated": true,
+      "operating_six_months": true,
+      "supported_applicant": true,
+      "professional_judgement": true,
+      "specific_matters": true,
+      "support_description": true,
+      "reason_for_support": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "'Victim testimony and referral' names the source of information, not the matters relied on.",
+     "error": null,
+     "latency_ms": 28158,
+     "quotes_unverified": 0,
+     "category": "digital"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P17-rejected-04-scanned",
+   "category": "scanned",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "17",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "missing",
+      "support_description": "included",
+      "reason_for_support": "included",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "applicant_named": "included",
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "missing",
+      "support_description": "included",
+      "reason_for_support": "included"
+     },
+     "element_matches": {
+      "uk_situated": true,
+      "operating_six_months": true,
+      "supported_applicant": true,
+      "professional_judgement": true,
+      "specific_matters": true,
+      "support_description": true,
+      "reason_for_support": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "unfilled_placeholder"
+     ],
+     "reason_expected": "'Victim testimony and referral' names the source of information, not the matters relied on.",
+     "error": null,
+     "latency_ms": 50689,
+     "quotes_unverified": 0,
+     "category": "scanned"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P11-accepted-01-digital",
+   "category": "digital",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "11",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "appropriate_health_professional": "included",
+      "examined_applicant": "included",
+      "consistent_with_domestic_abuse": "included",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "appropriate_health_professional": "included",
+      "examined_applicant": "included",
+      "consistent_with_domestic_abuse": "included",
+      "applicant_named": "included"
+     },
+     "element_matches": {
+      "appropriate_health_professional": true,
+      "examined_applicant": true,
+      "consistent_with_domestic_abuse": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "quote_multi_span"
+     ],
+     "reason_expected": "Accepted by MoJ.",
+     "error": null,
+     "latency_ms": 16227,
+     "quotes_unverified": 0,
+     "category": "digital"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P11-accepted-01-scanned",
+   "category": "scanned",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "11",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "appropriate_health_professional": "included",
+      "examined_applicant": "included",
+      "consistent_with_domestic_abuse": "included",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "appropriate_health_professional": "included",
+      "examined_applicant": "included",
+      "consistent_with_domestic_abuse": "included",
+      "applicant_named": "included"
+     },
+     "element_matches": {
+      "appropriate_health_professional": true,
+      "examined_applicant": true,
+      "consistent_with_domestic_abuse": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "Accepted by MoJ.",
+     "error": null,
+     "latency_ms": 28686,
+     "quotes_unverified": 0,
+     "category": "scanned"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P11-rejected-02-digital",
+   "category": "digital",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "11",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "appropriate_health_professional": "included",
+      "examined_applicant": "included",
+      "consistent_with_domestic_abuse": "missing",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "appropriate_health_professional": "included",
+      "examined_applicant": "included",
+      "consistent_with_domestic_abuse": "missing",
+      "applicant_named": "included"
+     },
+     "element_matches": {
+      "appropriate_health_professional": true,
+      "examined_applicant": true,
+      "consistent_with_domestic_abuse": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "hedge"
+     ],
+     "reason_expected": "Hedged judgement: 'might be consistent with'.",
+     "error": null,
+     "latency_ms": 20465,
+     "quotes_unverified": 0,
+     "category": "digital"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P11-rejected-02-scanned",
+   "category": "scanned",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "11",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "appropriate_health_professional": "included",
+      "examined_applicant": "included",
+      "consistent_with_domestic_abuse": "missing",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "appropriate_health_professional": "included",
+      "examined_applicant": "included",
+      "consistent_with_domestic_abuse": "missing",
+      "applicant_named": "included"
+     },
+     "element_matches": {
+      "appropriate_health_professional": true,
+      "examined_applicant": true,
+      "consistent_with_domestic_abuse": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "quote_multi_span",
+      "hedge",
+      "unfilled_placeholder"
+     ],
+     "reason_expected": "Hedged judgement: 'might be consistent with'.",
+     "error": null,
+     "latency_ms": 63176,
+     "quotes_unverified": 0,
+     "category": "scanned"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P19-accepted-01-digital",
+   "category": "digital",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "19",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "public_authority_named": "included",
+      "victim_named": "included",
+      "perpetrator_named": "included",
+      "assessed_victim_or_at_risk": "included"
+     },
+     "elements_predicted": {
+      "public_authority_named": "included",
+      "victim_named": "included",
+      "perpetrator_named": "included",
+      "assessed_victim_or_at_risk": "included"
+     },
+     "element_matches": {
+      "public_authority_named": true,
+      "victim_named": true,
+      "perpetrator_named": true,
+      "assessed_victim_or_at_risk": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "Accepted by MoJ.",
+     "error": null,
+     "latency_ms": 19589,
+     "quotes_unverified": 0,
+     "category": "digital"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P19-accepted-01-scanned",
+   "category": "scanned",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "19",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "public_authority_named": "included",
+      "victim_named": "included",
+      "perpetrator_named": "included",
+      "assessed_victim_or_at_risk": "included"
+     },
+     "elements_predicted": {
+      "public_authority_named": "included",
+      "victim_named": "included",
+      "perpetrator_named": "included",
+      "assessed_victim_or_at_risk": "included"
+     },
+     "element_matches": {
+      "public_authority_named": true,
+      "victim_named": true,
+      "perpetrator_named": true,
+      "assessed_victim_or_at_risk": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "Accepted by MoJ.",
+     "error": null,
+     "latency_ms": 28084,
+     "quotes_unverified": 0,
+     "category": "scanned"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P19-rejected-02-digital",
+   "category": "digital",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "19",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "public_authority_named": "included",
+      "victim_named": "included",
+      "perpetrator_named": "included",
+      "assessed_victim_or_at_risk": "missing"
+     },
+     "elements_predicted": {
+      "public_authority_named": "included",
+      "victim_named": "included",
+      "perpetrator_named": "included",
+      "assessed_victim_or_at_risk": "missing"
+     },
+     "element_matches": {
+      "public_authority_named": true,
+      "victim_named": true,
+      "perpetrator_named": true,
+      "assessed_victim_or_at_risk": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "hedge"
+     ],
+     "reason_expected": "'Might be a victim' is not an assessment.",
+     "error": null,
+     "latency_ms": 24915,
+     "quotes_unverified": 0,
+     "category": "digital"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P19-rejected-02-scanned",
+   "category": "scanned",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "19",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "public_authority_named": "included",
+      "victim_named": "included",
+      "perpetrator_named": "included",
+      "assessed_victim_or_at_risk": "missing"
+     },
+     "elements_predicted": {
+      "public_authority_named": "included",
+      "victim_named": "included",
+      "perpetrator_named": "included",
+      "assessed_victim_or_at_risk": "missing"
+     },
+     "element_matches": {
+      "public_authority_named": true,
+      "victim_named": true,
+      "perpetrator_named": true,
+      "assessed_victim_or_at_risk": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "hedge"
+     ],
+     "reason_expected": "'Might be a victim' is not an assessment.",
+     "error": null,
+     "latency_ms": 57079,
+     "quotes_unverified": 0,
+     "category": "scanned"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P18-accepted-01-digital",
+   "category": "digital",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "18",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "organisation_identified": "included",
+      "perpetrator_named": "included",
+      "victim_named": "included",
+      "refusal_date": "included",
+      "sought_because_of_abuse_by_other_party": "included"
+     },
+     "elements_predicted": {
+      "organisation_identified": "included",
+      "perpetrator_named": "included",
+      "victim_named": "included",
+      "refusal_date": "included",
+      "sought_because_of_abuse_by_other_party": "included"
+     },
+     "element_matches": {
+      "organisation_identified": true,
+      "perpetrator_named": true,
+      "victim_named": true,
+      "refusal_date": true,
+      "sought_because_of_abuse_by_other_party": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "Accepted by MoJ.",
+     "error": null,
+     "latency_ms": 18711,
+     "quotes_unverified": 0,
+     "category": "digital"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P18-accepted-01-scanned",
+   "category": "scanned",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "18",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "organisation_identified": "included",
+      "perpetrator_named": "included",
+      "victim_named": "included",
+      "refusal_date": "included",
+      "sought_because_of_abuse_by_other_party": "included"
+     },
+     "elements_predicted": {
+      "organisation_identified": "included",
+      "perpetrator_named": "included",
+      "victim_named": "included",
+      "refusal_date": "included",
+      "sought_because_of_abuse_by_other_party": "included"
+     },
+     "element_matches": {
+      "organisation_identified": true,
+      "perpetrator_named": true,
+      "victim_named": true,
+      "refusal_date": true,
+      "sought_because_of_abuse_by_other_party": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "Accepted by MoJ.",
+     "error": null,
+     "latency_ms": 28223,
+     "quotes_unverified": 0,
+     "category": "scanned"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P18-rejected-02-digital",
+   "category": "digital",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "18",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "organisation_identified": "included",
+      "perpetrator_named": "missing",
+      "victim_named": "included",
+      "refusal_date": "included",
+      "sought_because_of_abuse_by_other_party": "unclear"
+     },
+     "elements_predicted": {
+      "organisation_identified": "included",
+      "perpetrator_named": "missing",
+      "victim_named": "included",
+      "refusal_date": "included",
+      "sought_because_of_abuse_by_other_party": "unclear"
+     },
+     "element_matches": {
+      "organisation_identified": true,
+      "perpetrator_named": true,
+      "victim_named": true,
+      "refusal_date": true,
+      "sought_because_of_abuse_by_other_party": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "No perpetrator named, so the refusal can't be linked to abuse by B.",
+     "error": null,
+     "latency_ms": 17137,
+     "quotes_unverified": 0,
+     "category": "digital"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P18-rejected-02-scanned",
+   "category": "scanned",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "18",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "organisation_identified": "included",
+      "perpetrator_named": "missing",
+      "victim_named": "included",
+      "refusal_date": "included",
+      "sought_because_of_abuse_by_other_party": "unclear"
+     },
+     "elements_predicted": {
+      "organisation_identified": "included",
+      "perpetrator_named": "missing",
+      "victim_named": "included",
+      "refusal_date": "included",
+      "sought_because_of_abuse_by_other_party": "unclear"
+     },
+     "element_matches": {
+      "organisation_identified": true,
+      "perpetrator_named": true,
+      "victim_named": true,
+      "refusal_date": true,
+      "sought_because_of_abuse_by_other_party": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "No perpetrator named, so the refusal can't be linked to abuse by B.",
+     "error": null,
+     "latency_ms": 31202,
+     "quotes_unverified": 0,
+     "category": "scanned"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P14-accepted-01-digital",
+   "category": "digital",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "14",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "author_is_idva": "included",
+      "confirms_support": "included",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "author_is_idva": "included",
+      "confirms_support": "included",
+      "applicant_named": "included"
+     },
+     "element_matches": {
+      "author_is_idva": true,
+      "confirms_support": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "unfilled_placeholder"
+     ],
+     "reason_expected": "Accepted by MoJ.",
+     "error": null,
+     "latency_ms": 12064,
+     "quotes_unverified": 0,
+     "category": "digital"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P14-accepted-01-scanned",
+   "category": "scanned",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "14",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "author_is_idva": "included",
+      "confirms_support": "included",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "author_is_idva": "included",
+      "confirms_support": "included",
+      "applicant_named": "included"
+     },
+     "element_matches": {
+      "author_is_idva": true,
+      "confirms_support": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "unfilled_placeholder"
+     ],
+     "reason_expected": "Accepted by MoJ.",
+     "error": null,
+     "latency_ms": 24100,
+     "quotes_unverified": 0,
+     "category": "scanned"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P14-rejected-02-digital",
+   "category": "digital",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "14",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "author_is_idva": "included",
+      "confirms_support": "missing",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "author_is_idva": "included",
+      "confirms_support": "missing",
+      "applicant_named": "included"
+     },
+     "element_matches": {
+      "author_is_idva": true,
+      "confirms_support": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "unfilled_placeholder"
+     ],
+     "reason_expected": "MoJ rejected this; the only differences are 'we provided' vs 'I am providing'. Exact reason unconfirmed - ask MoJ.",
+     "error": null,
+     "latency_ms": 14648,
+     "quotes_unverified": 0,
+     "category": "digital"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P14-rejected-02-scanned",
+   "category": "scanned",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "14",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "author_is_idva": "included",
+      "confirms_support": "missing",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "author_is_idva": "included",
+      "confirms_support": "missing",
+      "applicant_named": "included"
+     },
+     "element_matches": {
+      "author_is_idva": true,
+      "confirms_support": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "unfilled_placeholder"
+     ],
+     "reason_expected": "MoJ rejected this; the only differences are 'we provided' vs 'I am providing'. Exact reason unconfirmed - ask MoJ.",
+     "error": null,
+     "latency_ms": 32241,
+     "quotes_unverified": 0,
+     "category": "scanned"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,57 @@
+id: sch1_p16_la_housing
+gateway: da
+enabled: true
+paragraph: "16"
+legal_ref: "Civil Legal Aid (Procedure) Regulations 2012, Schedule 1, paragraph 16"
+guidance_ref: "LAA Evidence Requirements v15, paragraphs 2.70 to 2.73"
+name: "Letter from an officer employed by a local authority or housing association for the purpose of supporting tenants"
+short_name: "Housing officer letter"
+names_other_party_required: true
+applicant_must_be_victim: false
+always_needs_caseworker: false
+accepted_formats: ["letter", "email from an official address"]
+classification_hints:
+  - "letter or email from a council housing department, Housing Options or homelessness team, or a housing association, signed by a housing officer, tenancy officer or similar with their department"
+  - "author is employed to support tenants or housing applicants; a private landlord, letting agent or property manager does not qualify"
+  - "contains the officer's professional judgement that a named person is, or is at risk of being, a victim of domestic abuse by a named other party"
+  - "describes housing support or a housing decision such as acceptance as homeless or in priority need, a local connection exemption, a management transfer or safe temporary accommodation"
+elements:
+  - id: officer_of_la_or_ha
+    label: "Officer of local authority or housing association"
+    requirement: "The author is an officer employed by a local authority or housing association in England or Wales (or their equivalent in Scotland or Northern Ireland) for the purpose of supporting tenants."
+    accept_if: "The letterhead, signature block or email address shows a local authority (a borough, district, city or county council, or London borough) or a housing association (a registered provider of social housing, housing trust or homes group), and the author's job title or department shows they work with tenants or housing applicants (for example housing officer, tenancy sustainment officer, Housing Options, homelessness team, domestic abuse lead). The name of the officer and their department should both be given."
+    reject_if: "The author works for a private landlord, letting agent, estate agent or property management company; no employer is named at all; or the author is a council officer in a role with no tenant-support function and no housing link is shown. An employer whose name shows a council or a social housing body (Council, Borough, Housing Association, Housing Group, Housing Trust, Homes, Housing Options) is taken on its face as a local authority or housing association; do not use unclear merely because you cannot place the organisation. Use unclear only where an employer is named but nothing in its name or the letter indicates whether it is a council, a housing association or a private company."
+    fix: "Give the name of the officer and their department, and confirm that {author_org} is a local authority or housing association that employs them for the purpose of supporting tenants."
+  - id: victim_named
+    label: "Victim named, family relationship with B"
+    requirement: "The letter names the person who is, or is at risk of being, a victim: the applicant, or another person in a family relationship with B."
+    accept_if: "The victim's name appears and the letter states or clearly implies a family relationship with the other party (for example 'her former partner', 'his ex-wife', 'with whom B is or has been in a family relationship', or describing B as the victim's husband, partner, cohabitant or the father of her children). The victim does not have to be the applicant: under paragraph 16 the victim may be another person with whom B is or has been in a family relationship. If the person named is the applicant on the legal aid application, the family relationship with B is established by the application and need not be restated in the letter; whether B is named is checked separately under perpetrator_named."
+    reject_if: "No victim is named; only an unfilled placeholder such as [name of client] is given; or the victim is someone other than the applicant and nothing links them to B as a family member or current or former partner. If the name does not match the applicant on the application and the letter does not explain who the person is, use unclear rather than missing."
+    fix: "Name {applicant_name} as the person who is, or is at risk of being, a victim and state their relationship to {other_party_name} (for example former partner or spouse)."
+  - id: perpetrator_named
+    label: "Other party named"
+    requirement: "The letter names B, the other party to the legal aid application, as the person who is, or is at risk of, abusing the victim."
+    accept_if: "The other party's name appears as the perpetrator, for example 'victim of domestic abuse by John Doe', a 'Name of perpetrator: John Doe' line, or a judgement sentence that names B."
+    reject_if: "No perpetrator is named; the abuser is only described ('her ex-partner', 'the respondent', 'the perpetrator') with no name anywhere in the letter; or the person named is not the other party on the application. A different name is unclear rather than missing if it could be a spelling variant, maiden name or alias."
+    fix: "Name {other_party_name} as the person who is, or is at risk of, abusing {applicant_name}."
+  - id: professional_judgement
+    label: "Reasonable professional judgement stated"
+    requirement: "A statement to the effect that, in the officer's reasonable professional judgement, the victim is, or is at risk of being, a victim of domestic abuse by B."
+    accept_if: "A clear, unqualified statement of the officer's own judgement or assessment that the named victim is, or is at risk of being, a victim of domestic abuse by B. Exact words are not required: 'in my professional opinion', 'I am satisfied that', 'our assessment is that' all count where the meaning is clear."
+    reject_if: "No judgement at all; a hedged judgement ('it is possible that ... could be', 'may be', 'might be', 'appears to be', 'potentially'); the client's own allegation or belief reported without the officer's judgement ('she tells us she is a victim', 'she states that'); a judgement given by someone else and merely repeated (for example what the police or a charity said); or a judgement about someone other than the named victim."
+    fix: "State that, in your reasonable professional judgement, {applicant_name} is, or is at risk of being, a victim of domestic abuse by {other_party_name}, without qualification."
+  - id: specific_matters
+    label: "Specific matters relied on"
+    requirement: "A description of the specific matters the officer relied upon to support that judgement."
+    accept_if: "A description of what happened, was disclosed or was observed: threats or assaults described, incidents at the property, a DASH or other risk assessment with its score or date, police attendance, a disclosure of controlling behaviour, damage to the home, or a MARAC referral. A short description is enough if it says what the matters were."
+    reject_if: "Only a source or category is given with no content: 'based on our records', 'information held on file', 'disclosures made to us', 'reports received', 'as per the police', or a bare mention of a risk assessment with no indication of what it found; or the matters described concern a different person from the named victim."
+    fix: "Describe the specific matters you relied on to reach your judgement: what {applicant_name} disclosed or what {author_org} observed or recorded, not just where the information came from."
+  - id: support_or_decision
+    label: "Support provided or decision reached"
+    requirement: "A description of the support the officer or their organisation provided to the victim, which may be a housing decision reached because of the domestic abuse."
+    accept_if: "Any description of support or of a decision reached: acceptance as homeless or in priority need, emergency or temporary accommodation, a management transfer, exemption from local connection rules, extra security or a sanctuary scheme, a referral to a domestic abuse service, safety planning, or ongoing tenancy support. Guidance 2.73 confirms that a decision such as priority need or a local connection exemption counts as support."
+    reject_if: "No support or decision is described; the letter only says the client is 'known to the service' or 'in contact with us'; or the support described was given to someone other than the named victim."
+    fix: "Describe the support {author_org} provided to {applicant_name}, or the housing decision reached because of the domestic abuse (for example acceptance as priority need or a local connection exemption)."
+hedge_terms: []
+gov_template_url: "https://www.gov.uk/government/publications/get-a-letter-from-a-housing-authority-or-association-as-evidence-of-domestic-abuse"
+test_cases_min: 5

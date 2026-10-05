@@ -1,0 +1,1833 @@
+{
+ "summary": {
+  "documents": 35,
+  "cases": 35,
+  "agreement": 1.0,
+  "safe_agreement": 1.0,
+  "case_agreement": 1.0,
+  "false_approval_rate": 0.0,
+  "false_rejection_rate": 0.0,
+  "caseworker_routing_rate": 0.086,
+  "element_accuracy": 0.953,
+  "recategorisation_accuracy": 0.0,
+  "quote_validity": 1.0,
+  "errors": 0,
+  "latency_ms_p50": 19599,
+  "latency_ms_p95": 32454,
+  "by_paragraph": {
+   "1": {
+    "n": 1,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "10": {
+    "n": 2,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 1
+   },
+   "11": {
+    "n": 2,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "12": {
+    "n": 1,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "13": {
+    "n": 1,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "14": {
+    "n": 2,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "15": {
+    "n": 1,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "16": {
+    "n": 2,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "17": {
+    "n": 2,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "18": {
+    "n": 1,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "19": {
+    "n": 2,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "2": {
+    "n": 2,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "20": {
+    "n": 1,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "21": {
+    "n": 1,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 1
+   },
+   "3": {
+    "n": 2,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "4": {
+    "n": 1,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "5": {
+    "n": 1,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "6": {
+    "n": 2,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "6A": {
+    "n": 2,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 1
+   },
+   "7": {
+    "n": 2,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "8": {
+    "n": 2,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "9": {
+    "n": 2,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   }
+  },
+  "by_category": {
+   "style_shift": {
+    "n": 35,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 3
+   }
+  },
+  "confusion": {
+   "meets->meets": 18,
+   "needs_caseworker->needs_caseworker": 3,
+   "needs_change->needs_change": 14
+  },
+  "set": "style",
+  "model": "gpt-5.4",
+  "votes": 3,
+  "rules_version": "schedule1-v15-2026-06-15",
+  "run_at": "2026-10-05T16:20:07+00:00",
+  "wall_seconds": 110.6
+ },
+ "runs": [
+  {
+   "id": "S-P1-no_further_action-01",
+   "category": "style_shift",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "1",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "perpetrator_named": "included",
+      "victim_named": "included",
+      "da_offence": "included",
+      "arrest_current": "missing",
+      "acceptable_source": "included"
+     },
+     "elements_predicted": {
+      "perpetrator_named": "included",
+      "victim_named": "included",
+      "da_offence": "included",
+      "arrest_current": "missing",
+      "acceptable_source": "included"
+     },
+     "element_matches": {
+      "perpetrator_named": true,
+      "victim_named": true,
+      "da_offence": true,
+      "arrest_current": true,
+      "acceptable_source": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "Police confirm no further action, so B is no longer under investigation or charged.",
+     "error": null,
+     "latency_ms": 18974,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P2-benign_defects-01",
+   "category": "style_shift",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "2",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "perpetrator_named": "included",
+      "caution_given": "included",
+      "da_offence": "included",
+      "victim_named": "included"
+     },
+     "elements_predicted": {
+      "perpetrator_named": "included",
+      "caution_given": "included",
+      "da_offence": "included",
+      "victim_named": "included"
+     },
+     "element_matches": {
+      "perpetrator_named": true,
+      "caution_given": true,
+      "da_offence": true,
+      "victim_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "Still valid: typo 'relationsip'. MoJ accepted letters with similar errors.",
+     "error": null,
+     "latency_ms": 17827,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P3-not_charged-01",
+   "category": "style_shift",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "3",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "perpetrator_named": "included",
+      "charged": "missing",
+      "da_offence": "included",
+      "not_concluded": "included",
+      "victim_named": "included"
+     },
+     "elements_predicted": {
+      "perpetrator_named": "missing",
+      "charged": "missing",
+      "da_offence": "missing",
+      "not_concluded": "missing",
+      "victim_named": "missing"
+     },
+     "element_matches": {
+      "perpetrator_named": false,
+      "charged": true,
+      "da_offence": false,
+      "not_concluded": false,
+      "victim_named": false
+     },
+     "recategorise_expected": "1",
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "B is released under investigation with no charging decision. This would meet para 1 (arrest) instead.",
+     "error": null,
+     "latency_ms": 53515,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P4-different_defendant-01",
+   "category": "style_shift",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "4",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "perpetrator_named": "missing",
+      "convicted": "included",
+      "da_offence": "included",
+      "victim_named": "included"
+     },
+     "elements_predicted": {
+      "perpetrator_named": "missing",
+      "convicted": "missing",
+      "da_offence": "included",
+      "victim_named": "included"
+     },
+     "element_matches": {
+      "perpetrator_named": true,
+      "convicted": false,
+      "da_offence": true,
+      "victim_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "name_mismatch"
+     ],
+     "reason_expected": "The person convicted is not the other party in this application.",
+     "error": null,
+     "latency_ms": 20961,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P6-valid-01",
+   "category": "style_shift",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "6",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "perpetrator_named": "included",
+      "protected_party_named": "included",
+      "valid_notice": "included"
+     },
+     "elements_predicted": {
+      "perpetrator_named": "included",
+      "protected_party_named": "included",
+      "valid_notice": "included"
+     },
+     "element_matches": {
+      "perpetrator_named": true,
+      "protected_party_named": true,
+      "valid_notice": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "quote_multi_span"
+     ],
+     "reason_expected": "All required elements present.",
+     "error": null,
+     "latency_ms": 13469,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P6A-benign_defects-01",
+   "category": "style_shift",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "6A",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "perpetrator_named": "included",
+      "protected_party_named": "included",
+      "valid_notice": "included"
+     },
+     "elements_predicted": {
+      "perpetrator_named": "included",
+      "protected_party_named": "included",
+      "valid_notice": "included"
+     },
+     "element_matches": {
+      "perpetrator_named": true,
+      "protected_party_named": true,
+      "valid_notice": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "Still valid: . MoJ accepted letters with similar errors.",
+     "error": null,
+     "latency_ms": 17913,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P7-set_aside-01",
+   "category": "style_shift",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "7",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "court_document": "included",
+      "order_made_and_in_force": "missing",
+      "respondent_is_other_party": "included",
+      "protected_party_named": "included"
+     },
+     "elements_predicted": {
+      "court_document": "included",
+      "order_made_and_in_force": "missing",
+      "respondent_is_other_party": "included",
+      "protected_party_named": "included"
+     },
+     "element_matches": {
+      "court_document": true,
+      "order_made_and_in_force": true,
+      "respondent_is_other_party": true,
+      "protected_party_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "quote_multi_span"
+     ],
+     "reason_expected": "The without-notice order was set aside at the return hearing.",
+     "error": null,
+     "latency_ms": 32454,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P8-benign_defects-01",
+   "category": "style_shift",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "8",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "given_by_other_party": "included",
+      "correct_statutory_basis": "included",
+      "beneficiary_named": "included",
+      "no_relevant_cross_undertaking": "included"
+     },
+     "elements_predicted": {
+      "given_by_other_party": "included",
+      "correct_statutory_basis": "included",
+      "beneficiary_named": "included",
+      "no_relevant_cross_undertaking": "included"
+     },
+     "element_matches": {
+      "given_by_other_party": true,
+      "correct_statutory_basis": true,
+      "beneficiary_named": true,
+      "no_relevant_cross_undertaking": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "Still valid: . MoJ accepted letters with similar errors.",
+     "error": null,
+     "latency_ms": 23958,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P9-finding_after_application-01",
+   "category": "style_shift",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "9",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "court_document": "included",
+      "specific_finding_by_other_party": "included",
+      "made_before_application": "missing",
+      "victim_named": "included"
+     },
+     "elements_predicted": {
+      "court_document": "included",
+      "specific_finding_by_other_party": "included",
+      "made_before_application": "missing",
+      "victim_named": "included"
+     },
+     "element_matches": {
+      "court_document": true,
+      "specific_finding_by_other_party": true,
+      "made_before_application": true,
+      "victim_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "quote_multi_span"
+     ],
+     "reason_expected": "The finding post-dates the application, so it can't be the only evidence.",
+     "error": null,
+     "latency_ms": 23246,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P10-no_qualifications-01",
+   "category": "style_shift",
+   "expected_case": "needs_caseworker",
+   "predicted_case": "needs_caseworker",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "10",
+     "expected": "needs_caseworker",
+     "predicted": "needs_caseworker",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "produced_for_uk_proceedings": "included",
+      "expert_identity_and_qualifications": "unclear",
+      "names_perpetrator_and_victim": "included",
+      "assessed_victim_or_at_risk": "included"
+     },
+     "elements_predicted": {
+      "produced_for_uk_proceedings": "included",
+      "expert_identity_and_qualifications": "unclear",
+      "names_perpetrator_and_victim": "included",
+      "assessed_victim_or_at_risk": "included"
+     },
+     "element_matches": {
+      "produced_for_uk_proceedings": true,
+      "expert_identity_and_qualifications": true,
+      "names_perpetrator_and_victim": true,
+      "assessed_victim_or_at_risk": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "Author's qualifications and experience are not stated.",
+     "error": null,
+     "latency_ms": 22640,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P11-benign_defects-01",
+   "category": "style_shift",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "11",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "appropriate_health_professional": "included",
+      "examined_applicant": "included",
+      "consistent_with_domestic_abuse": "included",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "appropriate_health_professional": "included",
+      "examined_applicant": "included",
+      "consistent_with_domestic_abuse": "included",
+      "applicant_named": "included"
+     },
+     "element_matches": {
+      "appropriate_health_professional": true,
+      "examined_applicant": true,
+      "consistent_with_domestic_abuse": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "unfilled_placeholder"
+     ],
+     "reason_expected": "Still valid: typo 'proffesional', typo 'Regualtions', typo 'domestc', unfilled template placeholder. MoJ accepted letters with similar errors.",
+     "error": null,
+     "latency_ms": 18637,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P12-benign_defects-01",
+   "category": "style_shift",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "12",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "applicant_named": "included",
+      "referral_by_ahp": "included",
+      "specialist_da_service": "included",
+      "author_eligible": "included"
+     },
+     "elements_predicted": {
+      "applicant_named": "included",
+      "referral_by_ahp": "included",
+      "specialist_da_service": "included",
+      "author_eligible": "included"
+     },
+     "element_matches": {
+      "applicant_named": true,
+      "referral_by_ahp": true,
+      "specialist_da_service": true,
+      "author_eligible": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "quote_multi_span",
+      "unfilled_placeholder"
+     ],
+     "reason_expected": "Still valid: typo 'vicim', typo 'comfirm', typo 'suport', unfilled template placeholder. MoJ accepted letters with similar errors.",
+     "error": null,
+     "latency_ms": 84725,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P14-we_provided-01",
+   "category": "style_shift",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "14",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "author_is_idva": "included",
+      "confirms_support": "missing",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "author_is_idva": "included",
+      "confirms_support": "missing",
+      "applicant_named": "included"
+     },
+     "element_matches": {
+      "author_is_idva": true,
+      "confirms_support": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "Mirrors the MoJ rejected example: 'we provided' rather than the IDVA confirming support personally. MoJ's exact reason is unconfirmed.",
+     "error": null,
+     "latency_ms": 21830,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P15-stranger_assault-01",
+   "category": "style_shift",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "15",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "author_is_isva": "included",
+      "applicant_named": "included",
+      "support_relates_to_sexual_violence": "included",
+      "perpetrator_is_other_party": "missing"
+     },
+     "elements_predicted": {
+      "author_is_isva": "included",
+      "applicant_named": "included",
+      "support_relates_to_sexual_violence": "included",
+      "perpetrator_is_other_party": "missing"
+     },
+     "element_matches": {
+      "author_is_isva": true,
+      "applicant_named": true,
+      "support_relates_to_sexual_violence": true,
+      "perpetrator_is_other_party": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "name_mismatch"
+     ],
+     "reason_expected": "Support relates to an assault by an unknown person, not B.",
+     "error": null,
+     "latency_ms": 19566,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P16-valid-01",
+   "category": "style_shift",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "16",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "officer_of_la_or_ha": "included",
+      "victim_named": "included",
+      "perpetrator_named": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_or_decision": "included"
+     },
+     "elements_predicted": {
+      "officer_of_la_or_ha": "included",
+      "victim_named": "included",
+      "perpetrator_named": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_or_decision": "included"
+     },
+     "element_matches": {
+      "officer_of_la_or_ha": true,
+      "victim_named": true,
+      "perpetrator_named": true,
+      "professional_judgement": true,
+      "specific_matters": true,
+      "support_or_decision": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "All required elements present.",
+     "error": null,
+     "latency_ms": 22881,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P17-valid-01",
+   "category": "style_shift",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "17",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_description": "included",
+      "reason_for_support": "included",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "applicant_named": "included",
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_description": "included",
+      "reason_for_support": "included"
+     },
+     "element_matches": {
+      "uk_situated": true,
+      "operating_six_months": true,
+      "supported_applicant": true,
+      "professional_judgement": true,
+      "specific_matters": true,
+      "support_description": true,
+      "reason_for_support": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "All required elements present.",
+     "error": null,
+     "latency_ms": 22107,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P18-benign_defects-01",
+   "category": "style_shift",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "18",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "organisation_identified": "included",
+      "perpetrator_named": "included",
+      "victim_named": "included",
+      "refusal_date": "included",
+      "sought_because_of_abuse_by_other_party": "included"
+     },
+     "elements_predicted": {
+      "organisation_identified": "included",
+      "perpetrator_named": "included",
+      "victim_named": "included",
+      "refusal_date": "included",
+      "sought_because_of_abuse_by_other_party": "included"
+     },
+     "element_matches": {
+      "organisation_identified": true,
+      "perpetrator_named": true,
+      "victim_named": true,
+      "refusal_date": true,
+      "sought_because_of_abuse_by_other_party": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "Still valid: typo 'Regualtions', typo 'relationsip', typo 'comfirm', unfilled template placeholder. MoJ accepted letters with similar errors.",
+     "error": null,
+     "latency_ms": 19648,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P19-valid-02",
+   "category": "style_shift",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "19",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "public_authority_named": "included",
+      "victim_named": "included",
+      "perpetrator_named": "included",
+      "assessed_victim_or_at_risk": "included"
+     },
+     "elements_predicted": {
+      "public_authority_named": "included",
+      "victim_named": "included",
+      "perpetrator_named": "included",
+      "assessed_victim_or_at_risk": "included"
+     },
+     "element_matches": {
+      "public_authority_named": true,
+      "victim_named": true,
+      "perpetrator_named": true,
+      "assessed_victim_or_at_risk": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "All required elements present.",
+     "error": null,
+     "latency_ms": 19488,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P20-other_basis-01",
+   "category": "style_shift",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "20",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "from_home_office": "included",
+      "applicant_named": "included",
+      "leave_as_da_victim": "missing",
+      "granted_on_or_before_application": "included"
+     },
+     "elements_predicted": {
+      "from_home_office": "included",
+      "applicant_named": "included",
+      "leave_as_da_victim": "missing",
+      "granted_on_or_before_application": "included"
+     },
+     "element_matches": {
+      "from_home_office": true,
+      "applicant_named": true,
+      "leave_as_da_victim": true,
+      "granted_on_or_before_application": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "quote_multi_span"
+     ],
+     "reason_expected": "Leave was granted as a partner under Appendix FM, not as a victim of domestic abuse.",
+     "error": null,
+     "latency_ms": 17406,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P21-narrative_only_no_explanation-01",
+   "category": "style_shift",
+   "expected_case": "needs_caseworker",
+   "predicted_case": "needs_caseworker",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "21",
+     "expected": "needs_caseworker",
+     "predicted": "needs_caseworker",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "perpetrator_named": "included",
+      "economic_behaviour_described": "included",
+      "pattern_of_power_or_control": "included",
+      "corroboration_or_explanation": "unclear"
+     },
+     "elements_predicted": {
+      "perpetrator_named": "included",
+      "economic_behaviour_described": "included",
+      "pattern_of_power_or_control": "included",
+      "corroboration_or_explanation": "unclear"
+     },
+     "element_matches": {
+      "perpetrator_named": true,
+      "economic_behaviour_described": true,
+      "pattern_of_power_or_control": true,
+      "corroboration_or_explanation": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "quote_multi_span"
+     ],
+     "reason_expected": "Narrative only, with no documents and no explanation of why none are available.",
+     "error": null,
+     "latency_ms": 24155,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P2-non_da_offence-01",
+   "category": "style_shift",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "2",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "perpetrator_named": "included",
+      "caution_given": "included",
+      "da_offence": "missing",
+      "victim_named": "included"
+     },
+     "elements_predicted": {
+      "perpetrator_named": "included",
+      "caution_given": "included",
+      "da_offence": "missing",
+      "victim_named": "missing"
+     },
+     "element_matches": {
+      "perpetrator_named": true,
+      "caution_given": true,
+      "da_offence": true,
+      "victim_named": false
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "Caution was for drug possession, not a domestic abuse offence.",
+     "error": null,
+     "latency_ms": 17012,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P3-non_da_offence-01",
+   "category": "style_shift",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "3",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "perpetrator_named": "included",
+      "charged": "included",
+      "da_offence": "missing",
+      "not_concluded": "included",
+      "victim_named": "included"
+     },
+     "elements_predicted": {
+      "perpetrator_named": "included",
+      "charged": "included",
+      "da_offence": "missing",
+      "not_concluded": "included",
+      "victim_named": "missing"
+     },
+     "element_matches": {
+      "perpetrator_named": true,
+      "charged": true,
+      "da_offence": true,
+      "not_concluded": true,
+      "victim_named": false
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "B is charged with a drugs offence, not a domestic abuse offence.",
+     "error": null,
+     "latency_ms": 16451,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P5-valid-01",
+   "category": "style_shift",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "5",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "perpetrator_bound_over": "included",
+      "da_offence_connection": "included",
+      "victim_named": "included"
+     },
+     "elements_predicted": {
+      "perpetrator_bound_over": "included",
+      "da_offence_connection": "included",
+      "victim_named": "included"
+     },
+     "element_matches": {
+      "perpetrator_bound_over": true,
+      "da_offence_connection": true,
+      "victim_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "quote_multi_span"
+     ],
+     "reason_expected": "All required elements present.",
+     "error": null,
+     "latency_ms": 15200,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P6-valid-02",
+   "category": "style_shift",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "6",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "perpetrator_named": "included",
+      "protected_party_named": "included",
+      "valid_notice": "included"
+     },
+     "elements_predicted": {
+      "perpetrator_named": "included",
+      "protected_party_named": "included",
+      "valid_notice": "included"
+     },
+     "element_matches": {
+      "perpetrator_named": true,
+      "protected_party_named": true,
+      "valid_notice": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "All required elements present.",
+     "error": null,
+     "latency_ms": 19292,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P6A-non_pilot_force-01",
+   "category": "style_shift",
+   "expected_case": "needs_caseworker",
+   "predicted_case": "needs_caseworker",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "6A",
+     "expected": "needs_caseworker",
+     "predicted": "needs_caseworker",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "perpetrator_named": "included",
+      "protected_party_named": "included",
+      "valid_notice": "unclear"
+     },
+     "elements_predicted": {
+      "perpetrator_named": "included",
+      "protected_party_named": "included",
+      "valid_notice": "unclear"
+     },
+     "element_matches": {
+      "perpetrator_named": true,
+      "protected_party_named": true,
+      "valid_notice": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "DAPNs are only given in the pilot areas; this one claims to be from a non-pilot force, so verify it.",
+     "error": null,
+     "latency_ms": 19599,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P7-benign_defects-01",
+   "category": "style_shift",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "7",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "court_document": "included",
+      "order_made_and_in_force": "included",
+      "respondent_is_other_party": "included",
+      "protected_party_named": "included"
+     },
+     "elements_predicted": {
+      "court_document": "included",
+      "order_made_and_in_force": "included",
+      "respondent_is_other_party": "included",
+      "protected_party_named": "included"
+     },
+     "element_matches": {
+      "court_document": true,
+      "order_made_and_in_force": true,
+      "respondent_is_other_party": true,
+      "protected_party_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "quote_multi_span"
+     ],
+     "reason_expected": "Still valid: typo 'comfirm'. MoJ accepted letters with similar errors.",
+     "error": null,
+     "latency_ms": 15483,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P8-valid-01",
+   "category": "style_shift",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "8",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "given_by_other_party": "included",
+      "correct_statutory_basis": "included",
+      "beneficiary_named": "included",
+      "no_relevant_cross_undertaking": "included"
+     },
+     "elements_predicted": {
+      "given_by_other_party": "included",
+      "correct_statutory_basis": "included",
+      "beneficiary_named": "included",
+      "no_relevant_cross_undertaking": "included"
+     },
+     "element_matches": {
+      "given_by_other_party": true,
+      "correct_statutory_basis": true,
+      "beneficiary_named": true,
+      "no_relevant_cross_undertaking": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "quote_multi_span"
+     ],
+     "reason_expected": "All required elements present.",
+     "error": null,
+     "latency_ms": 26214,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P9-valid-02",
+   "category": "style_shift",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "9",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "court_document": "included",
+      "specific_finding_by_other_party": "included",
+      "made_before_application": "included",
+      "victim_named": "included"
+     },
+     "elements_predicted": {
+      "court_document": "included",
+      "specific_finding_by_other_party": "included",
+      "made_before_application": "included",
+      "victim_named": "included"
+     },
+     "element_matches": {
+      "court_document": true,
+      "specific_finding_by_other_party": true,
+      "made_before_application": true,
+      "victim_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "quote_multi_span"
+     ],
+     "reason_expected": "All required elements present.",
+     "error": null,
+     "latency_ms": 24555,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P10-no_assessment-01",
+   "category": "style_shift",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "10",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "produced_for_uk_proceedings": "included",
+      "expert_identity_and_qualifications": "included",
+      "names_perpetrator_and_victim": "included",
+      "assessed_victim_or_at_risk": "missing"
+     },
+     "elements_predicted": {
+      "produced_for_uk_proceedings": "included",
+      "expert_identity_and_qualifications": "included",
+      "names_perpetrator_and_victim": "included",
+      "assessed_victim_or_at_risk": "missing"
+     },
+     "element_matches": {
+      "produced_for_uk_proceedings": true,
+      "expert_identity_and_qualifications": true,
+      "names_perpetrator_and_victim": true,
+      "assessed_victim_or_at_risk": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "quote_multi_span"
+     ],
+     "reason_expected": "The report expressly makes no assessment of the abuse allegations.",
+     "error": null,
+     "latency_ms": 24591,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P11-hedged_judgement-01",
+   "category": "style_shift",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "11",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "appropriate_health_professional": "included",
+      "examined_applicant": "included",
+      "consistent_with_domestic_abuse": "missing",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "appropriate_health_professional": "included",
+      "examined_applicant": "included",
+      "consistent_with_domestic_abuse": "missing",
+      "applicant_named": "included"
+     },
+     "element_matches": {
+      "appropriate_health_professional": true,
+      "examined_applicant": true,
+      "consistent_with_domestic_abuse": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "hedge"
+     ],
+     "reason_expected": "Judgement is hedged ('may possibly be consistent'), mirroring the MoJ rejected example.",
+     "error": null,
+     "latency_ms": 18657,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P13-benign_defects-01",
+   "category": "style_shift",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "13",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "author_forum_member": "included",
+      "victim_named": "included",
+      "perpetrator_named": "included",
+      "at_risk_of_harm_from_other_party": "included"
+     },
+     "elements_predicted": {
+      "author_forum_member": "included",
+      "victim_named": "included",
+      "perpetrator_named": "included",
+      "at_risk_of_harm_from_other_party": "included"
+     },
+     "element_matches": {
+      "author_forum_member": true,
+      "victim_named": true,
+      "perpetrator_named": true,
+      "at_risk_of_harm_from_other_party": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "unfilled_placeholder"
+     ],
+     "reason_expected": "Still valid: typo 'suport', typo 'comfirm', typo 'domestc', unfilled template placeholder. MoJ accepted letters with similar errors.",
+     "error": null,
+     "latency_ms": 15198,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P14-valid-01",
+   "category": "style_shift",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "14",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "author_is_idva": "included",
+      "confirms_support": "included",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "author_is_idva": "included",
+      "confirms_support": "included",
+      "applicant_named": "included"
+     },
+     "element_matches": {
+      "author_is_idva": true,
+      "confirms_support": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "All required elements present.",
+     "error": null,
+     "latency_ms": 12146,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P16-private_landlord-01",
+   "category": "style_shift",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "16",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "officer_of_la_or_ha": "missing",
+      "victim_named": "included",
+      "perpetrator_named": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_or_decision": "included"
+     },
+     "elements_predicted": {
+      "officer_of_la_or_ha": "missing",
+      "victim_named": "included",
+      "perpetrator_named": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_or_decision": "included"
+     },
+     "element_matches": {
+      "officer_of_la_or_ha": true,
+      "victim_named": true,
+      "perpetrator_named": true,
+      "professional_judgement": true,
+      "specific_matters": true,
+      "support_or_decision": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "Author is a private letting agent, not a local authority or housing association.",
+     "error": null,
+     "latency_ms": 21525,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P17-operating_under_six_months-01",
+   "category": "style_shift",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "17",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "uk_situated": "included",
+      "operating_six_months": "missing",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_description": "included",
+      "reason_for_support": "included",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "applicant_named": "included",
+      "uk_situated": "included",
+      "operating_six_months": "missing",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_description": "included",
+      "reason_for_support": "included"
+     },
+     "element_matches": {
+      "uk_situated": true,
+      "operating_six_months": true,
+      "supported_applicant": true,
+      "professional_judgement": true,
+      "specific_matters": true,
+      "support_description": true,
+      "reason_for_support": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "Organisation states it was established about four months ago.",
+     "error": null,
+     "latency_ms": 20486,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  },
+  {
+   "id": "S-P19-benign_defects-01",
+   "category": "style_shift",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "19",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "public_authority_named": "included",
+      "victim_named": "included",
+      "perpetrator_named": "included",
+      "assessed_victim_or_at_risk": "included"
+     },
+     "elements_predicted": {
+      "public_authority_named": "included",
+      "victim_named": "included",
+      "perpetrator_named": "included",
+      "assessed_victim_or_at_risk": "included"
+     },
+     "element_matches": {
+      "public_authority_named": true,
+      "victim_named": true,
+      "perpetrator_named": true,
+      "assessed_victim_or_at_risk": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "unfilled_placeholder"
+     ],
+     "reason_expected": "Still valid: typo 'relationsip', typo 'domestc', typo 'vicim', unfilled template placeholder. MoJ accepted letters with similar errors.",
+     "error": null,
+     "latency_ms": 15111,
+     "quotes_unverified": 0,
+     "category": "style_shift"
+    }
+   ]
+  }
+ ]
+}

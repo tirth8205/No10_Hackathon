@@ -1,0 +1,45 @@
+id: sch1_p2_caution
+gateway: da
+enabled: true
+paragraph: "2"
+legal_ref: "Civil Legal Aid (Procedure) Regulations 2012, Schedule 1, paragraph 2"
+guidance_ref: "LAA Evidence Requirements v15, paragraphs 2.14 to 2.17"
+name: "A relevant police caution for a domestic abuse offence"
+short_name: "Police caution for DA offence"
+names_other_party_required: true
+applicant_must_be_victim: false
+always_needs_caseworker: false
+accepted_formats: ["copy of the caution sheet from the police", "letter or email from the police, CPS or Witness Care Unit", "email from a pnn.police.uk address", "email from the legal aid provider naming the police station and the officer spoken to", "letter or email from an overseas law enforcement agency"]
+classification_hints:
+  - "headed 'record of simple caution', 'conditional caution' or 'caution sheet', or a police email confirming that a caution was given"
+  - "has fields for the person cautioned, date of birth, custody record, offence, victim and the date the caution was administered"
+  - "says the offender admitted the offence and accepted a caution; signed by an administering officer"
+  - "not an incident log, call record or attendance report where police gave advice and took no action"
+elements:
+  - id: perpetrator_named
+    label: "B named as person cautioned"
+    requirement: "The other party in the case (B) is named as the person who received the caution."
+    accept_if: "B's name appears as the person cautioned or the offender, in any form (full name, or title and surname, with or without date of birth)."
+    reject_if: "No name for the person cautioned; the person is described only as 'the offender' or 'a male'; the name is redacted or an unfilled placeholder; or the person cautioned is the applicant rather than B. Where a name is given but does not match the other party on the application, use 'unclear' rather than 'missing' so a caseworker can check identity."
+    fix: "Name {other_party_name} as the person who was cautioned."
+  - id: caution_given
+    label: "Caution actually administered"
+    requirement: "The document shows that a police caution (simple or conditional) was actually administered to B."
+    accept_if: "A record or confirmation that a caution was given, for example 'accepted a simple caution', 'caution administered on [date]', 'was cautioned for', or a conditional caution with its conditions. A caution received overseas, confirmed by the relevant law enforcement agency, also counts."
+    reject_if: "The document is an incident log, call record or attendance report where police took no action, gave advice or words of advice, or recorded 'no offences disclosed' or 'no further action'; the only 'caution' is the interview caution read before questioning, not a disposal; the outcome was a community resolution, penalty notice, warning or harassment warning letter rather than a caution; or B was arrested or charged but not cautioned (consider paragraph 1 or 3 instead). A hedged statement ('may have been cautioned', 'I understand a caution was considered') is not confirmation."
+    fix: "Confirm that {other_party_name} was formally cautioned by the police, giving the date the caution was administered."
+  - id: da_offence
+    label: "Caution for a listed DA offence"
+    requirement: "The caution was for an offence on the gov.uk list of domestic violence and child abuse offences."
+    accept_if: "The offence named is on the gov.uk list, for example common assault, assault occasioning actual bodily harm, harassment, controlling or coercive behaviour, threats to kill or criminal damage, with or without the section and Act."
+    reject_if: "The caution was for an offence not on the list, for example possession of a controlled drug, a road traffic offence or a public order offence with no individual victim; or no offence is stated. If an offence is named but you cannot tell whether it is on the gov.uk list, use 'unclear' rather than 'missing'."
+    fix: "State the specific offence for which {other_party_name} was cautioned, which must be on the gov.uk list of domestic violence and child abuse offences."
+  - id: victim_named
+    label: "Victim named, family relationship to B"
+    requirement: "The victim is named (unless the caution is for a sexual offence) and is, or was, in a family relationship with B; the victim may be the applicant or another person."
+    accept_if: "A named victim whose relationship to B falls within the family relationship definition (partner, former partner, spouse, former spouse, cohabitant, former cohabitant, relative, or parent of the same child), for example 'Victim: [name] (relationship to offender: former partner)'. If the named victim is the applicant, the family relationship is established by the application and need not be restated. For a sexual offence the victim need not be named."
+    reject_if: "The victim field is blank, 'not recorded' or 'N/A' and the offence is not a sexual offence; or the named victim is a member of the public, stranger, neighbour or colleague with no family relationship to B. If the named victim is someone other than the applicant and no relationship to B is stated, use 'unclear' rather than 'missing'."
+    fix: "Name the victim (for example {applicant_name}) and state their relationship to {other_party_name}, unless the caution was for a sexual offence."
+hedge_terms: []
+gov_template_url: null
+test_cases_min: 5

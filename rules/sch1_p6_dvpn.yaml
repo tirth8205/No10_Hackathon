@@ -1,0 +1,43 @@
+id: sch1_p6_dvpn
+gateway: da
+enabled: true
+paragraph: "6"
+legal_ref: "Civil Legal Aid (Procedure) Regulations 2012, Schedule 1, paragraph 6"
+guidance_ref: "LAA Evidence Requirements v15, paragraph 2.34"
+name: "Domestic violence protection notice issued under section 24 of the Crime and Security Act 2010 against B"
+short_name: "Domestic violence protection notice"
+names_other_party_required: true
+applicant_must_be_victim: false
+always_needs_caseworker: false
+accepted_formats:
+  - "copy of the DVPN issued by the police"
+  - "letter or email from the police, CPS or Witness Care Unit confirming the DVPN"
+  - "email from a pnn.police.uk address"
+  - "court document detailing the DVPN"
+classification_hints:
+  - "headed 'Domestic Violence Protection Notice' and cites section 24 of the Crime and Security Act 2010"
+  - "issued by a named police force, authorised by a superintendent or above and served by a police officer, with the date and time of issue"
+  - "names the person the notice is given to and the person to be protected; bars molesting or contacting the protected person or entering or approaching their home"
+  - "says an application for a Domestic Violence Protection Order will be heard at a magistrates' court within 48 hours; a DVPO (the order itself) is a protective injunction assessed under paragraph 7, not here"
+elements:
+  - id: perpetrator_named
+    label: "B named as person given notice"
+    requirement: "The notice was issued to B, the other party to the case, who is named as the person it was given to."
+    accept_if: "B's name appears as the person to whom the notice is given, the person served, the respondent or the person prohibited, in any form (full name, or title and surname). A police or court document confirming that a DVPN was issued to B also counts."
+    reject_if: "The recipient's name is missing, redacted or an unfilled placeholder; the recipient is someone other than B; or the roles are reversed, so the notice was given to the applicant and names B as the person to be protected."
+    fix: "Confirm that the notice was issued to {other_party_name} as the person against whom it was made."
+  - id: protected_party_named
+    label: "Protected person named and related"
+    requirement: "The notice names the person it protects, who must be the applicant or another person with whom B is or was in a family relationship."
+    accept_if: "A named protected person. Where it is the applicant, the family relationship with B may be taken from the application; where it is someone else, the notice or covering letter should describe them as B's partner, former partner, spouse, child, parent or other family member."
+    reject_if: "No protected person is named, or the name is redacted or a placeholder; or the protected person is described as having no family relationship with B (for example a neighbour, colleague or stranger). If the protected person is not the applicant and the relationship with B is not stated anywhere, use 'unclear' rather than 'missing'."
+    fix: "Name the person the notice protects, usually {applicant_name}, and if it is not the applicant state how they are, or were, in a family relationship with {other_party_name}."
+  - id: valid_notice
+    label: "Genuine DVPN, correct statute and force"
+    requirement: "The document is a DVPN issued by the police under section 24 of the Crime and Security Act 2010, or a police, CPS, Witness Care Unit or court document confirming that one was issued."
+    accept_if: "The notice is headed as a domestic violence protection notice, cites section 24 of the Crime and Security Act 2010 (or plainly describes a police-issued DVPN), and shows the issuing police force and an authorising or serving officer; or a letter or email from the police, CPS or Witness Care Unit, or a court document, confirms such a notice was issued against B."
+    reject_if: "The document is something else: a Domestic Violence Protection Order made by the magistrates' court (assess under paragraph 7), a Domestic Abuse Protection Notice under the Domestic Abuse Act 2021 (paragraph 6A), a police incident log, a warning or harassment letter, a bail notice, or a notice naming no issuing force or officer. Whether the named force genuinely issued the notice cannot be decided from the text alone, so where the only doubt is authenticity use 'unclear' rather than 'missing'."
+    fix: "Provide a copy of the DVPN itself, or written confirmation from {author_org} on police letterhead or from a pnn.police.uk address that a notice under section 24 of the Crime and Security Act 2010 was issued to {other_party_name}."
+hedge_terms: []
+gov_template_url: null
+test_cases_min: 5

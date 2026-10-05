@@ -1,0 +1,1663 @@
+{
+  "meta": {
+    "description": "Synthetic cases rewritten in unseen styles; labels inherited from the base case. Generated after rule tuning as a generalisation check.",
+    "n_cases": 35,
+    "styles": [
+      "an informal email from the author to the solicitor, first person, short paragraphs, no letterhead",
+      "a formal letter with a letterhead, reference numbers, a date line and 'Yours faithfully'",
+      "a bullet-point summary written in haste, fragments rather than full sentences",
+      "a letter by a writer whose first language is not English: slightly unusual grammar and word choice, but the meaning clear",
+      "a long letter with two or three unrelated paragraphs of padding (office hours, how to contact the service, general information) around the substance",
+      "the same content with every sentence reordered and reworded using synonyms, keeping all names, dates and figures identical"
+    ],
+    "model": "gpt-5.4"
+  },
+  "cases": [
+    {
+      "id": "S-P1-no_further_action-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Leah Fletcher",
+        "other_party": "Dean Brennan",
+        "relationship": "former partner",
+        "child": "Oscar Brennan",
+        "application_date": "2026-09-16",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "1",
+          "text": "Good afternoon,\n\nRegarding Leah Fletcher – crime reference GF/24322/26, I can confirm that Dean Brennan (date of birth 2 February 1995) was arrested on 22 August 2026 on suspicion of assault occasioning actual bodily harm (section 47 Offences Against the Person Act 1861).\n\nThe victim in this matter is Leah Fletcher, his former partner.\n\nDean was interviewed under caution.\n\nFollowing a review of the evidence, a decision was made on 10 September 2026 to take no further action and the investigation has been closed.\n\nKind regards,\n\nDC Ben Davies\nSafeguarding and Domestic Abuse Investigation Team\nLeicestershire Police",
+          "expected": {
+            "outcome": "fail",
+            "elements": {
+              "perpetrator_named": {
+                "description": "Other party (B) is named as the person arrested",
+                "status": "met"
+              },
+              "victim_named": {
+                "description": "Victim is named and is or was in a family relationship with B",
+                "status": "met"
+              },
+              "da_offence": {
+                "description": "Arrest was for a listed domestic abuse offence",
+                "status": "met"
+              },
+              "arrest_current": {
+                "description": "B was arrested and is still under investigation, on bail or charged",
+                "status": "not_met"
+              },
+              "acceptable_source": {
+                "description": "From police/CPS/Witness Care, a pnn.police.uk address, or a provider email naming the station and officer",
+                "status": "met"
+              }
+            },
+            "reason": "Police confirm no further action, so B is no longer under investigation or charged.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "fail",
+      "style": "an informal email from the author to the solicitor, first person, short paragraphs, no letterhead",
+      "base_id": "P1-no_further_action-01"
+    },
+    {
+      "id": "S-P2-benign_defects-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Bethan Davies",
+        "other_party": "Adam Ahmed",
+        "relationship": "former spouse",
+        "child": "Ella Ahmed",
+        "application_date": "2026-09-25",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "2",
+          "text": "AVON AND SOMERSET CONSTABULARY\n\nRECORD OF SIMPLE CAUTION\n\nReference: JG/99065/26\nDate: 27 July 2026\n\nDear Sir or Madam,\n\nThis letter records the simple caution administered to Adam Ahmed, date of birth 12 May 1977, under custody record JG/99065/26.\n\nThe offence was threats to kill (section 16 Offences Against the Person Act 1861). The date of offence was 17 July 2026. The victim was Bethan Davies (relationsip to offender: former spouse).\n\nThe simple caution was administered on 27 July 2026.\n\nThe offender admitted the offence in interview and, having had its implications explained, accepted a simple caution.\n\nAdministering officer: PS Imran Clarke\n\nYours faithfully,\n\nAVON AND SOMERSET CONSTABULARY",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "perpetrator_named": {
+                "description": "B is named as the person cautioned",
+                "status": "met"
+              },
+              "caution_given": {
+                "description": "A caution was actually administered",
+                "status": "met"
+              },
+              "da_offence": {
+                "description": "Caution was for a listed domestic abuse offence",
+                "status": "met"
+              },
+              "victim_named": {
+                "description": "Victim is named (unless a sexual offence) and is in a family relationship with B",
+                "status": "met"
+              }
+            },
+            "reason": "Still valid: typo 'relationsip'. MoJ accepted letters with similar errors.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass",
+      "style": "a formal letter with a letterhead, reference numbers, a date line and 'Yours faithfully'",
+      "base_id": "P2-benign_defects-01"
+    },
+    {
+      "id": "S-P3-not_charged-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Kerry Okafor",
+        "other_party": "Imran Patel",
+        "relationship": "former spouse",
+        "child": "Ruby Patel",
+        "application_date": "2026-09-15",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "3",
+          "text": "- South Yorkshire Police Witness Care Unit\n- 11 September 2026\n- Dear Kerry Okafor,\n- Case reference: DF/25670/26\n- Update on the investigation into the incident on 6 August 2026.\n- Imran Patel — arrested on suspicion of assault occasioning actual bodily harm (section 47 Offences Against the Person Act 1861).\n- Released under investigation while the file is reviewed by the Crown Prosecution Service.\n- No charging decision yet made.\n- Yours sincerely,\n- Kerry Walsh\n- Witness Care Officer\n- South Yorkshire Police",
+          "expected": {
+            "outcome": "fail",
+            "elements": {
+              "perpetrator_named": {
+                "description": "B is named as the person charged",
+                "status": "met"
+              },
+              "charged": {
+                "description": "B has been formally charged (listing not required)",
+                "status": "not_met"
+              },
+              "da_offence": {
+                "description": "Charge is a listed domestic abuse offence",
+                "status": "met"
+              },
+              "not_concluded": {
+                "description": "Proceedings have not concluded",
+                "status": "met"
+              },
+              "victim_named": {
+                "description": "Victim is named (unless a sexual offence)",
+                "status": "met"
+              }
+            },
+            "reason": "B is released under investigation with no charging decision. This would meet para 1 (arrest) instead.",
+            "recategorise_to": "1"
+          }
+        }
+      ],
+      "expected_overall": "fail",
+      "style": "a bullet-point summary written in haste, fragments rather than full sentences",
+      "base_id": "P3-not_charged-01"
+    },
+    {
+      "id": "S-P4-different_defendant-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Chloe Brennan",
+        "other_party": "Rhys Patel",
+        "relationship": "former cohabitant",
+        "child": "Zayn Patel",
+        "application_date": "2026-09-17",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "4",
+          "text": "Dear Sir or Madam,\n\nI write regarding the memorandum of an entry in the register of LEICESTER MAGISTRATES' COURT.\n\nThe date of hearing was 19 June 2026. The Defendant was Arjun Begum, with date of birth 24 April 1984. The Offence was common assault (section 39 Criminal Justice Act 1988), committed against Chloe Brennan on 30 April 2026. The Plea was Guilty. The Finding was Convicted. The Sentence was Community order for 12 months with a Building Better Relationships programme requirement. A Restraining order was made for 2 years protecting Chloe Brennan.\n\nThis is certified as a true extract of the register.\n\nLewis Kowalski, Legal Adviser",
+          "expected": {
+            "outcome": "fail",
+            "elements": {
+              "perpetrator_named": {
+                "description": "B (the other party) is named as the person convicted",
+                "status": "not_met"
+              },
+              "convicted": {
+                "description": "Document records a conviction",
+                "status": "met"
+              },
+              "da_offence": {
+                "description": "Conviction is for a listed domestic abuse offence",
+                "status": "met"
+              },
+              "victim_named": {
+                "description": "Victim is named (unless a sexual offence)",
+                "status": "met"
+              }
+            },
+            "reason": "The person convicted is not the other party in this application.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "fail",
+      "style": "a letter by a writer whose first language is not English: slightly unusual grammar and word choice, but the meaning clear",
+      "base_id": "P4-different_defendant-01"
+    },
+    {
+      "id": "S-P6-valid-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Thomas Morgan",
+        "other_party": "Bethan Mensah",
+        "relationship": "former spouse",
+        "child": "Oscar Mensah",
+        "application_date": "2026-09-22",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "6",
+          "text": "DOMESTIC VIOLENCE PROTECTION NOTICE\nPursuant to Section 24 Crime and Security Act 2010\n\nThis notice has been issued by Thames Valley Police.\nAt 21:40 on 7 September 2026, it was issued.\nThe person to be protected is Thomas Morgan, and the person to whom this notice is given is Bethan Mensah.\n\nYou must not molest Thomas Morgan.\nYou must not go inside 17 Queens Crescent, Reading, or come within 100 metres of that address.\n\nWithin 48 hours of this notice being served, an application for a Domestic Violence Protection Order will be heard at Reading Magistrates' Court.\n\nThe authorising officer is Superintendent Adam Brennan.\nThe serving officer is PC Lewis Novak.",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "perpetrator_named": {
+                "description": "B is named as the person the notice was given to",
+                "status": "met"
+              },
+              "protected_party_named": {
+                "description": "Protected person is named and in a family relationship with B",
+                "status": "met"
+              },
+              "valid_notice": {
+                "description": "A genuine notice under the correct statute and issuing force",
+                "status": "met"
+              }
+            },
+            "reason": "All required elements present.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass",
+      "style": "the same content with every sentence reordered and reworded using synonyms, keeping all names, dates and figures identical",
+      "base_id": "P6-valid-01"
+    },
+    {
+      "id": "S-P6A-benign_defects-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Mohammed Reid",
+        "other_party": "Bethan Walsh",
+        "relationship": "former spouse",
+        "child": "Isla Walsh",
+        "application_date": "2026-09-24",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "6A",
+          "text": "Hi,\n\nI am writing about the Domestic Abuse Protection Notice under Section 22 Domestic Abuse Act 2021.\n\nNorth Wales Police gave this notice on 12 September 2026 at 23:05. It was given to Bethan Walsh, and the person to be protected is Mohammed Reid.\n\nThe notice means that Bethan Walsh must not be abusive towards Mohammed Reid. Bethan Walsh must not contact Mohammed Reid by any means, and must not come within 200 metres of 98 Church Street, Wrexham.\n\nAn application for a Domestic Abuse Protection Order will be made to Wrexham Magistrates' Court within 48 hours.\n\nI am the authorising officer, Superintendent Chloe Clarke.",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "perpetrator_named": {
+                "description": "B is named as the person the notice was given to",
+                "status": "met"
+              },
+              "protected_party_named": {
+                "description": "Protected person is named and in a family relationship with B",
+                "status": "met"
+              },
+              "valid_notice": {
+                "description": "A genuine notice under the correct statute and issuing force",
+                "status": "met"
+              }
+            },
+            "reason": "Still valid: . MoJ accepted letters with similar errors.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass",
+      "style": "an informal email from the author to the solicitor, first person, short paragraphs, no letterhead",
+      "base_id": "P6A-benign_defects-01"
+    },
+    {
+      "id": "S-P7-set_aside-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Zainab Ahmed",
+        "other_party": "Lewis Shah",
+        "relationship": "former partner",
+        "child": "Leo Shah",
+        "application_date": "2026-10-03",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "7",
+          "text": "THE FAMILY COURT SITTING AT NORWICH\n\nCase number: NO62P85353\nReference: Family Law Act 1996 – Non-Molestation Order (section 42)\nDate: 29 September 2026\n\nDear Sir or Madam,\n\nApplicant: Zainab Ahmed\nRespondent: Lewis Shah\n\nThe court ordered that the Respondent, Lewis Shah, must not:\n1. use or threaten violence against the Applicant, or instruct or encourage anyone else to do so;\n2. intimidate, harass or pester the Applicant;\n3. communicate with the Applicant by any means, except through solicitors;\n4. go to or enter 20 Church Street, Norwich.\n\nThis order was made without notice on 21 September 2026 and lasts until 1 April 2027 unless varied or discharged.\n\nDistrict Judge Rhys Brennan\n\nPlease note that, at the return hearing on 29 September 2026, the court set aside the without-notice order made on 21 September 2026.\n\nYours faithfully",
+          "expected": {
+            "outcome": "fail",
+            "elements": {
+              "court_document": {
+                "description": "Court document (or police document for a restraining order)",
+                "status": "met"
+              },
+              "order_made_and_in_force": {
+                "description": "An order has actually been made and has not been set aside",
+                "status": "not_met"
+              },
+              "respondent_is_other_party": {
+                "description": "B is the respondent and is in a family relationship with the protected person",
+                "status": "met"
+              },
+              "protected_party_named": {
+                "description": "Protected person is named",
+                "status": "met"
+              }
+            },
+            "reason": "The without-notice order was set aside at the return hearing.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "fail",
+      "style": "a formal letter with a letterhead, reference numbers, a date line and 'Yours faithfully'",
+      "base_id": "P7-set_aside-01"
+    },
+    {
+      "id": "S-P8-benign_defects-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Megan Thompson",
+        "other_party": "James Hughes",
+        "relationship": "former cohabitant",
+        "child": "Zayn Hughes",
+        "application_date": "2026-09-13",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "8",
+          "text": "- GENERAL FORM OF UNDERTAKING (N117)\n- In the Family Court at Plymouth\n- Case number: PL75P62610\n- Applicant: Megan Thompson\n- Respondent: James Hughes\n- On 14 August 2026, James Hughes before District Judge Leah Brennan; undertaking to the court under section 46 of the Family Law Act 1996; promises:\n  - not to use or threaten violence against Megan Thompson;\n  - not to contact Megan Thompson directly or indirectly, except through solicitors;\n  - not to attend 130 Victoria Road, Plymouth.\n- The court accepted the undertaking in place of a non-molestation order.\n- No undertaking given by the other party.",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "given_by_other_party": {
+                "description": "Undertaking was given by B",
+                "status": "met"
+              },
+              "correct_statutory_basis": {
+                "description": "Given under s46 or s63E FLA 1996 (or Scottish/NI equivalent)",
+                "status": "met"
+              },
+              "beneficiary_named": {
+                "description": "Person protected is named and in a family relationship with B",
+                "status": "met"
+              },
+              "no_relevant_cross_undertaking": {
+                "description": "Applicant did not give a domestic abuse-related cross-undertaking",
+                "status": "met"
+              }
+            },
+            "reason": "Still valid: . MoJ accepted letters with similar errors.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass",
+      "style": "a bullet-point summary written in haste, fragments rather than full sentences",
+      "base_id": "P8-benign_defects-01"
+    },
+    {
+      "id": "S-P9-finding_after_application-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Piotr Mensah",
+        "other_party": "Chloe Okafor",
+        "relationship": "former partner",
+        "child": "Oscar Okafor",
+        "application_date": "2026-09-20",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "9",
+          "text": "Dear Sir or Madam,\n\nThis is in the Family Court sitting at Leeds.\nCase number: LE86P14400\nRe: Oscar Okafor (Children Act 1989)\n\nApplicant: Piotr Mensah\nRespondent: Chloe Okafor\n\nThis is the order following fact-finding hearing.\n\nUpon the fact-finding hearing on 27 September 2026, and the court having applied Practice Direction 12J,\n\nThe court finds proved on the balance of probabilities that:\n(a) in March 2026 the Respondent, Chloe Okafor, grabbed the Applicant by the throat during an argument;\n(b) the Respondent engaged in a pattern of controlling and coercive behaviour towards the Applicant, including monitoring his phone and restricting his access to money.\n\nDistrict Judge Natalia Brennan",
+          "expected": {
+            "outcome": "fail",
+            "elements": {
+              "court_document": {
+                "description": "Judgment or court order",
+                "status": "met"
+              },
+              "specific_finding_by_other_party": {
+                "description": "A specific finding that B committed domestic abuse",
+                "status": "met"
+              },
+              "made_before_application": {
+                "description": "Finding made before the legal aid application",
+                "status": "not_met"
+              },
+              "victim_named": {
+                "description": "Victim named and in a family relationship with B",
+                "status": "met"
+              }
+            },
+            "reason": "The finding post-dates the application, so it can't be the only evidence.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "fail",
+      "style": "a letter by a writer whose first language is not English: slightly unusual grammar and word choice, but the meaning clear",
+      "base_id": "P9-finding_after_application-01"
+    },
+    {
+      "id": "S-P10-no_qualifications-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Ben Davies",
+        "other_party": "Sarah Morgan",
+        "relationship": "former cohabitant",
+        "child": "Zayn Morgan",
+        "application_date": "2026-09-15",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "10",
+          "text": "Dear Sir or Madam,\n\nI write in the form of a longer letter for ease of reading and administration. This correspondence is intended to set out the same information in letter form, while keeping the underlying content unchanged. Any routine matters concerning office arrangements, standard attendance information, or ordinary administrative queries should be dealt with separately and should not be taken as altering the substance set out below.\n\nFor general purposes, if there are questions about how to contact the service, when routine communications are handled, or where ordinary enquiries should be directed, those matters should be addressed through the usual channels. This paragraph is included only as general padding around the main content and does not add to, subtract from, or qualify the report details that follow.\n\nCafcass – Section 7 Report. Case number: LE56P23965. Child: Zayn Morgan. Family Court Adviser: Kerry Patel. Prepared for: The Family Court sitting at Leicester, hearing on 6 October 2026.\n\nIn relation to the analysis of risk, having considered police information, local authority records and my interviews with both parents, I assess that Ben Davies has been a victim of domestic abuse by Sarah Morgan, his former cohabitant, including coercive and controlling behaviour, and that he remains at risk of further abuse.\n\nBy way of further general information only, any broader questions about routine service information, standard office matters, or ordinary methods of communication should be considered separately from the contents of this letter. Nothing in this closing paragraph changes the meaning of the report information set out above.\n\nYours faithfully,",
+          "expected": {
+            "outcome": "refer",
+            "elements": {
+              "produced_for_uk_proceedings": {
+                "description": "Report produced as evidence in UK court or tribunal proceedings",
+                "status": "met"
+              },
+              "expert_identity_and_qualifications": {
+                "description": "Expert named with relevant qualifications/experience",
+                "status": "unclear"
+              },
+              "names_perpetrator_and_victim": {
+                "description": "Names B and the victim (in a family relationship with B)",
+                "status": "met"
+              },
+              "assessed_victim_or_at_risk": {
+                "description": "Victim assessed as being, or at risk of being, a victim of domestic abuse by B",
+                "status": "met"
+              }
+            },
+            "reason": "Author's qualifications and experience are not stated.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "refer",
+      "style": "a long letter with two or three unrelated paragraphs of padding (office hours, how to contact the service, general information) around the substance",
+      "base_id": "P10-no_qualifications-01"
+    },
+    {
+      "id": "S-P11-benign_defects-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Leah Reid",
+        "other_party": "Adam Shah",
+        "relationship": "former cohabitant",
+        "child": "Oscar Shah",
+        "application_date": "2026-09-15",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "11",
+          "text": "10 September 2026\n\nFor whom it may concern\n\nRegarding: [NAME OF CLIENT]\n\nRegarding Leah Reid, date of birth 3 July 1987\n\nI am a doctor registered with the General Medical Council (GMC number 6730438).\n\nLeah Reid was examined by me in person on 7 September 2026. In my reasonable proffesional judgement, the injuries she has are consistent with her being a victim of domestic abuse.\n\nIt is my understanding that Leah Reid wishes to access legal aid for a family dispute as a victim of domestc abuse. For that reason, I have been requested to provide this letter in accordance with regulation 33 and Schedule 1 of the Civil Legal Aid (Procedure) Regualtions 2012 (as amended).\n\nDr Imran Kowalski\nEmergency Department, Plymouth General Hospital",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "appropriate_health_professional": {
+                "description": "Author is a registered appropriate health professional (doctor, nurse, midwife, dentist, paramedic, psychologist, radiographer, social worker)",
+                "status": "met"
+              },
+              "examined_applicant": {
+                "description": "Applicant was examined in person, by phone or by video",
+                "status": "met"
+              },
+              "consistent_with_domestic_abuse": {
+                "description": "Clear (unhedged) judgement that injuries/condition are consistent with domestic abuse",
+                "status": "met"
+              },
+              "applicant_named": {
+                "description": "Applicant is named (perpetrator need not be)",
+                "status": "met"
+              }
+            },
+            "reason": "Still valid: typo 'proffesional', typo 'Regualtions', typo 'domestc', unfilled template placeholder. MoJ accepted letters with similar errors.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass",
+      "style": "the same content with every sentence reordered and reworded using synonyms, keeping all names, dates and figures identical",
+      "base_id": "P11-benign_defects-01"
+    },
+    {
+      "id": "S-P12-benign_defects-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Priya Brennan",
+        "other_party": "Rhys Novak",
+        "relationship": "former spouse",
+        "child": "Ruby Novak",
+        "application_date": "2026-09-15",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "12",
+          "text": "Dear Solicitor,\n\nRe: [NAME OF CLIENT]\n\nRe: Priya Brennan, date of birth 19 September 1980\n\nI am a general practitioner registered with the General Medical Council (GMC number 7292005).\n\nI confirm that on 6 August 2026, following her disclosure of abuse during a consultation, I referred Priya Brennan to Harbour Light Women's Centre, a specialist service providing support to victims of domestic abuse.\n\nKind regards,\n\nDr Leah Ahmed\nElm Tree Medical Practice\n9 September 2026",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "applicant_named": {
+                "description": "Applicant is named",
+                "status": "met"
+              },
+              "referral_by_ahp": {
+                "description": "Referral made by an appropriate health professional",
+                "status": "met"
+              },
+              "specialist_da_service": {
+                "description": "Referral was to a specialist domestic abuse support service",
+                "status": "met"
+              },
+              "author_eligible": {
+                "description": "Letter is from the referring professional, one with access to records, or the service referred to",
+                "status": "met"
+              }
+            },
+            "reason": "Still valid: typo 'vicim', typo 'comfirm', typo 'suport', unfilled template placeholder. MoJ accepted letters with similar errors.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass",
+      "style": "an informal email from the author to the solicitor, first person, short paragraphs, no letterhead",
+      "base_id": "P12-benign_defects-01"
+    },
+    {
+      "id": "S-P14-we_provided-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Aisha Morgan",
+        "other_party": "Piotr Begum",
+        "relationship": "former partner",
+        "child": "Oscar Begum",
+        "application_date": "2026-09-27",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "14",
+          "text": "- To whom it may concern\n- Name of applicant: Aisha Morgan\n- Understanding: Aisha Morgan wishes to access legal aid for a family dispute, as a victim of domestic abuse\n- For this reason, asked to confirm that I am providing / have provided support to Aisha Morgan, in accordance with regulation 33 and Schedule 1 of the Civil Legal Aid (Procedure) Regulations 2012 (as amended)\n- Can confirm: we provided Aisha Morgan with support\n- Yours sincerely\n- Chloe Hughes\n- Independent Domestic Violence Advisor (IDVA)\n- Calder Valley DA Partnership",
+          "expected": {
+            "outcome": "fail",
+            "elements": {
+              "author_is_idva": {
+                "description": "Author is an IDVA",
+                "status": "met"
+              },
+              "confirms_support": {
+                "description": "IDVA personally confirms they are providing or have provided support",
+                "status": "not_met"
+              },
+              "applicant_named": {
+                "description": "Applicant is named as the person supported",
+                "status": "met"
+              }
+            },
+            "reason": "Mirrors the MoJ rejected example: 'we provided' rather than the IDVA confirming support personally. MoJ's exact reason is unconfirmed.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "fail",
+      "style": "a bullet-point summary written in haste, fragments rather than full sentences",
+      "base_id": "P14-we_provided-01"
+    },
+    {
+      "id": "S-P15-stranger_assault-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Arjun Clarke",
+        "other_party": "Zainab Kowalski",
+        "relationship": "former spouse",
+        "child": "Zayn Kowalski",
+        "application_date": "2026-09-05",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "15",
+          "text": "Leicester Sexual Assault Referral Centre\n31 August 2026\n\nTo whom it may concern\n\nRe: Arjun Clarke\n\nI am an Independent Sexual Violence Advisor (ISVA). I confirm that I have been providing support for Arjun Clarke since 28 May 2026, after a sexual assault by an unknown male in May 2026.\n\nKerry Hughes\nISVA",
+          "expected": {
+            "outcome": "fail",
+            "elements": {
+              "author_is_isva": {
+                "description": "Author is an ISVA",
+                "status": "met"
+              },
+              "applicant_named": {
+                "description": "Applicant named (where possible)",
+                "status": "met"
+              },
+              "support_relates_to_sexual_violence": {
+                "description": "Support relates to sexual violence",
+                "status": "met"
+              },
+              "perpetrator_is_other_party": {
+                "description": "Sexual violence was by B, who is named",
+                "status": "not_met"
+              }
+            },
+            "reason": "Support relates to an assault by an unknown person, not B.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "fail",
+      "style": "a letter by a writer whose first language is not English: slightly unusual grammar and word choice, but the meaning clear",
+      "base_id": "P15-stranger_assault-01"
+    },
+    {
+      "id": "S-P16-valid-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Kerry Reid",
+        "other_party": "Arjun Clarke",
+        "relationship": "former cohabitant",
+        "child": "Isla Clarke",
+        "application_date": "2026-09-12",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "16",
+          "text": "8 September 2026\n\nTo whom it may concern\n\nI am writing in relation to Kerry Reid. This letter sets out the relevant confirmation for the recipient in a fuller letter format. General administrative matters, such as ordinary office hours, routine service contact arrangements, and standard requests for information, are separate from the substantive points confirmed below and should be dealt with through the usual channels.\n\nIn my reasonable professional judgement, Kerry Reid is, or is at risk of being, a victim of domestic abuse by Arjun Clarke, her former cohabitant. The matters relied on are that Kerry Reid disclosed repeated threats from Arjun Clarke after the separation, and that Arjun Clarke attended the property on several occasions in breach of police advice. A DASH risk assessment completed on 14 July 2026 scored 15 (high risk).\n\nSeparately from the substance of that professional judgement, general information about how a service may be contacted, when enquiries may be handled, and other routine administrative matters does not alter the confirmation given in this letter. Those points are outside the substance recorded here and are mentioned only as general background.\n\nThe support provided was as follows: Kerry Reid was accepted as homeless and in priority need on 29 July 2026 owing to domestic abuse, placed in safe temporary accommodation and exempted from the local connection requirement.\n\nFor completeness, any routine queries about general information or ordinary administrative arrangements should be directed through the usual channels, as those matters are distinct from the substantive confirmation set out above.\n\nFatima Mensah\nSenior Housing Officer (Domestic Abuse Lead)\nKestrel Housing Group",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "officer_of_la_or_ha": {
+                "description": "Officer employed by a local authority or housing association to support tenants",
+                "status": "met"
+              },
+              "victim_named": {
+                "description": "Victim named and in a family relationship with B",
+                "status": "met"
+              },
+              "perpetrator_named": {
+                "description": "B named",
+                "status": "met"
+              },
+              "professional_judgement": {
+                "description": "Statement of reasonable professional judgement that the victim is or is at risk of being a victim",
+                "status": "met"
+              },
+              "specific_matters": {
+                "description": "Description of the specific matters relied on",
+                "status": "met"
+              },
+              "support_or_decision": {
+                "description": "Description of support provided or decision reached",
+                "status": "met"
+              }
+            },
+            "reason": "All required elements present.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass",
+      "style": "a long letter with two or three unrelated paragraphs of padding (office hours, how to contact the service, general information) around the substance",
+      "base_id": "P16-valid-01"
+    },
+    {
+      "id": "S-P17-valid-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Imran Novak",
+        "other_party": "Emma Morgan",
+        "relationship": "former spouse",
+        "child": "Oscar Morgan",
+        "application_date": "2026-09-08",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "17",
+          "text": "As I understand it, Imran Novak wishes to access legal aid for a family dispute as a victim of domestic abuse. For that reason, I have been asked to provide this letter under regulation 33 and Schedule 1 of the Civil Legal Aid (Procedure) Regulations 2012 (as amended).\n\nI confirm that our organisation is based in the United Kingdom and has operated continuously for a period of six months or more.\n\nI confirm that we have given Imran Novak support relating to his needs as a victim, or person at risk, of domestic abuse.\n\nIn my reasonable professional judgement, Imran Novak is, or is at risk of being, a victim of domestic abuse.\n\nThe matters on which I have relied in support of that judgement are: a DASH risk assessment completed on 10 July 2026 scored 16 (high risk); Imran described escalating jealousy, verbal abuse and one incident in which Emma held him by the throat.\n\nWe have given Imran Novak the following support: a place on our 12-week recovery programme, assistance to apply for a non-molestation order and a referral for counselling.\n\nImran Novak required this support because the abuse was escalating and he needed help to plan for his own and Oscar's safety.\n\nBethan Reid\nSenior Outreach Worker\nNorthgate Domestic Abuse Service",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "uk_situated": {
+                "description": "Organisation confirms it is situated in the UK",
+                "status": "met"
+              },
+              "operating_six_months": {
+                "description": "Organisation confirms it has operated for an uninterrupted 6 months or more",
+                "status": "met"
+              },
+              "supported_applicant": {
+                "description": "Confirms it supported the applicant as a victim or person at risk",
+                "status": "met"
+              },
+              "professional_judgement": {
+                "description": "Unhedged professional judgement that the applicant is or is at risk of being a victim",
+                "status": "met"
+              },
+              "specific_matters": {
+                "description": "Description of the specific matters (what happened), not just the source of information",
+                "status": "met"
+              },
+              "support_description": {
+                "description": "Description of the support provided",
+                "status": "met"
+              },
+              "reason_for_support": {
+                "description": "Statement of why the applicant needed the support",
+                "status": "met"
+              },
+              "applicant_named": {
+                "description": "Applicant named",
+                "status": "met"
+              }
+            },
+            "reason": "All required elements present.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass",
+      "style": "the same content with every sentence reordered and reworded using synonyms, keeping all names, dates and figures identical",
+      "base_id": "P17-valid-01"
+    },
+    {
+      "id": "S-P18-benign_defects-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Emma Hussain",
+        "other_party": "Thomas Novak",
+        "relationship": "former spouse",
+        "child": "Kai Novak",
+        "application_date": "2026-09-22",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "18",
+          "text": "Dear Solicitor,\n\nThe name of the perpetrator is Thomas Novak, and the name of the applicant is Emma Hussain.\n\nI understand that Emma Hussain wishes to access legal aid for a family dispute as a victim of domestic abuse. For this reason, I have been asked to provide a letter in accordance with regulation 33 and Schedule 1 of the Civil Legal Aid (Procedure) Regualtions 2012 (as amended).\n\nI can comfirm that Emma Hussain, with whom Thomas Novak is or was in a family relationsip, was refused admission to a refuge on 2 September 2026.\n\nI can confirm that Emma Hussain sought admission to a refuge because of allegations of domestic abuse by Thomas Novak.\n\nKind regards,\n\nKerry Mensah\nDomestic Abuse Support Officer\nCalder Valley DA Partnership",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "organisation_identified": {
+                "description": "Domestic abuse support organisation is identified",
+                "status": "met"
+              },
+              "perpetrator_named": {
+                "description": "B named",
+                "status": "met"
+              },
+              "victim_named": {
+                "description": "Person refused is named and in a family relationship with B",
+                "status": "met"
+              },
+              "refusal_date": {
+                "description": "Date admission was refused",
+                "status": "met"
+              },
+              "sought_because_of_abuse_by_other_party": {
+                "description": "Sought admission because of allegations of domestic abuse by B",
+                "status": "met"
+              }
+            },
+            "reason": "Still valid: typo 'Regualtions', typo 'relationsip', typo 'comfirm', unfilled template placeholder. MoJ accepted letters with similar errors.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass",
+      "style": "an informal email from the author to the solicitor, first person, short paragraphs, no letterhead",
+      "base_id": "P18-benign_defects-01"
+    },
+    {
+      "id": "S-P19-valid-02",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "James Patel",
+        "other_party": "Priya Novak",
+        "relationship": "former partner",
+        "child": "Ella Novak",
+        "application_date": "2026-10-05",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "19",
+          "text": "Ashby Fields Council Children's Services\n\nReference: regulation 33 and Schedule 1 of the Civil Legal Aid (Procedure) Regulations 2012 (as amended)\nDate: \n\nTo whom it may concern\n\nRe: Name of perpetrator: Priya Novak\nName of applicant: James Patel\n\nI understand that James Patel wishes to access legal aid for a family dispute as a victim of domestic abuse. For that reason, I have been asked to provide this letter in accordance with regulation 33 and Schedule 1 of the Civil Legal Aid (Procedure) Regulations 2012 (as amended).\n\nAccordingly, I confirm that James Patel, a person with whom Priya Novak is or was in a family relationship, was assessed as being, or at risk of being, a victim of domestic abuse by Priya Novak.\n\nYours faithfully,\n\nCraig Thompson\nAshby Fields Council Children's Services",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "public_authority_named": {
+                "description": "A public authority is identified",
+                "status": "met"
+              },
+              "victim_named": {
+                "description": "Victim named and in a family relationship with B",
+                "status": "met"
+              },
+              "perpetrator_named": {
+                "description": "B named",
+                "status": "met"
+              },
+              "assessed_victim_or_at_risk": {
+                "description": "Confirms the victim was assessed as being, or at risk of being, a victim of domestic abuse by B",
+                "status": "met"
+              }
+            },
+            "reason": "All required elements present.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass",
+      "style": "a formal letter with a letterhead, reference numbers, a date line and 'Yours faithfully'",
+      "base_id": "P19-valid-02"
+    },
+    {
+      "id": "S-P20-other_basis-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Leah Okafor",
+        "other_party": "Arjun Begum",
+        "relationship": "former spouse",
+        "child": "Kai Begum",
+        "application_date": "2026-09-23",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "20",
+          "text": "- Home Office – UK Visas and Immigration\n- Dear Leah Okafor,\n- application for leave to remain in the United Kingdom as the partner of a person present and settled in the UK under Appendix FM — approved\n- indefinite leave to remain — granted, with effect from 15 June 2026\n- UK Visas and Immigration\n- on behalf of the Secretary of State for the Home Department",
+          "expected": {
+            "outcome": "fail",
+            "elements": {
+              "from_home_office": {
+                "description": "Letter from the Home Office (Secretary of State)",
+                "status": "met"
+              },
+              "applicant_named": {
+                "description": "Applicant named",
+                "status": "met"
+              },
+              "leave_as_da_victim": {
+                "description": "Leave granted as a victim of domestic abuse",
+                "status": "not_met"
+              },
+              "granted_on_or_before_application": {
+                "description": "Leave granted on or before the legal aid application date",
+                "status": "met"
+              }
+            },
+            "reason": "Leave was granted as a partner under Appendix FM, not as a victim of domestic abuse.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "fail",
+      "style": "a bullet-point summary written in haste, fragments rather than full sentences",
+      "base_id": "P20-other_basis-01"
+    },
+    {
+      "id": "S-P21-narrative_only_no_explanation-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Natalia Brennan",
+        "other_party": "Arjun Davies",
+        "relationship": "former cohabitant",
+        "child": "Oscar Davies",
+        "application_date": "2026-10-02",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "21",
+          "text": "Dear Sir or Madam,\n\nMy name is Natalia Brennan, and this is my statement about economic abuse. The other party is Arjun Davies.\n\n1. During all our relationship, Arjun Davies controlled all the household money. My wages were paid into an account in his sole name, and I had to ask him for money for food and nappies.\n2. In June 2026, Arjun Davies took out a loan of £6,000 in my name without my knowledge. I only found this out when the lender wrote to me about arrears.\n3. Since we separated, Arjun Davies has stopped paying the mortgage, although he paid it before, and he says he will only pay child maintenance if I let him see Oscar whenever he wants.\n\nYours faithfully,\nNatalia Brennan",
+          "expected": {
+            "outcome": "refer",
+            "elements": {
+              "perpetrator_named": {
+                "description": "B named",
+                "status": "met"
+              },
+              "economic_behaviour_described": {
+                "description": "Describes behaviour affecting the ability to acquire, use or keep money or property, or obtain goods or services",
+                "status": "met"
+              },
+              "pattern_of_power_or_control": {
+                "description": "Behaviour shows an intent to gain power or control, not an ordinary financial dispute",
+                "status": "met"
+              },
+              "corroboration_or_explanation": {
+                "description": "Supporting documents, or an explanation of why none are available",
+                "status": "unclear"
+              }
+            },
+            "reason": "Narrative only, with no documents and no explanation of why none are available.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "refer",
+      "style": "a letter by a writer whose first language is not English: slightly unusual grammar and word choice, but the meaning clear",
+      "base_id": "P21-narrative_only_no_explanation-01"
+    },
+    {
+      "id": "S-P2-non_da_offence-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Hannah Ahmed",
+        "other_party": "Dean Patel",
+        "relationship": "former cohabitant",
+        "child": "Kai Patel",
+        "application_date": "2026-10-03",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "2",
+          "text": "SOUTH YORKSHIRE POLICE\nRECORD OF SIMPLE CAUTION\n\nName of person cautioned: Dean Patel\nDate of birth: 14 August 1977\nCustody record: KD/60328/26\nOffence: possession of a controlled drug (section 5 Misuse of Drugs Act 1971)\nDate of offence: 25 July 2026\nVictim: N/A – no individual victim\nDate caution administered: 4 August 2026\n\nFollowing an explanation of its implications, the offender admitted the offence in interview and accepted a simple caution.\n\nAdministering officer: PS Kwame Kowalski",
+          "expected": {
+            "outcome": "fail",
+            "elements": {
+              "perpetrator_named": {
+                "description": "B is named as the person cautioned",
+                "status": "met"
+              },
+              "caution_given": {
+                "description": "A caution was actually administered",
+                "status": "met"
+              },
+              "da_offence": {
+                "description": "Caution was for a listed domestic abuse offence",
+                "status": "not_met"
+              },
+              "victim_named": {
+                "description": "Victim is named (unless a sexual offence) and is in a family relationship with B",
+                "status": "met"
+              }
+            },
+            "reason": "Caution was for drug possession, not a domestic abuse offence.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "fail",
+      "style": "the same content with every sentence reordered and reworded using synonyms, keeping all names, dates and figures identical",
+      "base_id": "P2-non_da_offence-01"
+    },
+    {
+      "id": "S-P3-non_da_offence-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Grace Morgan",
+        "other_party": "Piotr Shah",
+        "relationship": "former cohabitant",
+        "child": "Isla Shah",
+        "application_date": "2026-09-28",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "3",
+          "text": "24 September 2026\n\nHi Grace Morgan,\n\nCase reference: HK/71592/26\n\nI’m Priya Kowalski, Witness Care Officer at South Yorkshire Police Witness Care Unit.\n\nFollowing the search of 61 Station Road, Sheffield on 19 August 2026, Piotr Shah has been charged with possession of a controlled drug (section 5 Misuse of Drugs Act 1971).\n\nYou may be asked to give evidence as a witness.\n\nThe case is listed at Sheffield Magistrates' Court on 19 October 2026.\n\nYours sincerely,\n\nPriya Kowalski\nWitness Care Officer\nSouth Yorkshire Police",
+          "expected": {
+            "outcome": "fail",
+            "elements": {
+              "perpetrator_named": {
+                "description": "B is named as the person charged",
+                "status": "met"
+              },
+              "charged": {
+                "description": "B has been formally charged (listing not required)",
+                "status": "met"
+              },
+              "da_offence": {
+                "description": "Charge is a listed domestic abuse offence",
+                "status": "not_met"
+              },
+              "not_concluded": {
+                "description": "Proceedings have not concluded",
+                "status": "met"
+              },
+              "victim_named": {
+                "description": "Victim is named (unless a sexual offence)",
+                "status": "met"
+              }
+            },
+            "reason": "B is charged with a drugs offence, not a domestic abuse offence.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "fail",
+      "style": "an informal email from the author to the solicitor, first person, short paragraphs, no letterhead",
+      "base_id": "P3-non_da_offence-01"
+    },
+    {
+      "id": "S-P5-valid-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Zainab Okafor",
+        "other_party": "Lewis Thompson",
+        "relationship": "former partner",
+        "child": "Kai Thompson",
+        "application_date": "2026-09-01",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "5",
+          "text": "- SHEFFIELD MAGISTRATES' COURT – COURT RESULT\n- Date: 23 June 2026\n- Defendant: Lewis Thompson\n- Charge: common assault (section 39 Criminal Justice Act 1988) against Zainab Okafor\n- Outcome: prosecution offered no evidence; defendant bound over in the sum of £500 to keep the peace and be of good behaviour for 12 months, in particular towards Zainab Okafor\n- Court Legal Adviser: Priya Shah",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "perpetrator_bound_over": {
+                "description": "B is named as the person bound over",
+                "status": "met"
+              },
+              "da_offence_connection": {
+                "description": "Bind over is connected with a domestic abuse offence",
+                "status": "met"
+              },
+              "victim_named": {
+                "description": "Victim is named and in a family relationship with B",
+                "status": "met"
+              }
+            },
+            "reason": "All required elements present.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass",
+      "style": "a bullet-point summary written in haste, fragments rather than full sentences",
+      "base_id": "P5-valid-01"
+    },
+    {
+      "id": "S-P6-valid-02",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Lewis Kowalski",
+        "other_party": "Megan Reid",
+        "relationship": "former cohabitant",
+        "child": "Oscar Reid",
+        "application_date": "2026-09-10",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "6",
+          "text": "To whom it may concern,\n\nI write to inform that this is a DOMESTIC VIOLENCE PROTECTION NOTICE under Section 24 Crime and Security Act 2010.\n\nIt is issued by: Nottinghamshire Police.\nDate and time issued: 26 August 2026 at 21:40.\nPerson to whom this notice is given: Megan Reid.\nPerson to be protected: Lewis Kowalski.\n\nYou must not molest Lewis Kowalski. You must not enter 3 Church Street, Nottingham or come within 100 metres of it.\n\nAn application for a Domestic Violence Protection Order will be heard at Nottingham Magistrates' Court within 48 hours of this notice being served.\n\nAuthorising officer: Superintendent Arjun Okafor.\nServing officer: PC Amira Brennan.\n\nYours faithfully,",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "perpetrator_named": {
+                "description": "B is named as the person the notice was given to",
+                "status": "met"
+              },
+              "protected_party_named": {
+                "description": "Protected person is named and in a family relationship with B",
+                "status": "met"
+              },
+              "valid_notice": {
+                "description": "A genuine notice under the correct statute and issuing force",
+                "status": "met"
+              }
+            },
+            "reason": "All required elements present.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass",
+      "style": "a letter by a writer whose first language is not English: slightly unusual grammar and word choice, but the meaning clear",
+      "base_id": "P6-valid-02"
+    },
+    {
+      "id": "S-P6A-non_pilot_force-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Amira Clarke",
+        "other_party": "Imran Thompson",
+        "relationship": "former spouse",
+        "child": "Ruby Thompson",
+        "application_date": "2026-10-04",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "6A",
+          "text": "Dear Imran Thompson,\n\nFor general information about office hours, opening arrangements, and routine service information, please refer to the usual published guidance. If you need to make a general enquiry, you should use the standard contact methods already available to you. These general matters are separate from the terms set out in this letter.\n\nThis letter is to confirm a DOMESTIC ABUSE PROTECTION NOTICE under Section 22 Domestic Abuse Act 2021. It is given by Devon and Cornwall Police. The date and time given are 22 September 2026 at 23:05. The person to whom this notice is given is Imran Thompson, and the person to be protected is Amira Clarke. You must not be abusive towards Amira Clarke. You must not contact Amira Clarke by any means, and you must not come within 200 metres of 8 Oakfield Drive, Plymouth. An application for a Domestic Abuse Protection Order will be made to Plymouth Magistrates' Court within 48 hours. The authorising officer is Superintendent Grace Hussain.\n\nFor routine administrative information, including general office hours and standard service arrangements, please use the ordinary sources of information already provided. General contact information and other non-case-specific matters do not change the notice recorded above.\n\nIf you are seeking general information about how to contact the service for ordinary purposes, please use the usual channels. Any such general information is separate from this notice and does not alter any part of it.",
+          "expected": {
+            "outcome": "refer",
+            "elements": {
+              "perpetrator_named": {
+                "description": "B is named as the person the notice was given to",
+                "status": "met"
+              },
+              "protected_party_named": {
+                "description": "Protected person is named and in a family relationship with B",
+                "status": "met"
+              },
+              "valid_notice": {
+                "description": "A genuine notice under the correct statute and issuing force",
+                "status": "unclear"
+              }
+            },
+            "reason": "DAPNs are only given in the pilot areas; this one claims to be from a non-pilot force, so verify it.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "refer",
+      "style": "a long letter with two or three unrelated paragraphs of padding (office hours, how to contact the service, general information) around the substance",
+      "base_id": "P6A-non_pilot_force-01"
+    },
+    {
+      "id": "S-P7-benign_defects-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Bethan Begum",
+        "other_party": "Mohammed Ahmed",
+        "relationship": "former cohabitant",
+        "child": "Zayn Ahmed",
+        "application_date": "2026-09-19",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "7",
+          "text": "From: PC Hannah Patel <patel.3068@devonandcornwall.pnn.police.uk>\nDate: 14 September 2026\nSubject: Restraining order – Mohammed Ahmed\n\nI can confirm that, following his conviction, a restraining order under section 360 of the Sentencing Act 2020 was made against Mohammed Ahmed at Plymouth Crown Court on 21 June 2026. Until 19 September 2027, the order prohibits Mohammed Ahmed from contacting Bethan Begum, his former cohabitant, directly or indirectly.\n\nPC Hannah Patel\nDevon and Cornwall Police",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "court_document": {
+                "description": "Court document (or police document for a restraining order)",
+                "status": "met"
+              },
+              "order_made_and_in_force": {
+                "description": "An order has actually been made and has not been set aside",
+                "status": "met"
+              },
+              "respondent_is_other_party": {
+                "description": "B is the respondent and is in a family relationship with the protected person",
+                "status": "met"
+              },
+              "protected_party_named": {
+                "description": "Protected person is named",
+                "status": "met"
+              }
+            },
+            "reason": "Still valid: typo 'comfirm'. MoJ accepted letters with similar errors.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass",
+      "style": "the same content with every sentence reordered and reworded using synonyms, keeping all names, dates and figures identical",
+      "base_id": "P7-benign_defects-01"
+    },
+    {
+      "id": "S-P8-valid-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Sarah Shah",
+        "other_party": "Dean Clarke",
+        "relationship": "former partner",
+        "child": "Leo Clarke",
+        "application_date": "2026-10-01",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "8",
+          "text": "I’m writing about the GENERAL FORM OF UNDERTAKING (N117) in the Family Court at Sheffield, case number: SH26P58567.\n\nI am Dean Clarke, the Respondent, and Sarah Shah is the Applicant.\n\nOn 1 September 2026 I appeared before District Judge Ben Reid and gave an undertaking to the court under section 46 of the Family Law Act 1996. I promised:\n1. not to use or threaten violence against Sarah Shah;\n2. not to contact Sarah Shah directly or indirectly, except through solicitors;\n3. not to attend 133 Mill Lane, Sheffield.\n\nThe court accepted the undertaking in place of a non-molestation order.\n\nNo undertaking was given by the other party.",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "given_by_other_party": {
+                "description": "Undertaking was given by B",
+                "status": "met"
+              },
+              "correct_statutory_basis": {
+                "description": "Given under s46 or s63E FLA 1996 (or Scottish/NI equivalent)",
+                "status": "met"
+              },
+              "beneficiary_named": {
+                "description": "Person protected is named and in a family relationship with B",
+                "status": "met"
+              },
+              "no_relevant_cross_undertaking": {
+                "description": "Applicant did not give a domestic abuse-related cross-undertaking",
+                "status": "met"
+              }
+            },
+            "reason": "All required elements present.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass",
+      "style": "an informal email from the author to the solicitor, first person, short paragraphs, no letterhead",
+      "base_id": "P8-valid-01"
+    },
+    {
+      "id": "S-P9-valid-02",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Amira Ahmed",
+        "other_party": "Craig Okafor",
+        "relationship": "former spouse",
+        "child": "Kai Okafor",
+        "application_date": "2026-09-19",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "9",
+          "text": "IN THE FAMILY COURT SITTING AT NORWICH\n\nReference Number: NO44P53204\nRe: Kai Okafor (Children Act 1989)\nDate: 31 July 2026\n\nApplicant: Amira Ahmed\nRespondent: Craig Okafor\n\nORDER FOLLOWING FACT-FINDING HEARING\n\nDear Sir/Madam,\n\nFollowing the fact-finding hearing on 31 July 2026, and the court having applied Practice Direction 12J, the court finds proved on the balance of probabilities that:\n(a) in June 2026 the Respondent, Craig Okafor, grabbed the Applicant by the throat during an argument;\n(b) the Respondent engaged in a pattern of controlling and coercive behaviour towards the Applicant, including monitoring her phone and restricting her access to money.\n\nYours faithfully,\n\nDistrict Judge Hannah Mensah",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "court_document": {
+                "description": "Judgment or court order",
+                "status": "met"
+              },
+              "specific_finding_by_other_party": {
+                "description": "A specific finding that B committed domestic abuse",
+                "status": "met"
+              },
+              "made_before_application": {
+                "description": "Finding made before the legal aid application",
+                "status": "met"
+              },
+              "victim_named": {
+                "description": "Victim named and in a family relationship with B",
+                "status": "met"
+              }
+            },
+            "reason": "All required elements present.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass",
+      "style": "a formal letter with a letterhead, reference numbers, a date line and 'Yours faithfully'",
+      "base_id": "P9-valid-02"
+    },
+    {
+      "id": "S-P10-no_assessment-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Kerry Hughes",
+        "other_party": "Craig Patel",
+        "relationship": "former partner",
+        "child": "Kai Patel",
+        "application_date": "2026-10-05",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "10",
+          "text": "- Cafcass – Section 7 Report\n- Case number: SH27P20279\n- Child: Kai Patel\n- Family Court Adviser: Chloe Walsh, BA (Hons) Social Work, registered with Social Work England, 11 years' experience as a Family Court Adviser\n- Prepared for: The Family Court sitting at Sheffield, hearing on 26 October 2026\n- Analysis: both parents make allegations against each other\n- No view reached on the allegations of domestic abuse made by Kerry Hughes against Craig Patel; matters for the court to determine",
+          "expected": {
+            "outcome": "fail",
+            "elements": {
+              "produced_for_uk_proceedings": {
+                "description": "Report produced as evidence in UK court or tribunal proceedings",
+                "status": "met"
+              },
+              "expert_identity_and_qualifications": {
+                "description": "Expert named with relevant qualifications/experience",
+                "status": "met"
+              },
+              "names_perpetrator_and_victim": {
+                "description": "Names B and the victim (in a family relationship with B)",
+                "status": "met"
+              },
+              "assessed_victim_or_at_risk": {
+                "description": "Victim assessed as being, or at risk of being, a victim of domestic abuse by B",
+                "status": "not_met"
+              }
+            },
+            "reason": "The report expressly makes no assessment of the abuse allegations.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "fail",
+      "style": "a bullet-point summary written in haste, fragments rather than full sentences",
+      "base_id": "P10-no_assessment-01"
+    },
+    {
+      "id": "S-P11-hedged_judgement-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Amira Thompson",
+        "other_party": "Adam Ahmed",
+        "relationship": "former cohabitant",
+        "child": "Ruby Ahmed",
+        "application_date": "2026-09-28",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "11",
+          "text": "23 September 2026\n\nTo whom it may concern\n\nRe: Amira Thompson, date of birth 19 February 2000\n\nI understand that Amira Thompson wishes to access legal aid for a family dispute as a victim of domestic abuse. For this reason, I have been asked to provide this letter in accordance with regulation 33 and Schedule 1 of the Civil Legal Aid (Procedure) Regulations 2012 (as amended).\n\nI am a doctor who is registered with the General Medical Council (GMC number 7106698).\n\nI examined Amira Thompson by telephone on 20 September 2026. In my reasonable professional judgement, she has a condition which may possibly be consistent with domestic abuse.\n\nDr Bethan Clarke\nEmergency Department, Cardiff General Hospital",
+          "expected": {
+            "outcome": "fail",
+            "elements": {
+              "appropriate_health_professional": {
+                "description": "Author is a registered appropriate health professional (doctor, nurse, midwife, dentist, paramedic, psychologist, radiographer, social worker)",
+                "status": "met"
+              },
+              "examined_applicant": {
+                "description": "Applicant was examined in person, by phone or by video",
+                "status": "met"
+              },
+              "consistent_with_domestic_abuse": {
+                "description": "Clear (unhedged) judgement that injuries/condition are consistent with domestic abuse",
+                "status": "not_met"
+              },
+              "applicant_named": {
+                "description": "Applicant is named (perpetrator need not be)",
+                "status": "met"
+              }
+            },
+            "reason": "Judgement is hedged ('may possibly be consistent'), mirroring the MoJ rejected example.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "fail",
+      "style": "a letter by a writer whose first language is not English: slightly unusual grammar and word choice, but the meaning clear",
+      "base_id": "P11-hedged_judgement-01"
+    },
+    {
+      "id": "S-P13-benign_defects-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Natalia Hughes",
+        "other_party": "Mohammed Begum",
+        "relationship": "former cohabitant",
+        "child": "Isla Begum",
+        "application_date": "2026-09-16",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "13",
+          "text": "Westmoor City Council – Multi-Agency Risk Assessment Conference (MARAC)\n10 September 2026\n\nTo whom it may concern\n\nRe: [NAME OF CLIENT]\n\nRe: Natalia Hughes\n\nI serve as the MARAC Coordinator for Westmoor City Council and am also a member of the MARAC. I confirm that the case of Natalia Hughes was considered at MARAC on 12 August 2026. It was agreed at the conference that Natalia Hughes is at high risk of serious harm arising from domestic abuse by Mohammed Begum, her former cohabitant. The agreed multi-agency safety plan included police markers on the address and IDVA support.\n\nJames Davies\nMARAC Coordinator",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "author_forum_member": {
+                "description": "Author is a member of a MARAC or multi-agency safeguarding forum",
+                "status": "met"
+              },
+              "victim_named": {
+                "description": "Victim is the applicant or someone in a family relationship with the applicant",
+                "status": "met"
+              },
+              "perpetrator_named": {
+                "description": "B is named as the source of risk",
+                "status": "met"
+              },
+              "at_risk_of_harm_from_other_party": {
+                "description": "Confirms the victim is or has been at risk of harm from domestic abuse by B",
+                "status": "met"
+              }
+            },
+            "reason": "Still valid: typo 'suport', typo 'comfirm', typo 'domestc', unfilled template placeholder. MoJ accepted letters with similar errors.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass",
+      "style": "the same content with every sentence reordered and reworded using synonyms, keeping all names, dates and figures identical",
+      "base_id": "P13-benign_defects-01"
+    },
+    {
+      "id": "S-P14-valid-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Grace Thompson",
+        "other_party": "Daniel Walsh",
+        "relationship": "former spouse",
+        "child": "Oscar Walsh",
+        "application_date": "2026-10-05",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "14",
+          "text": "Hi,\n\nI understand that Grace Thompson wishes to access legal aid for a family dispute as a victim of domestic abuse.\n\nFor this reason, I have been asked to confirm that I am providing / have provided support to Grace Thompson in accordance with regulation 33 and Schedule 1 of the Civil Legal Aid (Procedure) Regulations 2012 (as amended).\n\nI can confirm that I have provided Grace Thompson with support since 27 June 2026.\n\nBest,\n\nAisha Davies\nIndependent Domestic Violence Advisor (IDVA)\nRiverside Safe Futures",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "author_is_idva": {
+                "description": "Author is an IDVA",
+                "status": "met"
+              },
+              "confirms_support": {
+                "description": "IDVA personally confirms they are providing or have provided support",
+                "status": "met"
+              },
+              "applicant_named": {
+                "description": "Applicant is named as the person supported",
+                "status": "met"
+              }
+            },
+            "reason": "All required elements present.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass",
+      "style": "an informal email from the author to the solicitor, first person, short paragraphs, no letterhead",
+      "base_id": "P14-valid-01"
+    },
+    {
+      "id": "S-P16-private_landlord-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Leah Okafor",
+        "other_party": "Ben Reid",
+        "relationship": "former spouse",
+        "child": "Amelia Reid",
+        "application_date": "2026-09-22",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "16",
+          "text": "- 18 September 2026\n- To whom it may concern\n- Re: Leah Okafor\n- Reasonable professional judgement: Leah Okafor is, or is at risk of being, a victim of domestic abuse by Ben Reid, her former spouse\n- Matters relied on: Leah Okafor disclosed repeated threats from Ben Reid after the separation; Ben Reid attended the property on several occasions in breach of police advice; DASH risk assessment completed on 24 July 2026, scored 15 (high risk)\n- Support provided: Leah Okafor accepted as homeless and in priority need on 8 August 2026 owing to domestic abuse; placed in safe temporary accommodation; exempted from the local connection requirement\n- Sarah Fletcher\n- Senior Housing Officer (Domestic Abuse Lead)\n- Parkside Lettings Ltd (private letting agent)",
+          "expected": {
+            "outcome": "fail",
+            "elements": {
+              "officer_of_la_or_ha": {
+                "description": "Officer employed by a local authority or housing association to support tenants",
+                "status": "not_met"
+              },
+              "victim_named": {
+                "description": "Victim named and in a family relationship with B",
+                "status": "met"
+              },
+              "perpetrator_named": {
+                "description": "B named",
+                "status": "met"
+              },
+              "professional_judgement": {
+                "description": "Statement of reasonable professional judgement that the victim is or is at risk of being a victim",
+                "status": "met"
+              },
+              "specific_matters": {
+                "description": "Description of the specific matters relied on",
+                "status": "met"
+              },
+              "support_or_decision": {
+                "description": "Description of support provided or decision reached",
+                "status": "met"
+              }
+            },
+            "reason": "Author is a private letting agent, not a local authority or housing association.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "fail",
+      "style": "a bullet-point summary written in haste, fragments rather than full sentences",
+      "base_id": "P16-private_landlord-01"
+    },
+    {
+      "id": "S-P17-operating_under_six_months-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Hannah Morgan",
+        "other_party": "Lewis Ahmed",
+        "relationship": "former spouse",
+        "child": "Maya Ahmed",
+        "application_date": "2026-09-12",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "17",
+          "text": "I understand that Hannah Morgan wishes to access legal aid for a family dispute as a victim of domestic abuse. For this reason, I have been asked to provide this letter in accordance with regulation 33 and Schedule 1 of the Civil Legal Aid (Procedure) Regulations 2012 (as amended).\n\nOur organisation is situated in England and was established on 25 April 2026.\n\nI can confirm that we have given Hannah Morgan support in relation to her needs as a victim, or person at risk, of domestic abuse.\n\nIn my reasonable professional judgement, Hannah Morgan is, or is at risk of being, a victim of domestic abuse.\n\nThe matters I have relied on to support this judgement are: Hannah described being pushed against a wall and slapped during an argument in April 2026, and repeated threatening text messages from Lewis since the separation.\n\nWe have provided Hannah Morgan with the following support: risk assessment, safety planning and weekly one-to-one outreach sessions.\n\nHannah Morgan needed this support because the abuse was escalating and she needed help to plan for her own and Maya's safety.\n\nDaniel Okafor\nSenior Outreach Worker\nHarbour Light Women's Centre",
+          "expected": {
+            "outcome": "fail",
+            "elements": {
+              "uk_situated": {
+                "description": "Organisation confirms it is situated in the UK",
+                "status": "met"
+              },
+              "operating_six_months": {
+                "description": "Organisation confirms it has operated for an uninterrupted 6 months or more",
+                "status": "not_met"
+              },
+              "supported_applicant": {
+                "description": "Confirms it supported the applicant as a victim or person at risk",
+                "status": "met"
+              },
+              "professional_judgement": {
+                "description": "Unhedged professional judgement that the applicant is or is at risk of being a victim",
+                "status": "met"
+              },
+              "specific_matters": {
+                "description": "Description of the specific matters (what happened), not just the source of information",
+                "status": "met"
+              },
+              "support_description": {
+                "description": "Description of the support provided",
+                "status": "met"
+              },
+              "reason_for_support": {
+                "description": "Statement of why the applicant needed the support",
+                "status": "met"
+              },
+              "applicant_named": {
+                "description": "Applicant named",
+                "status": "met"
+              }
+            },
+            "reason": "Organisation states it was established about four months ago.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "fail",
+      "style": "a letter by a writer whose first language is not English: slightly unusual grammar and word choice, but the meaning clear",
+      "base_id": "P17-operating_under_six_months-01"
+    },
+    {
+      "id": "S-P19-benign_defects-01",
+      "source": "style_shift",
+      "category": "style_shift",
+      "application": {
+        "applicant": "Priya Thompson",
+        "other_party": "Daniel Fletcher",
+        "relationship": "former cohabitant",
+        "child": "Zayn Fletcher",
+        "application_date": "2026-09-27",
+        "proceedings": "Child arrangements order (Children Act 1989, section 8)"
+      },
+      "documents": [
+        {
+          "doc_id": "D1",
+          "claimed_para": "19",
+          "text": "To whom it may concern\n\nRe: [NAME OF CLIENT]\n\nName of applicant: Priya Thompson\nName of perpetrator: Daniel Fletcher\n\nI understand that, as a vicim of domestc abuse, Priya Thompson wishes to access legal aid in relation to a family dispute. For that reason, I have been requested to provide this letter pursuant to regulation 33 and Schedule 1 of the Civil Legal Aid (Procedure) Regulations 2012 (as amended).\n\nTherefore, I am able to confirm that Priya Thompson, a person who is or was in a family relationsip with Daniel Fletcher, was assessed as being, or at risk of being, a victim of domestic abuse by Daniel Fletcher.\n\nYours sincerely,\n\nAdam Clarke\nWestmoor City Council Children's Services",
+          "expected": {
+            "outcome": "pass",
+            "elements": {
+              "public_authority_named": {
+                "description": "A public authority is identified",
+                "status": "met"
+              },
+              "victim_named": {
+                "description": "Victim named and in a family relationship with B",
+                "status": "met"
+              },
+              "perpetrator_named": {
+                "description": "B named",
+                "status": "met"
+              },
+              "assessed_victim_or_at_risk": {
+                "description": "Confirms the victim was assessed as being, or at risk of being, a victim of domestic abuse by B",
+                "status": "met"
+              }
+            },
+            "reason": "Still valid: typo 'relationsip', typo 'domestc', typo 'vicim', unfilled template placeholder. MoJ accepted letters with similar errors.",
+            "recategorise_to": null
+          }
+        }
+      ],
+      "expected_overall": "pass",
+      "style": "the same content with every sentence reordered and reworded using synonyms, keeping all names, dates and figures identical",
+      "base_id": "P19-benign_defects-01"
+    }
+  ]
+}

@@ -21,6 +21,18 @@ export interface ElementResult {
   clientHint?: string | null;
 }
 
+export type VerificationStatus = "pass" | "warn" | "fail" | "unknown";
+
+/** A check on the author or organisation that helps a person verify the letter. Never changes the verdict. */
+export interface VerificationCheck {
+  id: string;
+  label: string;
+  status: VerificationStatus;
+  detail: string;
+  /** Where a person can check it themselves. */
+  link: string | null;
+}
+
 export interface CheckResult {
   /** Schedule 1 paragraph, or null when the document is not an accepted evidence type. */
   matchedPara: string | null;
@@ -28,6 +40,8 @@ export interface CheckResult {
   reason: string;
   elements: ElementResult[];
   flags: string[];
+  /** How the names in the letter differ from the case, when they do (the back end adds it). */
+  nameCheck?: string | null;
   authorOrg: string | null;
   /** Short, safer name for the organisation, used on the client's screens. */
   shortOrg: string | null;
@@ -38,6 +52,8 @@ export interface CheckResult {
   victimName: string | null;
   otherPartyName: string | null;
   agreement: string;
+  /** Verification checks on the author and organisation (optional; the back end adds them). */
+  verification?: VerificationCheck[];
   rulesVersion: string;
   checkedAt: string;
 }
@@ -60,6 +76,34 @@ export interface CaseDocument {
   uploadedAt: string;
   /** Null while the check is running. */
   result: CheckResult | null;
+  /** The letter this one replaces, when it was uploaded as a corrected version (the back end adds it). */
+  replacesDocumentId?: string | null;
+  /** What changed against the letter it replaces, requirement by requirement. Null when the two
+   *  were checked against different paragraphs or rule versions, so they cannot be compared. */
+  changes?: DocumentChanges | null;
+}
+
+export interface ResolvedRequirement {
+  key: string;
+  label: string;
+  /** The status in the previous letter. */
+  before: ElementStatus;
+  /** The problem wording in the previous letter, if there was one. */
+  beforeQuote: string | null;
+  /** The passage in the corrected letter that now covers it. */
+  quote: string | null;
+}
+
+export interface DocumentChanges {
+  previousDocumentId: string;
+  /** Gaps in the previous letter that the corrected letter covers. */
+  resolved: ResolvedRequirement[];
+  /** Gaps the corrected letter still has. */
+  remaining: { key: string; label: string; status: ElementStatus }[];
+  /** Requirements the previous letter met that the corrected letter no longer does. */
+  newGaps: { key: string; label: string; status: ElementStatus; explanation: string }[];
+  /** Requirements met in both letters. */
+  stillMet: number;
 }
 
 export interface Decision {
@@ -89,6 +133,11 @@ export interface Case {
   submittedDocumentIds: string[];
   submitReason: string | null;
   decision: Decision | null;
+  /** Set once the case is submitted (null before): the pack for Civil Apply is GET /web/submissions/{submissionId}/pack.zip.
+   *  On a caseworker queue row it is the submission that row shows; review and decide by it, not by the case. */
+  submissionId?: string | null;
+  /** The LAA's own run of the check on the submitted pack, compared with the provider's. Absent until it exists. */
+  laaCheck?: { done: boolean; differences: number } | null;
 }
 
 export interface CaseWithDocuments {

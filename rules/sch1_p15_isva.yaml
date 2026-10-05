@@ -1,0 +1,45 @@
+id: sch1_p15_isva
+gateway: da
+enabled: true
+paragraph: "15"
+legal_ref: "Civil Legal Aid (Procedure) Regulations 2012, Schedule 1, paragraph 15"
+guidance_ref: "LAA Evidence Requirements v15, paragraph 2.69"
+name: "Letter from an independent sexual violence advisor (ISVA)"
+short_name: "ISVA letter"
+names_other_party_required: true
+applicant_must_be_victim: true
+always_needs_caseworker: false
+accepted_formats: ["letter from an ISVA", "email from an ISVA"]
+classification_hints:
+  - "signed by someone whose title is Independent Sexual Violence Advisor, Independent Sexual Violence Advocate or ISVA, often at a Sexual Assault Referral Centre (SARC), Rape Crisis centre or sexual violence charity"
+  - "confirms the author is providing or has provided support to the client relating to sexual violence, sexual assault or rape"
+  - "names the person who committed the sexual violence, who should be the other party (a partner, ex-partner or family member)"
+  - "if the author is an IDVA rather than an ISVA, assess under paragraph 14; if the letter is from a sexual violence charity but not an ISVA personally, consider paragraph 17"
+elements:
+  - id: author_is_isva
+    label: "Author is an ISVA"
+    requirement: "The letter is from an individual who is an independent sexual violence advisor or advocate (ISVA)."
+    accept_if: "The author signs as, or states that they are, an Independent Sexual Violence Advisor, Independent Sexual Violence Advocate, ISVA, or a variant such as senior ISVA, children's and young people's ISVA (ChISVA) or ISVA team leader. The organisation's name is not required."
+    reject_if: "The author's title is anything else: IDVA, support worker, counsellor, SARC crisis worker, therapist, caseworker, or no title at all. A letter written for the ISVA by their manager or the organisation also fails. Use 'unclear' if the title is abbreviated or ambiguous."
+    fix: "Sign the letter with your name and the title Independent Sexual Violence Advisor (ISVA)."
+  - id: applicant_named
+    label: "Applicant named where possible"
+    requirement: "The letter names the applicant (A) as the person supported, where possible (guidance 2.69)."
+    accept_if: "The applicant's name appears as the person supported, in any form (full name, title and surname, or a 'Re:' line). If the ISVA explains that the applicant cannot be named for safety or confidentiality reasons and identifies them another way (for example a reference the solicitor can match), record 'unclear' and refer to the caseworker rather than 'missing'."
+    reject_if: "No name and no explanation for its absence, or only an unfilled placeholder such as [name of applicant]. If the name differs from the application, use 'unclear' and refer to the caseworker."
+    fix: "Name {applicant_name} as the person you are supporting, or explain why the name cannot be given."
+  - id: support_relates_to_sexual_violence
+    label: "Support relates to sexual violence"
+    requirement: "The ISVA confirms that they are providing or have provided support to the applicant and that the support relates to sexual violence."
+    accept_if: "A first-person confirmation that the ISVA is providing or has provided support (present or past tense), and the letter says the support relates to sexual violence, sexual assault, rape or sexual abuse ('I have been supporting her since [date] following rape by...' counts)."
+    reject_if: "No confirmation that support is or has been provided (for example only a referral, assessment or waiting list); the support is described only as domestic abuse support or general support with no reference to sexual violence; the confirmation is made only on behalf of the organisation ('we support'); or the wording is hedged ('may have experienced sexual violence')."
+    fix: "Confirm in the first person that you are providing or have provided support to {applicant_name} relating to sexual violence."
+  - id: perpetrator_is_other_party
+    label: "Sexual violence by named other party"
+    requirement: "The sexual violence to which the support relates was by B, who is named in the letter and must be the other party in the case."
+    accept_if: "The other party is named (full name, or title and surname) as the person who committed the sexual violence, for example 'sexual violence perpetrated by John Smith, her former partner'. A relationship label alongside the name is helpful but not required."
+    reject_if: "The perpetrator is not named at all ('relating to sexual violence' with no one identified, or only 'her ex-partner'), so the letter cannot be linked to the other party; or the sexual violence was by someone other than the other party, such as an unknown attacker, a stranger or a different named person. If the person named does not match the other party in the application, use 'unclear' and refer to the caseworker."
+    fix: "Name {other_party_name} as the person who committed the sexual violence to which your support to {applicant_name} relates."
+hedge_terms: []
+gov_template_url: "https://www.gov.uk/government/publications/get-an-evidence-support-letter-from-an-independent-sexual-violence-advisoradvocate"
+test_cases_min: 5

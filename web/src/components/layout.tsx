@@ -5,6 +5,7 @@ import { useEffect, type ReactNode } from "react";
 import { Link } from "react-router";
 import { useGovukComponent } from "../hooks/govuk";
 import { paths } from "../paths";
+import { ActionErrorBanner } from "./ErrorBanner";
 import { cx, ExitThisPage, PhaseBanner } from "./govuk";
 
 function SkipLink() {
@@ -87,7 +88,6 @@ function Footer({ links, wide }: { links: NavItem[]; wide?: boolean }) {
                 </li>
               ))}
             </ul>
-            <p className="govuk-body-s govuk-!-margin-bottom-0">Prototype built for the 10 Downing Street hackathon, October 2026.</p>
           </div>
         </div>
       </div>
@@ -119,6 +119,7 @@ export function ProviderLayout({ children, beforeContent, firm }: ShellProps & {
         <PhaseBanner />
         {beforeContent}
         <main className="govuk-main-wrapper" id="main-content">
+          <ActionErrorBanner />
           {children}
         </main>
       </div>
@@ -153,6 +154,7 @@ export function CaseworkerLayout({ children, beforeContent, active }: ShellProps
         <PhaseBanner />
         {beforeContent}
         <main className="govuk-main-wrapper" id="main-content">
+          <ActionErrorBanner />
           {children}
         </main>
       </div>
@@ -171,7 +173,7 @@ export function CaseworkerLayout({ children, beforeContent, active }: ShellProps
 // Client (on their phone)
 // ---------------------------------------------------------------------------
 
-const EXIT_URL = "https://www.bbc.co.uk/weather";
+const EXIT_URL = "https://www.gov.uk";
 
 /** Leaves the page when Escape is pressed 3 times within 2 seconds (docs 4.12). */
 function useEscapeToExit() {
@@ -208,6 +210,7 @@ export function ClientLayout({ children }: { children: ReactNode }) {
         <PhaseBanner />
         <ExitThisPage href={EXIT_URL} />
         <main className="govuk-main-wrapper govuk-!-padding-top-4" id="main-content">
+          <ActionErrorBanner />
           {children}
         </main>
       </div>
@@ -224,6 +227,7 @@ export function PlainLayout({ children }: { children: ReactNode }) {
       <div className="govuk-width-container">
         <PhaseBanner />
         <main className="govuk-main-wrapper" id="main-content">
+          <ActionErrorBanner />
           {children}
         </main>
       </div>

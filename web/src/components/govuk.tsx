@@ -182,15 +182,15 @@ export function PhaseBanner() {
   return (
     <div className="govuk-phase-banner">
       <p className="govuk-phase-banner__content">
-        <strong className="govuk-tag govuk-phase-banner__content__tag">Prototype</strong>
-        <span className="govuk-phase-banner__text">Sample data only. This is not a real service.</span>
+        <strong className="govuk-tag govuk-phase-banner__content__tag">Beta</strong>
+        <span className="govuk-phase-banner__text">This is a new service – your feedback will help us to improve it.</span>
       </p>
     </div>
   );
 }
 
 /** GOV.UK "Exit this page". Its JavaScript also exits when Shift is pressed 3 times. */
-export function ExitThisPage({ href = "https://www.bbc.co.uk/weather" }: { href?: string }) {
+export function ExitThisPage({ href = "https://www.gov.uk" }: { href?: string }) {
   const ref = useGovukComponent<HTMLDivElement>(GovukExitThisPage);
   return (
     <div ref={ref} className="govuk-exit-this-page" data-module="govuk-exit-this-page">

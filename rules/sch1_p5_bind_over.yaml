@@ -1,0 +1,39 @@
+id: sch1_p5_bind_over
+gateway: da
+enabled: true
+paragraph: "5"
+legal_ref: "Civil Legal Aid (Procedure) Regulations 2012, Schedule 1, paragraph 5"
+guidance_ref: "LAA Evidence Requirements v15, paragraphs 2.31 to 2.33"
+name: "Evidence of a court order binding over B in connection with a domestic abuse offence"
+short_name: "Bind over for DA offence"
+names_other_party_required: true
+applicant_must_be_victim: false
+always_needs_caseworker: false
+accepted_formats: ["formal court document recording the bind over (court result, order or register extract)", "letter or email from the police, CPS or Witness Care Unit", "email from a pnn.police.uk address"]
+classification_hints:
+  - "magistrates' court result, order or register extract saying the defendant 'was bound over' to keep the peace or be of good behaviour"
+  - "gives a sum (a recognisance, for example £500) and a period (for example 12 months)"
+  - "often says the prosecution 'offered no evidence' or the charge was withdrawn in return for the bind over"
+  - "names the charge the defendant faced and, for a domestic abuse offence, the person it was committed against"
+elements:
+  - id: perpetrator_bound_over
+    label: "B named as person bound over"
+    requirement: "The other party in the case (B) is named as the defendant who was bound over by the court."
+    accept_if: "B's name appears as the defendant or person bound over, in any form (full name, or title and surname). Where both parties were bound over, B must be one of them."
+    reject_if: "The person bound over is the applicant rather than B (check whose name is in the defendant field, not just who is mentioned in the document); no defendant is named; or the name is redacted or an unfilled placeholder. Where a name is given but does not match the other party on the application, use 'unclear' rather than 'missing' so a caseworker can check identity."
+    fix: "Name {other_party_name} as the defendant who was bound over."
+  - id: da_offence_connection
+    label: "Connected with a DA offence"
+    requirement: "The bind over was made as an alternative to, or following, a prosecution for an offence on the gov.uk list of domestic violence and child abuse offences."
+    accept_if: "The charge or offence to which the bind over relates is on the gov.uk list, for example common assault, assault occasioning actual bodily harm, harassment, threats to kill, criminal damage or controlling or coercive behaviour, whether the prosecution offered no evidence, withdrew the charge, or the bind over followed a conviction."
+    reject_if: "The bind over followed a charge that is not on the list, for example being drunk and disorderly or another public order offence, a drugs offence or a road traffic offence; the bind over arose from a neighbour dispute, a civil complaint or a complaint by B against the applicant; or no connected charge or offence is stated at all. If an offence is named but you cannot tell whether it is on the gov.uk list, use 'unclear' rather than 'missing'."
+    fix: "State the charge or offence that led to the bind over of {other_party_name}, which must be on the gov.uk list of domestic violence and child abuse offences."
+  - id: victim_named
+    label: "Victim named, family relationship to B"
+    requirement: "The victim of the connected offence is named (where the offence names a victim) and is, or was, in a family relationship with B; the victim may be the applicant or another person."
+    accept_if: "A named victim, for example '[offence] against [name]' in the charge, or a bind over to keep the peace 'in particular towards [name]'. If the named victim is the applicant, the family relationship is established by the application and need not be restated."
+    reject_if: "No victim is named anywhere and the connected offence is one that would normally name a victim; the named victim is a stranger or member of the public with no family relationship to B; or the only person named as needing protection is B. If the named victim is someone other than the applicant and no relationship to B is stated, use 'unclear' rather than 'missing'."
+    fix: "Name the victim (for example {applicant_name}) in the charge or in the terms of the bind over and state their relationship to {other_party_name}."
+hedge_terms: []
+gov_template_url: null
+test_cases_min: 5

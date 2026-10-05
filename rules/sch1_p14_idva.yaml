@@ -1,0 +1,43 @@
+id: sch1_p14_idva
+gateway: da
+enabled: true
+paragraph: "14"
+legal_ref: "Civil Legal Aid (Procedure) Regulations 2012, Schedule 1, paragraph 14"
+guidance_ref: "LAA Evidence Requirements v15, paragraph 2.68"
+name: "Letter from an independent domestic violence advisor (IDVA)"
+short_name: "IDVA letter"
+share_of_applications: 0.08
+names_other_party_required: false
+applicant_must_be_victim: true
+always_needs_caseworker: false
+accepted_formats: ["letter from an IDVA", "email from an IDVA"]
+classification_hints:
+  - "signed by someone whose title is Independent Domestic Violence Advisor, Independent Domestic Violence Advocate or IDVA, often at a domestic abuse charity, council or hospital service"
+  - "a short confirmation that the author is providing or has provided support to the client; often follows the gov.uk IDVA template and cites regulation 33 and Schedule 1 of the Civil Legal Aid (Procedure) Regulations 2012"
+  - "does not need to describe the abuse, name the perpetrator or detail the support, unlike a support organisation letter (paragraph 17)"
+  - "if the author is a support worker, outreach worker or refuge worker rather than an IDVA, consider paragraph 17 instead"
+elements:
+  - id: author_is_idva
+    label: "Author is an IDVA"
+    requirement: "The letter is from an individual who is an independent domestic violence advisor or advocate (IDVA)."
+    accept_if: "The author signs as, or states that they are, an Independent Domestic Violence Advisor, Independent Domestic Violence Advocate, IDVA, or a variant such as senior IDVA, IDVA team leader, hospital IDVA or court IDVA (the guidance treats advisor and advocate as the same). The organisation's name is not required."
+    reject_if: "The author's title is anything else: family support worker, domestic abuse support worker, outreach worker, refuge worker, key worker, caseworker, DAPA, ISVA, floating support officer, or no title at all. A letter written for the IDVA by their manager or the organisation also fails. A letter from a non-IDVA support service may instead meet paragraph 17: record 'missing' here and flag recategorisation. Use 'unclear' if the title is abbreviated or ambiguous (for example 'DA Advisor')."
+    fix: "Sign the letter with your name and the title Independent Domestic Violence Advisor (IDVA); a letter from a support worker who is not an IDVA cannot be accepted under this paragraph."
+    client_hint: "say that they are an IDVA"
+  - id: confirms_support
+    label: "IDVA personally confirms support"
+    requirement: "The IDVA confirms, in their own name, that they are providing or have provided support to the applicant."
+    accept_if: "A first-person confirmation in the present or past tense naming the applicant: 'I am providing support to', 'I have provided support to', 'I have been supporting', 'I am currently supporting', 'I confirm that I am/have been providing support'. The gov.uk template wording 'I can confirm that I am providing [name] with support' counts, as does a first-person description of the support given."
+    reject_if: "The confirmation is made on behalf of an organisation rather than by the IDVA personally: 'we provided', 'our service has supported', 'the team is supporting'. The MoJ rejected a template letter whose only change from the accepted version was 'we provided' in place of 'I am providing'. Also fails if the IDVA only says the applicant was referred, assessed or placed on a waiting list without support having started, or the wording is hedged ('may have received support'). The template's introductory line 'I am providing / have provided support to [name]' does not count on its own; a completed confirmation sentence is needed. 'Unclear' if the sentence is illegible."
+    fix: "Confirm in the first person that you, as the IDVA, are providing or have provided support to {applicant_name} (for example 'I can confirm that I am providing {applicant_name} with support'), not 'we'."
+    client_hint: "say that they personally are supporting or have supported you"
+  - id: applicant_named
+    label: "Applicant named as person supported"
+    requirement: "The letter names the applicant (A) as the person the IDVA is supporting or has supported (guidance 2.68)."
+    accept_if: "The applicant's name appears as the person supported, in any form (full name, or title and surname). A completed 'Name of applicant:' line counts. A leftover placeholder elsewhere does not fail the letter so long as the applicant is named somewhere as the person supported (the MoJ accepted a letter with one unfilled [name of applicant] in the introduction)."
+    reject_if: "The applicant is not named anywhere: the placeholder [name of applicant] or [name of client] was never filled in, or the letter only says 'the client' or 'your client'. If the name differs from the application, use 'unclear' and refer to the caseworker."
+    fix: "Replace every placeholder with the applicant's name and confirm that you are providing or have provided support to {applicant_name}."
+    client_hint: "add your full name"
+hedge_terms: []
+gov_template_url: "https://www.gov.uk/government/publications/get-an-evidence-support-letter-from-an-independent-domestic-violence-advisoradvocate"
+test_cases_min: 5

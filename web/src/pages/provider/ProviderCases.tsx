@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router";
 import { NotificationBanner, VerdictTag } from "../../components/govuk";
 import { ProviderLayout } from "../../components/layout";
@@ -44,11 +45,38 @@ function evidenceSummary({ case: c, documents }: CaseWithDocuments) {
 const lastUpdated = ({ case: c, documents }: CaseWithDocuments) =>
   documents.map((d) => d.uploadedAt).sort().at(-1) ?? c.createdAt;
 
+type CaseFilter = "all" | "fail" | "refer" | "pass";
+type CaseSort = "needs-you" | "updated" | "name";
+
+const FILTERS: { key: CaseFilter; text: string }[] = [
+  { key: "all", text: "All" },
+  { key: "fail", text: "Needs a change" },
+  { key: "refer", text: "Needs a caseworker check" },
+  { key: "pass", text: "Meets the requirements" },
+];
+const SORTS: { key: CaseSort; text: string }[] = [
+  { key: "needs-you", text: "Cases that need you first" },
+  { key: "updated", text: "Most recently updated" },
+  { key: "name", text: "Client name A to Z" },
+];
+
 export function ProviderCases({ firm, cases, onDropLetter, firstTimeRight }: ProviderCasesProps) {
   useTitle("Cases – Gateway Check");
-  const rows = [...cases]
-    .map((data) => ({ data, verdict: caseVerdict(data.documents.map((d) => d.result)) }))
-    .sort((a, b) => ORDER.indexOf(a.verdict.key) - ORDER.indexOf(b.verdict.key));
+  const [filter, setFilter] = useState<CaseFilter>("all");
+  const [sort, setSort] = useState<CaseSort>("needs-you");
+  const all = cases.map((data) => ({ data, verdict: caseVerdict(data.documents.map((d) => d.result)) }));
+  const byUpdated = (a: (typeof all)[number], b: (typeof all)[number]) => lastUpdated(b.data).localeCompare(lastUpdated(a.data));
+  const rows = all
+    .filter((r) => filter === "all" || r.verdict.key === filter)
+    .sort((a, b) =>
+      sort === "name"
+        ? a.data.case.applicantName.localeCompare(b.data.case.applicantName)
+        : sort === "updated"
+          ? byUpdated(a, b)
+          : // Cases that need the solicitor first; within a group, the most recently updated at the top.
+            ORDER.indexOf(a.verdict.key) - ORDER.indexOf(b.verdict.key) || byUpdated(a, b),
+    );
+  const count = (key: CaseFilter) => (key === "all" ? all.length : all.filter((r) => r.verdict.key === key).length);
 
   return (
     <ProviderLayout firm={firm}>
@@ -66,7 +94,36 @@ export function ProviderCases({ firm, cases, onDropLetter, firstTimeRight }: Pro
       </p>
 
       <h2 className="govuk-heading-m govuk-!-margin-bottom-1">Open cases</h2>
-      <p className="govuk-body-s app-secondary-text">Cases that need you are at the top.</p>
+      <nav className="app-sub-nav" aria-label="Filter by status">
+        <ul className="app-sub-nav__list">
+          {FILTERS.map((tab) => (
+            <li key={tab.key}>
+              <button
+                type="button"
+                className="govuk-link app-sub-nav__link app-link-button"
+                aria-current={filter === tab.key ? "page" : undefined}
+                aria-pressed={filter === tab.key}
+                onClick={() => setFilter(tab.key)}
+              >
+                {tab.text} ({count(tab.key)})
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <div className="govuk-form-group govuk-!-margin-bottom-3">
+        <label className="govuk-label govuk-label--s" htmlFor="case-sort">
+          Sort by
+        </label>
+        <select className="govuk-select" id="case-sort" value={sort} onChange={(e) => setSort(e.target.value as CaseSort)}>
+          {SORTS.map((s) => (
+            <option key={s.key} value={s.key}>
+              {s.text}
+            </option>
+          ))}
+        </select>
+      </div>
+      {rows.length === 0 && <p className="govuk-body">No cases with this status.</p>}
       <div className="app-table-wrapper">
         <table className="govuk-table">
           <thead className="govuk-table__head">
@@ -107,7 +164,6 @@ export function ProviderCases({ firm, cases, onDropLetter, firstTimeRight }: Pro
             <p className="govuk-notification-banner__heading">
               Most firms get gateway evidence right first time. Yours: {firstTimeRight.yours} of {firstTimeRight.outOf} cases.
             </p>
-            <p className="govuk-body-s app-secondary-text govuk-!-margin-bottom-0">Illustrative figures for this prototype.</p>
           </NotificationBanner>
         </div>
       )}

@@ -1,0 +1,78 @@
+id: sch1_p17_support_org
+gateway: da
+enabled: true
+paragraph: "17"
+legal_ref: "Civil Legal Aid (Procedure) Regulations 2012, Schedule 1, paragraph 17"
+guidance_ref: "LAA Evidence Requirements v15, paragraphs 2.74 to 2.77"
+name: "Letter from an organisation providing domestic abuse support services"
+short_name: "Support organisation letter"
+share_of_applications: 0.43
+names_other_party_required: false
+applicant_must_be_victim: true
+always_needs_caseworker: false
+accepted_formats: ["letter", "email from an official address"]
+classification_hints:
+  - "letter from a domestic abuse charity, refuge, Women's Aid, outreach or support service"
+  - "says the organisation has operated for six months and is in the UK / England and Wales"
+  - "describes support provided to the client as a victim of domestic abuse and the matters relied on"
+  - "refuge admission letters are also assessed under this paragraph"
+elements:
+  - id: applicant_named
+    label: "Applicant named"
+    requirement: "The applicant (A) is named as the person who received support."
+    accept_if: "The applicant's name appears as the person supported, in any form (full name, or title and surname)."
+    reject_if: "No name, or only an unfilled placeholder such as [name of applicant]."
+    fix: "Name {applicant_name} as the person the organisation supported."
+    client_hint: "add your full name"
+  - id: uk_situated
+    label: "Organisation is in the UK"
+    requirement: "The letter confirms the organisation is situated in the United Kingdom."
+    accept_if: "A clear statement that the organisation is in the UK, England, Wales, England and Wales, Scotland or Northern Ireland."
+    reject_if: "No statement about where the organisation is situated."
+    fix: "Confirm in the letter that the organisation is situated in the United Kingdom."
+    client_hint: "say that the organisation is in the UK"
+  - id: operating_six_months
+    label: "Operating for six months or more"
+    requirement: "The letter confirms the organisation has been operating for an uninterrupted period of six months or more."
+    accept_if: "A statement that the organisation (not the individual service or worker) has operated for an uninterrupted period of six months or longer."
+    reject_if: "No statement, or the statement is about the service or the worker rather than the organisation, or the period is under six months (for example 'established four months ago')."
+    fix: "Confirm that the organisation has been operating for an uninterrupted period of six months or more."
+    client_hint: "say that the organisation has been running for at least six months"
+  - id: supported_applicant
+    label: "Confirms support was provided to the applicant"
+    requirement: "The letter confirms the organisation provided the applicant with support in relation to their needs as a victim, or person at risk, of domestic abuse."
+    accept_if: "A confirmation that support was provided to the applicant themselves in connection with domestic abuse."
+    reject_if: "No confirmation of support, support unrelated to domestic abuse, or the support was provided to someone else (for example the applicant's child) rather than the applicant."
+    fix: "Confirm that the organisation provided {applicant_name} with support in relation to their needs as a victim, or person at risk, of domestic abuse."
+    client_hint: "say that they supported you because of domestic abuse"
+  - id: professional_judgement
+    label: "Professional judgement that the applicant is a victim"
+    requirement: "A statement that, in the author's reasonable professional judgement, the applicant is, or is at risk of being, a victim of domestic abuse."
+    accept_if: "A clear, unhedged statement of professional judgement about the applicant. Paraphrase is fine where the meaning is clear."
+    reject_if: "No judgement, a judgement about someone other than the applicant, or a hedged one ('might be', 'may be at risk', 'possibly')."
+    fix: "State that, in your reasonable professional judgement, {applicant_name} is, or is at risk of being, a victim of domestic abuse, without qualification."
+    client_hint: "say clearly, in their professional judgement, that you are or are at risk of being a victim of domestic abuse"
+  - id: specific_matters
+    label: "Specific matters relied on"
+    requirement: "A description of the specific matters relied on to support that judgement."
+    accept_if: "A description of what happened or was disclosed (for example controlling behaviour, threats, assaults, a DASH score, a police report, a refuge referral)."
+    reject_if: "Only a source is given, such as 'victim testimony and referral' or 'client disclosure', with no description of the abuse."
+    fix: "Describe the specific matters relied on to support your judgement: what the client disclosed or what the organisation observed, not just where the information came from."
+    client_hint: "describe what happened to you, not just where they heard about it"
+  - id: support_description
+    label: "Support described"
+    requirement: "A description of the support provided to the applicant."
+    accept_if: "Any description of the support, such as safety planning, risk assessment, advocacy, a refuge place or group work."
+    reject_if: "No description of the support provided."
+    fix: "Describe the support the organisation provided to {applicant_name}."
+    client_hint: "describe the support they gave you"
+  - id: reason_for_support
+    label: "Why the applicant needed support"
+    requirement: "A statement of the reasons the applicant needed that support."
+    accept_if: "A separate statement of why the applicant needed the support, however brief: 'needed this support because she had fled the family home', 'because they were identified as a victim of domestic abuse'. It must be its own statement of reason, distinct from the confirmation that support was provided and from the professional judgement (the guidance lists these as separate requirements)."
+    reject_if: "No statement of the reason the applicant needed the support. The confirmation that support was provided 'in relation to their needs as a victim, or person at risk, of domestic abuse' is the support confirmation, not the reason, and does not count on its own; nor does the judgement that the applicant is a victim."
+    fix: "State why {applicant_name} needed that support."
+    client_hint: "say why you needed their help"
+hedge_terms: []
+gov_template_url: "https://www.gov.uk/government/publications/domestic-violence-and-abuse-sample-letter-from-a-domestic-violence-support-organisation"
+test_cases_min: 10

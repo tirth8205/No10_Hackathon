@@ -1,0 +1,48 @@
+id: sch1_p10_expert_report
+gateway: da
+enabled: true
+paragraph: "10"
+legal_ref: "Civil Legal Aid (Procedure) Regulations 2012, Schedule 1, paragraph 10"
+guidance_ref: "LAA Evidence Requirements v15, paragraphs 2.49 to 2.51"
+name: "Expert report produced as evidence in proceedings in the United Kingdom for the benefit of a court or tribunal"
+short_name: "Expert report for court"
+names_other_party_required: true
+applicant_must_be_victim: false
+always_needs_caseworker: false
+accepted_formats:
+  - "expert report prepared for a UK court or tribunal, including a Cafcass or Cafcass Cymru report"
+  - "extract of the report containing the expert's details, the facts given to the expert, the findings and the expert's declaration"
+classification_hints:
+  - "headed as a report prepared for a named court or tribunal, with case number, the hearing it is for and the direction or instruction it was written under; Cafcass section 7 reports and Cafcass Cymru reports count"
+  - "names the author with their profession, qualifications, registration and experience (clinical psychologist, psychiatrist, independent social worker, Family Court Adviser)"
+  - "contains the statement or facts given to the expert, an analysis or summary of findings, and a declaration or statement of truth by the expert"
+  - "a privately commissioned therapeutic, medical or counselling report that was not prepared for proceedings is not under this paragraph; a health professional's letter may fall under paragraph 11 instead"
+elements:
+  - id: produced_for_uk_proceedings
+    label: "Prepared for UK court or tribunal"
+    requirement: "The report was produced as evidence in proceedings in the United Kingdom for the benefit of a court or tribunal."
+    accept_if: "The report says it was prepared for, directed by or filed in a named court or tribunal in England, Wales, Scotland or Northern Ireland, for example 'Prepared for the Family Court sitting at [place]', a section 7 report ordered by the court, or an expert report under FPR Part 25 or CPR Part 35 with the case number and hearing date."
+    reject_if: "The report was commissioned privately for therapy, treatment, insurance, employment, immigration advice or the applicant's own purposes and does not say it was for a court or tribunal; it was prepared for proceedings outside the United Kingdom; or it is a letter rather than a report, in which case consider paragraph 11 or 17 instead."
+    fix: "State at the head of the report which UK court or tribunal it was prepared for, with the case number and the direction or instruction under which it was written."
+  - id: expert_identity_and_qualifications
+    label: "Expert named with qualifications and experience"
+    requirement: "The report names the expert and sets out their relevant qualifications and experience, so that they are a person qualified to give expert advice on all or most of the matters covered (Schedule 1, paragraph 22)."
+    accept_if: "The author is named with their profession and their qualifications, professional registration (for example HCPC, Social Work England, GMC, NMC) or years of relevant experience. A Cafcass or Cafcass Cymru report is an expert report (2.50), but its author should still be identified with their role and experience."
+    reject_if: "The author is anonymous; or is named with no profession, qualifications, registration or experience stated (a bare 'Family Court Adviser' or 'Dr' and nothing more); or the stated expertise is unrelated to the matters covered (for example a surveyor assessing domestic abuse). Whether a named person is genuinely qualified cannot be decided from the text alone, so where the author is named but qualifications are missing or doubtful use 'unclear' rather than 'missing' so a caseworker can verify."
+    fix: "Give the expert's full name, profession, professional registration and qualifications, and the experience that qualifies them to assess domestic abuse."
+    unverifiable_to_caseworker: true
+  - id: names_perpetrator_and_victim
+    label: "Names B and the victim"
+    requirement: "The report names B and the person assessed as a victim, who must be the applicant or another person with whom B is or was in a family relationship."
+    accept_if: "Both are named, in full or by title and surname, as parties, parents or in the analysis, and the relationship between them (partner, former partner, spouse, parents of the same child, relative) is stated or evident from the report or the application."
+    reject_if: "B or the victim is not named anywhere, is referred to only as 'the father', 'the mother' or 'the respondent' with no name, or is redacted or an unfilled placeholder; or the person assessed has no family relationship with B. Where both are named but the relationship is stated nowhere, use 'unclear' rather than 'missing'."
+    fix: "Name both {other_party_name} and {applicant_name} in the report and state the relationship between them."
+  - id: assessed_victim_or_at_risk
+    label: "Assessed as victim or at risk"
+    requirement: "The report confirms that the person was assessed as being, or at risk of being, a victim of domestic abuse by B."
+    accept_if: "A clear statement of the expert's own assessment or conclusion that the person is or has been a victim of domestic abuse by B, or is at risk of being one ('I assess that', 'in my opinion', 'my conclusion is'), covering controlling or coercive, sexual, economic, psychological or emotional abuse as well as violence. Paraphrase is fine where the meaning is clear."
+    reject_if: "The report records the allegations without assessing them; says the expert could not reach a view or that the allegations are matters for the court to determine; finds the allegations unfounded; assesses someone else as the victim or someone other than B as the source of risk; or hedges the assessment ('may have been', 'possibly', 'appears to be', 'could be at risk')."
+    fix: "State your assessment, without qualification, that {applicant_name} is, or is at risk of being, a victim of domestic abuse by {other_party_name}."
+hedge_terms: []
+gov_template_url: null
+test_cases_min: 5

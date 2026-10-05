@@ -1,0 +1,56 @@
+id: sch1_p18_refuge_refusal
+gateway: da
+enabled: true
+paragraph: "18"
+legal_ref: "Civil Legal Aid (Procedure) Regulations 2012, Schedule 1, paragraph 18"
+guidance_ref: "LAA Evidence Requirements v15, paragraphs 2.78 to 2.82"
+name: "Letter or report from a domestic abuse support organisation confirming refusal of admission to a refuge"
+short_name: "Refuge refusal letter"
+names_other_party_required: true
+applicant_must_be_victim: false
+always_needs_caseworker: false
+accepted_formats: ["letter", "report", "email from an official address"]
+classification_hints:
+  - "letter, report or email from a refuge, Women's Aid, Refuge or another domestic abuse support organisation, often signed by a refuge manager or domestic abuse support officer"
+  - "central statement that a named person 'was refused admission to a refuge' on a given date"
+  - "says the person sought admission to the refuge because of (allegations of) domestic abuse by a named other party"
+  - "often uses the gov.uk sample letter lines 'Name of perpetrator' and 'Name of applicant'; a letter confirming admission to a refuge is paragraph 17, not this paragraph"
+elements:
+  - id: organisation_identified
+    label: "Support organisation identified"
+    requirement: "The letter clearly identifies the name and details of the organisation providing domestic abuse support services in the United Kingdom that is confirming the refusal."
+    accept_if: "The organisation's name appears in the letterhead, signature block, email address or body (for example 'Women's Aid', a named refuge or domestic abuse service). A job title linked to domestic abuse support (refuge manager, domestic abuse support officer, IDVA) supports this. Paragraph 18 does not require the organisation to state that it is UK-situated or has operated for six months; those tests belong to paragraph 17 (guidance 2.78)."
+    reject_if: "No organisation is named (only an individual's name, or 'the refuge' with no name); the author is not a domestic abuse support organisation or refuge (for example a solicitor, friend, landlord, council housing officer or the client themselves); or the organisation is plainly outside the United Kingdom. If an organisation is named but you cannot tell from the text whether it provides domestic abuse support services, use unclear rather than missing; the LAA may take steps to verify the organisation."
+    fix: "Put the full name and contact details of {author_org} on the letter and make clear that it provides domestic abuse support services."
+    client_hint: "put the refuge or organisation's name on the letter"
+  - id: perpetrator_named
+    label: "Other party named"
+    requirement: "The letter names B, the other party to the legal aid application, as the person whose alleged domestic abuse led to admission being sought."
+    accept_if: "The other party's name appears, for example in a 'Name of perpetrator: John Doe' line, in 'with whom John Doe is or was in a family relationship', or in 'allegations of domestic abuse by John Doe'."
+    reject_if: "No perpetrator is named anywhere in the letter (the MoJ rejected example says only 'allegations of domestic abuse', so the refusal cannot be linked to B); the abuser is only described ('her ex-partner', 'the perpetrator') with no name; or the person named is not the other party on the application. A different name is unclear rather than missing if it could be a spelling variant, maiden name or alias."
+    fix: "Name {other_party_name} as the person whose alleged domestic abuse caused {applicant_name} to seek admission to the refuge."
+    client_hint: "name the person you needed to get away from"
+  - id: victim_named
+    label: "Person refused named, family relationship with B"
+    requirement: "The letter names the person who was refused admission: the applicant, or another person in a family relationship with B."
+    accept_if: "The person refused is named (for example in a 'Name of applicant:' line or in 'I can confirm that Jane Doe ... was refused admission'). The person refused may be the applicant or another person in a family relationship with B (guidance 2.80); where it is someone else, the letter should state the relationship ('with whom B is or was in a family relationship', 'her former partner', 'his wife'). If the person named is the applicant on the legal aid application, the family relationship with B is established by the application and need not be restated in the letter; whether B is named is checked separately under perpetrator_named."
+    reject_if: "No person is named; only an unfilled placeholder such as [name of applicant] is given; or the person refused is someone other than the applicant and nothing links them to B as a family member or current or former partner. If the name does not match the applicant on the application and the letter does not explain who the person is, use unclear rather than missing."
+    fix: "Name {applicant_name} as the person refused admission and state that {other_party_name} is or was in a family relationship with them (for example former partner or spouse)."
+    client_hint: "add your full name"
+  - id: refusal_date
+    label: "Date admission was refused"
+    requirement: "The letter states the date on which the person was refused admission to the refuge."
+    accept_if: "A specific date of refusal (day, month and year) is given, for example 'was refused admission to a refuge on 28 September 2026', in the sentence or in a 'Date of refusal:' line. Any date format counts."
+    reject_if: "No date is given; only a vague period is given ('recently', 'in September', 'earlier this year', 'last month'); only the date of the letter or of the enquiry is given without saying when admission was refused; or the only date is a date of admission (that is a paragraph 17 letter, not a refusal)."
+    fix: "State the exact date on which {applicant_name} was refused admission to the refuge."
+    client_hint: "give the date you were refused a place"
+  - id: sought_because_of_abuse_by_other_party
+    label: "Sought refuge because of abuse by B"
+    requirement: "The letter states that the person sought admission to the refuge because of allegations of domestic abuse by B."
+    accept_if: "A statement that the person sought, applied for or was referred for a refuge place because of domestic abuse, or allegations of domestic abuse, by the named other party (for example 'sought admission to a refuge because of allegations of domestic abuse by John Doe', 'was fleeing abuse from her former partner John Doe'). The reason the refuge refused admission does not matter: immigration status, complex mental health needs, no space, or the refuge being too close to the perpetrator are all acceptable reasons for refusal (guidance 2.82)."
+    reject_if: "The reason for seeking a refuge place is something other than domestic abuse by B, for example eviction for rent arrears, homelessness, overcrowding or general housing need; no reason is given; or the abuse is attributed to someone other than B. Where the letter says domestic abuse but names no perpetrator, so the abuse cannot be linked to B, use unclear for this element and mark perpetrator_named missing."
+    fix: "State that {applicant_name} sought admission to the refuge because of allegations of domestic abuse by {other_party_name}."
+    client_hint: "say that you asked for a place because of abuse by that person"
+hedge_terms: []
+gov_template_url: "https://www.gov.uk/government/publications/domestic-abuse-support-services-letter-confirming-refused-admission-to-a-refuge"
+test_cases_min: 5

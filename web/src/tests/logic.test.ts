@@ -92,3 +92,27 @@ describe("drafted text", () => {
     expect(inboxReply("Northgate Family Law", smith.documents.slice(0, 1))).toContain("might be consistent with");
   });
 });
+
+describe("a letter about someone else", () => {
+  it("tells the client to check the letter rather than listing abstract changes", () => {
+    const note = "The letter is about Jane Doe and John Doe; this case is for Joe Bloggs and Sam Bloggs.";
+    const r = { ...janeDoe.documents[0].result!, outcome: "fail" as const, nameCheck: note };
+    const m = clientMessage(r);
+    expect(m.title).toBe("Check this is the right letter");
+    expect(m.body).toBe(note);
+    expect(requestLetter(janeDoe.case, { ...janeDoe.documents[0], result: r })).toContain(note);
+  });
+});
+
+describe("marks on the PDF page", () => {
+  const item = (str: string) => ({ str, transform: [1, 0, 0, 1, 0, 0], width: str.length * 5, height: 10 });
+  const items = [item("I can confirm that Hannah Shah was"), item("refused admission to a refuge on 15"), item("September 2026."), item("Fatima Begum")];
+
+  it("finds a quote that runs across lines and curly quotes, item by item", async () => {
+    const { locate } = await import("../components/PdfView");
+    expect(locate(items, "I can confirm that Hannah Shah was refused admission to a refuge on 15 September 2026.")).toEqual([[0, 1, 2]]);
+    expect(locate(items, "‘refused admission’ to a refuge")).toEqual([]); // quote marks the letter does not have
+    expect(locate(items, "refused admission to a refuge ... Fatima Begum")).toEqual([[1], [3]]); // a stitched quote, fragment by fragment
+    expect(locate(items, "not in the letter at all")).toEqual([]);
+  });
+});

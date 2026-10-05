@@ -1,0 +1,49 @@
+id: sch1_p7_injunction
+gateway: da
+enabled: true
+paragraph: "7"
+legal_ref: "Civil Legal Aid (Procedure) Regulations 2012, Schedule 1, paragraph 7"
+guidance_ref: "LAA Evidence Requirements v15, paragraphs 2.38 to 2.42"
+name: "Relevant protective injunction made by a court against B"
+short_name: "Protective injunction"
+share_of_applications: 0.24
+names_other_party_required: true
+applicant_must_be_victim: false
+always_needs_caseworker: false
+accepted_formats:
+  - "court order or other court document detailing the injunction"
+  - "letter or email from the police, CPS or Witness Care Unit confirming a restraining order made in criminal proceedings"
+  - "email from a pnn.police.uk address"
+classification_hints:
+  - "a court order headed with the court name and case or claim number: non-molestation or occupation order (Family Law Act 1996 Part IV), restraining order (Protection from Harassment Act 1997 or Sentencing Act 2020 section 360), forced marriage protection order, FGM protection order, domestic violence protection order or domestic abuse protection order"
+  - "names an applicant or claimant and a respondent or defendant, and sets out prohibitions: not to use or threaten violence, intimidate, harass or pester, not to contact or communicate, or not to go to or enter a named property"
+  - "made by a named judge, district judge or magistrates, with the date the order was made, whether it was made with or without notice, and how long it lasts"
+  - "a police letter or email confirming a restraining order made at a criminal court also falls here; an application form (FL401), a notice of hearing or an undertaking (N117) is not an injunction"
+elements:
+  - id: court_document
+    label: "Court document or police confirmation"
+    requirement: "The evidence is a court document detailing the protective injunction or, for a restraining order obtained in criminal proceedings, a document from the police, CPS or Witness Care Unit confirming it."
+    accept_if: "A court order, sealed copy, judgment, court record or court letter showing the order; or a letter or email from the police, CPS or Witness Care Unit (ideally from a pnn.police.uk address) confirming that a restraining order was made against B and stating its terms and date."
+    reject_if: "The document comes from neither a court nor the police, CPS or Witness Care Unit: for example a solicitor's letter, the applicant's own statement, a support worker's summary, or an unsourced description of an order. A police document is only acceptable for a restraining order; for other injunctions the court document is needed."
+    fix: "Provide the court order itself (a sealed or stamped copy) or, for a restraining order, a letter or email from the police, CPS or Witness Care Unit confirming the order made against {other_party_name}."
+  - id: order_made_and_in_force
+    label: "Order made and not set aside"
+    requirement: "A protective injunction has actually been made by the court on or before the date it is relied on and, if it was made without notice, has not since been set aside."
+    accept_if: "Wording showing the court made the order ('the court orders', 'it is ordered that', 'a non-molestation order was made on [date]') with the date of making on or before the legal aid application (the same day is enough, 2.40). An order that has since expired or been discharged by effluxion of time still counts; only an order set aside does not. The order must protect against harm, intimidation, threats or harassment, forced marriage or FGM, prohibit contact or communication, or concern entry to or occupation of property (2.39)."
+    reject_if: "The document is only an application (form FL401, FL403, a C-form or a claim form), a notice of hearing, a listing or case management order, or a draft order, so no injunction has yet been made; or the document records that the order, typically a without-notice order, was set aside, discharged or dismissed at the return hearing or on appeal with nothing put in its place (2.41); or the order's terms are not protective (for example a child arrangements or financial order with no protective provision). If the order's date cannot be read, use 'unclear' rather than 'missing'."
+    fix: "Provide the order the court actually made, dated and showing it is still effective; if a without-notice order was set aside at the return hearing, provide the order that replaced it or other evidence."
+  - id: respondent_is_other_party
+    label: "B is respondent, in family relationship"
+    requirement: "The order was made against B, the other party to the case, who is or was in a family relationship with the protected person."
+    accept_if: "B is named as the respondent, defendant or person bound by the order, in any name form, and the order or the application shows a family relationship with the protected person (partner, former partner, spouse, civil partner, parents of the same child, relative). For Family Law Act 1996 orders (non-molestation, occupation, forced marriage protection) and DVPOs or DAPOs the family relationship can be inferred, since those orders are only made between associated or personally connected persons. For a restraining order or a Protection from Harassment Act injunction the relationship must appear in the document or the application."
+    reject_if: "The order is against someone other than B (for example a neighbour or former colleague under the Protection from Harassment Act 1997 with no family relationship to the protected person); B appears only as the applicant or claimant rather than the respondent; or the respondent's name is redacted or an unfilled placeholder. Where the respondent is B but the order is not a family-court order and the relationship is stated nowhere, use 'unclear' rather than 'missing'."
+    fix: "Confirm that {other_party_name} is the person the order was made against, and state the family relationship between {other_party_name} and the person the order protects."
+  - id: protected_party_named
+    label: "Protected person named"
+    requirement: "The order names the person it protects, who must be the applicant or another person with whom B is or was in a family relationship."
+    accept_if: "The protected person is named as the applicant, claimant or protected party, or by name in the terms of the order ('must not contact [name]'); any name form will do. The protected person does not have to be the legal aid applicant."
+    reject_if: "No protected person is named anywhere in the document, the name is redacted or an unfilled placeholder, or the protected person is B rather than the applicant (the roles are reversed)."
+    fix: "Make sure the order names the person it protects, usually {applicant_name}, in its heading or terms."
+hedge_terms: []
+gov_template_url: null
+test_cases_min: 5

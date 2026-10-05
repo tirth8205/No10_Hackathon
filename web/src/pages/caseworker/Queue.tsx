@@ -81,7 +81,7 @@ export function Queue({ items, filter, filterTo, decided }: QueueProps) {
           <h1 className="govuk-heading-xl govuk-!-margin-bottom-0">Evidence queue</h1>
         </div>
         {next && (
-          <ButtonLink to={paths.review(next.data.case.id)} className="govuk-!-margin-bottom-0">
+          <ButtonLink to={paths.review(next.data.case.submissionId ?? next.data.case.id)} className="govuk-!-margin-bottom-0">
             Review next case
           </ButtonLink>
         )}
@@ -117,9 +117,10 @@ export function Queue({ items, filter, filterTo, decided }: QueueProps) {
           </thead>
           <tbody className="govuk-table__body">
             {visible.map(({ data, verdict }) => (
-              <tr className="govuk-table__row" key={data.case.id}>
+              // One row per submission: a case submitted twice has two rows, each opening its own pack.
+              <tr className="govuk-table__row" key={data.case.submissionId ?? data.case.id}>
                 <td className="govuk-table__cell">
-                  <Link className="govuk-link govuk-!-font-weight-bold" to={paths.review(data.case.id)}>
+                  <Link className="govuk-link govuk-!-font-weight-bold" to={paths.review(data.case.submissionId ?? data.case.id)}>
                     {data.case.ref}
                   </Link>
                   <span className="govuk-!-display-block app-secondary-text">{data.case.applicantName}</span>

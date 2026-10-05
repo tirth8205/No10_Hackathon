@@ -1,0 +1,30 @@
+[project]
+name = "gateway-check"
+version = "0.1.0"
+description = "Checks domestic abuse evidence for legal aid against Schedule 1 before submission (10DS hackathon prototype)"
+requires-python = ">=3.12"
+dependencies = [
+    "anthropic>=0.70",
+    "openai>=1.60",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "python-multipart>=0.0.9",
+    "jinja2>=3.1",
+    "pydantic>=2.7",
+    "pyyaml>=6.0",
+    "pypdf>=4.0",
+    "python-docx>=1.1",
+    "pillow>=10.0",
+    "rapidfuzz>=3.0",
+    "httpx>=0.27",
+    "pillow-heif>=1.8.0",
+]
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.setuptools]
+packages = ["engine", "app", "eval", "demo"]

@@ -1,0 +1,45 @@
+id: sch1_p4_conviction
+gateway: da
+enabled: true
+paragraph: "4"
+legal_ref: "Civil Legal Aid (Procedure) Regulations 2012, Schedule 1, paragraph 4"
+guidance_ref: "LAA Evidence Requirements v15, paragraphs 2.26 to 2.30"
+name: "A relevant conviction for a domestic abuse offence"
+short_name: "Conviction for DA offence"
+names_other_party_required: true
+applicant_must_be_victim: false
+always_needs_caseworker: false
+accepted_formats: ["memorandum of conviction (magistrates' court)", "certificate of conviction (Crown Court)", "letter or email from the police, CPS or Witness Care Unit", "email from a pnn.police.uk address", "email from the legal aid provider naming the police station and the officer spoken to", "newspaper clipping about the case", "letter or email from an overseas law enforcement agency"]
+classification_hints:
+  - "headed 'memorandum of an entry in the register' or 'certificate of conviction' from a magistrates' or Crown Court, certified by a legal adviser or court officer"
+  - "has fields for defendant, date of birth, offence, plea, finding or verdict, and sentence"
+  - "records 'convicted', 'guilty' or 'pleaded guilty', or a sentence such as a community order, restraining order, fine, suspended sentence or custody"
+  - "a police, CPS or Witness Care Unit letter telling the victim the outcome of the trial or sentencing"
+elements:
+  - id: perpetrator_named
+    label: "B named as person convicted"
+    requirement: "The other party in the case (B) is named as the person convicted."
+    accept_if: "B's name appears as the defendant or person convicted, in any form (full name, or title and surname, with or without date of birth)."
+    reject_if: "The defendant named is a different person from the other party in this application (check the whole name, not just the surname); no defendant is named; the name is redacted or an unfilled placeholder; or the person convicted is the applicant. If the defendant's name is close to but not the same as the other party's, use 'unclear' rather than 'missing' so a caseworker can check identity."
+    fix: "Name {other_party_name} as the person who was convicted."
+  - id: convicted
+    label: "Records a conviction"
+    requirement: "The document records that B was convicted of the offence, whether by a guilty plea or a finding of guilt."
+    accept_if: "A finding or verdict of 'guilty' or 'convicted', a guilty plea accepted by the court, or a sentence imposed on conviction (community order, fine, custody, suspended sentence, or a restraining order made on conviction). A conviction overseas confirmed by the relevant law enforcement agency also counts."
+    reject_if: "The defendant was found not guilty or acquitted, the case was dismissed, discontinued or withdrawn, or no evidence was offered; the document shows only a charge or a pending trial (consider paragraph 3); a bind over without conviction (consider paragraph 5); a caution (consider paragraph 2); or the conviction has been quashed on appeal. A hedged statement ('I understand he was convicted', 'is likely to be convicted') is not confirmation."
+    fix: "Confirm that {other_party_name} was convicted, giving the court, the date of conviction and the plea or finding."
+  - id: da_offence
+    label: "Conviction for a listed DA offence"
+    requirement: "The conviction is for an offence on the gov.uk list of domestic violence and child abuse offences."
+    accept_if: "The offence is on the gov.uk list, for example common assault, assault occasioning actual bodily harm, controlling or coercive behaviour, harassment, stalking, threats to kill, criminal damage, rape or sexual assault, with or without the section and Act. For an offence tried overseas, an equivalent offence of the same kind is acceptable."
+    reject_if: "The conviction is for an offence not on the list, for example being drunk and disorderly or another public order offence with no individual victim, a drugs offence or a road traffic offence; or no offence is stated. If an offence is named but you cannot tell whether it is on the gov.uk list, use 'unclear' rather than 'missing'."
+    fix: "State the specific offence {other_party_name} was convicted of, which must be on the gov.uk list of domestic violence and child abuse offences."
+  - id: victim_named
+    label: "Victim named"
+    requirement: "The victim of the offence is named (unless it is a sexual offence) and is, or was, in a family relationship with B; the victim may be the applicant or another person."
+    accept_if: "A named victim, for example 'committed against [name]' in the offence particulars, a restraining order 'protecting [name]', or a letter addressed to the victim by name. If the named victim is the applicant, the family relationship is established by the application and need not be restated. For a sexual offence the victim need not be named."
+    reject_if: "No victim is named and the offence is not a sexual offence (for example a public order offence with no individual victim); or the named victim is a stranger or member of the public with no family relationship to B. If the named victim is someone other than the applicant and no relationship to B is stated, use 'unclear' rather than 'missing'."
+    fix: "Name the victim (for example {applicant_name}) in the offence particulars and state their relationship to {other_party_name}, unless the conviction is for a sexual offence."
+hedge_terms: []
+gov_template_url: null
+test_cases_min: 5

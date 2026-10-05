@@ -1,0 +1,679 @@
+{
+ "summary": {
+  "documents": 12,
+  "cases": 12,
+  "agreement": 0.917,
+  "safe_agreement": 0.917,
+  "case_agreement": 0.917,
+  "false_approval_rate": 0.0,
+  "false_rejection_rate": 0.0,
+  "caseworker_routing_rate": 0.083,
+  "element_accuracy": 0.969,
+  "recategorisation_accuracy": null,
+  "quote_validity": 1.0,
+  "errors": 0,
+  "latency_ms_p50": 5,
+  "latency_ms_p95": 6,
+  "by_paragraph": {
+   "11": {
+    "n": 2,
+    "agreement": 0.5,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 1
+   },
+   "14": {
+    "n": 2,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "17": {
+    "n": 4,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "18": {
+    "n": 2,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   },
+   "19": {
+    "n": 2,
+    "agreement": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 0
+   }
+  },
+  "by_category": {
+   "gold": {
+    "n": 12,
+    "agreement": 0.917,
+    "false_approvals": 0,
+    "false_rejections": 0,
+    "to_caseworker": 1
+   }
+  },
+  "confusion": {
+   "meets->meets": 6,
+   "meets->needs_caseworker": 1,
+   "needs_change->needs_change": 5
+  },
+  "set": "gold",
+  "model": "gpt-5.4+cache:on",
+  "votes": 3,
+  "rules_version": "schedule1-v15-2026-06-15",
+  "run_at": "2026-10-05T14:22:51+00:00",
+  "wall_seconds": 0.0
+ },
+ "runs": [
+  {
+   "id": "MOJ-P17-accepted-01",
+   "category": "gold",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "17",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_description": "included",
+      "reason_for_support": "included",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "applicant_named": "included",
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_description": "included",
+      "reason_for_support": "included"
+     },
+     "element_matches": {
+      "uk_situated": true,
+      "operating_six_months": true,
+      "supported_applicant": true,
+      "professional_judgement": true,
+      "specific_matters": true,
+      "support_description": true,
+      "reason_for_support": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "Accepted by MoJ.",
+     "error": null,
+     "latency_ms": 4,
+     "quotes_unverified": 0,
+     "category": "gold"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P17-accepted-02",
+   "category": "gold",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "17",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_description": "included",
+      "reason_for_support": "included",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "applicant_named": "included",
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_description": "included",
+      "reason_for_support": "included"
+     },
+     "element_matches": {
+      "uk_situated": true,
+      "operating_six_months": true,
+      "supported_applicant": true,
+      "professional_judgement": true,
+      "specific_matters": true,
+      "support_description": true,
+      "reason_for_support": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "hedge"
+     ],
+     "reason_expected": "Accepted by MoJ.",
+     "error": null,
+     "latency_ms": 5,
+     "quotes_unverified": 0,
+     "category": "gold"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P17-accepted-03",
+   "category": "gold",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "17",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_description": "included",
+      "reason_for_support": "included",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "applicant_named": "included",
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "included",
+      "support_description": "included",
+      "reason_for_support": "included"
+     },
+     "element_matches": {
+      "uk_situated": true,
+      "operating_six_months": true,
+      "supported_applicant": true,
+      "professional_judgement": true,
+      "specific_matters": true,
+      "support_description": true,
+      "reason_for_support": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "quote_multi_span"
+     ],
+     "reason_expected": "Accepted by MoJ.",
+     "error": null,
+     "latency_ms": 6,
+     "quotes_unverified": 0,
+     "category": "gold"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P17-rejected-04",
+   "category": "gold",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "17",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "missing",
+      "support_description": "included",
+      "reason_for_support": "included",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "applicant_named": "included",
+      "uk_situated": "included",
+      "operating_six_months": "included",
+      "supported_applicant": "included",
+      "professional_judgement": "included",
+      "specific_matters": "missing",
+      "support_description": "included",
+      "reason_for_support": "included"
+     },
+     "element_matches": {
+      "uk_situated": true,
+      "operating_six_months": true,
+      "supported_applicant": true,
+      "professional_judgement": true,
+      "specific_matters": true,
+      "support_description": true,
+      "reason_for_support": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "'Victim testimony and referral' names the source of information, not the matters relied on.",
+     "error": null,
+     "latency_ms": 6,
+     "quotes_unverified": 0,
+     "category": "gold"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P11-accepted-01",
+   "category": "gold",
+   "expected_case": "meets",
+   "predicted_case": "needs_caseworker",
+   "case_agree": false,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "11",
+     "expected": "meets",
+     "predicted": "needs_caseworker",
+     "agree": false,
+     "safe_agree": false,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "appropriate_health_professional": "included",
+      "examined_applicant": "included",
+      "consistent_with_domestic_abuse": "included",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "appropriate_health_professional": "unclear",
+      "examined_applicant": "included",
+      "consistent_with_domestic_abuse": "included",
+      "applicant_named": "included"
+     },
+     "element_matches": {
+      "appropriate_health_professional": false,
+      "examined_applicant": true,
+      "consistent_with_domestic_abuse": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "classification_low_confidence"
+     ],
+     "reason_expected": "Accepted by MoJ.",
+     "error": null,
+     "latency_ms": 6,
+     "quotes_unverified": 0,
+     "category": "gold"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P11-rejected-02",
+   "category": "gold",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "11",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "appropriate_health_professional": "included",
+      "examined_applicant": "included",
+      "consistent_with_domestic_abuse": "missing",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "appropriate_health_professional": "missing",
+      "examined_applicant": "included",
+      "consistent_with_domestic_abuse": "missing",
+      "applicant_named": "included"
+     },
+     "element_matches": {
+      "appropriate_health_professional": false,
+      "examined_applicant": true,
+      "consistent_with_domestic_abuse": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "hedge"
+     ],
+     "reason_expected": "Hedged judgement: 'might be consistent with'.",
+     "error": null,
+     "latency_ms": 6,
+     "quotes_unverified": 0,
+     "category": "gold"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P19-accepted-01",
+   "category": "gold",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "19",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "public_authority_named": "included",
+      "victim_named": "included",
+      "perpetrator_named": "included",
+      "assessed_victim_or_at_risk": "included"
+     },
+     "elements_predicted": {
+      "public_authority_named": "included",
+      "victim_named": "included",
+      "perpetrator_named": "included",
+      "assessed_victim_or_at_risk": "included"
+     },
+     "element_matches": {
+      "public_authority_named": true,
+      "victim_named": true,
+      "perpetrator_named": true,
+      "assessed_victim_or_at_risk": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "Accepted by MoJ.",
+     "error": null,
+     "latency_ms": 6,
+     "quotes_unverified": 0,
+     "category": "gold"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P19-rejected-02",
+   "category": "gold",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "19",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "public_authority_named": "included",
+      "victim_named": "included",
+      "perpetrator_named": "included",
+      "assessed_victim_or_at_risk": "missing"
+     },
+     "elements_predicted": {
+      "public_authority_named": "included",
+      "victim_named": "included",
+      "perpetrator_named": "included",
+      "assessed_victim_or_at_risk": "missing"
+     },
+     "element_matches": {
+      "public_authority_named": true,
+      "victim_named": true,
+      "perpetrator_named": true,
+      "assessed_victim_or_at_risk": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "hedge"
+     ],
+     "reason_expected": "'Might be a victim' is not an assessment.",
+     "error": null,
+     "latency_ms": 6,
+     "quotes_unverified": 0,
+     "category": "gold"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P18-accepted-01",
+   "category": "gold",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "18",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "organisation_identified": "included",
+      "perpetrator_named": "included",
+      "victim_named": "included",
+      "refusal_date": "included",
+      "sought_because_of_abuse_by_other_party": "included"
+     },
+     "elements_predicted": {
+      "organisation_identified": "included",
+      "perpetrator_named": "included",
+      "victim_named": "included",
+      "refusal_date": "included",
+      "sought_because_of_abuse_by_other_party": "included"
+     },
+     "element_matches": {
+      "organisation_identified": true,
+      "perpetrator_named": true,
+      "victim_named": true,
+      "refusal_date": true,
+      "sought_because_of_abuse_by_other_party": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "Accepted by MoJ.",
+     "error": null,
+     "latency_ms": 1,
+     "quotes_unverified": 0,
+     "category": "gold"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P18-rejected-02",
+   "category": "gold",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "18",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "organisation_identified": "included",
+      "perpetrator_named": "missing",
+      "victim_named": "included",
+      "refusal_date": "included",
+      "sought_because_of_abuse_by_other_party": "unclear"
+     },
+     "elements_predicted": {
+      "organisation_identified": "included",
+      "perpetrator_named": "missing",
+      "victim_named": "included",
+      "refusal_date": "included",
+      "sought_because_of_abuse_by_other_party": "unclear"
+     },
+     "element_matches": {
+      "organisation_identified": true,
+      "perpetrator_named": true,
+      "victim_named": true,
+      "refusal_date": true,
+      "sought_because_of_abuse_by_other_party": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [],
+     "reason_expected": "No perpetrator named, so the refusal can't be linked to abuse by B.",
+     "error": null,
+     "latency_ms": 1,
+     "quotes_unverified": 0,
+     "category": "gold"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P14-accepted-01",
+   "category": "gold",
+   "expected_case": "meets",
+   "predicted_case": "meets",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "14",
+     "expected": "meets",
+     "predicted": "meets",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "author_is_idva": "included",
+      "confirms_support": "included",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "author_is_idva": "included",
+      "confirms_support": "included",
+      "applicant_named": "included"
+     },
+     "element_matches": {
+      "author_is_idva": true,
+      "confirms_support": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "unfilled_placeholder"
+     ],
+     "reason_expected": "Accepted by MoJ.",
+     "error": null,
+     "latency_ms": 1,
+     "quotes_unverified": 0,
+     "category": "gold"
+    }
+   ]
+  },
+  {
+   "id": "MOJ-P14-rejected-02",
+   "category": "gold",
+   "expected_case": "needs_change",
+   "predicted_case": "needs_change",
+   "case_agree": true,
+   "documents": [
+    {
+     "doc_id": "D1",
+     "claimed_para": "14",
+     "expected": "needs_change",
+     "predicted": "needs_change",
+     "agree": true,
+     "safe_agree": true,
+     "false_approval": false,
+     "false_rejection": false,
+     "elements_expected": {
+      "author_is_idva": "included",
+      "confirms_support": "missing",
+      "applicant_named": "included"
+     },
+     "elements_predicted": {
+      "author_is_idva": "included",
+      "confirms_support": "missing",
+      "applicant_named": "included"
+     },
+     "element_matches": {
+      "author_is_idva": true,
+      "confirms_support": true,
+      "applicant_named": true
+     },
+     "recategorise_expected": null,
+     "recategorise_predicted": null,
+     "flags": [
+      "unfilled_placeholder"
+     ],
+     "reason_expected": "MoJ rejected this; the only differences are 'we provided' vs 'I am providing'. Exact reason unconfirmed - ask MoJ.",
+     "error": null,
+     "latency_ms": 1,
+     "quotes_unverified": 0,
+     "category": "gold"
+    }
+   ]
+  }
+ ]
+}
