@@ -23,6 +23,14 @@ export function clientMessage(result: CheckResult): ClientMessage {
   if (verdict === "pass") {
     return { title: "Your letter is ready", body: "It meets the requirements." };
   }
+  if (verdict === "fail" && result.nameCheck) {
+    return {
+      title: "Check this is the right letter",
+      body: result.nameCheck,
+      addTitle: "What to do",
+      addBody: "If it is the wrong letter, upload the right one. If the letter has the wrong names, ask the person who wrote it to correct them.",
+    };
+  }
   if (verdict === "fail") {
     const missing = gaps(result);
     const hints = missing.map((e) => e.clientHint).filter(Boolean) as string[];
@@ -71,7 +79,7 @@ export function requestLetter(c: Case, doc: CaseDocument): string {
     "",
     `Dear ${r.authorName ?? "Sir or Madam"},`,
     "",
-    `Thank you for your letter${dated} supporting our client, ${c.applicantName}.`,
+    `Thank you for your letter${dated} supporting our client, ${c.applicantName}.${r.nameCheck ? ` ${r.nameCheck}` : ""}`,
     "",
     `For legal aid, the letter needs ${changeWord(list.length)} (Civil Legal Aid (Procedure) Regulations 2012, Schedule 1${para ? `, paragraph ${para.number}` : ""}):`,
     "",
@@ -92,7 +100,7 @@ export function clientRequestMessage(c: Case, doc: CaseDocument): string {
   return [
     `Hello${r.authorName ? ` ${r.authorName}` : ""},`,
     "",
-    `Thank you for the letter you wrote for me. My solicitor says it needs ${changeWord(list.length)} before it can be used:`,
+    `Thank you for the letter you wrote for me. ${r.nameCheck ? `${r.nameCheck} ` : ""}My solicitor says it needs ${changeWord(list.length)} before it can be used:`,
     "",
     asList(list),
     "",

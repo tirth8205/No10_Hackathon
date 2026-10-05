@@ -107,7 +107,9 @@ def agreement(result: dict) -> str:
 def flag_sentences(result: dict) -> list[str]:
     out: list[str] = []
     for f in result.get("flags", []):
-        if f == "vote_disagreement":
+        if f in ("name_mismatch", "victim_name_mismatch") and result.get("name_check"):
+            text = result["name_check"]  # the names themselves, not just "does not match"
+        elif f == "vote_disagreement":
             k = result.get("votes") or 0
             counts = [max(e.get("votes", {}).values() or [0]) for e in result.get("elements", [])]
             text = f"Checks disagreed ({min(counts) if counts else 0} of {k})"
@@ -137,6 +139,7 @@ def client_result(full: dict, r: dict) -> dict:
     return {
         "matchedPara": full["matchedPara"], "outcome": full["outcome"],
         "reason": r.get("client_message") or "",
+        "nameCheck": r.get("name_check"),
         "elements": [{"key": e["key"], "status": e["status"], "clientHint": e.get("clientHint"), "fix": e.get("fix")} for e in full["elements"]],
         "shortOrg": full["shortOrg"], "authorName": None, "letterDate": full["letterDate"],
         "rulesVersion": full["rulesVersion"], "checkedAt": full["checkedAt"],
@@ -154,6 +157,7 @@ def _full_check_result(r: dict) -> dict:
                       "explanation": e.get("reasoning") or "", "fix": e.get("fix"), "clientHint": e.get("client_hint")}
                      for e in r.get("elements", [])],
         "flags": flag_sentences(r),
+        "nameCheck": r.get("name_check"),
         "authorOrg": cls.get("author_org"),
         "shortOrg": cls.get("short_org") or short_org(cls.get("author_org")),
         "authorName": cls.get("author_name"),

@@ -92,3 +92,14 @@ describe("drafted text", () => {
     expect(inboxReply("Northgate Family Law", smith.documents.slice(0, 1))).toContain("might be consistent with");
   });
 });
+
+describe("a letter about someone else", () => {
+  it("tells the client to check the letter rather than listing abstract changes", () => {
+    const note = "The letter is about Jane Doe and John Doe; this case is for Joe Bloggs and Sam Bloggs.";
+    const r = { ...janeDoe.documents[0].result!, outcome: "fail" as const, nameCheck: note };
+    const m = clientMessage(r);
+    expect(m.title).toBe("Check this is the right letter");
+    expect(m.body).toBe(note);
+    expect(requestLetter(janeDoe.case, { ...janeDoe.documents[0], result: r })).toContain(note);
+  });
+});

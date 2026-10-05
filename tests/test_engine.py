@@ -190,3 +190,25 @@ def test_invented_short_fragment_fails_the_whole_quote():
     # only empty strings are dropped when splitting
     assert fragments("Abuse confirmed. ... \n\n") == ["Abuse confirmed."]
     assert fragments("") == []
+
+
+def test_letter_about_someone_else_gets_a_plain_name_note():
+    """A different person: the deterministic wording replaces the model's, and every audience gets one sentence with the names."""
+    from engine import aggregate
+    from engine.models import Application, ElementResult, Parties
+    from engine.rules import load_rules
+
+    rules = load_rules()
+    rule = rules.get("sch1_p19_public_authority")
+    els = [ElementResult(element_id="perpetrator_named", label="Perpetrator named", status="missing", reasoning="model words", fix="model fix")]
+    flags, severity, note = aggregate.party_checks(
+        Parties(victim_name="Jane Doe", other_party_name="John Doe"), Application(applicant_name="Joe Bloggs", other_party_name="Sam Bloggs"),
+        rule, rules.gateway, els)
+    assert flags == ["name_mismatch"] and severity == "change"
+    assert note == "The letter is about Jane Doe and John Doe; this case is for Joe Bloggs and Sam Bloggs."
+    assert els[0].status == "missing" and "Sam Bloggs" in els[0].fix and "model" not in els[0].fix
+    # names that match: no note, nothing touched
+    els = [ElementResult(element_id="perpetrator_named", label="Perpetrator named", status="included", reasoning="ok", fix=None)]
+    assert aggregate.party_checks(Parties(victim_name="Joe Bloggs", other_party_name="Sam Bloggs"),
+                                  Application(applicant_name="Joe Bloggs", other_party_name="Sam Bloggs"), rule, rules.gateway, els) == ([], "none", None)
+    assert els[0].status == "included"

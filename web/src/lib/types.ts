@@ -40,6 +40,8 @@ export interface CheckResult {
   reason: string;
   elements: ElementResult[];
   flags: string[];
+  /** How the names in the letter differ from the case, when they do (the back end adds it). */
+  nameCheck?: string | null;
   authorOrg: string | null;
   /** Short, safer name for the organisation, used on the client's screens. */
   shortOrg: string | null;

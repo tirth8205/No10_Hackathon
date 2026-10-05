@@ -125,6 +125,7 @@ class DocumentResult(BaseModel):
     elements: list[ElementResult] = Field(default_factory=list)
     verdict: DocVerdict
     flags: list[str] = Field(default_factory=list)
+    name_check: str | None = Field(default=None, description="Plain sentence on how the names in the document differ from the application, when flagged")
     verification: list[VerificationCheck] = Field(default_factory=list)
     provider_summary: str = ""
     client_message: str = ""

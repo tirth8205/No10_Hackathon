@@ -64,17 +64,17 @@ async def _votes(llm: LLM, text: str, rule: Rule, application: Application, rule
 
 
 def _assemble(text: str, rule: Rule, votes: list[Assessment], classification: Classification, parties: Parties,
-              application: Application, rules: RuleSet, failed: int = 0) -> tuple[list, list[str], str]:
+              application: Application, rules: RuleSet, failed: int = 0) -> tuple[list, list[str], str, str | None]:
     elements, flags = aggregate.majority(votes, rule, failed=failed)
     flags += aggregate.verify_quotes(elements, text, rules.gateway)
-    party_flags, severity = aggregate.party_checks(parties, application, rule, rules.gateway, elements)
+    party_flags, severity, name_check = aggregate.party_checks(parties, application, rule, rules.gateway, elements)
     flags += party_flags
     flags += aggregate.hedge_flag(votes) + aggregate.injection_flag(votes) + aggregate.language_flag(classification) + aggregate.confidence_flag(classification)
     for f in aggregate.text_checks(text, rules.gateway):
         if f not in flags:
             flags.append(f)
     verdict = aggregate.decide(elements, classification, rule, flags, severity)
-    return elements, list(dict.fromkeys(flags)), verdict
+    return elements, list(dict.fromkeys(flags)), verdict, name_check
 
 
 async def check_text(text: str, filename: str, application: Application, *, rules: RuleSet | None = None,
@@ -126,7 +126,7 @@ async def check_text(text: str, filename: str, application: Application, *, rule
                       rule_id=rule.id, paragraph=rule.paragraph, rule_name=rule.name, legal_ref=rule.legal_ref, votes_failed=k,
                       provider_summary=f"The model declined to assess this document ({e}). A caseworker must review it.",
                       client_message=outputs.client_message("needs_caseworker"))
-    elements, flags, verdict = _assemble(text, rule, good, classification, parties, application, rules, failed=failed)
+    elements, flags, verdict, name_check = _assemble(text, rule, good, classification, parties, application, rules, failed=failed)
 
     # Fewer than half the votes completed: whatever the survivors said, the check is not
     # reliable enough to act on. A person decides, and the summary says why.
@@ -142,7 +142,7 @@ async def check_text(text: str, filename: str, application: Application, *, rule
         try:
             alt_good, alt_failed = await _votes(llm, text, suggested, application, rules, k)
             if len(alt_good) >= quorum(k):
-                _, _, alt_verdict = _assemble(text, suggested, alt_good, classification, parties, application, rules, failed=alt_failed)
+                _, _, alt_verdict, _ = _assemble(text, suggested, alt_good, classification, parties, application, rules, failed=alt_failed)
                 if alt_verdict == "meets":
                     recategorise_to = suggested.id
         except RefusalError:
@@ -163,9 +163,9 @@ async def check_text(text: str, filename: str, application: Application, *, rule
         verdict=verdict, flags=flags, elements=elements, classification=classification, parties=parties, verification=verification,
         rule_id=rule.id, paragraph=rule.paragraph, rule_name=rule.name, legal_ref=rule.legal_ref, votes_failed=failed,
         claimed_rule_id=claimed.id if claimed else None, recategorise_to=recategorise_to,
-        provider_summary=summary,
-        client_message=outputs.client_message(verdict),
-        request_letter=outputs.request_letter(rule, elements, application, classification.author_name, classification.author_org)
+        provider_summary=summary, name_check=name_check,
+        client_message=outputs.client_message(verdict, name_check=name_check),
+        request_letter=outputs.request_letter(rule, elements, application, classification.author_name, classification.author_org, name_check=name_check)
         if verdict in ("needs_change", "needs_caseworker") and not unreliable else None,
     )
 

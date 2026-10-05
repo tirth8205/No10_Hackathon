@@ -43,13 +43,20 @@ def provider_summary(rule: Rule | None, elements: list[ElementResult], verdict: 
     return " ".join([head, *parts])
 
 
-def client_message(verdict: str, illegible: bool = False) -> str:
+CLIENT_WRONG_NAMES = ("If you uploaded the wrong letter, upload the right one. "
+                      "If the names in the letter are wrong, ask the person who wrote it to correct them.")
+
+
+def client_message(verdict: str, illegible: bool = False, name_check: str | None = None) -> str:
     if illegible:
         return CLIENT_ILLEGIBLE
+    if name_check and verdict == "needs_change":
+        return f"{name_check} {CLIENT_WRONG_NAMES}"
     return CLIENT_MESSAGES.get(verdict, CLIENT_MESSAGES["needs_caseworker"])
 
 
-def request_letter(rule: Rule | None, elements: list[ElementResult], application: Application, author_name: str | None, author_org: str | None) -> str | None:
+def request_letter(rule: Rule | None, elements: list[ElementResult], application: Application, author_name: str | None, author_org: str | None,
+                   name_check: str | None = None) -> str | None:
     if rule is None:
         return None
     gaps = [e for e in elements if e.status in ("missing", "unclear")]
@@ -62,7 +69,8 @@ def request_letter(rule: Rule | None, elements: list[ElementResult], application
         f"Re: {application.applicant_name}",
         "",
         f"Thank you for your letter in support of {application.applicant_name}'s application for legal aid. "
-        f"To be accepted as evidence under {rule.legal_ref}, the letter needs to confirm the following, which the current letter does not clearly show:",
+        + (f"{name_check} " if name_check else "")
+        + f"To be accepted as evidence under {rule.legal_ref}, the letter needs to confirm the following, which the current letter does not clearly show:",
         "",
     ]
     for e in gaps:

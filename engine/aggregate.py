@@ -114,33 +114,50 @@ def verify_quotes(elements: list[ElementResult], text: str, gateway: Gateway) ->
     return flags
 
 
-def party_checks(parties: Parties, application: Application, rule: Rule, gateway: Gateway, elements: list[ElementResult]) -> tuple[list[str], str]:
-    """Returns (flags, severity) where severity is none | caseworker | change."""
+def party_checks(parties: Parties, application: Application, rule: Rule, gateway: Gateway,
+                 elements: list[ElementResult]) -> tuple[list[str], str, str | None]:
+    """Returns (flags, severity, note): severity is none | caseworker | change; the note says in plain
+    words how the names in the letter differ from the application (None when nothing was flagged)."""
     flags: list[str] = []
     severity = "none"
     victim = name_match(parties.victim_name, application.applicant_name, gateway.name_match_threshold)
+    other = name_match(parties.other_party_name, application.other_party_name, gateway.name_match_threshold) if application.other_party_name else "unknown"
     if rule.applicant_must_be_victim and victim in ("near", "far"):
         flags.append(FLAG_VICTIM_MISMATCH)
         # a typo needs a human; a different person is a real gap (the letter is about someone else)
         severity = "caseworker" if victim == "near" else "change"
         for el in elements:
-            if el.element_id in ("applicant_named", "victim_named") and el.status == "included":
+            # the model may already have marked the element missing in its own words; a different
+            # person always gets the deterministic wording, a near miss only overrides an "included"
+            if el.element_id in ("applicant_named", "victim_named") and (el.status == "included" or victim == "far"):
                 el.status = "unclear" if victim == "near" else "missing"
                 el.quote_verified = False
                 el.reasoning = f"The document names '{parties.victim_name}' but the application is for '{application.applicant_name}'."
-                el.fix = f"Confirm the letter is about {application.applicant_name} and correct the name."
-    if rule.names_other_party_required and application.other_party_name:
-        other = name_match(parties.other_party_name, application.other_party_name, gateway.name_match_threshold)
-        if other in ("near", "far"):
-            flags.append(FLAG_NAME_MISMATCH)
-            severity = "change" if other == "far" else ("caseworker" if severity == "none" else severity)
-            for el in elements:
-                if ("perpetrator" in el.element_id or "other_party" in el.element_id or "respondent" in el.element_id) and el.status == "included":
-                    el.status = "unclear" if other == "near" else "missing"
-                    el.quote_verified = False
-                    el.reasoning = f"The document names '{parties.other_party_name}' but the other party on the application is '{application.other_party_name}'."
-                    el.fix = f"Confirm the letter refers to {application.other_party_name}."
-    return flags, severity
+                el.fix = f"Confirm who the letter is about: it names {parties.victim_name}, but the application is for {application.applicant_name}."
+    if rule.names_other_party_required and other in ("near", "far"):
+        flags.append(FLAG_NAME_MISMATCH)
+        severity = "change" if other == "far" else ("caseworker" if severity == "none" else severity)
+        for el in elements:
+            if ("perpetrator" in el.element_id or "other_party" in el.element_id or "respondent" in el.element_id) and (el.status == "included" or other == "far"):
+                el.status = "unclear" if other == "near" else "missing"
+                el.quote_verified = False
+                el.reasoning = f"The document names '{parties.other_party_name}' but the other party on the application is '{application.other_party_name}'."
+                el.fix = f"Confirm the other party: the letter names {parties.other_party_name}, but the application names {application.other_party_name}."
+    return flags, severity, (name_note(parties, application, victim, other) if flags else None)
+
+
+def name_note(parties: Parties, application: Application, victim: str, other: str) -> str:
+    """One plain sentence for every audience: who the letter is about versus who the case is for."""
+    pv, po, aa, ao = parties.victim_name, parties.other_party_name, application.applicant_name, application.other_party_name
+    if victim == "far" and other == "far":
+        return f"The letter is about {pv} and {po}; this case is for {aa} and {ao}."
+    if victim == "far":
+        return f"The letter is about {pv}, but this case is for {aa}."
+    if other == "far":
+        return f"The letter names {po} as the other party, but on this case it is {ao}."
+    pairs = [(pv, aa)] if victim == "near" else []
+    pairs += [(po, ao)] if other == "near" else []
+    return " ".join(f"The letter spells the name '{a}' where the application says '{b}'." for a, b in pairs)
 
 
 def text_checks(text: str, gateway: Gateway) -> list[str]:

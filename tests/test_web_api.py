@@ -230,7 +230,7 @@ def test_client_view_is_plain_words_only(api):
         assert d["id"] == doc_id and d["uploadedBy"] == "client"
         assert not (set(d) & webmap.CLIENT_HIDDEN_DOCUMENT_KEYS)                   # no document text
         res = d["result"]
-        assert set(res) == {"matchedPara", "outcome", "reason", "elements", "shortOrg", "authorName", "letterDate", "rulesVersion", "checkedAt"}
+        assert set(res) == {"matchedPara", "outcome", "reason", "nameCheck", "elements", "shortOrg", "authorName", "letterDate", "rulesVersion", "checkedAt"}
         assert not (set(res) & webmap.CLIENT_HIDDEN_RESULT_KEYS)
         assert res["outcome"] == "pass" and res["matchedPara"] == "18"
         assert res["authorName"] is None

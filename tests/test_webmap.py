@@ -27,7 +27,7 @@ RESULT = {
 
 def test_check_result_shape_and_vocabulary():
     r = webmap.to_check_result(RESULT)
-    assert set(r) == {"matchedPara", "outcome", "reason", "elements", "flags", "authorOrg", "shortOrg", "authorName", "authorRole",
+    assert set(r) == {"matchedPara", "outcome", "reason", "nameCheck", "elements", "flags", "authorOrg", "shortOrg", "authorName", "authorRole",
                       "letterDate", "victimName", "otherPartyName", "agreement", "verification", "rulesVersion", "checkedAt"}
     assert r["outcome"] == "fail" and r["matchedPara"] == "18"
     assert [e["status"] for e in r["elements"]] == ["not_met", "met"]
@@ -125,7 +125,7 @@ def test_verification_links_are_http_only():
 # --------------------------------------------------------------------------- #
 def test_client_result_is_reduced_to_plain_words():
     r = webmap.to_check_result({**RESULT, "client_message": "This document may need a little more detail."}, role="client")
-    assert set(r) == {"matchedPara", "outcome", "reason", "elements", "shortOrg", "authorName", "letterDate", "rulesVersion", "checkedAt"}
+    assert set(r) == {"matchedPara", "outcome", "reason", "nameCheck", "elements", "shortOrg", "authorName", "letterDate", "rulesVersion", "checkedAt"}
     assert not (set(r) & webmap.CLIENT_HIDDEN_RESULT_KEYS)
     assert r["outcome"] == "fail" and r["matchedPara"] == "18" and r["shortOrg"] == "Brookfield" and r["letterDate"] == "2026-09-28"
     assert r["reason"] == "This document may need a little more detail."     # the client message, never the provider summary
