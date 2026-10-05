@@ -190,7 +190,7 @@ export function PhaseBanner() {
 }
 
 /** GOV.UK "Exit this page". Its JavaScript also exits when Shift is pressed 3 times. */
-export function ExitThisPage({ href = "https://www.bbc.co.uk/weather" }: { href?: string }) {
+export function ExitThisPage({ href = "https://www.gov.uk" }: { href?: string }) {
   const ref = useGovukComponent<HTMLDivElement>(GovukExitThisPage);
   return (
     <div ref={ref} className="govuk-exit-this-page" data-module="govuk-exit-this-page">

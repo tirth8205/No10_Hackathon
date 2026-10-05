@@ -173,7 +173,7 @@ export function CaseworkerLayout({ children, beforeContent, active }: ShellProps
 // Client (on their phone)
 // ---------------------------------------------------------------------------
 
-const EXIT_URL = "https://www.bbc.co.uk/weather";
+const EXIT_URL = "https://www.gov.uk";
 
 /** Leaves the page when Escape is pressed 3 times within 2 seconds (docs 4.12). */
 function useEscapeToExit() {
