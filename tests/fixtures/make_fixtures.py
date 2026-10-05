@@ -18,6 +18,7 @@ import io
 import json
 import random
 import textwrap
+import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -199,7 +200,19 @@ def make_docx(text: str) -> bytes:
             doc.add_paragraph(para.strip())
     buf = io.BytesIO()
     doc.save(buf)
-    return buf.getvalue()
+    return _stable_zip(buf.getvalue())
+
+
+def _stable_zip(data: bytes) -> bytes:
+    """Re-pack a zip (DOCX) with a fixed entry timestamp so the bytes do not change with the clock."""
+    out = io.BytesIO()
+    with zipfile.ZipFile(io.BytesIO(data)) as src, zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as dst:
+        for info in src.infolist():
+            zi = zipfile.ZipInfo(info.filename, date_time=(1980, 1, 1, 0, 0, 0))
+            zi.compress_type = zipfile.ZIP_DEFLATED
+            zi.external_attr = info.external_attr
+            dst.writestr(zi, src.read(info.filename))
+    return out.getvalue()
 
 
 # --------------------------------------------------------------------------- #

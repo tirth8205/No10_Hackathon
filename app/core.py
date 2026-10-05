@@ -7,6 +7,7 @@ from __future__ import annotations
 from typing import Any
 
 from app.store import Store
+from engine.ingest import Ingested
 from engine.llm import get_llm
 from engine.models import Application
 from engine.pipeline import check_text
@@ -39,8 +40,10 @@ async def run_check(case: dict, doc: dict, text: str, needs_transcription: bool 
             if parts:
                 text = "\n\n".join(parts)
                 store.set_document_text(doc["id"], text)
+        # a scan or photo that yielded no text must go to a caseworker as illegible, not be classified as "not prescribed"
+        ing = Ingested(text=text, kind="scan", needs_transcription=True) if needs_transcription else None
         res = await check_text(text, doc["filename"], application_for(case), rules=rules(), llm=llm,
-                               claimed_para=doc.get("claimed_para"), document_id=doc["id"])
+                               claimed_para=doc.get("claimed_para"), document_id=doc["id"], ingested=ing)
         store.set_document_result(doc["id"], res.model_dump())
     except Exception as e:  # surface, never hang the UI
         store.set_document_result(doc["id"], None, f"{type(e).__name__}: {e}")
