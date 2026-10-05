@@ -216,24 +216,24 @@ def get_document(case_id: str, document_id: str, highlight: bool = False):
 def get_document_text(case_id: str, document_id: str):
     c = _case(case_id)
     _doc(c, document_id)
-    item = store.docs.get(document_id)
-    if not item or item.text is None:
+    text = store.document_text(document_id)
+    if text is None:
         raise HTTPException(410, "document text no longer held (purged or expired)")
-    return item.text
+    return text
 
 
 @app.post("/api/cases/{case_id}/documents/{document_id}/recheck", status_code=202)
 async def recheck(case_id: str, document_id: str, background: BackgroundTasks, claimed_para: str | None = Query(None)):
     c = _case(case_id)
     d = _doc(c, document_id)
-    item = store.docs.get(document_id)
-    if not item or item.text is None:
+    text = store.document_text(document_id)
+    if text is None:
         raise HTTPException(410, "document text no longer held; upload it again")
     if claimed_para is not None:
         store._exec("UPDATE documents SET claimed_para=? WHERE id=?", (claimed_para, document_id))
         d["claimed_para"] = claimed_para
     store._exec("UPDATE documents SET status='checking' WHERE id=?", (document_id,))
-    background.add_task(_run_check, c, d, item.text, False, None, None)
+    background.add_task(_run_check, c, d, text, False, None, None)
     return {"ok": True}
 
 
@@ -369,8 +369,7 @@ async def _laa_check(sub: dict):
     app_ = Application(**snap["application"])
     results, diffs = [], []
     for d in snap["documents"]:
-        item = store.docs.get(d["document_id"])
-        text = item.text if item and item.text else None
+        text = store.document_text(d["document_id"])
         if text is None:
             results.append({"document_id": d["document_id"], "error": "text no longer held"})
             continue
@@ -410,8 +409,7 @@ def get_submission(submission_id: str, highlight: bool = True):
         raise HTTPException(404, "submission not found")
     if highlight:
         for d in s["snapshot"]["documents"]:
-            item = store.docs.get(d["document_id"])
-            d["text"] = item.text if item and item.text else None
+            d["text"] = store.document_text(d["document_id"])
             d["highlights"] = _highlights({"result": d["result"]}, d["text"]) if d["text"] else []
     s["return_note"] = "\n\n".join(outputs.return_note(_as_doc_result(d["result"]), rules().get(d["result"].get("rule_id") or ""))
                                    for d in s["snapshot"]["documents"] if d["result"]["verdict"] != "meets") or None
@@ -480,8 +478,7 @@ def _case_verdict(docs: list[dict]) -> str:
 def _highlights(d: dict, text: str | None = None) -> list[dict]:
     """Character offsets of each verified quote in the document text, for <mark> rendering."""
     if text is None:
-        item = store.docs.get(d.get("id", ""))
-        text = item.text if item and item.text else None
+        text = store.document_text(d.get("id", ""))
     if not text:
         return []
     out = []

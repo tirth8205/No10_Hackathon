@@ -38,7 +38,7 @@ async def run_check(case: dict, doc: dict, text: str, needs_transcription: bool 
                     parts.append(tr.text)
             if parts:
                 text = "\n\n".join(parts)
-                store.docs.set_text(doc["id"], text)
+                store.set_document_text(doc["id"], text)
         res = await check_text(text, doc["filename"], application_for(case), rules=rules(), llm=llm,
                                claimed_para=doc.get("claimed_para"), document_id=doc["id"])
         store.set_document_result(doc["id"], res.model_dump())
@@ -49,10 +49,10 @@ async def run_check(case: dict, doc: dict, text: str, needs_transcription: bool 
 async def recheck_case(case: dict) -> None:
     """Re-run every held document after the case details change."""
     for d in store.list_documents(case["id"]):
-        item = store.docs.get(d["id"])
-        if item and item.text:
+        text = store.document_text(d["id"])
+        if text:
             store._exec("UPDATE documents SET status='checking' WHERE id=?", (d["id"],))
-            await run_check(case, d, item.text)
+            await run_check(case, d, text)
 
 
 def case_verdict(docs: list[dict]) -> str:

@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS cases (
 CREATE TABLE IF NOT EXISTS documents (
   id TEXT PRIMARY KEY, case_id TEXT, filename TEXT, uploaded_by TEXT, uploaded_at TEXT, claimed_para TEXT,
   replaces_document_id TEXT, version INTEGER DEFAULT 1, status TEXT, verdict TEXT, result_json TEXT, error TEXT,
-  text_quality TEXT, purged INTEGER DEFAULT 0, pages_json TEXT
+  text_quality TEXT, purged INTEGER DEFAULT 0, pages_json TEXT, text TEXT
 );
 CREATE TABLE IF NOT EXISTS tracker_events (
   id TEXT PRIMARY KEY, case_id TEXT, event_type TEXT, applicant_text TEXT, solicitor_text TEXT,
@@ -85,7 +85,7 @@ class Store:
         self.conn.executescript(SCHEMA)
         for ddl in ("ALTER TABLE cases ADD COLUMN application_date TEXT", "ALTER TABLE cases ADD COLUMN ask_label TEXT",
                     "ALTER TABLE cases ADD COLUMN selected_json TEXT", "ALTER TABLE cases ADD COLUMN selection_touched INTEGER DEFAULT 0",
-                    "ALTER TABLE documents ADD COLUMN pages_json TEXT"):
+                    "ALTER TABLE documents ADD COLUMN pages_json TEXT", "ALTER TABLE documents ADD COLUMN text TEXT"):
             try:  # older demo databases
                 self.conn.execute(ddl)
             except sqlite3.OperationalError:
@@ -121,7 +121,8 @@ class Store:
             "INSERT INTO cases(id, ref, applicant_name, applicant_first_name, other_party_name, case_type, work_type, created_by, created_at,"
             " safe_contact_method, safe_contact_value, safe_times, firm_name, application_date, ask_label) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
             (cid, ref, applicant_name, (applicant_name.split() or [""])[0], other_party_name, case_type, work_type, created_by, now(),
-             safe_contact_method, safe_contact_value, safe_times, firm_name, application_date, ask_label))
+             safe_contact_method, safe_contact_value, safe_times, firm_name, application_date,
+             ask_label if ask_label is not None else "Letter from your support worker"))
         self.audit(created_by, "case.create", cid, {"ref": ref})
         self.add_event(cid, "case_created", "Your case has been set up.", f"Case {ref} created.", created_by)
         return self.get_case(cid)
@@ -142,7 +143,8 @@ class Store:
         return self.get_case(case_id)
 
     def set_selection(self, case_id: str, document_ids: list[str], actor: str) -> dict | None:
-        self._exec("UPDATE cases SET selected_json=?, selection_touched=1 WHERE id=?", (json.dumps(document_ids), case_id))
+        """An empty selection means "back to the default" (the latest document that meets the requirements)."""
+        self._exec("UPDATE cases SET selected_json=?, selection_touched=? WHERE id=?", (json.dumps(document_ids), 1 if document_ids else 0, case_id))
         self.audit(actor, "selection.set", case_id, {"document_ids": document_ids})
         return self.get_case(case_id)
 
@@ -162,9 +164,9 @@ class Store:
         if replaces:
             prev = self.get_document(replaces)
             version = (prev["version"] + 1) if prev else 1
-        self._exec("INSERT INTO documents(id, case_id, filename, uploaded_by, uploaded_at, claimed_para, replaces_document_id, version, status, pages_json)"
-                   " VALUES (?,?,?,?,?,?,?,?,?,?)", (did, case_id, filename, uploaded_by, now(), claimed_para, replaces, version, "checking",
-                                                    json.dumps(pages) if pages else None))
+        self._exec("INSERT INTO documents(id, case_id, filename, uploaded_by, uploaded_at, claimed_para, replaces_document_id, version, status, pages_json, text)"
+                   " VALUES (?,?,?,?,?,?,?,?,?,?,?)", (did, case_id, filename, uploaded_by, now(), claimed_para, replaces, version, "checking",
+                                                      json.dumps(pages) if pages else None, text))
         self.docs.put(did, data, text)
         self.audit(uploaded_by, "document.upload", did, {"case_id": case_id, "filename": filename, "version": version})
         who = "You" if uploaded_by == "client" else "Your solicitor"
@@ -188,8 +190,20 @@ class Store:
         if d:
             d["result"] = json.loads(d.pop("result_json")) if d.get("result_json") else None
             d["pages"] = json.loads(d.pop("pages_json")) if d.get("pages_json") else None
-            d["text_available"] = self.docs.has(document_id)
+            d["text_available"] = bool(d.get("text")) or self.docs.has(document_id)
         return d
+
+    def document_text(self, document_id: str) -> str | None:
+        """Extracted text: from memory if held (freshest after transcription), else the row, until purged."""
+        item = self.docs.get(document_id)
+        if item and item.text:
+            return item.text
+        row = self._one("SELECT text FROM documents WHERE id=? AND purged=0", (document_id,))
+        return row["text"] if row and row.get("text") else None
+
+    def set_document_text(self, document_id: str, text: str) -> None:
+        self.docs.set_text(document_id, text)
+        self._exec("UPDATE documents SET text=? WHERE id=?", (text, document_id))
 
     def list_documents(self, case_id: str, include_superseded: bool = True) -> list[dict]:
         docs = [self.get_document(r["id"]) for r in self._all("SELECT id FROM documents WHERE case_id=? ORDER BY uploaded_at", (case_id,))]
@@ -203,7 +217,7 @@ class Store:
         for d in self.list_documents(case_id):
             if self.docs.drop(d["id"]):
                 n += 1
-            self._exec("UPDATE documents SET purged=1 WHERE id=?", (d["id"],))
+            self._exec("UPDATE documents SET purged=1, text=NULL WHERE id=?", (d["id"],))
         self.audit(actor, "documents.purge", case_id, {"count": n})
         return n
 

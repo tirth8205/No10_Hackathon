@@ -61,7 +61,7 @@ def via_api(base: str) -> None:
 
     c = httpx.Client(base_url=base, timeout=120)
     for spec in CASES:
-        case = c.post("/api/cases", json={k: spec[k] for k in ("applicant_name", "other_party_name", "case_type", "work_type")}).json()
+        case = c.post("/api/cases", json={**{k: spec[k] for k in ("applicant_name", "other_party_name", "case_type", "work_type")}, "firm_name": "Hartley & Webb Solicitors"}).json()
         ids = []
         for fn, text, para in spec["docs"]:
             d = c.post(f"/api/cases/{case['id']}/documents/text", json={"text": text, "filename": fn, "claimed_para": para}).json()
@@ -92,7 +92,8 @@ def direct() -> None:
 
     async def go():
         for spec in CASES:
-            case = store.create_case(spec["applicant_name"], spec["other_party_name"], spec["case_type"], "provider", work_type=spec["work_type"])
+            case = store.create_case(spec["applicant_name"], spec["other_party_name"], spec["case_type"], "provider", work_type=spec["work_type"],
+                                     firm_name="Hartley & Webb Solicitors", ask_label=spec.get("ask_label", "Letter from your support worker"))
             ids = []
             for fn, text, para in spec["docs"]:
                 doc = store.add_document(case["id"], fn, "provider", para, None, text)

@@ -170,9 +170,13 @@ export function CaseEvidenceRoute() {
   const data = useCase(caseId);
   if (data.loading) return <Loading />;
   if (data.error || !data.data) return <NotFound />;
+  // The screen keeps its own selection state from first render. While the solicitor has not
+  // touched it, follow the server's default (which changes when a check finishes).
+  const c = data.data.case;
+  const key = c.selectionTouched ? caseId : `${caseId}:${c.selectedDocumentIds.join(",")}`;
   return (
     <CaseEvidence
-      key={caseId}
+      key={key}
       data={data.data}
       onSelectionChange={(ids) => void api.setSelection(caseId, ids)}
       onAddDocument={(files) => {

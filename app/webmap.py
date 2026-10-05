@@ -155,7 +155,7 @@ def to_document(store: Store, d: dict, base_url: str = "") -> dict:
     if held and getattr(held, "files", None):
         for i, p in enumerate(pages[: len(held.files)]):
             p["url"] = f"{base_url}/web/documents/{d['id']}/file/{i}"
-    text = held.text if held and held.text else ""
+    text = store.document_text(d["id"]) or ""
     if d["status"] == "done" and d.get("result"):
         result = to_check_result(d["result"])
         if text:
