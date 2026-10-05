@@ -603,3 +603,14 @@ $app-light-grey: govuk.govuk-colour("black", $variant: "tint-95");
     animation: none;
   }
 }
+
+// A button that looks and reads like a link: for in-page filters that change nothing on the server.
+.app-link-button {
+  background: none;
+  border: 0;
+  padding-left: 0;
+  padding-right: 0;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
