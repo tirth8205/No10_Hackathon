@@ -1,12 +1,12 @@
 # Backend: engine + API
 
-Checks domestic abuse evidence for legal aid against Schedule 1 (all 22 paragraphs). Rules are YAML, the model is Claude, every "included" carries a quote that code verifies, and a person always decides.
+Checks domestic abuse evidence for legal aid against Schedule 1 (all 22 paragraphs). Rules are YAML, the model sits behind one adapter (OpenAI `gpt-5.4` by default; Claude and an offline stub also available), every "included" carries a quote that code verifies, and a person always decides.
 
 ## Run
 
 ```bash
 uv sync                                   # Python 3.12+, creates .venv
-cp .env.example .env                      # add ANTHROPIC_API_KEY; GC_MODEL defaults to claude-opus-5-5
+cp .env.example .env                      # add OPENAI_API_KEY (GC_LLM=openai, GC_OPENAI_MODEL=gpt-5.4) or ANTHROPIC_API_KEY (GC_LLM=anthropic)
 .venv/bin/uvicorn app.main:app --reload   # API on http://localhost:8000, OpenAPI at /docs
 .venv/bin/python -m demo.seed_demo --api http://localhost:8000     # demo cases
 .venv/bin/python -m pytest -q
