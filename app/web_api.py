@@ -418,23 +418,25 @@ async def demo_reset(background: BackgroundTasks):
     store.docs._items.clear()
 
     async def seed():
-        from demo.seed_demo import CASES, CORRECTED_A, ROOT
-        from engine.pipeline import check_text
+        from demo.seed_demo import CASES, iter_docs, write_corrected_letter
 
         for spec in CASES:
             case = store.create_case(spec["applicant_name"], spec["other_party_name"], spec["case_type"], "provider", work_type=spec["work_type"],
                                      firm_name="Hartley & Webb Solicitors", ask_label=spec.get("ask_label", "Letter from your support worker"))
             ids = []
-            for fn, text, para in spec["docs"]:
-                doc = store.add_document(case["id"], fn, "provider", para, None, text)
-                res = await check_text(text, fn, core.application_for(case), rules=core.rules(), llm=core.state["llm"], claimed_para=para, document_id=doc["id"])
-                store.set_document_result(doc["id"], res.model_dump())
+            for fn, data, text, para, pages in iter_docs(spec):
+                needs = not (text or "").strip()
+                doc = store.add_document(case["id"], fn, "provider", para, data, text or "", pages=pages)
+                item = store.docs.get(doc["id"])
+                media = (pages[0].get("contentType") if pages else None) or "application/octet-stream"
+                if item is not None:
+                    item.files = [(data, media)]
+                await core.run_check(case, doc, text or "", needs, [(data, media)] if needs else None)
                 ids.append(doc["id"])
             if spec.get("submit"):
-                store.create_submission(case["id"], ids, "Demo submission", spec.get("reason"), "provider")
-        out = ROOT / "demo" / "files"
-        out.mkdir(exist_ok=True)
-        (out / "case-a-support-letter-corrected.txt").write_text(CORRECTED_A)
+                sub = store.create_submission(case["id"], ids, "Demo submission", spec.get("reason"), "provider")
+                await core.laa_check(sub)
+        write_corrected_letter()
 
     background.add_task(seed)
     return {"ok": True, "expected_cases": 7}
