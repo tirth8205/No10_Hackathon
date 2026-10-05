@@ -47,7 +47,8 @@ def load_cases(which: str, paras: list[str] | None, limit: int | None, ids: list
 
 
 async def run_case(case: dict, rules, llm, votes: int, sem: asyncio.Semaphore) -> dict:
-    app = Application(applicant_name=case["application"]["applicant"], other_party_name=case["application"].get("other_party"))
+    app = Application(applicant_name=case["application"]["applicant"], other_party_name=case["application"].get("other_party"),
+                      application_date=case["application"].get("application_date"))
     docs_out = []
     for d in case["documents"]:
         async with sem:

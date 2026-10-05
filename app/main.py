@@ -46,6 +46,7 @@ class CaseIn(BaseModel):
     other_party_name: str | None = None
     case_type: str | None = "Child arrangements order"
     work_type: str | None = Field(default=None, description="controlled | licensed | null")
+    application_date: str | None = Field(default=None, description="ISO date of the legal aid application")
     created_by: str = "provider"
     safe_contact_method: str | None = None
     safe_contact_value: str | None = None
@@ -58,6 +59,7 @@ class CaseUpdate(BaseModel):
     other_party_name: str | None = None
     case_type: str | None = None
     work_type: str | None = None
+    application_date: str | None = None
     status: str | None = None
     safe_contact_method: str | None = None
     safe_contact_value: str | None = None
@@ -210,7 +212,7 @@ async def _run_check(case: dict, doc: dict, text: str, needs_transcription: bool
             if tr.text.strip():
                 text = tr.text
                 store.docs.set_text(doc["id"], text)
-        res = await check_text(text, doc["filename"], Application(applicant_name=case["applicant_name"], other_party_name=case["other_party_name"], case_type=case["case_type"]),
+        res = await check_text(text, doc["filename"], Application(applicant_name=case["applicant_name"], other_party_name=case["other_party_name"], case_type=case["case_type"], application_date=case.get("application_date")),
                                rules=rules(), llm=llm, claimed_para=doc["claimed_para"], document_id=doc["id"])
         store.set_document_result(doc["id"], res.model_dump())
     except Exception as e:  # surface, never hang the UI

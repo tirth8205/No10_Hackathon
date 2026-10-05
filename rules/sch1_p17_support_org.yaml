@@ -62,8 +62,8 @@ elements:
   - id: reason_for_support
     label: "Why the applicant needed support"
     requirement: "A statement of the reasons the applicant needed that support."
-    accept_if: "Any statement of why the applicant needed the support, linked to domestic abuse."
-    reject_if: "No reason given."
+    accept_if: "A separate statement of why the applicant needed the support, however brief: 'needed this support because she had fled the family home', 'because they were identified as a victim of domestic abuse'. It must be its own statement of reason, distinct from the confirmation that support was provided and from the professional judgement (the guidance lists these as separate requirements)."
+    reject_if: "No statement of the reason the applicant needed the support. The confirmation that support was provided 'in relation to their needs as a victim, or person at risk, of domestic abuse' is the support confirmation, not the reason, and does not count on its own; nor does the judgement that the applicant is a victim."
     fix: "State why {applicant_name} needed that support."
 hedge_terms: []
 gov_template_url: "https://www.gov.uk/government/publications/domestic-violence-and-abuse-sample-letter-from-a-domestic-violence-support-organisation"

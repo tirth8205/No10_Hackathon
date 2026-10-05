@@ -36,8 +36,9 @@ def locate(quote: str, text: str) -> tuple[int, int] | None:
     if not tokens:
         return None
     pattern = r"\s+".join(re.escape(t) for t in tokens)
-    # allow either quote style in the source
-    pattern = pattern.replace(re.escape("'"), "[‘’']").replace(re.escape('"'), '[“”"]')
+    # allow either quote and dash style in the source
+    pattern = (pattern.replace(re.escape("'"), "[‘’']").replace(re.escape('"'), '[“”"]')
+               .replace(re.escape("-"), "[-–—]"))
     m = re.search(pattern, text, flags=re.IGNORECASE)
     return (m.start(), m.end()) if m else None
 

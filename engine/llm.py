@@ -42,7 +42,7 @@ class LLM(Protocol):
 
     async def classify(self, doc_text: str, rules: RuleSet) -> ClassifyResponse: ...
 
-    async def assess(self, doc_text: str, rule: Rule, applicant: str | None, other_party: str | None, hedge_terms: list[str]) -> Assessment: ...
+    async def assess(self, doc_text: str, rule: Rule, applicant: str | None, other_party: str | None, hedge_terms: list[str], application_date: str | None = None) -> Assessment: ...
 
     async def transcribe(self, data: bytes, media_type: str) -> Transcription: ...
 
@@ -91,8 +91,8 @@ class AnthropicLLM:
     async def classify(self, doc_text: str, rules: RuleSet) -> ClassifyResponse:
         return await self._parse(prompts.classify_prompt(doc_text, rules), ClassifyResponse)
 
-    async def assess(self, doc_text, rule, applicant, other_party, hedge_terms) -> Assessment:
-        return await self._parse(prompts.assess_prompt(doc_text, rule, applicant, other_party, hedge_terms), Assessment)
+    async def assess(self, doc_text, rule, applicant, other_party, hedge_terms, application_date=None) -> Assessment:
+        return await self._parse(prompts.assess_prompt(doc_text, rule, applicant, other_party, hedge_terms, application_date), Assessment)
 
     async def transcribe(self, data: bytes, media_type: str) -> Transcription:
         import base64
@@ -146,8 +146,8 @@ class OpenAILLM:
     async def classify(self, doc_text: str, rules: RuleSet) -> ClassifyResponse:
         return await self._parse(prompts.classify_prompt(doc_text, rules), ClassifyResponse)
 
-    async def assess(self, doc_text, rule, applicant, other_party, hedge_terms) -> Assessment:
-        return await self._parse(prompts.assess_prompt(doc_text, rule, applicant, other_party, hedge_terms), Assessment)
+    async def assess(self, doc_text, rule, applicant, other_party, hedge_terms, application_date=None) -> Assessment:
+        return await self._parse(prompts.assess_prompt(doc_text, rule, applicant, other_party, hedge_terms, application_date), Assessment)
 
     async def transcribe(self, data: bytes, media_type: str) -> Transcription:
         import base64
@@ -207,7 +207,7 @@ class OfflineLLM:
             parties=Parties(victim_name=victim, other_party_name=perp, dates_mentioned=re.findall(r"\b\d{1,2}(?:st|nd|rd|th)? [A-Z][a-z]+ \d{4}\b", doc_text)[:5]),
         )
 
-    async def assess(self, doc_text, rule, applicant, other_party, hedge_terms) -> Assessment:
+    async def assess(self, doc_text, rule, applicant, other_party, hedge_terms, application_date=None) -> Assessment:
         sents = _sentences(doc_text)
         low = doc_text.lower()
         results, hedged = [], False
@@ -275,6 +275,11 @@ def _line_with(sents: list[str], name: str, allow_surname_only: bool = True) -> 
 # --------------------------------------------------------------------------- #
 # Record / replay cache
 # --------------------------------------------------------------------------- #
+import inspect as _inspect
+
+_PROMPTS_HASH = hashlib.sha256(_inspect.getsource(prompts).encode()).hexdigest()[:12]
+
+
 class CachedLLM:
     """Caches structured results on disk keyed by a hash of the inputs.
 
@@ -288,7 +293,7 @@ class CachedLLM:
         self.name = f"{inner.name}+cache:{mode}"
 
     def _path(self, kind: str, *parts: str) -> Path:
-        h = hashlib.sha256("\x1f".join([kind, getattr(self.inner, "name", ""), *parts]).encode()).hexdigest()[:24]
+        h = hashlib.sha256("\x1f".join([kind, getattr(self.inner, "name", ""), _PROMPTS_HASH, *parts]).encode()).hexdigest()[:24]
         return self.dir / f"{kind}-{h}.json"
 
     async def _cached(self, kind: str, model: type[BaseModel], parts: list[str], call):
@@ -307,9 +312,9 @@ class CachedLLM:
         ids = ",".join(sorted(r.id for r in rules.enabled()))
         return await self._cached("classify", ClassifyResponse, [doc_text, ids], lambda l: l.classify(doc_text, rules))
 
-    async def assess(self, doc_text, rule, applicant, other_party, hedge_terms):
-        parts = [doc_text, rule.model_dump_json(), applicant or "", other_party or "", ",".join(hedge_terms)]
-        return await self._cached("assess", Assessment, parts, lambda l: l.assess(doc_text, rule, applicant, other_party, hedge_terms))
+    async def assess(self, doc_text, rule, applicant, other_party, hedge_terms, application_date=None):
+        parts = [doc_text, rule.model_dump_json(), applicant or "", other_party or "", ",".join(hedge_terms), application_date or ""]
+        return await self._cached("assess", Assessment, parts, lambda l: l.assess(doc_text, rule, applicant, other_party, hedge_terms, application_date))
 
     async def transcribe(self, data, media_type):
         return await self._cached("transcribe", Transcription, [hashlib.sha256(data).hexdigest(), media_type], lambda l: l.transcribe(data, media_type))

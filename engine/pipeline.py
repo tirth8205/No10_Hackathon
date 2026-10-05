@@ -35,7 +35,7 @@ def rule_for_paragraph(rules: RuleSet, paragraph: str | None) -> Rule | None:
 async def _votes(llm: LLM, text: str, rule: Rule, application: Application, rules: RuleSet, k: int) -> list[Assessment]:
     hedges = rules.gateway.hedge_terms
     results = await asyncio.gather(
-        *[llm.assess(text, rule, application.applicant_name, application.other_party_name, hedges) for _ in range(k)],
+        *[llm.assess(text, rule, application.applicant_name, application.other_party_name, hedges, application.application_date) for _ in range(k)],
         return_exceptions=True,
     )
     good = [r for r in results if isinstance(r, Assessment)]

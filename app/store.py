@@ -42,7 +42,7 @@ SCHEMA = """
 CREATE TABLE IF NOT EXISTS cases (
   id TEXT PRIMARY KEY, ref TEXT UNIQUE, applicant_name TEXT, applicant_first_name TEXT, other_party_name TEXT,
   case_type TEXT, work_type TEXT, created_by TEXT, created_at TEXT, status TEXT DEFAULT 'open',
-  safe_contact_method TEXT, safe_contact_value TEXT, safe_times TEXT, firm_id TEXT, firm_name TEXT
+  safe_contact_method TEXT, safe_contact_value TEXT, safe_times TEXT, firm_id TEXT, firm_name TEXT, application_date TEXT
 );
 CREATE TABLE IF NOT EXISTS documents (
   id TEXT PRIMARY KEY, case_id TEXT, filename TEXT, uploaded_by TEXT, uploaded_at TEXT, claimed_para TEXT,
@@ -82,6 +82,10 @@ class Store:
         self.conn = sqlite3.connect(self.path, check_same_thread=False)
         self.conn.row_factory = sqlite3.Row
         self.conn.executescript(SCHEMA)
+        try:  # older demo databases
+            self.conn.execute("ALTER TABLE cases ADD COLUMN application_date TEXT")
+        except sqlite3.OperationalError:
+            pass
         self.docs = DocStore(ttl_seconds=settings.doc_ttl_min * 60)
 
     # ---------------------------------------------------------------- helpers
@@ -105,14 +109,14 @@ class Store:
     # ---------------------------------------------------------------- cases
     def create_case(self, applicant_name: str, other_party_name: str | None, case_type: str | None, created_by: str,
                     work_type: str | None = None, safe_contact_method: str | None = None, safe_contact_value: str | None = None,
-                    safe_times: str | None = None, firm_name: str | None = None) -> dict:
+                    safe_times: str | None = None, firm_name: str | None = None, application_date: str | None = None) -> dict:
         cid = secrets.token_hex(8)
         ref = neutral_ref()
         self._exec(
             "INSERT INTO cases(id, ref, applicant_name, applicant_first_name, other_party_name, case_type, work_type, created_by, created_at,"
-            " safe_contact_method, safe_contact_value, safe_times, firm_name) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            " safe_contact_method, safe_contact_value, safe_times, firm_name, application_date) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
             (cid, ref, applicant_name, applicant_name.split()[0], other_party_name, case_type, work_type, created_by, now(),
-             safe_contact_method, safe_contact_value, safe_times, firm_name))
+             safe_contact_method, safe_contact_value, safe_times, firm_name, application_date))
         self.audit(created_by, "case.create", cid, {"ref": ref})
         self.add_event(cid, "case_created", "Your case has been set up.", f"Case {ref} created.", created_by)
         return self.get_case(cid)
@@ -124,7 +128,7 @@ class Store:
         return self._all("SELECT * FROM cases ORDER BY created_at DESC")
 
     def update_case(self, case_id: str, **fields) -> dict | None:
-        allowed = {"applicant_name", "other_party_name", "case_type", "work_type", "status", "safe_contact_method", "safe_contact_value", "safe_times", "firm_name"}
+        allowed = {"applicant_name", "other_party_name", "case_type", "work_type", "status", "safe_contact_method", "safe_contact_value", "safe_times", "firm_name", "application_date"}
         cols = [k for k in fields if k in allowed]
         if cols:
             self._exec(f"UPDATE cases SET {', '.join(f'{c}=?' for c in cols)} WHERE id=?", (*[fields[c] for c in cols], case_id))
@@ -234,7 +238,7 @@ class Store:
         case = self.get_case(case_id)
         docs = [self.get_document(d) for d in document_ids]
         docs = [d for d in docs if d and d["case_id"] == case_id and d["result"]]
-        snapshot = {"application": {"applicant_name": case["applicant_name"], "other_party_name": case["other_party_name"], "case_type": case["case_type"]},
+        snapshot = {"application": {"applicant_name": case["applicant_name"], "other_party_name": case["other_party_name"], "case_type": case["case_type"], "application_date": case.get("application_date")},
                     "documents": [{"document_id": d["id"], "filename": d["filename"], "version": d["version"], "claimed_para": d["claimed_para"],
                                    "result": d["result"]} for d in docs],
                     "rules_version": docs[0]["result"].get("rules_version") if docs else None, "frozen_at": now()}

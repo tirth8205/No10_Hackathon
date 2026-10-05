@@ -110,6 +110,7 @@ class Application(BaseModel):
     applicant_name: str
     other_party_name: str | None = None
     case_type: str | None = None
+    application_date: str | None = Field(default=None, description="Date of the legal aid application, ISO or as written")
 
 
 class CaseResult(BaseModel):

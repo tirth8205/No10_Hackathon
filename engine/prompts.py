@@ -13,6 +13,8 @@ Rules:
 - Judge meaning, not exact wording: a clear paraphrase of a requirement counts as included.
 - Hedged certainty does NOT satisfy a requirement that needs a confirmation or judgement (for example "might be consistent", "may be a victim", "possibly at risk"). Mark it missing and set hedging_detected to true.
 - Vague, generic statements do not satisfy a requirement for "specific matters" (for example "victim testimony and referral").
+- Reported facts are not hedges: "I understand that he remains on bail", "the police confirmed that" or "I can confirm that" state a fact. Hedging means uncertainty about the judgement or confirmation itself ("might be", "may be", "possibly", "could be").
+- Assess what the document shows on its face. Whether a letterhead, email address, registration number or signature is genuine is checked separately by a person; do not mark an element unclear only because its source "cannot be verified". Use unclear when the document itself does not say enough to decide.
 - Typos, informal wording and unfilled template placeholders in sentences that do not carry a requirement do not count against the document.
 - For every element you mark included, copy the exact sentence or phrase from the document as the quote, verbatim, character for character. If you cannot quote it, it is not included.
 - If the document is ambiguous or illegible, or you are unsure, use unclear. Do not guess.
@@ -38,13 +40,15 @@ Also extract the parties: the victim or client named, the other party (alleged p
 </document>"""
 
 
-def assess_prompt(doc_text: str, rule: Rule, applicant_name: str | None, other_party_name: str | None, hedge_terms: list[str]) -> str:
+def assess_prompt(doc_text: str, rule: Rule, applicant_name: str | None, other_party_name: str | None, hedge_terms: list[str],
+                  application_date: str | None = None) -> str:
     elements = "\n".join(
         f"- {e.id}: {e.requirement}\n    Accept if: {e.accept_if}\n    Reject if: {e.reject_if}"
         for e in rule.elements
     )
     hedges = ", ".join(f'"{h}"' for h in (hedge_terms + rule.hedge_terms))
-    app = f"Applicant on the legal aid application: {applicant_name or 'not given'}. Other party on the application: {other_party_name or 'not given'}."
+    app = (f"Applicant on the legal aid application: {applicant_name or 'not given'}. Other party on the application: {other_party_name or 'not given'}. "
+           f"Date of the legal aid application: {application_date or 'not given (if an element depends on it, use unclear)'}.")
     return f"""Assess the document against: {rule.name} ({rule.legal_ref}; {rule.guidance_ref}).
 
 {app}
