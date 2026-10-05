@@ -80,3 +80,16 @@ def test_case_and_documents_from_store():
     assert case3["submittedAt"] and case3["submittedDocumentIds"] == [d2["id"]]
     assert case3["decision"]["action"] == "accept" and case3["decision"]["agreedWithTool"] is True
     assert "Case: " + case3["ref"] in webmap.verification_summary(case3, docs)
+
+
+def test_quotes_are_anchored_to_the_document_text_for_highlighting():
+    store = Store(os.path.join(tempfile.mkdtemp(), "t.sqlite3"))
+    c = store.create_case("Jane Doe", "John Doe", "Child arrangements", "provider")
+    text = "Home Office \u2013 UK Visas and Immigration\n\nDear Jane,\n\nLeave granted.\n\nUK Visas and Immigration\nOn behalf of the Secretary of State"
+    d = store.add_document(c["id"], "ho.txt", "provider", None, None, text)
+    res = {**RESULT, "verdict": "meets", "elements": [{**RESULT["elements"][1], "element_id": "from_home_office",
+           "quote": "Home Office - UK Visas and Immigration\n\nOn behalf of the Secretary of State"}], "flags": ["quote_multi_span"]}
+    store.set_document_result(d["id"], res)
+    doc = webmap.to_document(store, store.get_document(d["id"]))
+    q = doc["result"]["elements"][0]["quote"]
+    assert q in doc["text"] and q == "Home Office \u2013 UK Visas and Immigration"

@@ -155,14 +155,33 @@ def to_document(store: Store, d: dict, base_url: str = "") -> dict:
     if held and getattr(held, "files", None):
         for i, p in enumerate(pages[: len(held.files)]):
             p["url"] = f"{base_url}/web/documents/{d['id']}/file/{i}"
+    text = held.text if held and held.text else ""
     if d["status"] == "done" and d.get("result"):
         result = to_check_result(d["result"])
+        if text:
+            _anchor_quotes(result, text)
     elif d["status"] == "error":
         result = error_result(d.get("error") or "error")
     else:
         result = None
-    return {"id": d["id"], "caseId": d["case_id"], "pages": pages, "text": (held.text if held and held.text else ""),
+    return {"id": d["id"], "caseId": d["case_id"], "pages": pages, "text": text,
             "uploadedBy": d["uploaded_by"], "uploadedAt": d["uploaded_at"], "result": result}
+
+
+def _anchor_quotes(result: dict, text: str) -> None:
+    """The frontend highlights a quote only if it is a substring of the text. A quote that the
+    verifier accepted across several passages (or with different quote marks) is replaced by the
+    exact text of its longest verified span, so the annotation lands on the document."""
+    from engine.verify import spans
+
+    for e in result["elements"]:
+        q = e.get("quote")
+        if not q or q in text:
+            continue
+        found = spans(q, text)
+        if found:
+            a, b = max(found, key=lambda s: s[1] - s[0])
+            e["quote"] = text[a:b]
 
 
 def default_selection(documents: list[dict]) -> list[str]:
