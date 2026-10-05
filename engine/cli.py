@@ -26,7 +26,7 @@ def main(argv: list[str] | None = None) -> int:
     c.add_argument("--other-party")
     c.add_argument("--para", help="Schedule 1 paragraph the provider relies on")
     c.add_argument("--votes", type=int)
-    c.add_argument("--llm", choices=["anthropic", "offline"])
+    c.add_argument("--llm", choices=["openai", "anthropic", "offline"])
     c.add_argument("--cache", choices=["off", "on", "replay"])
     sub.add_parser("rules")
     a = ap.parse_args(argv)

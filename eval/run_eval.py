@@ -162,7 +162,7 @@ def main(argv=None) -> int:
     ap.add_argument("--para", nargs="*")
     ap.add_argument("--ids", nargs="*")
     ap.add_argument("--limit", type=int)
-    ap.add_argument("--llm", choices=["anthropic", "offline"])
+    ap.add_argument("--llm", choices=["openai", "anthropic", "offline"])
     ap.add_argument("--cache", choices=["off", "on", "replay"])
     ap.add_argument("--concurrency", type=int, default=6)
     ap.add_argument("--name", default=None)

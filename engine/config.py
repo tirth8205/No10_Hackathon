@@ -25,8 +25,9 @@ _load_dotenv()
 
 @dataclass
 class Settings:
-    llm: str = field(default_factory=lambda: os.getenv("GC_LLM", "anthropic"))  # anthropic | offline
+    llm: str = field(default_factory=lambda: os.getenv("GC_LLM", "openai"))  # openai | anthropic | offline
     model: str = field(default_factory=lambda: os.getenv("GC_MODEL", "claude-opus-5-5"))
+    openai_model: str = field(default_factory=lambda: os.getenv("GC_OPENAI_MODEL", "gpt-5.4"))
     effort: str = field(default_factory=lambda: os.getenv("GC_EFFORT", "medium"))
     votes: int = field(default_factory=lambda: int(os.getenv("GC_VOTES", "3")))
     cache: str = field(default_factory=lambda: os.getenv("GC_CACHE", "off"))  # off | on | replay
@@ -37,7 +38,14 @@ class Settings:
 
     @property
     def has_api_key(self) -> bool:
-        return bool(os.getenv("ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_AUTH_TOKEN"))
+        return self.has_key_for(self.llm)
+
+    def has_key_for(self, kind: str) -> bool:
+        if kind == "openai":
+            return bool(os.getenv("OPENAI_API_KEY"))
+        if kind == "anthropic":
+            return bool(os.getenv("ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_AUTH_TOKEN"))
+        return True
 
 
 settings = Settings()
