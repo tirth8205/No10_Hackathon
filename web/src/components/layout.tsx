@@ -88,7 +88,6 @@ function Footer({ links, wide }: { links: NavItem[]; wide?: boolean }) {
                 </li>
               ))}
             </ul>
-            <p className="govuk-body-s govuk-!-margin-bottom-0">Prototype built for the 10 Downing Street hackathon, October 2026.</p>
           </div>
         </div>
       </div>

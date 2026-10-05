@@ -377,6 +377,6 @@ def verification_summary(case: dict, documents: list[dict]) -> str:
         rows = [f"  [{'x' if e['status'] == 'met' else ' '}] {e['label']}" + (f'\n      "{e["quote"]}"' if e.get("quote") else "") for e in r["elements"]]
         blocks.append("\n".join([title, f"  Evidence type: {('Schedule 1, paragraph ' + r['matchedPara']) if r['matchedPara'] else 'Not matched'}",
                                  f"  Result: {labels[doc_verdict_key(r)]}", f"  Agreement: {r['agreement']}", f"  Rules: {r['rulesVersion']}", *rows]))
-    return "\n".join(["GATEWAY CHECK – VERIFICATION SUMMARY (PROTOTYPE, SYNTHETIC DATA)", "", f"Client: {case['applicantName']}",
+    return "\n".join(["GATEWAY CHECK – VERIFICATION SUMMARY", "", f"Client: {case['applicantName']}",
                       f"Other party: {case['otherPartyName']}", f"Case: {case['ref']}", f"Firm: {case['firm']}", "", *blocks, "",
                       "This summary supports the caseworker's decision. The decision is theirs."])

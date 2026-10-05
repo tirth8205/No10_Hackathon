@@ -24,7 +24,7 @@ from engine.rules import RuleLoadError, load_rules
 from engine.verify import spans
 
 app = FastAPI(title="Gateway Check API", version="0.1.0",
-              description="Checks domestic abuse evidence for legal aid against Schedule 1. Prototype: synthetic data only.")
+              description="Checks domestic abuse evidence for legal aid against Schedule 1.")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 app.include_router(web_router)
@@ -406,7 +406,7 @@ def audit(record: str | None = None):
     return store.list_audit(record)
 
 
-SCOREBOARD_SETS = {"synthetic": "syn-v3-live", "style": "style-v3-live", "gold": "gold-v3-live"}
+SCOREBOARD_SETS = {"synthetic": "syn-v3-live", "style": "style-v3-live", "gold": "gold-v3-live", "gold_pdf": "gold-pdf-v3-live"}
 
 
 @app.get("/api/scoreboard")

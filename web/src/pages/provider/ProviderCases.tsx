@@ -107,7 +107,6 @@ export function ProviderCases({ firm, cases, onDropLetter, firstTimeRight }: Pro
             <p className="govuk-notification-banner__heading">
               Most firms get gateway evidence right first time. Yours: {firstTimeRight.yours} of {firstTimeRight.outOf} cases.
             </p>
-            <p className="govuk-body-s app-secondary-text govuk-!-margin-bottom-0">Illustrative figures for this prototype.</p>
           </NotificationBanner>
         </div>
       )}

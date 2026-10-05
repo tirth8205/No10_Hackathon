@@ -49,7 +49,7 @@ from engine.rules import Rule
 
 MAX_PAGE_BYTES = 200_000
 MAX_CALL_TIMEOUT = 4.0
-USER_AGENT = "gateway-check/0.1 (+evidence verification; hackathon prototype)"
+USER_AGENT = "gateway-check/0.1 (+evidence verification)"
 
 # --------------------------------------------------------------------------- #
 # Links a person can open

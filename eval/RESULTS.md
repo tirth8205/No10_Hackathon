@@ -7,6 +7,7 @@ Model `gpt-5.4`, 3 votes per element, rules `schedule1-v15-2026-06-15`. Final ru
 | Synthetic | Labelled by construction from the guidance, all 22 paragraphs. Used for tuning. | 146 | **100%** | **0** | **0** | 8.2% | 93.3% |
 | Unseen style | 35 synthetic cases rewritten by the model in registers the rules never saw (informal email, bullets, non-native English, padding, reordered). Generated after tuning. | 35 | **100%** | **0** | **0** | 8.6% | 95.3% |
 | MoJ gold | The 12 real example letters from MoJ's pack (7 accepted, 5 rejected). Held out. | 12 | **91.7%** (11/12) | **0** | **1** (the unsigned sample letter) | 0% | 96.9% |
+| MoJ gold as PDFs | The same 12 letters as files: a digital PDF and a scanned (image-only) PDF of each, through the full upload path (PDF text layer or model transcription of the scan). Held out. | 24 | **100%** (24/24) | **0** | **0** | 0% | 100% |
 
 MoJ's success criteria: agree with expert assessors in at least 90 to 95% of cases, reliably identify incomplete or unclear evidence, very low false approval and false rejection rates. Met on all three sets. A false approval would put an ineligible application through; there were none. The one false rejection is discussed below.
 
@@ -22,6 +23,10 @@ An external review then found that the three votes of an assessment shared one c
 
 - **Synthetic and unseen style:** none in the final run.
 - **Gold (1 of 12):** MoJ's accepted paragraph 11 letter. The sample text carries no signature, profession or registration number, so the author cannot be identified from the document; a real letter would be on the practice's letterhead. In earlier runs the model marked the author element *unclear* (sent to a caseworker); in the final run all three votes marked it *missing* (needs a change), which counts as a false rejection. The rule already says to use "unclear" when the author cannot be identified; the wording has not been tuned on this held-out letter. Either way the letter is not passed without a person seeing it.
+
+## The gold letters as files
+
+The 24 PDFs were made from the gold letters with `scripts/make_gold_pdfs.py`: 12 with a text layer (read with pypdf) and 12 rendered to images only (sent to the model to transcribe, then checked like any other text). All 24 verdicts matched the labels, including the paragraph 11 letter that misses in the text-only run: the PDF rendering puts the practice name and the signature block on the page, so the author can be identified. Median 28 seconds per PDF (transcription adds a model call for the scans).
 
 ## Where the model and the labels disagree on elements but not verdicts
 
@@ -41,6 +46,7 @@ Median 20 seconds per document in the final live runs (classification plus three
 .venv/bin/python -m eval.run_eval --set synthetic --votes 3 --cache off --name syn-v3-live
 .venv/bin/python -m eval.style_shift --n 42 && .venv/bin/python -m eval.run_eval --set style --votes 3 --cache off --name style-v3-live
 .venv/bin/python -m eval.run_eval --set gold --votes 3 --cache off --name gold-v3-live
+.venv/bin/python -m eval.run_eval --set gold-pdf --votes 3 --cache off --name gold-pdf-v3-live
 ```
 
 Per-case detail: `eval/results/<name>.json`; disagreements from the last run: `eval/results/failures.md`.

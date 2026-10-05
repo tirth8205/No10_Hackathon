@@ -73,7 +73,6 @@ export function Stage() {
         <button className="govuk-button govuk-button--warning" style={{ margin: 0 }} onClick={() => void onReset()} disabled={resetting}>
           {resetting ? "Resetting…" : "Reset demo data"}
         </button>
-        <span className="govuk-body-s" style={{ margin: "0 0 0 auto" }}>Prototype. Synthetic data only.</span>
       </div>
       {state && current ? (
         <div style={{ flex: 1, display: "flex", gap: 12, minHeight: 0, justifyContent: view === "client" ? "center" : "flex-start" }}>

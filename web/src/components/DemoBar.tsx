@@ -27,9 +27,9 @@ export function DemoBar() {
     </Link>
   );
   return (
-    <div className="app-demo-bar" role="navigation" aria-label="Prototype view switcher"
+    <div className="app-demo-bar" role="navigation" aria-label="View switcher"
          style={{ background: "#0b0c0c", color: "#fff", fontSize: 14, padding: "4px 16px", display: "flex", gap: 16, alignItems: "center" }}>
-      <span style={{ opacity: 0.8 }}>Prototype view{state ? ` · ${state.applicantName} (${state.ref})` : ""}:</span>
+      <span style={{ opacity: 0.8 }}>View as{state ? ` · ${state.applicantName} (${state.ref})` : ""}:</span>
       {state && item("client", paths.client(state.clientToken), "Client's phone")}
       {item("provider", state ? paths.caseEvidence(state.caseId) : paths.provider, "Solicitor")}
       {item("caseworker", paths.queue, "Caseworker")}

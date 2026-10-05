@@ -184,7 +184,7 @@ export function verificationSummary(c: Case, docs: CaseDocument[]): string {
     ].join("\n");
   });
   return [
-    "GATEWAY CHECK – VERIFICATION SUMMARY (PROTOTYPE, SYNTHETIC DATA)",
+    "GATEWAY CHECK – VERIFICATION SUMMARY",
     "",
     `Client: ${c.applicantName}`,
     `Other party: ${c.otherPartyName}`,
