@@ -333,6 +333,56 @@ def _first(pattern: str, text: str) -> str | None:
 
 
 # --------------------------------------------------------------------------- #
+# demo helpers: the stage view and the persona switcher
+# --------------------------------------------------------------------------- #
+DEMO_APPLICANT = "Jane Doe"
+
+
+@router.get("/demo")
+def demo_state():
+    """The case the demo follows (Jane Doe, else the newest), with a live client link, and the first case in the queue."""
+    cases = store.list_cases()
+    if not cases:
+        raise HTTPException(404, "no cases: run the seed")
+    c = next((x for x in cases if x["applicant_name"] == DEMO_APPLICANT), cases[-1])
+    link = store.latest_client_link(c["id"]) or store.create_client_link(c["id"], 7)
+    queue = [s for s in store.list_submissions() if s["status"] == "submitted"]
+    return {"caseId": c["id"], "ref": c["ref"], "applicantName": c["applicant_name"], "clientToken": link["token"],
+            "queueCaseId": queue[0]["case_id"] if queue else None,
+            "cases": [{"id": x["id"], "ref": x["ref"], "applicantName": x["applicant_name"]} for x in cases]}
+
+
+@router.post("/demo/reset", status_code=202)
+async def demo_reset(background: BackgroundTasks):
+    """Wipe everything and re-seed the scripted demo cases (cached model answers make this quick)."""
+    for table in ("cases", "documents", "tracker_events", "evidence_requests", "client_links", "submissions", "decisions", "audit"):
+        store._exec(f"DELETE FROM {table}")
+    store.docs._items.clear()
+
+    async def seed():
+        from demo.seed_demo import CASES, CORRECTED_A, ROOT
+        from engine.pipeline import check_text
+
+        for spec in CASES:
+            case = store.create_case(spec["applicant_name"], spec["other_party_name"], spec["case_type"], "provider", work_type=spec["work_type"],
+                                     firm_name="Hartley & Webb Solicitors", ask_label=spec.get("ask_label", "Letter from your support worker"))
+            ids = []
+            for fn, text, para in spec["docs"]:
+                doc = store.add_document(case["id"], fn, "provider", para, None, text)
+                res = await check_text(text, fn, core.application_for(case), rules=core.rules(), llm=core.state["llm"], claimed_para=para, document_id=doc["id"])
+                store.set_document_result(doc["id"], res.model_dump())
+                ids.append(doc["id"])
+            if spec.get("submit"):
+                store.create_submission(case["id"], ids, "Demo submission", spec.get("reason"), "provider")
+        out = ROOT / "demo" / "files"
+        out.mkdir(exist_ok=True)
+        (out / "case-a-support-letter-corrected.txt").write_text(CORRECTED_A)
+
+    background.add_task(seed)
+    return {"ok": True, "expected_cases": 7}
+
+
+# --------------------------------------------------------------------------- #
 @router.get("/documents/{document_id}/file/{page}")
 def document_file(document_id: str, page: int):
     item = store.docs.get(document_id)

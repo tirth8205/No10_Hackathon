@@ -131,3 +131,15 @@ export const decide = (caseId: string, action: DecisionAction, note: string) =>
 /** Inbox mode: the check runs before this returns (one request, up to a minute). */
 export const draftInboxReply = (email: string, files: File[]) =>
   request<InboxDraft>("/inbox", { method: "POST", body: multipart(files, { email }) });
+
+// ---------------------------------------------------------------- demo helpers (prototype only)
+export interface DemoState {
+  caseId: string;
+  ref: string;
+  applicantName: string;
+  clientToken: string;
+  queueCaseId: string | null;
+  cases: { id: string; ref: string; applicantName: string }[];
+}
+export const demo = () => request<DemoState>("/demo");
+export const resetDemo = () => request<{ ok: boolean; expected_cases: number }>("/demo/reset", { method: "POST" });

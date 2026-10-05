@@ -3,6 +3,8 @@ import { Navigate, Route, Routes, useLocation } from "react-router";
 import { HowTheCheckWorks, NotFound } from "./pages/HowTheCheckWorks";
 import { ScreensIndex } from "./pages/ScreensIndex";
 import { ClientExpired } from "./pages/client/ClientExpired";
+import { Stage } from "./pages/Stage";
+import { DemoBar } from "./components/DemoBar";
 import * as live from "./api/routes";
 import * as sample from "./sample/routes";
 
@@ -31,7 +33,10 @@ function useNewPageFocus() {
 export function App() {
   useNewPageFocus();
   return (
+    <>
+    {!SAMPLE && <DemoBar />}
     <Routes>
+      <Route path="/stage" element={<Stage />} />
       <Route path="/" element={SAMPLE ? <ScreensIndex /> : <Navigate to="/provider" replace />} />
       <Route path="/screens" element={<ScreensIndex />} />
       <Route path="/how-the-check-works" element={<HowTheCheckWorks />} />
@@ -56,5 +61,6 @@ export function App() {
 
       <Route path="*" element={<NotFound />} />
     </Routes>
+    </>
   );
 }

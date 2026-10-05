@@ -1,0 +1,76 @@
+// The demo stage: the client's phone, the solicitor's case and the caseworker's queue
+// side by side, each a live frame of the real app. Prototype only.
+
+import { useEffect, useState } from "react";
+import { demo, resetDemo, type DemoState } from "../api/backend";
+import { paths } from "../paths";
+
+export function Stage() {
+  const [state, setState] = useState<DemoState | null>(null);
+  const [caseId, setCaseId] = useState<string | null>(null);
+  const [nonce, setNonce] = useState(0);
+  const [resetting, setResetting] = useState(false);
+
+  const load = () => demo().then((s) => { setState(s); setCaseId((c) => c ?? s.caseId); }).catch(() => setState(null));
+  useEffect(() => { void load(); }, []);
+
+  const onReset = async () => {
+    setResetting(true);
+    await resetDemo();
+    // the seed runs in the background; wait for the cases to come back
+    for (let i = 0; i < 60; i++) {
+      await new Promise((r) => setTimeout(r, 1000));
+      const s = await demo().catch(() => null);
+      if (s && s.cases.length >= 7) {
+        setState(s);
+        setCaseId(s.caseId);
+        break;
+      }
+    }
+    setNonce((n) => n + 1);
+    setResetting(false);
+  };
+
+  const frame = (title: string, src: string, width: string) => (
+    <section style={{ flex: `0 0 ${width}`, display: "flex", flexDirection: "column", minWidth: 0 }}>
+      <h2 className="govuk-heading-s" style={{ margin: "0 0 6px" }}>{title}</h2>
+      <iframe key={`${src}-${nonce}`} title={title} src={src}
+              style={{ flex: 1, width: "100%", border: "1px solid #b1b4b6", background: "#fff" }} />
+    </section>
+  );
+
+  const current = state?.cases.find((c) => c.id === caseId) ?? null;
+  const token = state && caseId === state.caseId ? state.clientToken : null;
+
+  return (
+    <div style={{ height: "100vh", display: "flex", flexDirection: "column", padding: 12, boxSizing: "border-box", gap: 8, background: "#f3f2f1" }}>
+      <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+        <h1 className="govuk-heading-m" style={{ margin: 0 }}>Gateway Check — all three views</h1>
+        <label className="govuk-body-s" style={{ margin: 0 }}>
+          Case{" "}
+          <select className="govuk-select" style={{ minWidth: 220 }} value={caseId ?? ""} onChange={(e) => setCaseId(e.target.value)}>
+            {(state?.cases ?? []).map((c) => (
+              <option key={c.id} value={c.id}>{c.applicantName || "New case"} ({c.ref})</option>
+            ))}
+          </select>
+        </label>
+        <button className="govuk-button govuk-button--secondary" style={{ margin: 0 }} onClick={() => setNonce((n) => n + 1)}>Reload views</button>
+        <button className="govuk-button govuk-button--warning" style={{ margin: 0 }} onClick={() => void onReset()} disabled={resetting}>
+          {resetting ? "Resetting…" : "Reset demo data"}
+        </button>
+        <span className="govuk-body-s" style={{ margin: "0 0 0 auto" }}>Prototype. Synthetic data only.</span>
+      </div>
+      {state && current ? (
+        <div style={{ flex: 1, display: "flex", gap: 12, minHeight: 0 }}>
+          {token
+            ? frame(`Client · ${current.applicantName.split(" ")[0]}'s phone`, paths.client(token), "390px")
+            : <section style={{ flex: "0 0 390px" }}><h2 className="govuk-heading-s">Client</h2><p className="govuk-body-s">Open the Jane Doe case for the client link.</p></section>}
+          {frame("Solicitor · Hartley & Webb", paths.caseEvidence(current.id), "1fr")}
+          {frame("LAA caseworker · evidence queue", paths.queue, "34%")}
+        </div>
+      ) : (
+        <p className="govuk-body">{resetting ? "Re-seeding the demo cases…" : "Loading the demo cases… (is the back end running?)"}</p>
+      )}
+    </div>
+  );
+}
