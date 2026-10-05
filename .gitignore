@@ -17,6 +17,9 @@ __pycache__/
 *.sqlite3-shm
 uploads/
 
+# recorded model answers for replay (regenerate with GC_CACHE=on)
+demo/cache/
+
 # evaluation runs: keep only the three result sets quoted in eval/RESULTS.md
 eval/results/*
 !eval/results/latest.json
