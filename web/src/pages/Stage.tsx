@@ -53,8 +53,8 @@ export function Stage() {
     <div style={{ height: "100vh", display: "flex", flexDirection: "column", padding: 12, boxSizing: "border-box", gap: 8, background: "#f3f2f1" }}>
       <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
         <h1 className="govuk-heading-m" style={{ margin: 0 }}>Gateway Check{view === "all" ? " — all three views" : ""}</h1>
-        {/* The case picker drives the client and solicitor frames; the caseworker's queue shows every case. */}
-        {view !== "caseworker" && (
+        {/* The case picker chooses whose phone the client frame shows; the solicitor and caseworker frames are the whole app. */}
+        {(view === "all" || view === "client") && (
           <label className="govuk-body-s" style={{ margin: 0 }}>
             Case{" "}
             <select className="govuk-select" style={{ minWidth: 220 }} value={caseId ?? ""} onChange={(e) => setCaseId(e.target.value)}>
@@ -82,7 +82,7 @@ export function Stage() {
           {(view === "all" || view === "client") && (token
             ? frame(`Client · ${current.applicantName.split(" ")[0]}'s phone`, paths.client(token), "390px")
             : <section style={{ flex: "0 0 390px" }}><h2 className="govuk-heading-s">Client</h2><p className="govuk-body-s">This case has no client link.</p></section>)}
-          {(view === "all" || view === "provider") && frame("Solicitor · Hartley & Webb", paths.caseEvidence(current.id), "1fr")}
+          {(view === "all" || view === "provider") && frame("Solicitor · Hartley & Webb", view === "provider" ? paths.provider : paths.caseEvidence(current.id), "1fr")}
           {(view === "all" || view === "caseworker") && frame("LAA caseworker · evidence queue", paths.queue, "34%")}
         </div>
       ) : (
