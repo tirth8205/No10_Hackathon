@@ -4,7 +4,7 @@ import { CopyButton } from "../../components/CopyButton";
 import { Breadcrumbs, Button, SummaryList, VerdictTag } from "../../components/govuk";
 import { ProviderLayout } from "../../components/layout";
 import { useTitle } from "../../hooks/govuk";
-import { dayMonth, when } from "../../lib/dates";
+import { capitalise, dayMonth, when } from "../../lib/dates";
 import { documentTitle } from "../../lib/evidence";
 import { caseVerdict, docVerdict } from "../../lib/labels";
 import { clientMessage, firstName } from "../../lib/outputs";
@@ -109,7 +109,7 @@ export function CaseClient({ data, clientLinkUrl, onTurnOffLink, onCreateLink }:
                   return (
                     <li key={doc.id} className={v.key === "pass" ? "app-timeline__item app-timeline__item--success" : "app-timeline__item"}>
                       <p className="govuk-body-s app-secondary-text govuk-!-margin-bottom-1">
-                        {when(doc.uploadedAt)} · {doc.pages.length === 1 ? "1 file" : `${doc.pages.length} files`}
+                        {capitalise(when(doc.uploadedAt))} · {doc.pages.length === 1 ? "1 file" : `${doc.pages.length} files`}
                       </p>
                       <p className="govuk-body govuk-!-margin-bottom-2">
                         <Link className="govuk-link govuk-!-font-weight-bold" to={paths.caseEvidence(c.id)}>

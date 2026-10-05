@@ -71,6 +71,15 @@ $app-light-grey: govuk.govuk-colour("black", $variant: "tint-95");
   overflow-x: auto;
 }
 
+// Keep short status tags on one line where they sit beside other content.
+.app-heading-with-tag .govuk-tag,
+.app-evidence-item__tags .govuk-tag,
+.app-doc-tabs .govuk-tag,
+.app-timeline .govuk-tag,
+.govuk-summary-list .govuk-tag {
+  max-width: none;
+}
+
 // Key figures in the "Getting paid" banner.
 .app-key-figures {
   display: flex;
@@ -142,8 +151,14 @@ $app-light-grey: govuk.govuk-colour("black", $variant: "tint-95");
   @include govuk.govuk-focused-text;
 }
 
+// A label is never a :link, so GOV.UK's link colours need setting directly.
 .app-file-button--link .govuk-link {
+  color: govuk.govuk-functional-colour(link);
   cursor: pointer;
+
+  &:hover {
+    color: govuk.govuk-functional-colour(link-hover);
+  }
 }
 
 // The client's two upload buttons, full width on a phone.
@@ -360,6 +375,11 @@ $app-light-grey: govuk.govuk-colour("black", $variant: "tint-95");
 }
 
 // Drafted text to read, copy or download.
+.govuk-details__text .app-letter {
+  padding: 0;
+  border: 0;
+}
+
 .app-letter {
   @include govuk.govuk-font($size: 16);
   padding: govuk.govuk-spacing(4);
