@@ -1,0 +1,648 @@
+{
+  "meta": {
+    "description": "Synthetic evidence PDFs built from data/moj_gold_cases.json by scripts/make_gold_pdfs.py. The body of each letter is MoJ's wording, unchanged; the letterhead, reference, date, salutation and signature are fictional and never add or remove anything an expected label depends on. digital/ has a text layer; scanned/ is images only and goes to the model for reading.",
+    "source": "data/moj_gold_cases.json",
+    "n_cases": 12,
+    "held_out": "Like the gold set, keep these as a held-out test set."
+  },
+  "cases": [
+    {
+      "case_id": "MOJ-P17-accepted-01",
+      "claimed_para": "17",
+      "application": {
+        "applicant": "Ms Jane Doe",
+        "other_party": null,
+        "relationship": null,
+        "child": null,
+        "application_date": null,
+        "proceedings": null
+      },
+      "expected_overall": "pass",
+      "expected_outcome": "pass",
+      "expected_elements": {
+        "uk_situated": "met",
+        "operating_six_months": "met",
+        "supported_applicant": "met",
+        "professional_judgement": "met",
+        "specific_matters": "met",
+        "support_description": "met",
+        "reason_for_support": "met",
+        "applicant_named": "met"
+      },
+      "expected_reason": "Accepted by MoJ.",
+      "letter": {
+        "date": "2026-09-24",
+        "reference": "Our ref: BWS/2026/0114",
+        "letterhead": "Brookfield Women's Support Service",
+        "added_text": [
+          "Our ref: BWS/2026/0114",
+          "24 September 2026",
+          "Brookfield Women's Support Service",
+          "Unit 4, Mill Court, Leeds",
+          "Tel: 0113 496 0742",
+          "Email: referrals@brookfield-support.example",
+          "Re: Ms Jane Doe",
+          "To whom it may concern",
+          "Yours faithfully,",
+          "Sam Taylor",
+          "Senior Domestic Abuse Support Worker",
+          "Brookfield Women's Support Service"
+        ],
+        "all_added_text_is_fictional": true
+      },
+      "files": {
+        "digital": {
+          "path": "digital/MOJ-P17-accepted-01.pdf",
+          "pages": 1,
+          "text_layer": true,
+          "sha256": "50616ca30302bb300cd3b423818cde5ec114ee646bda5143d1707e51643eec6d"
+        },
+        "scanned": {
+          "path": "scanned/MOJ-P17-accepted-01.pdf",
+          "pages": 1,
+          "text_layer": false,
+          "dpi": 150,
+          "sha256": "7c7075a2d0fbcc0e72cfb66005c89622aff9c0c25202d9054dd655f397b50579"
+        }
+      }
+    },
+    {
+      "case_id": "MOJ-P17-accepted-02",
+      "claimed_para": "17",
+      "application": {
+        "applicant": "Joe Bloggs",
+        "other_party": null,
+        "relationship": null,
+        "child": null,
+        "application_date": null,
+        "proceedings": null
+      },
+      "expected_overall": "pass",
+      "expected_outcome": "pass",
+      "expected_elements": {
+        "uk_situated": "met",
+        "operating_six_months": "met",
+        "supported_applicant": "met",
+        "professional_judgement": "met",
+        "specific_matters": "met",
+        "support_description": "met",
+        "reason_for_support": "met",
+        "applicant_named": "met"
+      },
+      "expected_reason": "Accepted by MoJ.",
+      "letter": {
+        "date": "2026-09-25",
+        "reference": "Our ref: MDAS/26/0471",
+        "letterhead": "Moorside Domestic Abuse Service",
+        "added_text": [
+          "Our ref: MDAS/26/0471",
+          "25 September 2026",
+          "Moorside Domestic Abuse Service",
+          "Moorside House, Station Road, Wakefield",
+          "Tel: 01632 960318",
+          "Email: help@moorside-das.example",
+          "Re: Joe Bloggs",
+          "To whom it may concern",
+          "Yours faithfully,",
+          "Chris Allen",
+          "Refuge and Outreach Worker",
+          "Moorside Domestic Abuse Service"
+        ],
+        "all_added_text_is_fictional": true
+      },
+      "files": {
+        "digital": {
+          "path": "digital/MOJ-P17-accepted-02.pdf",
+          "pages": 1,
+          "text_layer": true,
+          "sha256": "f1c3bbaec5bf0f274e35e06cf33c90d159258772fbdd854e6c4434e0359b782d"
+        },
+        "scanned": {
+          "path": "scanned/MOJ-P17-accepted-02.pdf",
+          "pages": 1,
+          "text_layer": false,
+          "dpi": 150,
+          "sha256": "ed3ab0b6f9a4c3c7e2a11d649481ad7bd53d174f0ac1e484cdb9a674f195e816"
+        }
+      }
+    },
+    {
+      "case_id": "MOJ-P17-accepted-03",
+      "claimed_para": "17",
+      "application": {
+        "applicant": "Jane Smith",
+        "other_party": null,
+        "relationship": null,
+        "child": null,
+        "application_date": null,
+        "proceedings": null
+      },
+      "expected_overall": "pass",
+      "expected_outcome": "pass",
+      "expected_elements": {
+        "uk_situated": "met",
+        "operating_six_months": "met",
+        "supported_applicant": "met",
+        "professional_judgement": "met",
+        "specific_matters": "met",
+        "support_description": "met",
+        "reason_for_support": "met",
+        "applicant_named": "met"
+      },
+      "expected_reason": "Accepted by MoJ.",
+      "letter": {
+        "date": "2026-09-22",
+        "reference": "Our ref: NRP-2026-0233",
+        "letterhead": "Northfield Recovery Project",
+        "added_text": [
+          "Our ref: NRP-2026-0233",
+          "22 September 2026",
+          "Northfield Recovery Project",
+          "3 Chapel Walk, Sheffield",
+          "Tel: 0114 496 0581",
+          "Email: hello@northfield-recovery.example",
+          "Re: Jane Smith",
+          "To whom it may concern",
+          "Yours faithfully,",
+          "Robin Clarke",
+          "Recovery Programme Coordinator",
+          "Northfield Recovery Project"
+        ],
+        "all_added_text_is_fictional": true
+      },
+      "files": {
+        "digital": {
+          "path": "digital/MOJ-P17-accepted-03.pdf",
+          "pages": 2,
+          "text_layer": true,
+          "sha256": "35f8f413691f611a7f0938b098c387740e5d74b2bffa8b8934d20799bffae4f3"
+        },
+        "scanned": {
+          "path": "scanned/MOJ-P17-accepted-03.pdf",
+          "pages": 2,
+          "text_layer": false,
+          "dpi": 150,
+          "sha256": "0839de6b2be1c3e30995c771caab5cd7837c72d0997e8cd82948f1a38935a982"
+        }
+      }
+    },
+    {
+      "case_id": "MOJ-P17-rejected-04",
+      "claimed_para": "17",
+      "application": {
+        "applicant": "Joe Bloggs",
+        "other_party": null,
+        "relationship": null,
+        "child": null,
+        "application_date": null,
+        "proceedings": null
+      },
+      "expected_overall": "fail",
+      "expected_outcome": "fail",
+      "expected_elements": {
+        "uk_situated": "met",
+        "operating_six_months": "met",
+        "supported_applicant": "met",
+        "professional_judgement": "met",
+        "specific_matters": "not_met",
+        "support_description": "met",
+        "reason_for_support": "met",
+        "applicant_named": "met"
+      },
+      "expected_reason": "'Victim testimony and referral' names the source of information, not the matters relied on.",
+      "letter": {
+        "date": "2026-09-29",
+        "reference": "Our ref: ROA/2026/1182",
+        "letterhead": "Riverside Outreach and Advocacy",
+        "added_text": [
+          "Our ref: ROA/2026/1182",
+          "29 September 2026",
+          "Riverside Outreach and Advocacy",
+          "The Old Mill, Water Lane, York",
+          "Tel: 01632 960447",
+          "Email: outreach@riverside-oa.example",
+          "Re: Joe Bloggs",
+          "To whom it may concern",
+          "Yours faithfully,",
+          "Lee Morgan",
+          "Outreach Worker",
+          "Riverside Outreach and Advocacy"
+        ],
+        "all_added_text_is_fictional": true
+      },
+      "files": {
+        "digital": {
+          "path": "digital/MOJ-P17-rejected-04.pdf",
+          "pages": 1,
+          "text_layer": true,
+          "sha256": "0a6d69c4f3b827f454d4553b7345a2d33cbe054dc3f388809b2f012ab43de5e8"
+        },
+        "scanned": {
+          "path": "scanned/MOJ-P17-rejected-04.pdf",
+          "pages": 1,
+          "text_layer": false,
+          "dpi": 150,
+          "sha256": "d52cd2a184410db3ac1793786fc70c1ebd9502ce879ee181edebf306769fb179"
+        }
+      }
+    },
+    {
+      "case_id": "MOJ-P11-accepted-01",
+      "claimed_para": "11",
+      "application": {
+        "applicant": "Jane Doe",
+        "other_party": null,
+        "relationship": null,
+        "child": null,
+        "application_date": null,
+        "proceedings": null
+      },
+      "expected_overall": "pass",
+      "expected_outcome": "pass",
+      "expected_elements": {
+        "appropriate_health_professional": "met",
+        "examined_applicant": "met",
+        "consistent_with_domestic_abuse": "met",
+        "applicant_named": "met"
+      },
+      "expected_reason": "Accepted by MoJ.",
+      "letter": {
+        "date": "2026-09-29",
+        "reference": "Our ref: EG/RH/0929",
+        "letterhead": "Elm Grove Medical Practice",
+        "added_text": [
+          "Our ref: EG/RH/0929",
+          "29 September 2026",
+          "Elm Grove Medical Practice",
+          "Elm Grove Health Centre, 2 Elm Grove, Leeds",
+          "Tel: 0113 496 0290",
+          "Re: Jane Doe",
+          "To whom it may concern",
+          "Yours faithfully,",
+          "Dr R. Hughes MBChB MRCGP",
+          "General Practitioner",
+          "GMC No. 0000000"
+        ],
+        "all_added_text_is_fictional": true
+      },
+      "files": {
+        "digital": {
+          "path": "digital/MOJ-P11-accepted-01.pdf",
+          "pages": 1,
+          "text_layer": true,
+          "sha256": "3671a737f0fb2bebef3916daca514634050179308e54644c25954bca7c9ac690"
+        },
+        "scanned": {
+          "path": "scanned/MOJ-P11-accepted-01.pdf",
+          "pages": 1,
+          "text_layer": false,
+          "dpi": 150,
+          "sha256": "2aec14a61d3c37b142ff12ff6ed7df280a44a97d22bbb6caa8c03690bc8cc5df"
+        }
+      }
+    },
+    {
+      "case_id": "MOJ-P11-rejected-02",
+      "claimed_para": "11",
+      "application": {
+        "applicant": "Jane Doe",
+        "other_party": null,
+        "relationship": null,
+        "child": null,
+        "application_date": null,
+        "proceedings": null
+      },
+      "expected_overall": "fail",
+      "expected_outcome": "fail",
+      "expected_elements": {
+        "appropriate_health_professional": "met",
+        "examined_applicant": "met",
+        "consistent_with_domestic_abuse": "not_met",
+        "applicant_named": "met"
+      },
+      "expected_reason": "Hedged judgement: 'might be consistent with'.",
+      "letter": {
+        "date": "2026-09-29",
+        "reference": "Our ref: EG/RH/0929",
+        "letterhead": "Elm Grove Medical Practice",
+        "added_text": [
+          "Our ref: EG/RH/0929",
+          "29 September 2026",
+          "Elm Grove Medical Practice",
+          "Elm Grove Health Centre, 2 Elm Grove, Leeds",
+          "Tel: 0113 496 0290",
+          "Re: Jane Doe",
+          "To whom it may concern",
+          "Yours faithfully,",
+          "Dr R. Hughes MBChB MRCGP",
+          "General Practitioner",
+          "GMC No. 0000000"
+        ],
+        "all_added_text_is_fictional": true
+      },
+      "files": {
+        "digital": {
+          "path": "digital/MOJ-P11-rejected-02.pdf",
+          "pages": 1,
+          "text_layer": true,
+          "sha256": "32ff17923a8f4970f0440c1b5f56054aa67d44e23206536a5b57dff97f31dd44"
+        },
+        "scanned": {
+          "path": "scanned/MOJ-P11-rejected-02.pdf",
+          "pages": 1,
+          "text_layer": false,
+          "dpi": 150,
+          "sha256": "f56b61739ab80f9cdaa3ec439f7ee4ad4914f7fb807c5ce59243e3a5c4f2eb0e"
+        }
+      }
+    },
+    {
+      "case_id": "MOJ-P19-accepted-01",
+      "claimed_para": "19",
+      "application": {
+        "applicant": "Jane Doe",
+        "other_party": "John Doe",
+        "relationship": null,
+        "child": null,
+        "application_date": null,
+        "proceedings": null
+      },
+      "expected_overall": "pass",
+      "expected_outcome": "pass",
+      "expected_elements": {
+        "public_authority_named": "met",
+        "victim_named": "met",
+        "perpetrator_named": "met",
+        "assessed_victim_or_at_risk": "met"
+      },
+      "expected_reason": "Accepted by MoJ.",
+      "letter": {
+        "date": "2026-10-01",
+        "reference": "Ref: FS/2026/7731",
+        "letterhead": null,
+        "added_text": [
+          "Ref: FS/2026/7731",
+          "1 October 2026",
+          "Private and confidential"
+        ],
+        "all_added_text_is_fictional": true
+      },
+      "files": {
+        "digital": {
+          "path": "digital/MOJ-P19-accepted-01.pdf",
+          "pages": 1,
+          "text_layer": true,
+          "sha256": "f1ccb92355af693527a402759dc843e9376e68f6252855c7646d2c68d551e3e8"
+        },
+        "scanned": {
+          "path": "scanned/MOJ-P19-accepted-01.pdf",
+          "pages": 1,
+          "text_layer": false,
+          "dpi": 150,
+          "sha256": "b66d4c9fbea42f4e03d5713089031a5e0781e24790f23f66b1a4d6f9c2423cad"
+        }
+      }
+    },
+    {
+      "case_id": "MOJ-P19-rejected-02",
+      "claimed_para": "19",
+      "application": {
+        "applicant": "Jane Doe",
+        "other_party": "John Doe",
+        "relationship": null,
+        "child": null,
+        "application_date": null,
+        "proceedings": null
+      },
+      "expected_overall": "fail",
+      "expected_outcome": "fail",
+      "expected_elements": {
+        "public_authority_named": "met",
+        "victim_named": "met",
+        "perpetrator_named": "met",
+        "assessed_victim_or_at_risk": "not_met"
+      },
+      "expected_reason": "'Might be a victim' is not an assessment.",
+      "letter": {
+        "date": "2026-10-01",
+        "reference": "Ref: FS/2026/7731",
+        "letterhead": null,
+        "added_text": [
+          "Ref: FS/2026/7731",
+          "1 October 2026",
+          "Private and confidential"
+        ],
+        "all_added_text_is_fictional": true
+      },
+      "files": {
+        "digital": {
+          "path": "digital/MOJ-P19-rejected-02.pdf",
+          "pages": 1,
+          "text_layer": true,
+          "sha256": "ac1b3749b2ef2e6a124af3cce6f04d115603cbae2cfe0a1f6186018a8d78274b"
+        },
+        "scanned": {
+          "path": "scanned/MOJ-P19-rejected-02.pdf",
+          "pages": 1,
+          "text_layer": false,
+          "dpi": 150,
+          "sha256": "0914ab10e364ba836f3c9575a410e276827e0a982bfb94b9bf939ad92e8de445"
+        }
+      }
+    },
+    {
+      "case_id": "MOJ-P18-accepted-01",
+      "claimed_para": "18",
+      "application": {
+        "applicant": "Jane Doe",
+        "other_party": "John Doe",
+        "relationship": null,
+        "child": null,
+        "application_date": null,
+        "proceedings": null
+      },
+      "expected_overall": "pass",
+      "expected_outcome": "pass",
+      "expected_elements": {
+        "organisation_identified": "met",
+        "perpetrator_named": "met",
+        "victim_named": "met",
+        "refusal_date": "met",
+        "sought_because_of_abuse_by_other_party": "met"
+      },
+      "expected_reason": "Accepted by MoJ.",
+      "letter": {
+        "date": "2026-09-30",
+        "reference": "Ref: RA/2026/0928",
+        "letterhead": null,
+        "added_text": [
+          "Ref: RA/2026/0928",
+          "30 September 2026",
+          "Private and confidential"
+        ],
+        "all_added_text_is_fictional": true
+      },
+      "files": {
+        "digital": {
+          "path": "digital/MOJ-P18-accepted-01.pdf",
+          "pages": 1,
+          "text_layer": true,
+          "sha256": "6553997985a3d33f0ab94b05beb952b049ded44046c0f745e8d1c6941bba8921"
+        },
+        "scanned": {
+          "path": "scanned/MOJ-P18-accepted-01.pdf",
+          "pages": 1,
+          "text_layer": false,
+          "dpi": 150,
+          "sha256": "d997f44673c1e12d751da7b4c335b646dc9279a8d4b35510cd3038a01b3c2167"
+        }
+      }
+    },
+    {
+      "case_id": "MOJ-P18-rejected-02",
+      "claimed_para": "18",
+      "application": {
+        "applicant": "Jane Doe",
+        "other_party": null,
+        "relationship": null,
+        "child": null,
+        "application_date": null,
+        "proceedings": null
+      },
+      "expected_overall": "fail",
+      "expected_outcome": "fail",
+      "expected_elements": {
+        "organisation_identified": "met",
+        "perpetrator_named": "not_met",
+        "victim_named": "met",
+        "refusal_date": "met",
+        "sought_because_of_abuse_by_other_party": "unclear"
+      },
+      "expected_reason": "No perpetrator named, so the refusal can't be linked to abuse by B.",
+      "letter": {
+        "date": "2026-09-30",
+        "reference": "Ref: RA/2026/0928",
+        "letterhead": null,
+        "added_text": [
+          "Ref: RA/2026/0928",
+          "30 September 2026",
+          "Private and confidential"
+        ],
+        "all_added_text_is_fictional": true
+      },
+      "files": {
+        "digital": {
+          "path": "digital/MOJ-P18-rejected-02.pdf",
+          "pages": 1,
+          "text_layer": true,
+          "sha256": "75673cbf8b346fdce57793a7985d1499b889d3cbaef802ff8c66cd0452de9823"
+        },
+        "scanned": {
+          "path": "scanned/MOJ-P18-rejected-02.pdf",
+          "pages": 1,
+          "text_layer": false,
+          "dpi": 150,
+          "sha256": "701494a2d727124147b19a19f34245c0e21d91c4250fefe2b486c32624a08d29"
+        }
+      }
+    },
+    {
+      "case_id": "MOJ-P14-accepted-01",
+      "claimed_para": "14",
+      "application": {
+        "applicant": "Jane Doe",
+        "other_party": null,
+        "relationship": null,
+        "child": null,
+        "application_date": null,
+        "proceedings": null
+      },
+      "expected_overall": "pass",
+      "expected_outcome": "pass",
+      "expected_elements": {
+        "author_is_idva": "met",
+        "confirms_support": "met",
+        "applicant_named": "met"
+      },
+      "expected_reason": "Accepted by MoJ.",
+      "letter": {
+        "date": "2026-10-02",
+        "reference": "Our ref: SF/IDVA/2026/0377",
+        "letterhead": "Safer Futures IDVA Service",
+        "added_text": [
+          "Our ref: SF/IDVA/2026/0377",
+          "2 October 2026",
+          "Safer Futures IDVA Service",
+          "Unit 9, Canal Wharf, Bradford",
+          "Tel: 01632 960214",
+          "Email: idva@saferfutures.example"
+        ],
+        "all_added_text_is_fictional": true
+      },
+      "files": {
+        "digital": {
+          "path": "digital/MOJ-P14-accepted-01.pdf",
+          "pages": 1,
+          "text_layer": true,
+          "sha256": "6ccc50aad967af63d799d61b43029c55fc1146bd5e2b0908726153a0f28899c1"
+        },
+        "scanned": {
+          "path": "scanned/MOJ-P14-accepted-01.pdf",
+          "pages": 1,
+          "text_layer": false,
+          "dpi": 150,
+          "sha256": "b7c5a275b9875fd5dd990ba26c8861bf66ab8190646664ead862c93ec2abfd3d"
+        }
+      }
+    },
+    {
+      "case_id": "MOJ-P14-rejected-02",
+      "claimed_para": "14",
+      "application": {
+        "applicant": "Jane Doe",
+        "other_party": null,
+        "relationship": null,
+        "child": null,
+        "application_date": null,
+        "proceedings": null
+      },
+      "expected_overall": "fail",
+      "expected_outcome": "fail",
+      "expected_elements": {
+        "author_is_idva": "met",
+        "confirms_support": "not_met",
+        "applicant_named": "met"
+      },
+      "expected_reason": "MoJ rejected this; the only differences are 'we provided' vs 'I am providing'. Exact reason unconfirmed - ask MoJ.",
+      "letter": {
+        "date": "2026-10-02",
+        "reference": "Our ref: SF/IDVA/2026/0377",
+        "letterhead": "Safer Futures IDVA Service",
+        "added_text": [
+          "Our ref: SF/IDVA/2026/0377",
+          "2 October 2026",
+          "Safer Futures IDVA Service",
+          "Unit 9, Canal Wharf, Bradford",
+          "Tel: 01632 960214",
+          "Email: idva@saferfutures.example"
+        ],
+        "all_added_text_is_fictional": true
+      },
+      "files": {
+        "digital": {
+          "path": "digital/MOJ-P14-rejected-02.pdf",
+          "pages": 1,
+          "text_layer": true,
+          "sha256": "d72b80b4af2ce3b67e962fdf21e652314315b55f728e3b010c3b2744fdaf1723"
+        },
+        "scanned": {
+          "path": "scanned/MOJ-P14-rejected-02.pdf",
+          "pages": 1,
+          "text_layer": false,
+          "dpi": 150,
+          "sha256": "75ed084c31a3c6b63d364558c8a7c118e4d66b7e9fc11f7855fe83cad0857991"
+        }
+      }
+    }
+  ]
+}
