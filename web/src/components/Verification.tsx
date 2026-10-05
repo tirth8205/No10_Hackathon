@@ -7,6 +7,17 @@ const TAG: Record<VerificationStatus, { label: string; colour: string }> = {
   unknown: { label: "Not checked", colour: "grey" },
 };
 
+/** Links can originate from the document itself; render only http(s). */
+const isSafeHref = (u: string | null): u is string => {
+  if (!u) return false;
+  try {
+    const p = new URL(u, window.location.origin);
+    return p.protocol === "https:" || p.protocol === "http:";
+  } catch {
+    return false;
+  }
+};
+
 /** Checks on the author and organisation, with a link to verify each one. They support a person's decision; they never make it. */
 export function VerificationList({ checks }: { checks?: VerificationCheck[] | null }) {
   if (!checks || checks.length === 0) return null;
@@ -24,8 +35,8 @@ export function VerificationList({ checks }: { checks?: VerificationCheck[] | nu
               <strong className={`govuk-tag govuk-tag--${TAG[v.status].colour} govuk-!-margin-right-1`}>{TAG[v.status].label}</strong> {v.detail}
             </dd>
             <dd className="govuk-summary-list__actions govuk-!-font-size-16">
-              {v.link && (
-                <a className="govuk-link" href={v.link} target="_blank" rel="noreferrer">
+              {isSafeHref(v.link) && (
+                <a className="govuk-link" href={v.link} target="_blank" rel="noreferrer noopener">
                   Check it<span className="govuk-visually-hidden"> ({v.label}, opens in a new tab)</span>
                 </a>
               )}

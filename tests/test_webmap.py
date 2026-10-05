@@ -106,3 +106,10 @@ def test_missing_element_gets_the_problem_wording_from_its_explanation():
     doc = webmap.to_document(store, store.get_document(d["id"]))
     e = doc["result"]["elements"][0]
     assert e["status"] == "not_met" and e["quote"] == "Victim testimony and referral" and e["quote"] in doc["text"]
+
+
+def test_verification_links_are_http_only():
+    from engine.models import VerificationCheck
+
+    assert VerificationCheck(id="x", label="x", status="unknown", detail="d", link="javascript:alert(1)").link is None
+    assert VerificationCheck(id="x", label="x", status="unknown", detail="d", link=" https://example.org/a ").link == "https://example.org/a"

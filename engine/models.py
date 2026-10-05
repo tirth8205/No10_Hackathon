@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 ElementStatus = Literal["included", "missing", "unclear"]
 DocVerdict = Literal["meets", "needs_change", "needs_caseworker", "not_prescribed"]
@@ -83,6 +83,15 @@ class VerificationCheck(BaseModel):
     status: VerificationStatus
     detail: str = Field(description="One or two plain sentences saying what was found")
     link: str | None = Field(default=None, description="Where a person can verify it themselves")
+
+    @field_validator("link")
+    @classmethod
+    def _http_only(cls, v: str | None) -> str | None:
+        """Links may come from the document itself; only http(s) ever reaches a screen."""
+        if v is None:
+            return None
+        v = v.strip()
+        return v if v.lower().startswith(("http://", "https://")) else None
 
 
 # --------------------------------------------------------------------------- #
