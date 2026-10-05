@@ -215,9 +215,7 @@ def direct() -> None:
             ids = []
             for fn, data, text, para, pages in iter_docs(spec):
                 doc = store.add_document(case["id"], fn, "provider", para, data, text, pages=pages)
-                held = store.docs.get(doc["id"])
-                if held is not None:
-                    held.files = [(data, pages[0]["contentType"])]
+                store.set_files(doc["id"], [(data, pages[0]["contentType"])])
                 res = await check_text(text, fn, Application(applicant_name=case["applicant_name"], other_party_name=case["other_party_name"]),
                                        rules=rules, llm=llm, claimed_para=para, document_id=doc["id"])
                 store.set_document_result(doc["id"], res.model_dump())

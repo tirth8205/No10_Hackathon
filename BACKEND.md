@@ -110,7 +110,7 @@ The React app in `web/` types its data in `web/src/lib/types.ts` (`pass/fail/ref
 | Caseworker queue, review, `onDecide` | `GET /web/queue` (one row per undecided submission, built from its frozen snapshot; `case.submissionId`, `case.laaCheck: {done, differences}`), `GET /web/queue/{id}` (`id` = submission id, LAA ref, or case id → its latest submitted one), `POST /web/queue/{id}/decision {action, note, submissionId?}` → `Decision` with `agreedWithTool` and `submissionId` |
 | Pack download | `GET /web/submissions/{id}/pack.zip`: the submitted files (or their frozen text as `.txt`) plus `verification-summary.txt` |
 | Inbox `onDraft` | `POST /web/inbox` (multipart `email`, `files`) → `{email, firm, documents, reply}` (runs the check before returning) |
-| `DocumentPage.url` | `GET /web/documents/{doc}/file/{page}` while the file is still held in memory |
+| `DocumentPage.url` | `GET /web/documents/{doc}/file/{page}` while the file is still held (until the text expires or the case is purged) |
 
 Roles (`app/webmap.py`, `role=` on every mapper): the **provider** gets the full shapes. The **caseworker** gets the frozen submission, with the LAA reference as `case.ref` and never `clientToken`, `tokenExpiresAt`, `askLabel`, `selectedDocumentIds` or `selectionTouched`. The **client** gets the reduced document: no `text`, and a `CheckResult` of only `matchedPara`, `outcome`, `reason` (the client message), `elements[{key, status, clientHint, fix}]`, `shortOrg`, `authorName` (always null), `letterDate`, `rulesVersion`, `checkedAt`. Tests assert the forbidden keys are absent per role.
 
@@ -118,7 +118,7 @@ Dev wiring: run the API on :8000 and add to `web/vite.config.ts` `server: { prox
 
 ## Data handling
 
-Uploaded bytes live only in memory. The extracted text is kept, in memory and on the document row in SQLite, for `GC_DOC_TTL_MIN` minutes (default 60) or until `POST /api/cases/{id}/purge`, whichever comes first: `store.document_text` returns `None` after that and the sweep nulls the row's text (verdicts, quotes and the audit log stay). Submitted packs keep their text: `create_submission` copies it into `snapshot.documents[*].snapshot_text`, which is what the LAA received and what the caseworker queue, review, decision and `pack.zip` are built from, so a later re-check, name change, purge or expiry on the live case changes nothing on link 2. Nothing uploaded is ever written to disk.
+Uploaded bytes and the extracted text are kept, in memory and on the document rows in SQLite (`document_files`, so the solicitor and caseworker can see the letter itself with the marks on it, and a restart loses nothing), for `GC_DOC_TTL_MIN` minutes (default 60) or until `POST /api/cases/{id}/purge`, whichever comes first: `store.document_text` returns `None` after that and the sweep nulls the row's text (verdicts, quotes and the audit log stay). Submitted packs keep their text: `create_submission` copies it into `snapshot.documents[*].snapshot_text`, which is what the LAA received and what the caseworker queue, review, decision and `pack.zip` are built from, so a later re-check, name change, purge or expiry on the live case changes nothing on link 2. The SQLite file is the only place anything uploaded is written; it lives on the volume at `GC_DB_PATH`.
 
 ## Layout
 

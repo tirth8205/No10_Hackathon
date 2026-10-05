@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Link } from "react-router";
 import { DocumentText, HighlightKey } from "../../components/DocumentText";
+import { PdfView } from "../../components/PdfView";
 import { VerificationList } from "../../components/Verification";
-import { BackLink, ElementTag, WarningText } from "../../components/govuk";
+import { BackLink, Details, ElementTag, WarningText } from "../../components/govuk";
 import { ProviderLayout } from "../../components/layout";
 import { useTitle } from "../../hooks/govuk";
 import { when } from "../../lib/dates";
@@ -20,6 +22,10 @@ export function DocumentFile({ c, doc }: { c: Case; doc: CaseDocument }) {
   const verdict = docVerdict(r);
   const met = r?.elements.filter((e) => e.status === "met").length ?? 0;
   const missing = r?.elements.filter((e) => e.status !== "met") ?? [];
+  // Show the file itself when we hold it: a PDF with its marks drawn on the page, photos as uploaded.
+  const pdfPage = doc.pages.find((p) => p.url && p.contentType === "application/pdf");
+  const photoPages = pdfPage ? [] : doc.pages.filter((p) => p.url && p.contentType.startsWith("image/"));
+  const [pdfHasText, setPdfHasText] = useState<boolean | null>(null);
   return (
     <ProviderLayout firm={c.firm} beforeContent={<BackLink to={paths.caseEvidence(c.id)}>Back to evidence</BackLink>}>
       <span className="govuk-caption-l">
@@ -48,12 +54,26 @@ export function DocumentFile({ c, doc }: { c: Case; doc: CaseDocument }) {
           <div className="app-split">
             <section aria-labelledby="doc-text-title">
               <h2 className="govuk-heading-m govuk-!-margin-bottom-1" id="doc-text-title">
-                Text read from the document
+                {pdfPage ? "The document" : photoPages.length > 0 ? "The photos" : "Text read from the document"}
               </h2>
               <p className="govuk-body-s app-secondary-text">
-                Each numbered highlight is the sentence the check relied on for that requirement.
+                {pdfPage && pdfHasText !== false
+                  ? "Each numbered mark is the sentence the check relied on for that requirement."
+                  : pdfPage
+                    ? "A scanned document: the marks are shown on the text we read from it, below."
+                    : "Each numbered highlight is the sentence the check relied on for that requirement."}
               </p>
-              <DocumentText text={doc.text} elements={r.elements} />
+              {pdfPage && <PdfView url={pdfPage.url!} elements={r.elements} onTextLayer={setPdfHasText} />}
+              {photoPages.map((page) => (
+                <img key={page.filename} className="app-doc-photo" src={page.url} alt={`${page.filename}, as uploaded`} />
+              ))}
+              {pdfPage && pdfHasText !== false ? (
+                <Details summary="Text we read from the document">
+                  <DocumentText text={doc.text} elements={r.elements} />
+                </Details>
+              ) : (
+                <DocumentText text={doc.text} elements={r.elements} />
+              )}
               <HighlightKey />
             </section>
 

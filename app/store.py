@@ -59,6 +59,9 @@ CREATE TABLE IF NOT EXISTS documents (
   replaces_document_id TEXT, version INTEGER DEFAULT 1, status TEXT, verdict TEXT, result_json TEXT, error TEXT,
   text_quality TEXT, purged INTEGER DEFAULT 0, pages_json TEXT, text TEXT
 );
+CREATE TABLE IF NOT EXISTS document_files (
+  document_id TEXT, page INTEGER, media_type TEXT, data BLOB, PRIMARY KEY (document_id, page)
+);
 CREATE TABLE IF NOT EXISTS tracker_events (
   id TEXT PRIMARY KEY, case_id TEXT, event_type TEXT, applicant_text TEXT, solicitor_text TEXT,
   visible_to_applicant INTEGER DEFAULT 1, created_by TEXT, created_at TEXT
@@ -223,6 +226,7 @@ class Store:
         cutoff = iso_ago(self.text_ttl_seconds)
         with self._lock:
             cur = self.conn.execute("UPDATE documents SET text=NULL WHERE text IS NOT NULL AND uploaded_at < ?", (cutoff,))
+            self.conn.execute("DELETE FROM document_files WHERE document_id IN (SELECT id FROM documents WHERE uploaded_at < ?)", (cutoff,))
             n = cur.rowcount
             if n:
                 self.conn.commit()
@@ -241,12 +245,37 @@ class Store:
             docs = [d for d in docs if d["id"] not in replaced]
         return docs
 
+    def set_files(self, document_id: str, files: list[tuple[bytes, str]]) -> None:
+        """The uploaded pages as (bytes, media type), kept so the solicitor and caseworker can see
+        the letter itself with the check's marks on it. Held in memory and on the document's rows in
+        SQLite, so a restart does not lose them; gone with the text's expiry or the case's purge."""
+        item = self.docs.get(document_id)
+        if item is not None:
+            item.files = files
+        self._exec("DELETE FROM document_files WHERE document_id=?", (document_id,))
+        for i, (data, media_type) in enumerate(files):
+            self._exec("INSERT INTO document_files(document_id, page, media_type, data) VALUES (?,?,?,?)", (document_id, i, media_type, sqlite3.Binary(data)))
+
+    def files(self, document_id: str) -> list[tuple[bytes, str]] | None:
+        item = self.docs.get(document_id)
+        files = getattr(item, "files", None) if item else None
+        if files:
+            return files
+        rows = self._all("SELECT page, media_type, data FROM document_files WHERE document_id=? ORDER BY page", (document_id,))
+        if not rows:
+            return None
+        files = [(bytes(r["data"]), r["media_type"]) for r in rows]
+        if item is not None:
+            item.files = files
+        return files
+
     def purge_case_documents(self, case_id: str, actor: str) -> int:
         n = 0
         for d in self.list_documents(case_id):
             if self.docs.drop(d["id"]):
                 n += 1
             self._exec("UPDATE documents SET purged=1, text=NULL WHERE id=?", (d["id"],))
+            self._exec("DELETE FROM document_files WHERE document_id=?", (d["id"],))
         self.audit(actor, "documents.purge", case_id, {"count": n})
         return n
 

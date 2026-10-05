@@ -200,9 +200,9 @@ def client_state(result: dict | None) -> str | None:
 
 def _pages(store: Store, doc_id: str, pages: list[dict] | None, filename: str, base_url: str) -> list[dict]:
     pages = [dict(p) for p in (pages or [{"filename": filename, "contentType": content_type(filename)}])]
-    held = store.docs.get(doc_id)
-    if held and getattr(held, "files", None):
-        for i, p in enumerate(pages[: len(held.files)]):
+    files = store.files(doc_id)
+    if files:
+        for i, p in enumerate(pages[: len(files)]):
             p["url"] = f"{base_url}/web/documents/{doc_id}/file/{i}"
     return pages
 

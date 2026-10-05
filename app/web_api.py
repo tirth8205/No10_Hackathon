@@ -117,9 +117,7 @@ async def _ingest_files(files: list[UploadFile]) -> tuple[str, bool, list[tuple[
 def _add_document(case: dict, uploaded_by: str, text: str, needs: bool, held: list, pages: list[dict],
                   replaces: str | None, background: BackgroundTasks) -> dict:
     doc = store.add_document(case["id"], pages[0]["filename"], uploaded_by, None, held[0][0] if held else None, text, replaces, pages=pages)
-    item = store.docs.get(doc["id"])
-    if item is not None:
-        item.files = held
+    store.set_files(doc["id"], held)
     background.add_task(core.run_check, case, doc, text, needs, held if needs else None)
     return doc
 
@@ -363,9 +361,7 @@ async def inbox(request: Request, email: str = Form(""), files: list[UploadFile]
     for f in files:
         text, needs, held, pages = await _ingest_files([f])
         doc = store.add_document(c["id"], pages[0]["filename"], "inbox", None, held[0][0], text, None, pages=pages)
-        item = store.docs.get(doc["id"])
-        if item is not None:
-            item.files = held
+        store.set_files(doc["id"], held)
         await core.run_check(c, doc, text, needs, held if needs else None)  # inbox mode waits for the answer
         docs.append(webmap.to_document(store, store.get_document(doc["id"]), _base(request)))
     return {"email": email, "firm": firm, "caseId": c["id"], "documents": docs, "reply": _inbox_reply(firm, docs)}
@@ -424,7 +420,7 @@ def demo_state():
 @router.post("/demo/reset", status_code=202)
 async def demo_reset(background: BackgroundTasks):
     """Wipe everything and re-seed the scripted demo cases (cached model answers make this quick)."""
-    for table in ("cases", "documents", "tracker_events", "evidence_requests", "client_links", "submissions", "decisions", "audit"):
+    for table in ("cases", "documents", "document_files", "tracker_events", "evidence_requests", "client_links", "submissions", "decisions", "audit"):
         store._exec(f"DELETE FROM {table}")
     store.docs._items.clear()
 
@@ -439,10 +435,8 @@ async def demo_reset(background: BackgroundTasks):
             for fn, data, text, para, pages in iter_docs(spec):
                 needs = not (text or "").strip()
                 doc = store.add_document(case["id"], fn, "provider", para, data, text or "", pages=pages)
-                item = store.docs.get(doc["id"])
                 media = (pages[0].get("contentType") if pages else None) or "application/octet-stream"
-                if item is not None:
-                    item.files = [(data, media)]
+                store.set_files(doc["id"], [(data, media)])
                 await core.run_check(case, doc, text or "", needs, [(data, media)] if needs else None)
                 ids.append(doc["id"])
             if spec.get("submit"):
@@ -459,8 +453,7 @@ async def demo_reset(background: BackgroundTasks):
 # --------------------------------------------------------------------------- #
 @router.get("/documents/{document_id}/file/{page}")
 def document_file(document_id: str, page: int):
-    item = store.docs.get(document_id)
-    files = getattr(item, "files", None) if item else None
+    files = store.files(document_id)
     if not files or page >= len(files):
         raise HTTPException(410, "file no longer held")
     data, media_type = files[page]
