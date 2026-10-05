@@ -13,7 +13,8 @@ export function DemoBar() {
   useEffect(() => {
     demo().then(setState).catch(() => setState(null));
   }, [pathname]);
-  if (pathname.startsWith("/stage")) return null;
+  // Not on the stage itself, and not inside the stage's frames.
+  if (pathname.startsWith("/stage") || window.self !== window.top) return null;
   const persona = pathname.startsWith("/client") ? "client" : pathname.startsWith("/caseworker") ? "caseworker" : "provider";
   const item = (key: string, to: string, label: string) => (
     <Link
