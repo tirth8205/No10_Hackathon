@@ -1,13 +1,39 @@
+# secrets: the real key lives in .env only
+.env
+.env.*
+!.env.example
+
+# python
 .venv/
 __pycache__/
 *.pyc
-.env
 .pytest_cache/
-eval/results/*.json
-eval/results/*.log
+.mypy_cache/
+.ruff_cache/
+
+# local data: sqlite database and uploaded files are never committed
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+uploads/
+
+# evaluation runs: keep only the three result sets quoted in eval/RESULTS.md
+eval/results/*
 !eval/results/latest.json
 !eval/results/syn-v3-final.json
 !eval/results/style-v3.json
 !eval/results/gold-v3-final.json
-*.sqlite3
+!eval/results/failures.md
+
+# frontend
+node_modules/
+dist/
+build/
+.next/
+.cache/
+*.log
+
+# editors and OS
+.idea/
+.vscode/
 .DS_Store

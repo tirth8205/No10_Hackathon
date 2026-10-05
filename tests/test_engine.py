@@ -51,6 +51,14 @@ def test_multi_span_quotes_verify_fragment_by_fragment():
     c = check_quote(stitched, text)
     assert c.verified and c.multi and len(c.spans) == 3
     assert [text[a:b] for a, b in spans("Your application has been approved ... Secretary of State", text)] == ["Your application has been approved", "Secretary of State"]
+    # header lines are not split on the colon
+    doc = "IN THE FAMILY COURT SITTING AT NOTTINGHAM\nCase number: NO82P24707\nRe: Maya Walsh (Children Act 1989)\n\nApplicant: Zainab Clarke\nRespondent: Ryan Walsh\n\nORDER FOLLOWING FACT-FINDING HEARING"
+    c2 = check_quote("Applicant: Zainab Clarke\nRespondent: Ryan Walsh", doc)
+    assert c2.verified and c2.exact and len(c2.spans) == 1  # contiguous across the line break
+    assert check_quote("IN THE FAMILY COURT SITTING AT NOTTINGHAM\nCase number: NO82P24707", doc).verified
+    # a stitched quote with light paraphrase in each passage verifies fuzzily, not exactly
+    c3 = check_quote("Applicant: Zainab Clarke ... ORDER FOLLOWING FACT FINDING HEARING", doc)
+    assert c3.verified and not c3.exact
     # a fragment that is not in the text fails the whole quote
     assert not check_quote("Home Office - UK Visas and Immigration\n\nYour application was refused.", text).verified
 

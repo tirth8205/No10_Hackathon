@@ -16,7 +16,7 @@ from dataclasses import dataclass, field
 from rapidfuzz import fuzz
 
 _QUOTES = str.maketrans({"‘": "'", "’": "'", "“": '"', "”": '"', "–": "-", "—": "-", " ": " ", "…": "..."})
-_FRAGMENT_SPLIT = re.compile(r"\s*\.\.\.\s*|\n+|(?<=[.;:!?])\s+(?=[A-Z(\[\d])")
+_FRAGMENT_SPLIT = re.compile(r"\s*\.\.\.\s*|\n+|(?<=[.!?])\s+(?=[A-Z(\[\d])")  # never on ":" (header lines) or ";"
 MIN_FRAGMENT_TOKENS = 3
 
 
@@ -88,7 +88,14 @@ def check_quote(quote: str | None, text: str, fuzzy_threshold: int = 90) -> Quot
         return QuoteCheck(verified=True, exact=True, score=100.0, spans=found)
     if len(found) > 1:
         return QuoteCheck(verified=True, exact=True, score=100.0, multi=True, spans=found)
-    score = fuzz.partial_ratio(normalise(quote), normalise(text))
+    norm_text = normalise(text)
+    score = fuzz.partial_ratio(normalise(quote), norm_text)
     if score >= fuzzy_threshold:
         return QuoteCheck(verified=True, exact=False, score=float(score))
+    # a stitched quote where each passage is a close (not exact) match
+    fragments = [f for f in _FRAGMENT_SPLIT.split(quote.translate(_QUOTES)) if f and len(f.split()) >= MIN_FRAGMENT_TOKENS]
+    if len(fragments) >= 2:
+        scores = [fuzz.partial_ratio(normalise(f), norm_text) for f in fragments]
+        if min(scores) >= fuzzy_threshold:
+            return QuoteCheck(verified=True, exact=False, score=float(min(scores)), multi=True)
     return QuoteCheck(verified=False, exact=False, score=float(score))
