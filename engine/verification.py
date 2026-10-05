@@ -351,8 +351,11 @@ def _find_force(text: str) -> NamedForce | None:
     return max((f for f in found if f.pos == found[0].pos), key=lambda f: len(f.display))
 
 
+NOT_A_LOCAL_COUNCIL = re.compile(r"\b(medical|dental|midwifery|professions|legal|research|arts|sports|british|privy|security|press|advertising|film)\b", re.I)
+
+
 def _find_council(text: str) -> str | None:
-    m = COUNCIL_RE.search(text)
+    m = next((x for x in COUNCIL_RE.finditer(text) if not NOT_A_LOCAL_COUNCIL.search(x.group(0))), None)
     if not m:
         return None
     name = m.group(1).strip()

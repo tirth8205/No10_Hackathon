@@ -35,11 +35,15 @@ async def run_check(case: dict, doc: dict, text: str, needs_transcription: bool 
             parts = []
             for data, media_type in files:
                 tr = await llm.transcribe(data, media_type)
-                if tr.text.strip():
+                # a page the model could not read contributes nothing: the document then goes
+                # to a caseworker as illegible rather than being classified on noise
+                if tr.legible and tr.text.strip() and tr.text.strip() != "[unreadable]":
                     parts.append(tr.text)
             if parts:
                 text = "\n\n".join(parts)
                 store.set_document_text(doc["id"], text)
+            else:
+                text = ""
         # a scan or photo that yielded no text must go to a caseworker as illegible, not be classified as "not prescribed"
         ing = Ingested(text=text, kind="scan", needs_transcription=True) if needs_transcription else None
         res = await check_text(text, doc["filename"], application_for(case), rules=rules(), llm=llm,

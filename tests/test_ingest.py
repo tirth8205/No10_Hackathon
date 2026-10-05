@@ -211,3 +211,13 @@ def test_unsupported_upload_is_rejected_with_415(api):
     case = _new_case(api)
     r = api.post(f"/web/cases/{case['id']}/documents", files=[("files", ("letter.xyz", b"abc", "application/octet-stream"))])
     assert r.status_code == 415
+
+
+def test_empty_document_is_reported_as_unreadable_not_as_wrong_type():
+    import asyncio
+    from engine.llm import OfflineLLM
+    from engine.models import Application
+    from engine.pipeline import check_text
+
+    res = asyncio.run(check_text("", "empty.txt", Application(applicant_name="Jane Doe"), llm=OfflineLLM(), votes=1))
+    assert res.verdict == "needs_caseworker" and "illegible" in res.flags and "another photo" in res.client_message

@@ -94,9 +94,14 @@ async def check_text(text: str, filename: str, application: Application, *, rule
         kw["latency_ms"] = int((time.perf_counter() - t0) * 1000)
         return DocumentResult(**base, **kw)
 
-    if ingested is not None and ingested.needs_transcription and not text.strip():
+    if not text.strip() and (ingested is None or ingested.needs_transcription or ingested.kind in ("image", "pdf", "scan")):
         return finish(verdict="needs_caseworker", flags=[FLAG_ILLEGIBLE],
                       provider_summary="The document could not be read. Ask for a clearer copy.",
+                      client_message=outputs.client_message("needs_caseworker", illegible=True))
+
+    if not text.strip():
+        return finish(verdict="needs_caseworker", flags=[FLAG_ILLEGIBLE],
+                      provider_summary="The document contains no readable text. Ask for a clearer copy.",
                       client_message=outputs.client_message("needs_caseworker", illegible=True))
 
     try:

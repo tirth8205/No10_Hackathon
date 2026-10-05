@@ -50,6 +50,7 @@ class NewCase(BaseModel):
     caseType: str = "Child arrangements"
     askLabel: str = "Letter from your support worker"
     firm: str | None = None
+    applicationDate: str | None = Field(default=None, description="ISO date; defaults to today (the application is being made now)")
 
 
 class CaseUpdate(BaseModel):
@@ -73,6 +74,12 @@ class DecisionIn(BaseModel):
     note: str = ""
     caseworker: str = "caseworker"
     submissionId: str | None = None  # exactly this submission; otherwise the case's latest submitted one
+
+
+def _today() -> str:
+    from datetime import date
+
+    return date.today().isoformat()
 
 
 def _case(case_id: str) -> dict:
@@ -128,7 +135,7 @@ def list_cases(request: Request):
 @router.post("/cases", status_code=201)
 def create_case(body: NewCase, request: Request):
     c = store.create_case(body.applicantName, body.otherPartyName or None, body.caseType, "provider", work_type="licensed",
-                          firm_name=body.firm or "Demo Family Law LLP", ask_label=body.askLabel)
+                          firm_name=body.firm or "Demo Family Law LLP", ask_label=body.askLabel, application_date=body.applicationDate or _today())
     store.create_client_link(c["id"], 7)
     return webmap.case_with_documents(store, c, base_url=_base(request))
 
@@ -137,7 +144,7 @@ def create_case(body: NewCase, request: Request):
 async def case_from_letter(request: Request, background: BackgroundTasks, files: list[UploadFile] = File(...), firm: str | None = Form(None)):
     text, needs, held, pages = await _ingest_files(files)
     c = store.create_case("", None, "Child arrangements", "provider", work_type="licensed", firm_name=firm or "Demo Family Law LLP",
-                          ask_label="Letter from your support worker")
+                          ask_label="Letter from your support worker", application_date=_today())
     doc = _add_document(c, "provider", text, needs, held, pages, None, background)
     out = webmap.case_with_documents(store, c, base_url=_base(request))
     out["documentId"] = doc["id"]

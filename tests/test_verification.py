@@ -645,3 +645,10 @@ def test_live_postcodes_io_metropolitan_police():
     assert "Metropolitan Police" in pfa  # postcodes.io returns "Metropolitan Police"
     assert v._forces_match("Metropolitan Police Service", pfa)
     assert data["result"]["admin_district"] == "Westminster"
+
+
+def test_general_medical_council_is_not_a_local_council():
+    from engine.verification import _find_council
+
+    assert _find_council("I am registered with the General Medical Council (GMC number 7106698). Northfield Surgery, Sheffield S1 2HH") is None
+    assert _find_council("Housing Options, Westmoor City Council, 1 High Street") == "Westmoor City"
