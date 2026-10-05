@@ -433,7 +433,8 @@ async def demo_reset(background: BackgroundTasks):
 
         for spec in CASES:
             case = store.create_case(spec["applicant_name"], spec["other_party_name"], spec["case_type"], "provider", work_type=spec["work_type"],
-                                     firm_name="Hartley & Webb Solicitors", ask_label=spec.get("ask_label", "Letter from your support worker"))
+                                     firm_name="Hartley & Webb Solicitors", ask_label=spec.get("ask_label", "Letter from your support worker"),
+                                     application_date=_today())
             ids = []
             for fn, data, text, para, pages in iter_docs(spec):
                 needs = not (text or "").strip()
@@ -449,8 +450,10 @@ async def demo_reset(background: BackgroundTasks):
                 await core.laa_check(sub)
         write_corrected_letter()
 
+    from demo.seed_demo import CASES
+
     background.add_task(seed)
-    return {"ok": True, "expected_cases": 7}
+    return {"ok": True, "expected_cases": len(CASES)}
 
 
 # --------------------------------------------------------------------------- #

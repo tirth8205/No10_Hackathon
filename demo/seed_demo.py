@@ -26,6 +26,7 @@ import asyncio
 import json
 import mimetypes
 import time
+from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -209,7 +210,8 @@ def direct() -> None:
     async def go():
         for spec in CASES:
             case = store.create_case(spec["applicant_name"], spec["other_party_name"], spec["case_type"], "provider", work_type=spec["work_type"],
-                                     firm_name=FIRM, ask_label=spec.get("ask_label", "Letter from your support worker"))
+                                     firm_name=FIRM, ask_label=spec.get("ask_label", "Letter from your support worker"),
+                                     application_date=date.today().isoformat())
             ids = []
             for fn, data, text, para, pages in iter_docs(spec):
                 doc = store.add_document(case["id"], fn, "provider", para, data, text, pages=pages)
