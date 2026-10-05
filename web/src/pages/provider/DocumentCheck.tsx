@@ -10,7 +10,7 @@ import { dayMonth, when } from "../../lib/dates";
 import { documentTitle } from "../../lib/evidence";
 import { docVerdict, paraOf } from "../../lib/labels";
 import { firstName, requestLetter } from "../../lib/outputs";
-import type { Case, CaseDocument } from "../../lib/types";
+import type { Case, CaseDocument, DocumentChanges } from "../../lib/types";
 import { paths } from "../../paths";
 
 export interface DocumentCheckProps {
@@ -19,6 +19,79 @@ export interface DocumentCheckProps {
   /** A newer version of the same letter, if one has arrived. */
   replacedBy?: CaseDocument | null;
   onUploadCorrected: (files: File[]) => void;
+}
+
+const statusWord: Record<string, string> = { met: "Included", not_met: "Missing", unclear: "Unclear" };
+
+/** Did the corrected letter address what was asked? A requirement-by-requirement comparison with the
+ *  letter it replaces: what is now covered (with the new passage), what is still missing, anything lost. */
+function WhatChanged({ c, changes }: { c: Case; changes: DocumentChanges }) {
+  const { resolved, remaining, newGaps, stillMet } = changes;
+  const clean = remaining.length === 0 && newGaps.length === 0;
+  const title =
+    resolved.length === 0
+      ? "The corrected letter has not added what was asked for"
+      : clean
+        ? resolved.length === 1
+          ? "The missing detail has been added"
+          : `The ${resolved.length} missing details have been added`
+        : "What the corrected letter changed";
+  const others = [
+    stillMet > 0 ? `${stillMet} other requirement${stillMet === 1 ? " remains" : "s remain"} met.` : null,
+    newGaps.length === 0 ? "No new gaps were found." : null,
+  ]
+    .filter(Boolean)
+    .join(" ");
+  return (
+    <div
+      className={`govuk-notification-banner${clean && resolved.length > 0 ? " govuk-notification-banner--success" : ""}`}
+      role="region"
+      aria-labelledby="what-changed-title"
+      data-module="govuk-notification-banner"
+    >
+      <div className="govuk-notification-banner__header">
+        <h2 className="govuk-notification-banner__title" id="what-changed-title">
+          Compared with the previous letter
+        </h2>
+      </div>
+      <div className="govuk-notification-banner__content">
+        <h3 className="govuk-notification-banner__heading">{title}</h3>
+        {resolved.map((e) => (
+          <div key={e.key} className="govuk-!-margin-bottom-3">
+            <p className="govuk-body govuk-!-margin-bottom-1">
+              <strong>{e.label}:</strong> {statusWord[e.before] ?? e.before} → Included
+            </p>
+            {e.beforeQuote && (
+              <p className="govuk-body-s govuk-!-margin-bottom-1">
+                <span className="app-secondary-text">Previous letter:</span> “{e.beforeQuote}”
+              </p>
+            )}
+            {e.quote && (
+              <p className="govuk-body-s govuk-!-margin-bottom-0">
+                <span className="app-secondary-text">Updated letter:</span> “{e.quote}”
+              </p>
+            )}
+          </div>
+        ))}
+        {remaining.length > 0 && (
+          <p className="govuk-body">
+            <strong>Still {remaining.length === 1 ? "missing" : "missing or unclear"}:</strong> {remaining.map((e) => e.label.toLowerCase()).join("; ")}.
+          </p>
+        )}
+        {newGaps.map((e) => (
+          <p className="govuk-body" key={e.key}>
+            <strong>No longer covered:</strong> {e.label.toLowerCase()}. {e.explanation}
+          </p>
+        ))}
+        {others && <p className="govuk-body">{others}</p>}
+        <p className="govuk-body govuk-!-margin-bottom-0">
+          <Link className="govuk-link" to={paths.caseDocument(c.id, changes.previousDocumentId)}>
+            See the previous letter
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
 }
 
 /** One document's check: the fix, the drafted request, and every requirement. */
@@ -69,6 +142,8 @@ export function DocumentCheck({ c, doc, replacedBy, onUploadCorrected }: Documen
           </Link>
         </InsetText>
       )}
+
+      {r && doc.changes && <WhatChanged c={c} changes={doc.changes} />}
 
       {!r && (
         <p className="govuk-body-l" role="status">

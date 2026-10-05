@@ -73,7 +73,7 @@ def test_case_and_documents_from_store():
     assert case["clientToken"] and case["tokenExpiresAt"] and case["askLabel"] == "Letter from your GP"
     assert case["submissionId"] is None and "laaCheck" not in case          # nothing submitted yet; the LAA's check never crosses back to link 1
     assert case["selectedDocumentIds"] == [d2["id"]] and case["selectionTouched"] is False   # default: latest passing document
-    assert set(docs[0]) == {"id", "caseId", "pages", "text", "uploadedBy", "uploadedAt", "result"}
+    assert set(docs[0]) == {"id", "caseId", "pages", "text", "uploadedBy", "uploadedAt", "result", "replacesDocumentId", "changes"}
     assert docs[0]["pages"][1]["filename"] == "refuge (2).jpg" and docs[0]["text"] == "text one"
     store.set_selection(c["id"], [d1["id"]], "provider")
     case2 = webmap.case_with_documents(store, store.get_case(c["id"]))["case"]
@@ -234,3 +234,20 @@ def test_document_text_expires_after_the_ttl_and_only_the_snapshot_keeps_it():
     store._exec("UPDATE documents SET uploaded_at=? WHERE id=?", (iso_ago(601), fresh["id"]))
     store.docs.sweep()
     assert store._one("SELECT text FROM documents WHERE id=?", (fresh["id"],))["text"] is None
+
+
+def test_corrected_letter_is_compared_requirement_by_requirement():
+    """Did the new letter add what was asked? Resolved, remaining and new gaps from the two stored results, no model call."""
+    el = lambda key, status, quote=None, label=None: {"key": key, "label": label or key.replace("_", " "), "status": status, "quote": quote, "explanation": "why"}
+    prev = {"matchedPara": "17", "rulesVersion": "v1", "elements": [el("author", "met", "I am"), el("specific_matters", "not_met", "Victim testimony and referral."), el("judgement", "met", "In my view"), el("named", "unclear")]}
+    cur = {"matchedPara": "17", "rulesVersion": "v1", "elements": [el("author", "met", "I am"), el("specific_matters", "met", "I base this on the injuries I saw."), el("judgement", "not_met"), el("named", "unclear")]}
+    ch = webmap.compare_results(prev, cur, "prev1")
+    assert ch["previousDocumentId"] == "prev1" and ch["stillMet"] == 1
+    assert [r["key"] for r in ch["resolved"]] == ["specific_matters"]
+    assert ch["resolved"][0]["before"] == "not_met" and ch["resolved"][0]["beforeQuote"] == "Victim testimony and referral." and "injuries" in ch["resolved"][0]["quote"]
+    assert [r["key"] for r in ch["remaining"]] == ["named"]
+    assert [r["key"] for r in ch["newGaps"]] == ["judgement"]
+    # different paragraph or rules: the keys do not line up, so nothing is claimed
+    assert webmap.compare_results({**prev, "matchedPara": "18"}, cur, "p") is None
+    assert webmap.compare_results({**prev, "rulesVersion": "v0"}, cur, "p") is None
+    assert webmap.compare_results(prev, {**cur, "elements": []}, "p") is None

@@ -76,6 +76,34 @@ export interface CaseDocument {
   uploadedAt: string;
   /** Null while the check is running. */
   result: CheckResult | null;
+  /** The letter this one replaces, when it was uploaded as a corrected version (the back end adds it). */
+  replacesDocumentId?: string | null;
+  /** What changed against the letter it replaces, requirement by requirement. Null when the two
+   *  were checked against different paragraphs or rule versions, so they cannot be compared. */
+  changes?: DocumentChanges | null;
+}
+
+export interface ResolvedRequirement {
+  key: string;
+  label: string;
+  /** The status in the previous letter. */
+  before: ElementStatus;
+  /** The problem wording in the previous letter, if there was one. */
+  beforeQuote: string | null;
+  /** The passage in the corrected letter that now covers it. */
+  quote: string | null;
+}
+
+export interface DocumentChanges {
+  previousDocumentId: string;
+  /** Gaps in the previous letter that the corrected letter covers. */
+  resolved: ResolvedRequirement[];
+  /** Gaps the corrected letter still has. */
+  remaining: { key: string; label: string; status: ElementStatus }[];
+  /** Requirements the previous letter met that the corrected letter no longer does. */
+  newGaps: { key: string; label: string; status: ElementStatus; explanation: string }[];
+  /** Requirements met in both letters. */
+  stillMet: number;
 }
 
 export interface Decision {

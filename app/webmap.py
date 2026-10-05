@@ -233,8 +233,42 @@ def to_document(store: Store, d: dict, base_url: str = "", role: str = "provider
         result = error_result(d.get("error") or "error", role)
     else:
         result = None
-    return _document(d["id"], d["case_id"], _pages(store, d["id"], d.get("pages"), d["filename"], base_url), text,
-                     d["uploaded_by"], d["uploaded_at"], result, role)
+    out = _document(d["id"], d["case_id"], _pages(store, d["id"], d.get("pages"), d["filename"], base_url), text,
+                    d["uploaded_by"], d["uploaded_at"], result, role)
+    if role != "client":
+        # A corrected letter is compared with the one it replaces, so the solicitor can see
+        # whether it added what was asked for. The client gets the simple result only.
+        prev_id = d.get("replaces_document_id")
+        out["replacesDocumentId"] = prev_id
+        out["changes"] = None
+        prev = store.get_document(prev_id) if prev_id else None
+        if result and prev and prev.get("status") == "done" and prev.get("result"):
+            out["changes"] = compare_results(_result_for(prev["result"], store.document_text(prev_id) or "", role), result, prev_id)
+    return out
+
+
+def compare_results(prev: dict | None, cur: dict | None, previous_document_id: str) -> dict | None:
+    """What a corrected letter changed, requirement by requirement, from the two stored results.
+    No model call. None when the letters were checked against different paragraphs or rule
+    versions: then the requirement keys do not line up and nothing is claimed."""
+    if not prev or not cur or not cur.get("elements"):
+        return None
+    if prev.get("matchedPara") != cur.get("matchedPara") or prev.get("rulesVersion") != cur.get("rulesVersion"):
+        return None
+    before = {e["key"]: e for e in prev.get("elements", [])}
+    resolved, remaining, new_gaps, still_met = [], [], [], 0
+    for e in cur["elements"]:
+        b = before.get(e["key"])
+        was_met = b is None or b["status"] == "met"
+        if e["status"] == "met" and was_met:
+            still_met += 1
+        elif e["status"] == "met":
+            resolved.append({"key": e["key"], "label": e["label"], "before": b["status"], "beforeQuote": b.get("quote"), "quote": e.get("quote")})
+        elif was_met and b is not None:
+            new_gaps.append({"key": e["key"], "label": e["label"], "status": e["status"], "explanation": e.get("explanation") or ""})
+        else:
+            remaining.append({"key": e["key"], "label": e["label"], "status": e["status"]})
+    return {"previousDocumentId": previous_document_id, "resolved": resolved, "remaining": remaining, "newGaps": new_gaps, "stillMet": still_met}
 
 
 def _anchor_quotes(result: dict, text: str) -> None:

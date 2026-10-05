@@ -276,8 +276,10 @@ export function DocumentCheckRoute() {
         replacedBy={newest && newest.id !== doc.id ? newest : null}
         onUploadCorrected={(files) =>
           void act.run(async () => {
-            await api.addDocument(caseId, files, { replaces: docId });
-            navigate(paths.caseEvidence(caseId));
+            // Straight to the corrected letter's own page: it polls while the check runs, then
+            // shows what the new letter changed against this one.
+            const added = await api.addDocument(caseId, files, { replaces: docId });
+            navigate(added?.id ? paths.caseDocument(caseId, added.id) : paths.caseEvidence(caseId));
           })
         }
       />
