@@ -62,7 +62,7 @@ def test_text_layer_pdf_does_not_need_the_model():
     assert not ing.needs_transcription and "refused admission to a refuge" in ing.text
 
 
-@pytest.mark.skipif(not (shutil.which("textutil") or shutil.which("soffice")), reason="no .doc converter on this machine")
+@pytest.mark.skipif(not (shutil.which("textutil") or shutil.which("antiword") or shutil.which("soffice")), reason="no .doc converter on this machine")
 def test_word_97_doc_is_converted(tmp_path):
     src = tmp_path / "letter.txt"
     src.write_text("I can confirm that Jane Doe was refused admission to a refuge on 28th September 2026.")

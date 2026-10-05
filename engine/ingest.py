@@ -111,6 +111,10 @@ def _doc(data: bytes) -> Ingested:
             r = subprocess.run(["textutil", "-convert", "txt", "-stdout", str(src)], capture_output=True, timeout=30)
             if r.returncode == 0 and r.stdout.strip():
                 return Ingested(text=_decode(r.stdout), kind="doc")
+        if shutil.which("antiword"):  # small converter, present in the Docker image
+            r = subprocess.run(["antiword", str(src)], capture_output=True, timeout=30)
+            if r.returncode == 0 and r.stdout.strip():
+                return Ingested(text=_decode(r.stdout), kind="doc")
         if shutil.which("soffice"):
             subprocess.run(["soffice", "--headless", "--convert-to", "txt:Text", "--outdir", tmp, str(src)], capture_output=True, timeout=90)
             out = Path(tmp) / "upload.txt"

@@ -22,12 +22,29 @@ from pathlib import Path
 
 from engine.llm import get_llm
 from engine.models import Application
-from engine.pipeline import check_text
+from engine.pipeline import check_document, check_text
 from engine.rules import load_rules
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = {"synthetic": ROOT / "data" / "synthetic_cases.json", "gold": ROOT / "data" / "moj_gold_cases.json",
         "style": ROOT / "data" / "style_shift_cases.json"}
+GOLD_PDF_MANIFEST = ROOT / "data" / "moj_gold_pdfs" / "manifest.json"
+
+
+def gold_pdf_cases() -> list[dict]:
+    """The 12 MoJ letters as PDFs (digital with a text layer, scanned images only), from scripts/make_gold_pdfs.py."""
+    m = json.load(open(GOLD_PDF_MANIFEST))
+    cases = []
+    for c in m["cases"]:
+        for kind, f in c["files"].items():
+            cases.append({
+                "id": f"{c['case_id']}-{kind}", "source": "moj_gold_pdfs", "category": kind, "application": c["application"],
+                "documents": [{"doc_id": "D1", "claimed_para": c["claimed_para"], "file": str(GOLD_PDF_MANIFEST.parent / f["path"]),
+                               "expected": {"outcome": c["expected_outcome"], "elements": {k: {"status": v} for k, v in c["expected_elements"].items()},
+                                            "reason": c.get("expected_reason"), "recategorise_to": None}}],
+                "expected_overall": c["expected_overall"],
+            })
+    return cases
 RESULTS = ROOT / "eval" / "results"
 
 OUTCOME = {"pass": "meets", "fail": "needs_change", "refer": "needs_caseworker"}
@@ -35,10 +52,13 @@ STATUS = {"met": "included", "not_met": "missing", "unclear": "unclear"}
 
 
 def load_cases(which: str, paras: list[str] | None, limit: int | None, ids: list[str] | None) -> list[dict]:
-    files = [DATA["synthetic"], DATA["gold"]] if which == "both" else [DATA[which]]
-    cases = []
-    for f in files:
-        cases += json.load(open(f))["cases"]
+    if which == "gold-pdf":
+        cases = gold_pdf_cases()
+    else:
+        files = [DATA["synthetic"], DATA["gold"]] if which == "both" else [DATA[which]]
+        cases = []
+        for f in files:
+            cases += json.load(open(f))["cases"]
     if ids:
         cases = [c for c in cases if c["id"] in set(ids)]
     if paras:
@@ -55,8 +75,14 @@ async def run_case(case: dict, rules, llm, votes: int, sem: asyncio.Semaphore) -
         async with sem:
             t0 = time.perf_counter()
             try:
-                res = await check_text(d["text"], f"{case['id']}-{d['doc_id']}.txt", app, rules=rules, llm=llm, votes=votes,
-                                       claimed_para=d["claimed_para"], document_id=d["doc_id"])
+                if d.get("file"):
+                    from pathlib import Path as _P
+
+                    res = await check_document(_P(d["file"]).read_bytes(), _P(d["file"]).name, app, rules=rules, llm=llm, votes=votes,
+                                               claimed_para=d["claimed_para"], document_id=d["doc_id"])
+                else:
+                    res = await check_text(d["text"], f"{case['id']}-{d['doc_id']}.txt", app, rules=rules, llm=llm, votes=votes,
+                                           claimed_para=d["claimed_para"], document_id=d["doc_id"])
                 err = None
             except Exception as e:  # keep going; record the failure
                 res, err = None, f"{type(e).__name__}: {e}"
@@ -159,7 +185,7 @@ def failures_md(runs: list[dict]) -> str:
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--set", choices=["synthetic", "gold", "style", "both"], default="synthetic")
+    ap.add_argument("--set", choices=["synthetic", "gold", "style", "gold-pdf", "both"], default="synthetic")
     ap.add_argument("--votes", type=int, default=None)
     ap.add_argument("--para", nargs="*")
     ap.add_argument("--ids", nargs="*")
