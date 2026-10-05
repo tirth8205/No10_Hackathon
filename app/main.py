@@ -24,7 +24,7 @@ from engine.llm import get_llm
 from engine.models import Application
 from engine.pipeline import check_text
 from engine.rules import RuleLoadError, RuleSet, load_rules
-from engine.verify import locate
+from engine.verify import spans
 
 app = FastAPI(title="Gateway Check API", version="0.1.0",
               description="Checks domestic abuse evidence for legal aid against Schedule 1. Prototype: synthetic data only.")
@@ -497,9 +497,8 @@ def _highlights(d: dict, text: str | None = None) -> list[dict]:
     out = []
     for e in d["result"].get("elements", []):
         if e.get("quote") and e.get("status") == "included":
-            span = locate(e["quote"], text)
-            if span:
-                out.append({"element_id": e["element_id"], "start": span[0], "end": span[1]})
+            for start, end in spans(e["quote"], text):
+                out.append({"element_id": e["element_id"], "start": start, "end": end})
     return out
 
 

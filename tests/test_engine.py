@@ -43,6 +43,18 @@ def test_quote_verification_exact_fuzzy_and_missing():
     assert locate("Jane Doe", text) == (19, 27)
 
 
+def test_multi_span_quotes_verify_fragment_by_fragment():
+    from engine.verify import spans
+
+    text = "Home Office – UK Visas and Immigration\n\nDear Jane,\n\nYour application has been approved.\n\nUK Visas and Immigration\nOn behalf of the Secretary of State"
+    stitched = "Home Office - UK Visas and Immigration\n\nUK Visas and Immigration\nOn behalf of the Secretary of State"
+    c = check_quote(stitched, text)
+    assert c.verified and c.multi and len(c.spans) == 3
+    assert [text[a:b] for a, b in spans("Your application has been approved ... Secretary of State", text)] == ["Your application has been approved", "Secretary of State"]
+    # a fragment that is not in the text fails the whole quote
+    assert not check_quote("Home Office - UK Visas and Immigration\n\nYour application was refused.", text).verified
+
+
 def test_name_matching_levels():
     t = RULES.gateway.name_match_threshold
     assert aggregate.name_match("Ms Jane Doe", "Jane Doe", t) == "exact"

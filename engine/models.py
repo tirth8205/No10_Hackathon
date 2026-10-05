@@ -123,6 +123,7 @@ class CaseResult(BaseModel):
 # Flags used across the engine. Keep in one place so the UI can map them to copy.
 FLAG_QUOTE_NOT_FOUND = "quote_not_found"
 FLAG_QUOTE_FUZZY = "quote_fuzzy_match"
+FLAG_QUOTE_MULTI = "quote_multi_span"
 FLAG_VOTE_DISAGREEMENT = "vote_disagreement"
 FLAG_HEDGE = "hedge"
 FLAG_INJECTION = "injection"

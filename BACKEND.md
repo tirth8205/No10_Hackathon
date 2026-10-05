@@ -25,7 +25,7 @@ Eval: `.venv/bin/python -m eval.run_eval --set synthetic` (143 cases); `--set go
 | Element status | `included` · `missing` · `unclear` |
 | Document verdict | `meets` · `needs_change` · `needs_caseworker` · `not_prescribed` |
 | Case verdict | `meets` · `needs_change` · `needs_caseworker` · `no_evidence_yet` |
-| Flags | `quote_not_found` `quote_fuzzy_match` `vote_disagreement` `hedge` `injection` `non_english` `name_mismatch` `victim_name_mismatch` `classification_low_confidence` `model_refusal` `illegible` `unfilled_placeholder` |
+| Flags | `quote_not_found` `quote_fuzzy_match` `quote_multi_span` `vote_disagreement` `hedge` `injection` `non_english` `name_mismatch` `victim_name_mismatch` `classification_low_confidence` `model_refusal` `illegible` `unfilled_placeholder` |
 
 Suggested labels: Meets the requirements (green) · Needs a change (yellow) · Needs a caseworker check (blue) · Not an accepted evidence type (grey). Never show "rejected", "fail" or "approved" to the applicant.
 

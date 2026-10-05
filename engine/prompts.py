@@ -16,7 +16,7 @@ Rules:
 - Reported facts are not hedges: "I understand that he remains on bail", "the police confirmed that" or "I can confirm that" state a fact. Hedging means uncertainty about the judgement or confirmation itself ("might be", "may be", "possibly", "could be").
 - Assess what the document shows on its face. Whether a letterhead, email address, registration number or signature is genuine is checked separately by a person; do not mark an element unclear only because its source "cannot be verified". Use unclear when the document itself does not say enough to decide.
 - Typos, informal wording and unfilled template placeholders in sentences that do not carry a requirement do not count against the document.
-- For every element you mark included, copy the exact sentence or phrase from the document as the quote, verbatim, character for character. If you cannot quote it, it is not included.
+- For every element you mark included, copy the exact sentence or phrase from the document as the quote, verbatim, character for character. Quote one continuous passage; if the evidence sits in two places, give both passages separated by " ... ". Never paraphrase inside a quote. If you cannot quote it, it is not included.
 - If the document is ambiguous or illegible, or you are unsure, use unclear. Do not guess.
 - Keep reasoning to at most two sentences, in plain British English."""
 

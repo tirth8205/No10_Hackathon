@@ -17,6 +17,7 @@ from engine.models import (
     FLAG_NON_ENGLISH,
     FLAG_PLACEHOLDER,
     FLAG_QUOTE_FUZZY,
+    FLAG_QUOTE_MULTI,
     FLAG_QUOTE_NOT_FOUND,
     FLAG_VICTIM_MISMATCH,
     FLAG_VOTE_DISAGREEMENT,
@@ -96,6 +97,8 @@ def verify_quotes(elements: list[ElementResult], text: str, gateway: Gateway) ->
                 flags.append(FLAG_QUOTE_NOT_FOUND)
         elif not check.exact and FLAG_QUOTE_FUZZY not in flags:
             flags.append(FLAG_QUOTE_FUZZY)
+        elif check.multi and FLAG_QUOTE_MULTI not in flags:
+            flags.append(FLAG_QUOTE_MULTI)
     return flags
 
 
