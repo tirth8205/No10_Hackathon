@@ -167,3 +167,4 @@ FLAG_REFUSAL = "model_refusal"
 FLAG_MODEL_ERROR = "model_error"  # fewer than half the votes completed, so the check is not reliable
 FLAG_ILLEGIBLE = "illegible"
 FLAG_PLACEHOLDER = "unfilled_placeholder"
+FLAG_DISCRETION = "caseworker_decides"  # the rule itself sends this evidence type to a person (paragraph 21)

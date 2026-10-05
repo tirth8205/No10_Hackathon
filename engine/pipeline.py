@@ -14,6 +14,7 @@ from engine.ingest import Ingested, ingest
 from engine.llm import LLM, RefusalError, get_llm
 from engine.models import (
     FLAG_ILLEGIBLE,
+    FLAG_DISCRETION,
     FLAG_MODEL_ERROR,
     FLAG_REFUSAL,
     NOT_PRESCRIBED,
@@ -74,6 +75,8 @@ def _assemble(text: str, rule: Rule, votes: list[Assessment], classification: Cl
         if f not in flags:
             flags.append(f)
     verdict = aggregate.decide(elements, classification, rule, flags, severity)
+    if rule.always_needs_caseworker:
+        flags.append(FLAG_DISCRETION)  # so the queue says why: not a gap in the letter, the rule itself
     return elements, list(dict.fromkeys(flags)), verdict, name_check
 
 

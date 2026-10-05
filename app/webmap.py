@@ -45,6 +45,7 @@ FLAG_TEXT = {
     "model_error": "The check could not be completed reliably; some model assessments failed",
     "illegible": "Document could not be read",
     "unfilled_placeholder": "Template placeholder left unfilled",
+    "caseworker_decides": "Always a caseworker's decision for this evidence type (Director's discretion)",
     "quote_not_found": "A quoted passage could not be found in the document",
     "quote_fuzzy_match": "A quote matched approximately, not word for word",
     "quote_multi_span": "A quote joins passages from different parts of the document",
