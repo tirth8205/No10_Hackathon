@@ -105,4 +105,5 @@ def test_two_page_photo_through_the_web_api(api):
     for e in met:
         assert e["quote"] and e["quote"] in d["text"], e
     judgement = next(e for e in res["elements"] if e["key"] == "consistent_with_domestic_abuse")
-    assert judgement["status"] == "not_met" and judgement["quote"] is None, judgement
+    # a missing requirement carries no quote, or the problem wording itself, which must be in the text
+    assert judgement["status"] == "not_met" and (judgement["quote"] is None or judgement["quote"] in d["text"]), judgement

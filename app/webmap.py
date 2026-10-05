@@ -176,6 +176,16 @@ def _anchor_quotes(result: dict, text: str) -> None:
 
     for e in result["elements"]:
         q = e.get("quote")
+        if not q and e["status"] != "met":
+            # The problem wording, if the explanation quotes it ("Victim testimony and referral"),
+            # so the document view can mark the sentence that needs to change.
+            for m in re.finditer(r"[\"\u201c']([^\"\u201d']{6,160})[\"\u201d']", e.get("explanation") or ""):
+                found = spans(m.group(1), text)
+                if found:
+                    a, b = found[0]
+                    e["quote"] = text[a:b]
+                    break
+            continue
         if not q or q in text:
             continue
         found = spans(q, text)

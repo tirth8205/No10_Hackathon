@@ -93,3 +93,16 @@ def test_quotes_are_anchored_to_the_document_text_for_highlighting():
     doc = webmap.to_document(store, store.get_document(d["id"]))
     q = doc["result"]["elements"][0]["quote"]
     assert q in doc["text"] and q == "Home Office \u2013 UK Visas and Immigration"
+
+
+def test_missing_element_gets_the_problem_wording_from_its_explanation():
+    store = Store(os.path.join(tempfile.mkdtemp(), "t.sqlite3"))
+    c = store.create_case("Jane Doe", None, "Child arrangements", "provider")
+    text = "In my reasonable professional judgement Jane Doe is a victim.\n\nThe matter I have relied upon to support that judgements are: Victim testimony and referral.\n\nWe have provided support."
+    d = store.add_document(c["id"], "s.txt", "provider", None, None, text)
+    res = {**RESULT, "elements": [{**RESULT["elements"][0], "element_id": "specific_matters", "quote": None,
+           "reasoning": "\u201cVictim testimony and referral\u201d gives only sources of information, not the specific matters relied on."}], "flags": []}
+    store.set_document_result(d["id"], res)
+    doc = webmap.to_document(store, store.get_document(d["id"]))
+    e = doc["result"]["elements"][0]
+    assert e["status"] == "not_met" and e["quote"] == "Victim testimony and referral" and e["quote"] in doc["text"]
