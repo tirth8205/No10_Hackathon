@@ -48,7 +48,8 @@ export function ProviderCases({ firm, cases, onDropLetter, firstTimeRight }: Pro
   useTitle("Cases – Gateway Check");
   const rows = [...cases]
     .map((data) => ({ data, verdict: caseVerdict(data.documents.map((d) => d.result)) }))
-    .sort((a, b) => ORDER.indexOf(a.verdict.key) - ORDER.indexOf(b.verdict.key));
+    // Cases that need the solicitor first; within a group, the most recently updated at the top.
+    .sort((a, b) => ORDER.indexOf(a.verdict.key) - ORDER.indexOf(b.verdict.key) || lastUpdated(b.data).localeCompare(lastUpdated(a.data)));
 
   return (
     <ProviderLayout firm={firm}>
