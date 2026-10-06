@@ -237,8 +237,8 @@ def closing_slide(prs, spec, number, tmpdir):
         # "Try it live": the code at the right, its label and the address underneath.
         left = MARGIN + CONTENT_W - QR_SIZE
         slide.shapes.add_picture(qr_image(qr["url"], tmpdir), px(left), px(body_top + 15), px(QR_SIZE), px(QR_SIZE))
-        text(slide, left - 120, body_top + 15 + QR_SIZE + 10, QR_SIZE + 240, 110,
-             [qr.get("label", "Try it live"), qr["url"].replace("https://", "")], 20, GREY, align=PP_ALIGN.CENTER)
+        text(slide, left - 120, body_top + 15 + QR_SIZE + 10, QR_SIZE + 120, 110,
+             [qr.get("label", "Try it live"), qr["url"].replace("https://", "")], 18, GREY, align=PP_ALIGN.CENTER)
 
 
 def build(manifest, out_path, mode):
