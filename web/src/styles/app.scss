@@ -661,3 +661,57 @@ $app-light-grey: govuk.govuk-colour("black", $variant: "tint-95");
 .app-split > .app-split__findings {
   flex: 2 1 360px;
 }
+
+// Demo view switcher: a thin black strip above the GOV.UK header, in the GOV.UK font,
+// with the current persona in bold. Only shown when a page is opened directly.
+.app-demo-bar {
+  @include govuk.govuk-font($size: 16);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: govuk.govuk-spacing(3);
+  padding: govuk.govuk-spacing(1) govuk.govuk-spacing(3);
+  background: govuk.govuk-colour("black");
+  color: govuk.govuk-colour("white");
+}
+
+.app-demo-bar__label {
+  color: govuk.govuk-colour("mid-grey");
+}
+
+.app-demo-bar__list {
+  display: flex;
+  gap: govuk.govuk-spacing(3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.app-demo-bar__link {
+  @include govuk.govuk-link-common;
+  color: govuk.govuk-colour("white");
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+
+  &:link,
+  &:visited {
+    color: govuk.govuk-colour("white");
+  }
+
+  &:hover {
+    color: govuk.govuk-colour("light-grey");
+  }
+
+  &:focus {
+    @include govuk.govuk-focused-text;
+  }
+
+  &[aria-current] {
+    font-weight: 700;
+    text-decoration: none;
+  }
+}
+
+.app-demo-bar__stage {
+  margin-left: auto;
+}

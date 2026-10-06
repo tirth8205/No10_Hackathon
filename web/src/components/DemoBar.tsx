@@ -1,4 +1,4 @@
-// Prototype-only view switcher: jump between the three personas for the demo case,
+// Demo-only view switcher: jump between the three personas for the demo case,
 // or open the stage that shows all three side by side. Not part of the service;
 // remove before any real use (client screens must carry no navigation).
 
@@ -17,23 +17,25 @@ export function DemoBar() {
   if (pathname.startsWith("/stage") || window.self !== window.top) return null;
   const persona = pathname.startsWith("/client") ? "client" : pathname.startsWith("/caseworker") ? "caseworker" : "provider";
   const item = (key: string, to: string, label: string) => (
-    <Link
-      to={to}
-      className="app-demo-bar__link"
-      aria-current={persona === key ? "page" : undefined}
-      style={{ fontWeight: persona === key ? 700 : 400, textDecoration: persona === key ? "none" : "underline" }}
-    >
-      {label}
-    </Link>
+    <li className="app-demo-bar__item" key={key}>
+      <Link to={to} className="app-demo-bar__link" aria-current={persona === key ? "page" : undefined}>
+        {label}
+      </Link>
+    </li>
   );
   return (
-    <div className="app-demo-bar" role="navigation" aria-label="View switcher"
-         style={{ background: "#0b0c0c", color: "#fff", fontSize: 14, padding: "4px 16px", display: "flex", gap: 16, alignItems: "center" }}>
-      <span style={{ opacity: 0.8 }}>View as{state ? ` · ${state.applicantName} (${state.ref})` : ""}:</span>
-      {state && item("client", paths.client(state.clientToken), "Client's phone")}
-      {item("provider", state ? paths.caseEvidence(state.caseId) : paths.provider, "Solicitor")}
-      {item("caseworker", paths.queue, "Caseworker")}
-      <Link to="/stage" className="app-demo-bar__link" style={{ marginLeft: "auto" }}>All three at once</Link>
-    </div>
+    <nav className="app-demo-bar" aria-label="Demo view switcher">
+      <span className="app-demo-bar__label">
+        Demo{state ? ` · ${state.applicantName} (${state.ref})` : ""} · View as
+      </span>
+      <ul className="app-demo-bar__list">
+        {state && item("client", paths.client(state.clientToken), "Client's phone")}
+        {item("provider", state ? paths.caseEvidence(state.caseId) : paths.provider, "Solicitor")}
+        {item("caseworker", paths.queue, "Caseworker")}
+      </ul>
+      <Link to="/stage" className="app-demo-bar__link app-demo-bar__stage">
+        All three at once
+      </Link>
+    </nav>
   );
 }

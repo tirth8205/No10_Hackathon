@@ -1,0 +1,46 @@
+{
+  "title": "Gateway Check",
+  "subtitle": "Domestic abuse evidence for legal aid, checked before it is submitted. Ministry of Justice · 10DS hackathon, 6 October 2026",
+  "slides": [
+    {
+      "section": "Solicitor",
+      "heading": "The solicitor sees what is missing and what to ask for",
+      "movie": "/Users/tirth/No10_Hackathon/demo/keynote/clips/01-solicitor-check.mp4",
+      "caption": "Letter checked against Schedule 1 in about 20 seconds: 7 of 8 requirements met, the one gap named, the request to the author already drafted."
+    },
+    {
+      "section": "Solicitor",
+      "heading": "The corrected letter shows what it fixed, on the letter itself",
+      "movie": "/Users/tirth/No10_Hackathon/demo/keynote/clips/02-corrected-letter.mp4",
+      "caption": "Missing → Included, with the new sentence quoted. Every mark is a sentence found word for word in the PDF."
+    },
+    {
+      "section": "Client",
+      "heading": "The client uploads from their phone and gets a plain answer",
+      "movie": "/Users/tirth/No10_Hackathon/demo/keynote/clips/03-client-phone.mp4",
+      "caption": "One-off link, camera or file. No legal wording, no \"rejected\": ready, needs a change, or your solicitor will look at it."
+    },
+    {
+      "section": "LAA caseworker",
+      "heading": "The caseworker gets the evidence, an independent re-check and the look-ups",
+      "movie": "/Users/tirth/No10_Hackathon/demo/keynote/clips/04-caseworker-review.mp4",
+      "caption": "Queue sorted by verdict. Each review: marks on the letter, party check, email domain and offence list verified. The decision stays with the person."
+    },
+    {
+      "section": "All three",
+      "heading": "One case, three people, live",
+      "movie": "/Users/tirth/No10_Hackathon/demo/keynote/clips/05-all-three.mp4",
+      "caption": "Client phone, solicitor and caseworker side by side on the same case."
+    }
+  ],
+  "closing": {
+    "heading": "Does it work?",
+    "lines": [
+      "MoJ's own example letters: 24 of 24 as PDFs, 11 of 12 as text",
+      "146 synthetic cases across all 22 paragraphs: 146 of 146",
+      "35 unseen writing styles: 35 of 35",
+      "No false approvals. Anything unclear goes to a person.",
+      "Every result rests on a quote found word for word; three checks must agree; names are matched in code."
+    ]
+  }
+}
