@@ -20,6 +20,7 @@ import { ProviderNewCase } from "../pages/provider/ProviderNewCase";
 import { ClientChecking } from "../pages/client/ClientChecking";
 import { ClientExpired } from "../pages/client/ClientExpired";
 import { ClientResult } from "../pages/client/ClientResult";
+import { ClientStart } from "../pages/client/ClientStart";
 import { ClientUpload } from "../pages/client/ClientUpload";
 import { Inbox } from "../pages/caseworker/Inbox";
 import { Queue, type QueueFilter } from "../pages/caseworker/Queue";
@@ -32,6 +33,20 @@ import { letter } from "./letters";
 // ---------------------------------------------------------------------------
 // Client
 // ---------------------------------------------------------------------------
+
+export function ClientStartRoute() {
+  const navigate = useNavigate();
+  return (
+    <ClientStart
+      onSubmit={async (code) => {
+        const data = findCaseByToken(code.toLowerCase());
+        if (!data?.case.clientToken) return false;
+        navigate(paths.client(data.case.clientToken));
+        return true;
+      }}
+    />
+  );
+}
 
 export function ClientUploadRoute() {
   const { token = "" } = useParams();

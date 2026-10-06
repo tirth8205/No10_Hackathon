@@ -431,6 +431,8 @@ async def demo_reset(background: BackgroundTasks):
             case = store.create_case(spec["applicant_name"], spec["other_party_name"], spec["case_type"], "provider", work_type=spec["work_type"],
                                      firm_name="Hartley & Webb Solicitors", ask_label=spec.get("ask_label", "Letter from your support worker"),
                                      application_date=_today())
+            # every demo client has a code ready on the solicitor's Client tab, to type on the client's start screen
+            store.create_client_link(case["id"], 7)
             ids = []
             for fn, data, text, para, pages in iter_docs(spec):
                 needs = not (text or "").strip()

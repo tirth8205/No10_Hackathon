@@ -6,6 +6,8 @@ export const paths = {
   index: "/",
   howTheCheckWorks: "/how-the-check-works",
 
+  /** Where a client types the code their solicitor gave them. */
+  clientStart: "/client",
   client: (token: string) => `/client/${token}`,
   clientChecking: (token: string) => `/client/${token}/checking`,
   clientResult: (token: string, state: ClientResultState) => `/client/${token}/result/${state}`,

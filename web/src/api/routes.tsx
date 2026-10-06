@@ -24,6 +24,7 @@ import { ProviderNewCase } from "../pages/provider/ProviderNewCase";
 import { ClientChecking } from "../pages/client/ClientChecking";
 import { ClientExpired } from "../pages/client/ClientExpired";
 import { ClientResult } from "../pages/client/ClientResult";
+import { ClientStart } from "../pages/client/ClientStart";
 import { ClientUpload } from "../pages/client/ClientUpload";
 import { Inbox, type InboxDraft } from "../pages/caseworker/Inbox";
 import { Queue, type QueueFilter } from "../pages/caseworker/Queue";
@@ -68,6 +69,21 @@ function clientCase(firstName: string, firm: string): Case {
 // ---------------------------------------------------------------------------
 // Client
 // ---------------------------------------------------------------------------
+
+/** The client types their code; it is the same token as their link, so a match opens their upload page. */
+export function ClientStartRoute() {
+  const navigate = useNavigate();
+  return (
+    <ClientStart
+      onSubmit={async (code) => {
+        const view = await api.clientView(code).catch(() => null);
+        if (!view?.linkExpiresAt) return false;
+        navigate(paths.client(code));
+        return true;
+      }}
+    />
+  );
+}
 
 export function ClientUploadRoute() {
   const { token = "" } = useParams();

@@ -31,7 +31,7 @@ export function ClientResult({ firmName, result, messageToWriter, uploadTo }: Cl
         <Panel title={message.title}>{message.body}</Panel>
         <p className="govuk-body">We’ve sent the result to {firmName}. They’ll contact you about what happens next.</p>
         <h2 className="govuk-heading-m">What happens to your letter</h2>
-        <p className="govuk-body">Your solicitor gets a copy. Nothing is saved on this phone.</p>
+        <p className="govuk-body">Your solicitor gets a copy. Nothing is saved on this device.</p>
         <p className="govuk-body">You can close this page now.</p>
         <p className="govuk-body">
           <Link className="govuk-link" to={uploadTo}>
