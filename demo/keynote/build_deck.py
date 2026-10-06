@@ -211,14 +211,34 @@ def content_slide(prs, spec, number, mode, tmpdir):
              bullets=True)
 
 
-def closing_slide(prs, spec, number):
+QR_SIZE = 420  # px; a square at the right of the closing slide
+
+
+def qr_image(url, tmpdir):
+    """A QR code PNG for the live site: black on white, no styling, as GOV.UK would print it."""
+    import qrcode
+
+    path = os.path.join(tmpdir, "qr.png")
+    qrcode.make(url, box_size=12, border=2).save(path)
+    return path
+
+
+def closing_slide(prs, spec, number, tmpdir):
     slide = prs.slides.add_slide(prs.slide_layouts[6])
     header(slide, spec.get("section", ""))
     footer(slide, number)
     body_top = heading_block(slide, spec["heading"])
+    qr = spec.get("qr")
+    text_w = CONTENT_W - (QR_SIZE + 80) if qr else CONTENT_W
     if spec.get("lines"):
-        text(slide, MARGIN, body_top + 15, CONTENT_W, MEDIA_BOTTOM - body_top, spec["lines"],
+        text(slide, MARGIN, body_top + 15, text_w, MEDIA_BOTTOM - body_top, spec["lines"],
              28, BLACK, bullets=True)
+    if qr:
+        # "Try it live": the code at the right, its label and the address underneath.
+        left = MARGIN + CONTENT_W - QR_SIZE
+        slide.shapes.add_picture(qr_image(qr["url"], tmpdir), px(left), px(body_top + 15), px(QR_SIZE), px(QR_SIZE))
+        text(slide, left - 60, body_top + 15 + QR_SIZE + 10, QR_SIZE + 120, 110,
+             [qr.get("label", "Try it live"), qr["url"].replace("https://", "")], 24, GREY, align=PP_ALIGN.CENTER)
 
 
 def build(manifest, out_path, mode):
@@ -232,7 +252,7 @@ def build(manifest, out_path, mode):
             number += 1
             content_slide(prs, spec, number, mode, tmpdir)
         if manifest.get("closing"):
-            closing_slide(prs, manifest["closing"], number + 1)
+            closing_slide(prs, manifest["closing"], number + 1, tmpdir)
         prs.save(out_path)
 
 

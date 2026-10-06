@@ -34,13 +34,17 @@
     }
   ],
   "closing": {
-    "heading": "Does it work?",
+    "heading": "Does it work? Try it live",
     "lines": [
       "MoJ's own example letters: 24 of 24 as PDFs, 11 of 12 as text",
       "146 synthetic cases across all 22 paragraphs: 146 of 146",
       "35 unseen writing styles: 35 of 35",
       "No false approvals. Anything unclear goes to a person.",
       "Every result rests on a quote found word for word; three checks must agree; names are matched in code."
-    ]
+    ],
+    "qr": {
+      "url": "https://api-production-b32ac.up.railway.app",
+      "label": "Scan to try it live"
+    }
   }
 }

@@ -4,7 +4,7 @@ Checks domestic abuse evidence for legal aid against Schedule 1 of the Civil Leg
 
 Three people use it:
 
-- **The client** uploads a letter or a photo from their phone through a one-off link and gets a plain answer: ready, needs a change, or their solicitor will look at it.
+- **The client** uploads a letter or a photo from their phone through a one-off link, or by typing the 8-character code the solicitor reads out (case → **Client** tab → **Create a new link**; **Turn off this link** then **Create a new link** to replace it), and gets a plain answer: ready, needs a change, or their solicitor will look at it.
 - **The solicitor** sees which of the paragraph's requirements the letter meets, the exact sentence each one rests on, what is missing, and a drafted request to the letter writer. A corrected letter is compared with the one it replaces.
 - **The LAA caseworker** gets the submitted evidence with the same marks on the letter itself, an independent re-check, verification look-ups on the author and organisation, and makes the decision.
 

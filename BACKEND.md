@@ -105,7 +105,7 @@ The React app in `web/` types its data in `web/src/lib/types.ts` (`pass/fail/ref
 | Client tab link on/off | `POST` / `DELETE /web/cases/{id}/client-link` |
 | Details `onSave` | `PATCH /web/cases/{id}` (a name change re-checks every letter) |
 | Submit `onDownload(reason)` | `POST /web/cases/{id}/submit {documentIds, reason}` → `{case, documents, summary, filename, submissionId}`; freezes the pack and schedules the LAA's independent check |
-| Client `/client/:token` | `GET /web/client/{token}` → `{firstName, firmName, askLabel, linkExpiresAt, latestDocument, state}`; 404 when expired or revoked |
+| Client `/client/:token` | `GET /web/client/{token}` → `{firstName, firmName, askLabel, linkExpiresAt, latestDocument, state}`; 404 when expired or revoked. The token is also the 8-character code the client can type on `/client` (any case, spaces or hyphens); 20 misses from one address in 15 minutes → 429 |
 | Client `onFiles` | `POST /web/client/{token}/upload` → `{documentId}`; poll `GET /web/client/{token}/documents/{doc}` → `{document, state}` where state is `change | ready | check | other` |
 | Caseworker queue, review, `onDecide` | `GET /web/queue` (one row per undecided submission, built from its frozen snapshot; `case.submissionId`, `case.laaCheck: {done, differences}`), `GET /web/queue/{id}` (`id` = submission id, LAA ref, or case id → its latest submitted one), `POST /web/queue/{id}/decision {action, note, submissionId?}` → `Decision` with `agreedWithTool` and `submissionId` |
 | Pack download | `GET /web/submissions/{id}/pack.zip`: the submitted files (or their frozen text as `.txt`) plus `verification-summary.txt` |
