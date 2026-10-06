@@ -339,3 +339,13 @@ def test_guessing_client_codes_is_rate_limited(api):
     assert api.get(f"/web/client/{case['clientToken']}").status_code == 429
     wa._misses.clear()
     assert api.get(f"/web/client/{case['clientToken']}").status_code == 200
+
+
+def test_file_links_use_the_forwarded_scheme(api):
+    """Behind Railway's proxy the app sees http; the links it hands out must match the https page."""
+    case = _case(api)
+    r = api.post(f"/web/cases/{case['id']}/documents", files=[("files", ("letter.txt", LETTER.encode(), "text/plain"))],
+                 headers={"x-forwarded-proto": "https"})
+    assert r.status_code in (200, 201, 202), r.text
+    doc = api.get(f"/web/cases/{case['id']}/documents/{r.json()['id']}", headers={"x-forwarded-proto": "https"}).json()
+    assert doc["pages"][0]["url"].startswith("https://")

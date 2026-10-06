@@ -91,7 +91,14 @@ def _case(case_id: str) -> dict:
 
 
 def _base(request: Request) -> str:
-    return str(request.base_url).rstrip("/")
+    """Origin for the file links the pages carry. Behind a TLS-terminating proxy the app sees
+    plain http; a browser on the https page would refuse that (mixed content), so the forwarded
+    scheme wins when the proxy sends one."""
+    base = request.base_url
+    proto = request.headers.get("x-forwarded-proto")
+    if proto in ("http", "https") and proto != base.scheme:
+        base = base.replace(scheme=proto)
+    return str(base).rstrip("/")
 
 
 async def _ingest_files(files: list[UploadFile]) -> tuple[str, bool, list[tuple[bytes, str]], list[dict]]:
