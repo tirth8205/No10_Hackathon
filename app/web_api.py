@@ -27,6 +27,7 @@ one endpoint per callback in web/src/sample/routes.tsx.
 """
 from __future__ import annotations
 
+import time
 import io
 import re
 import zipfile
@@ -228,17 +229,34 @@ def submit(case_id: str, body: Submit, request: Request, background: BackgroundT
 # --------------------------------------------------------------------------- #
 # client
 # --------------------------------------------------------------------------- #
-def _client_case(token: str) -> dict:
+# A client code is eight characters (about 40 bits) so it can be read out over the phone.
+# That is only safe if nobody can try codes quickly: after this many misses from one
+# address within the window, further attempts from it are refused for the rest of the window.
+_MISS_LIMIT, _MISS_WINDOW_S = 20, 15 * 60
+_misses: dict[str, list[float]] = {}
+
+
+def _client_case(token: str, request: Request | None = None) -> dict:
+    host = (request.client.host if request and request.client else None) or "unknown"
+    cutoff = time.time() - _MISS_WINDOW_S
+    recent = [t for t in _misses.get(host, []) if t > cutoff]
+    if len(recent) >= _MISS_LIMIT:
+        _misses[host] = recent
+        raise HTTPException(429, "too many attempts; try again later")
     link = store.resolve_client_link(token)
     if not link:
+        _misses[host] = recent + [time.time()]
+        store.audit("client", "client_link.miss", host, {"attempts": len(recent) + 1})
         raise HTTPException(404, "link not found or expired")
+    if recent:
+        _misses.pop(host, None)
     return store.get_case(link["case_id"])
 
 
 @router.get("/client/{token}")
 def client_view(token: str, request: Request):
     """Applicant view: first name, plain messages, the reduced document shape. No legal reasoning, no LAA detail."""
-    c = _client_case(token)
+    c = _client_case(token, request)
     link = store.latest_client_link(c["id"])
     docs = [webmap.to_document(store, d, _base(request), role="client") for d in store.list_documents(c["id"]) if d["uploaded_by"] == "client"]
     latest = docs[-1] if docs else None
@@ -257,7 +275,7 @@ async def client_upload(token: str, background: BackgroundTasks, files: list[Upl
 
 @router.get("/client/{token}/documents/{document_id}")
 def client_document(token: str, document_id: str, request: Request):
-    c = _client_case(token)
+    c = _client_case(token, request)
     d = store.get_document(document_id)
     if not d or d["case_id"] != c["id"]:
         raise HTTPException(404, "document not found")

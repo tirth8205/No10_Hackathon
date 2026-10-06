@@ -324,3 +324,18 @@ def test_pack_zip_falls_back_to_the_frozen_text_once_the_file_is_gone(api):
     files = _zip(api.get(f"/web/submissions/{sid}/pack.zip"))
     assert set(files) == {"refuge.txt", "verification-summary.txt"}
     assert files["refuge.txt"].decode() == LETTER
+
+
+def test_guessing_client_codes_is_rate_limited(api):
+    """An 8-character code is only safe if nobody can try many: after 20 misses from one address the next attempt is refused."""
+    import app.web_api as wa
+
+    wa._misses.clear()
+    for _ in range(20):
+        assert api.get("/web/client/NOTACODE").status_code == 404
+    assert api.get("/web/client/NOTACODE").status_code == 429
+    # a real link from the same address is refused too until the window passes: the limit is on the address, not the code
+    case = _case(api)
+    assert api.get(f"/web/client/{case['clientToken']}").status_code == 429
+    wa._misses.clear()
+    assert api.get(f"/web/client/{case['clientToken']}").status_code == 200

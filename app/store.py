@@ -325,8 +325,12 @@ class Store:
     def create_client_link(self, case_id: str, days: int = 7) -> dict:
         """The token is a short code the client can type as well as follow as a link, e.g. K7QM4XPR (shown K7QM-4XPR)."""
         token = new_client_code()
-        while self._one("SELECT token FROM client_links WHERE token=?", (token,)):
+        for _ in range(20):  # collisions are one in a trillion; never spin forever
+            if not self._one("SELECT token FROM client_links WHERE token=?", (token,)):
+                break
             token = new_client_code()
+        else:
+            raise RuntimeError("could not allocate a client code")
         exp = datetime.fromtimestamp(time.time() + days * 86400, tz=timezone.utc).isoformat(timespec="seconds")
         self._exec("INSERT INTO client_links(token, case_id, created_at, expires_at) VALUES (?,?,?,?)", (token, case_id, now(), exp))
         return {"token": token, "case_id": case_id, "expires_at": exp}
