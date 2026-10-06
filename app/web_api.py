@@ -241,18 +241,23 @@ def submit(case_id: str, body: Submit, request: Request, background: BackgroundT
 # address within the window, further attempts from it are refused for the rest of the window.
 _MISS_LIMIT, _MISS_WINDOW_S = 20, 15 * 60
 _misses: dict[str, list[float]] = {}
+# The address can be forged by whoever can set X-Forwarded-For, so a second, address-independent
+# budget caps guessing outright: this many misses in the window from everyone together.
+_MISS_LIMIT_ALL = 200
+_ALL = "*"
 
 
 def _client_case(token: str, request: Request | None = None) -> dict:
     host = (request.client.host if request and request.client else None) or "unknown"
     cutoff = time.time() - _MISS_WINDOW_S
     recent = [t for t in _misses.get(host, []) if t > cutoff]
-    if len(recent) >= _MISS_LIMIT:
-        _misses[host] = recent
+    recent_all = [t for t in _misses.get(_ALL, []) if t > cutoff]
+    _misses[host], _misses[_ALL] = recent, recent_all
+    if len(recent) >= _MISS_LIMIT or len(recent_all) >= _MISS_LIMIT_ALL:
         raise HTTPException(429, "too many attempts; try again later")
     link = store.resolve_client_link(token)
     if not link:
-        _misses[host] = recent + [time.time()]
+        _misses[host], _misses[_ALL] = recent + [time.time()], recent_all + [time.time()]
         store.audit("client", "client_link.miss", host, {"attempts": len(recent) + 1})
         raise HTTPException(404, "link not found or expired")
     if recent:
