@@ -1,6 +1,6 @@
 import { PlainLayout } from "../components/layout";
 import { useTitle } from "../hooks/govuk";
-import { PARAS } from "../lib/labels";
+import { guidanceUrl, PARAS } from "../lib/labels";
 
 export function HowTheCheckWorks() {
   useTitle("How the check works – Gateway Check");
@@ -36,7 +36,12 @@ export function HowTheCheckWorks() {
                 <tr className="govuk-table__row" key={p.number}>
                   <td className="govuk-table__cell">{p.number}</td>
                   <td className="govuk-table__cell">{p.singular}</td>
-                  <td className="govuk-table__cell">{p.guidance}</td>
+                  <td className="govuk-table__cell">
+                    <a className="govuk-link" href={guidanceUrl(p.number)} target="_blank" rel="noreferrer">
+                      {p.guidance}
+                      <span className="govuk-visually-hidden"> (opens in a new tab)</span>
+                    </a>
+                  </td>
                 </tr>
               ))}
             </tbody>

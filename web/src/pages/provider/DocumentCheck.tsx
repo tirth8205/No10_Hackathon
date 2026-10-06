@@ -8,7 +8,7 @@ import { DropZone } from "../../components/Upload";
 import { useTitle } from "../../hooks/govuk";
 import { dayMonth, when } from "../../lib/dates";
 import { documentTitle } from "../../lib/evidence";
-import { docVerdict, paraOf } from "../../lib/labels";
+import { docVerdict, guidanceUrl, paraOf } from "../../lib/labels";
 import { firstName, requestLetter } from "../../lib/outputs";
 import type { Case, CaseDocument, DocumentChanges } from "../../lib/types";
 import { paths } from "../../paths";
@@ -269,7 +269,12 @@ export function DocumentCheck({ c, doc, replacedBy, onUploadCorrected }: Documen
                 {para && (
                   <>
                     <dt>Checked against</dt>
-                    <dd>{para.guidance}</dd>
+                    <dd>
+                      <a className="govuk-link" href={guidanceUrl(para.number)} target="_blank" rel="noreferrer">
+                        {para.guidance}
+                        <span className="govuk-visually-hidden"> (opens in a new tab)</span>
+                      </a>
+                    </dd>
                   </>
                 )}
                 <dt>Agreement</dt>

@@ -33,6 +33,19 @@ export interface Para {
   guidance: string;
 }
 
+/** The LAA guidance itself (v15), served with the app; the page each paragraph's section starts on. */
+export const GUIDANCE_PDF = "/guidance/laa-evidence-requirements-v15.pdf";
+const GUIDANCE_PAGE: Record<string, number> = {
+  "1": 9, "2": 10, "3": 11, "4": 12, "5": 13, "6": 14, "6A": 15, "7": 15, "8": 17, "9": 17, "10": 18,
+  "11": 19, "12": 21, "13": 22, "14": 23, "15": 23, "16": 24, "17": 25, "18": 26, "19": 27, "20": 28, "21": 28,
+};
+
+/** Link to the section of the guidance a paragraph is checked against. */
+export function guidanceUrl(number: string): string {
+  const page = GUIDANCE_PAGE[number];
+  return page ? `${GUIDANCE_PDF}#page=${page}` : GUIDANCE_PDF;
+}
+
 export const PARAS: Record<string, Para> = {
   "1": { number: "1", singular: "Arrest for domestic abuse offence", plural: "Arrest for domestic abuse offences", guidance: "LAA guidance v15, 2.8 to 2.13" },
   "2": { number: "2", singular: "Police caution for DA offence", plural: "Police caution for DA offences", guidance: "LAA guidance v15, 2.14 to 2.17" },
