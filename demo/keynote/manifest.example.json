@@ -1,0 +1,40 @@
+{
+  "title": "Gateway Check",
+  "subtitle": "Checks domestic-abuse evidence for legal aid before the application is sent",
+  "slides": [
+    {
+      "heading": "The solicitor uploads the evidence",
+      "section": "Solicitor",
+      "lines": ["Letter from a GP", "Checked against the regulations"],
+      "movie": "/abs/path/to/solicitor.mp4",
+      "caption": "Upload, then the check runs against Schedule 1 of the 2012 regulations"
+    },
+    {
+      "heading": "The client sees what is missing",
+      "section": "Client",
+      "movie": "/abs/path/to/client.mp4",
+      "caption": "Plain-English list of what the letter still needs"
+    },
+    {
+      "heading": "The caseworker gets the rule, not a gap",
+      "section": "LAA caseworker",
+      "movie": "/abs/path/to/caseworker.mp4",
+      "caption": "Queue shows why a paragraph 21 case needs a person"
+    },
+    {
+      "heading": "What this changes",
+      "section": "Summary",
+      "lines": [
+        "Fewer applications bounced for missing evidence",
+        "Clients know what to ask for before they ask",
+        "Caseworkers see the rule that needs a decision"
+      ],
+      "movie": null
+    }
+  ],
+  "closing": {
+    "heading": "Thank you",
+    "section": "Gateway Check",
+    "lines": ["github.com/your-org/gateway-check", "Questions?"]
+  }
+}

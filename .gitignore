@@ -44,3 +44,7 @@ build/
 .idea/
 .vscode/
 .DS_Store
+
+# demo deck: clips and built decks are large binaries
+demo/keynote/clips/
+demo/keynote/*.pptx
