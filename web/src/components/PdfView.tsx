@@ -15,6 +15,8 @@ interface Mark {
   problem: boolean;
   /** The first box of a quote carries the number badge. */
   badge: boolean;
+  /** How many earlier badges sit at the same spot (two requirements resting on one line); shifts this one left. */
+  stack: number;
 }
 
 interface PageView {
@@ -85,8 +87,10 @@ export function PdfView({ url, elements, onTextLayer }: { url: string; elements:
     let cancelled = false;
     (async () => {
       try {
-        const pdfjs = await import("pdfjs-dist");
-        const worker = await import("pdfjs-dist/build/pdf.worker.min.mjs?url");
+        // The legacy build carries polyfills: the modern one needs Uint8Array.prototype.toHex (Chrome 140,
+        // Safari 18.2), so any older browser at a demo would show no letter at all.
+        const pdfjs = await import("pdfjs-dist/legacy/build/pdf.mjs");
+        const worker = await import("pdfjs-dist/legacy/build/pdf.worker.min.mjs?url");
         pdfjs.GlobalWorkerOptions.workerSrc = worker.default;
         const doc = await pdfjs.getDocument({ url }).promise;
         const width = Math.max(320, container.current?.clientWidth ?? 640);
@@ -117,10 +121,19 @@ export function PdfView({ url, elements, onTextLayer }: { url: string; elements:
                   number: i + 1,
                   problem: el.status !== "met",
                   badge: f === 0 && k === 0,
+                  stack: 0,
                 });
               });
             });
           });
+          // Requirements that rest on the same line would put their badges on top of each other: set them side by side.
+          const used = new Map<string, number>();
+          for (const m of marks) {
+            if (!m.badge) continue;
+            const spot = `${Math.round(m.left)}:${Math.round(m.top)}`;
+            m.stack = used.get(spot) ?? 0;
+            used.set(spot, m.stack + 1);
+          }
           views.push({ width: viewport.width, height: viewport.height, marks, hasText: items.some((it) => it.str.trim()) });
           const index = n - 1;
           renders.push(async () => {
@@ -186,7 +199,14 @@ export function PdfView({ url, elements, onTextLayer }: { url: string; elements:
               style={{ left: m.left, top: m.top, width: m.width, height: m.height }}
               aria-hidden="true"
             >
-              {m.badge && <span className={m.problem ? "app-mark__number app-mark__number--problem app-pdf__badge" : "app-mark__number app-pdf__badge"}>{m.number}</span>}
+              {m.badge && (
+                <span
+                  className={m.problem ? "app-mark__number app-mark__number--problem app-pdf__badge" : "app-mark__number app-pdf__badge"}
+                  style={m.stack ? { left: -26 - m.stack * 24 } : undefined}
+                >
+                  {m.number}
+                </span>
+              )}
             </div>
           ))}
         </div>

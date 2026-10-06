@@ -1,8 +1,9 @@
 import { VerificationList } from "../../components/Verification";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { DocumentText, HighlightKey } from "../../components/DocumentText";
-import { BackLink, Button, ElementTag, InsetText, SummaryList, VerdictTag, WarningText } from "../../components/govuk";
+import { PdfView } from "../../components/PdfView";
+import { BackLink, Button, Details, ElementTag, InsetText, SummaryList, VerdictTag, WarningText } from "../../components/govuk";
 import { CaseworkerLayout } from "../../components/layout";
 import { useTitle } from "../../hooks/govuk";
 import { when } from "../../lib/dates";
@@ -74,6 +75,11 @@ export function Review({ data, activeDocId, onDecide }: ReviewProps) {
   const [note, setNote] = useState(needsNote ? returnNote(c, documents) : "");
   const r = doc?.result;
   const para = paraOf(r ?? null);
+  // Show the submitted file itself when we hold it: a PDF with the check's marks drawn on the page, photos as uploaded.
+  const pdfPage = doc?.pages.find((p) => p.url && p.contentType === "application/pdf");
+  const photoPages = pdfPage ? [] : (doc?.pages.filter((p) => p.url && p.contentType.startsWith("image/")) ?? []);
+  const [pdfHasText, setPdfHasText] = useState<boolean | null>(null);
+  useEffect(() => setPdfHasText(null), [pdfPage?.url]);
 
   return (
     <CaseworkerLayout active="queue" beforeContent={<BackLink to={paths.queue}>Back to queue</BackLink>}>
@@ -109,19 +115,41 @@ export function Review({ data, activeDocId, onDecide }: ReviewProps) {
       {doc && r && (
         <div className="app-doc-panel">
           <div className="app-split">
-            <section aria-labelledby="doc-title">
+            <section aria-labelledby="doc-title" className="app-split__document">
               <h2 className="govuk-heading-m govuk-!-margin-bottom-1" id="doc-title">
-                The document
+                {photoPages.length > 0 ? "The photos" : "The document"}
               </h2>
               <p className="govuk-body-s app-secondary-text">
                 {doc.pages.length === 1 ? "1 page" : `${doc.pages.length} pages`}
                 {para ? ` · ${para.singular}` : ""}
+                {pdfPage && pdfHasText !== false ? " · each numbered mark is the sentence the check relied on" : ""}
+                {pdfPage && pdfHasText === false ? " · a scan: the marks are shown on the text we read from it, below" : ""}
               </p>
-              <DocumentText text={doc.text} elements={r.elements} />
+              {pdfPage && (
+                <>
+                  <PdfView key={pdfPage.url} url={pdfPage.url!} elements={r.elements} onTextLayer={setPdfHasText} />
+                  <p className="govuk-body-s">
+                    <a className="govuk-link" href={pdfPage.url} target="_blank" rel="noreferrer">
+                      Open the document in a new tab
+                    </a>{" "}
+                    to read it at full size.
+                  </p>
+                </>
+              )}
+              {photoPages.map((page) => (
+                <img key={page.filename} className="app-doc-photo" src={page.url} alt={`${page.filename}, as submitted`} />
+              ))}
+              {pdfPage && pdfHasText !== false ? (
+                <Details summary="Text we read from the document">
+                  <DocumentText text={doc.text} elements={r.elements} />
+                </Details>
+              ) : (
+                <DocumentText text={doc.text} elements={r.elements} />
+              )}
               <HighlightKey />
             </section>
 
-            <section aria-labelledby="found-title">
+            <section aria-labelledby="found-title" className="app-split__findings">
               <h2 className="govuk-heading-m govuk-!-margin-bottom-1" id="found-title">
                 What the tool found
               </h2>
