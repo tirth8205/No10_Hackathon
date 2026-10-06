@@ -11,6 +11,7 @@ interface ScreenLink {
 }
 
 const CLIENT: ScreenLink[] = [
+  { to: paths.clientStart, text: "Enter your code", hint: "The way in without a link" },
   { to: paths.client(CLIENT_TOKEN), text: "Send your letter", hint: "Upload by one-time link" },
   { to: paths.clientChecking(CLIENT_TOKEN), text: "Checking your document" },
   { to: paths.clientResult(CLIENT_TOKEN, "change"), text: "Result: needs a change" },

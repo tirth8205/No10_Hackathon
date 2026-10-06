@@ -45,6 +45,92 @@ $app-light-grey: govuk.govuk-colour("black", $variant: "tint-95");
   color: govuk.govuk-colour("white");
 }
 
+// Right-hand side of the header: who is signed in, and the (?) view shortcuts.
+.app-header-actions {
+  display: flex;
+  align-items: center;
+  gap: govuk.govuk-spacing(3);
+  margin-left: auto;
+}
+
+// The (?) menu. Prototype-only shortcuts to the three views (components/HelpMenu.tsx).
+.app-help {
+  position: relative;
+}
+
+.app-help__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: govuk.govuk-colour("white");
+  background: transparent;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  &:focus {
+    outline: 3px solid transparent;
+    color: govuk.govuk-functional-colour(focus-text);
+    background: govuk.govuk-functional-colour(focus);
+    box-shadow: 0 0 0 2px govuk.govuk-functional-colour(focus-text);
+  }
+
+  &[aria-expanded="true"]:not(:focus) {
+    background: rgba(255, 255, 255, 0.25);
+  }
+}
+
+.app-help__panel {
+  // The header sets the text colour to white; the panel is white, so set it back.
+  --govuk-text-colour: #{govuk.govuk-colour("black")};
+  position: absolute;
+  // Above GOV.UK's sticky Exit this page button (z-index 1000) while open; it is back as soon as the menu closes.
+  z-index: 1010;
+  top: calc(100% + #{govuk.govuk-spacing(2)});
+  right: 0;
+  box-sizing: border-box;
+  width: 320px;
+  max-width: calc(100vw - #{govuk.govuk-spacing(6)});
+  padding: govuk.govuk-spacing(4);
+  border: 1px solid $app-border;
+  border-top: 4px solid $app-brand;
+  color: govuk.govuk-functional-colour(text);
+  background: govuk.govuk-colour("white");
+  box-shadow: 0 2px 0 rgba(11, 12, 12, 0.15);
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.app-help__item {
+  padding: govuk.govuk-spacing(2) 0;
+  border-top: 1px solid $app-border;
+
+  &:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  a[aria-current] {
+    font-weight: 700;
+  }
+}
+
+// The client's code: spaced out and in capitals, so it reads like the code they were given.
+.app-code-input {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 // Caseworker screens use more of the width for side-by-side reading.
 .app-width-container--wide {
   max-width: 1280px;
@@ -660,4 +746,16 @@ $app-light-grey: govuk.govuk-colour("black", $variant: "tint-95");
 
 .app-split > .app-split__findings {
   flex: 2 1 360px;
+}
+
+// The client's code on the solicitor's Client tab: large and spaced, to read out over the phone.
+.app-client-code {
+  @include govuk.govuk-font($size: 24, $weight: bold);
+  letter-spacing: 0.08em;
+}
+
+// After a page change, focus moves to the main content for screen readers. Like GOV.UK's
+// skip link target, it needs no outline: nothing there can be acted on until a user tabs.
+#main-content[tabindex="-1"]:focus {
+  outline: none;
 }

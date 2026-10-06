@@ -7,6 +7,7 @@ import { useGovukComponent } from "../hooks/govuk";
 import { paths } from "../paths";
 import { ActionErrorBanner } from "./ErrorBanner";
 import { cx, ExitThisPage, PhaseBanner } from "./govuk";
+import { HelpMenu } from "./HelpMenu";
 
 function SkipLink() {
   return (
@@ -25,7 +26,10 @@ function Header({ home, title, meta, wide }: { home: string; title: string; meta
             {title}
           </Link>
         </div>
-        {meta && <span className="app-header-meta">{meta}</span>}
+        <div className="app-header-actions">
+          {meta && <span className="app-header-meta">{meta}</span>}
+          <HelpMenu />
+        </div>
       </div>
     </header>
   );
@@ -204,14 +208,22 @@ export function ClientLayout({ children }: { children: ReactNode }) {
           <div className="govuk-generic-header__logo">
             <span className="govuk-generic-header__homepage-link">Document upload</span>
           </div>
+          <div className="app-header-actions">
+            <HelpMenu />
+          </div>
         </div>
       </header>
       <div className="govuk-width-container app-client">
         <PhaseBanner />
         <ExitThisPage href={EXIT_URL} />
         <main className="govuk-main-wrapper govuk-!-padding-top-4" id="main-content">
-          <ActionErrorBanner />
-          {children}
+          {/* Full width on a phone, a readable two-thirds column on a tablet or computer. */}
+          <div className="govuk-grid-row">
+            <div className="govuk-grid-column-two-thirds">
+              <ActionErrorBanner />
+              {children}
+            </div>
+          </div>
         </main>
       </div>
     </>

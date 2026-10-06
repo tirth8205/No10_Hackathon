@@ -1,7 +1,7 @@
 import { Details } from "../../components/govuk";
 import { ClientLayout } from "../../components/layout";
-import { FileLink, PhoneUpload } from "../../components/Upload";
-import { useTitle } from "../../hooks/govuk";
+import { ClientFilePicker, FileLink } from "../../components/Upload";
+import { usePhoneLayout, useTitle } from "../../hooks/govuk";
 import { dayMonth } from "../../lib/dates";
 
 export interface ClientUploadProps {
@@ -16,6 +16,7 @@ export interface ClientUploadProps {
 
 export function ClientUpload({ firstName, firmName, askLabel, linkExpiresAt, onFiles }: ClientUploadProps) {
   useTitle("Upload documents");
+  const phone = usePhoneLayout();
   return (
     <ClientLayout>
       <span className="govuk-caption-m">{firmName}</span>
@@ -28,8 +29,12 @@ export function ClientUpload({ firstName, firmName, askLabel, linkExpiresAt, onF
           <span className="govuk-body govuk-!-font-weight-bold govuk-!-display-block govuk-!-margin-bottom-0">{askLabel}</span>
         </div>
         <div className="app-ask__body">
-          <PhoneUpload onFiles={onFiles} />
-          <p className="govuk-hint govuk-!-margin-bottom-0">More than one page? Take a photo of each page. We’ll keep them together.</p>
+          <ClientFilePicker phone={phone} onFiles={onFiles} />
+          <p className="govuk-hint govuk-!-margin-bottom-0">
+            {phone
+              ? "More than one page? Take a photo of each page. We’ll keep them together."
+              : "More than one page? Choose all the pages at once. We’ll keep them together."}
+          </p>
         </div>
       </div>
 
@@ -38,7 +43,7 @@ export function ClientUpload({ firstName, firmName, askLabel, linkExpiresAt, onF
       </p>
 
       <Details summary="What happens to my letter?">
-        We check it and send it to your solicitor. Nothing is saved on this phone.
+        We check it and send it to your solicitor. Nothing is saved on this device.
       </Details>
 
       <p className="govuk-body-s app-secondary-text">This link works until {dayMonth(linkExpiresAt)}.</p>

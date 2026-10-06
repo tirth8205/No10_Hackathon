@@ -4,7 +4,6 @@ import { HowTheCheckWorks, NotFound } from "./pages/HowTheCheckWorks";
 import { ScreensIndex } from "./pages/ScreensIndex";
 import { ClientExpired } from "./pages/client/ClientExpired";
 import { Stage } from "./pages/Stage";
-import { DemoBar } from "./components/DemoBar";
 import * as live from "./api/routes";
 import * as sample from "./sample/routes";
 
@@ -15,12 +14,11 @@ const R = SAMPLE ? sample : live;
 /** After each navigation, start at the top and move focus to the new page's content. */
 function useNewPageFocus() {
   const { pathname } = useLocation();
-  const first = useRef(true);
+  // Compare paths rather than counting runs: React's development mode runs effects twice on load.
+  const last = useRef(pathname);
   useEffect(() => {
-    if (first.current) {
-      first.current = false;
-      return;
-    }
+    if (last.current === pathname) return;
+    last.current = pathname;
     window.scrollTo(0, 0);
     const main = document.getElementById("main-content");
     if (main) {
@@ -34,13 +32,13 @@ export function App() {
   useNewPageFocus();
   return (
     <>
-    {!SAMPLE && <DemoBar />}
     <Routes>
       <Route path="/stage" element={<Stage />} />
       <Route path="/" element={SAMPLE ? <ScreensIndex /> : <Navigate to="/provider" replace />} />
       <Route path="/screens" element={<ScreensIndex />} />
       <Route path="/how-the-check-works" element={<HowTheCheckWorks />} />
 
+      <Route path="/client" element={<R.ClientStartRoute />} />
       <Route path="/client/expired" element={<ClientExpired />} />
       <Route path="/client/:token" element={<R.ClientUploadRoute />} />
       <Route path="/client/:token/checking" element={<R.ClientCheckingRoute />} />

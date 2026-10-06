@@ -5,6 +5,7 @@ import { Breadcrumbs, Button, SummaryList, VerdictTag } from "../../components/g
 import { ProviderLayout } from "../../components/layout";
 import { useTitle } from "../../hooks/govuk";
 import { capitalise, dayMonth, when } from "../../lib/dates";
+import { formatClientCode } from "../../lib/clientCode";
 import { documentTitle } from "../../lib/evidence";
 import { caseVerdict, docVerdict } from "../../lib/labels";
 import { clientMessage, firstName } from "../../lib/outputs";
@@ -56,7 +57,7 @@ export function CaseClient({ data, clientLinkUrl, onTurnOffLink, onCreateLink }:
             ]}
           />
 
-          <h2 className="govuk-heading-m">Upload link</h2>
+          <h2 className="govuk-heading-m">Upload link and code</h2>
           {clientLinkUrl && c.tokenExpiresAt ? (
             <>
               <SummaryList
@@ -73,14 +74,31 @@ export function CaseClient({ data, clientLinkUrl, onTurnOffLink, onCreateLink }:
                     ),
                     action: { to: paths.caseDetails(c.id), text: "Change", hidden: "what you are asking for" },
                   },
+                  ...(c.clientToken
+                    ? [
+                        {
+                          key: "Code",
+                          value: (
+                            <>
+                              <strong className="app-client-code">{formatClientCode(c.clientToken)}</strong>
+                              <span className="govuk-hint govuk-!-display-block govuk-!-margin-top-1 govuk-!-margin-bottom-0">
+                                {name} can type this at {new URL(clientLinkUrl).origin}
+                                {paths.clientStart} instead of opening the link.
+                              </span>
+                            </>
+                          ),
+                        },
+                      ]
+                    : []),
                   { key: "Link", value: <span className="app-break-anywhere">{clientLinkUrl}</span> },
                   { key: "Works until", value: dayMonth(c.tokenExpiresAt) },
                 ]}
               />
               <div className="govuk-button-group">
                 <CopyButton text={clientLinkUrl} label="Copy link" variant="secondary" />
+                {c.clientToken && <CopyButton text={formatClientCode(c.clientToken)} label="Copy code" variant="secondary" />}
                 <Button variant="secondary" onClick={onTurnOffLink}>
-                  Turn off link
+                  Turn off link and code
                 </Button>
               </div>
               <p className="govuk-body-s app-secondary-text govuk-!-margin-bottom-9">

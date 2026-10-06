@@ -38,6 +38,16 @@ def neutral_ref(prefix: str = "LA") -> str:
     return f"{prefix}-{pick(3)}-{pick(3)}"
 
 
+def new_client_code() -> str:
+    """Eight characters from the unambiguous alphabet: about 40 bits, short enough to read out or type."""
+    return "".join(secrets.choice(_ALPHABET) for _ in range(8))
+
+
+def normalise_client_code(typed: str) -> str:
+    """'k7qm-4xpr ' -> 'K7QM4XPR'."""
+    return "".join(ch for ch in typed.upper() if ch.isalnum())
+
+
 def now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
@@ -313,13 +323,19 @@ class Store:
         return self._all("SELECT * FROM evidence_requests WHERE case_id=? ORDER BY created_at", (case_id,))
 
     def create_client_link(self, case_id: str, days: int = 7) -> dict:
-        token = secrets.token_urlsafe(16)
+        """The token is a short code the client can type as well as follow as a link, e.g. K7QM4XPR (shown K7QM-4XPR)."""
+        token = new_client_code()
+        while self._one("SELECT token FROM client_links WHERE token=?", (token,)):
+            token = new_client_code()
         exp = datetime.fromtimestamp(time.time() + days * 86400, tz=timezone.utc).isoformat(timespec="seconds")
         self._exec("INSERT INTO client_links(token, case_id, created_at, expires_at) VALUES (?,?,?,?)", (token, case_id, now(), exp))
         return {"token": token, "case_id": case_id, "expires_at": exp}
 
     def resolve_client_link(self, token: str) -> dict | None:
+        """Accepts the token as issued, or a typed code with any case, spaces or hyphens."""
         link = self._one("SELECT * FROM client_links WHERE token=? AND revoked=0", (token,))
+        if not link:
+            link = self._one("SELECT * FROM client_links WHERE token=? AND revoked=0", (normalise_client_code(token),))
         if not link or link["expires_at"] < now():
             return None
         return link

@@ -86,17 +86,39 @@ export function PhoneUpload({ onFiles }: { onFiles: (files: File[]) => void }) {
   );
 }
 
+/**
+ * The client's upload: camera first on a phone or tablet; drag and drop with a file button
+ * on a computer, where there is usually no camera to take photos with.
+ */
+export function ClientFilePicker({ phone, onFiles }: { phone: boolean; onFiles: (files: File[]) => void }) {
+  if (phone) return <PhoneUpload onFiles={onFiles} />;
+  return (
+    <DropZone
+      primary
+      label="Drag your letter here"
+      hint="Or choose a PDF, Word file, scan or photo from your computer."
+      buttonLabel="Choose a file"
+      onFiles={onFiles}
+    />
+  );
+}
+
 /** Drop zone for the solicitor's desktop, with a button for keyboard and touch users. */
 export function DropZone({
   label,
   hint,
   onFiles,
   compact,
+  primary,
+  buttonLabel = "Choose file",
 }: {
   label: string;
   hint?: string;
   onFiles: (files: File[]) => void;
   compact?: boolean;
+  /** Make the file button the page's main action. */
+  primary?: boolean;
+  buttonLabel?: string;
 }) {
   const [over, setOver] = useState(false);
   const onDrop = (event: DragEvent) => {
@@ -119,7 +141,7 @@ export function DropZone({
         <p className="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">{label}</p>
         {hint && <p className="govuk-body-s app-secondary-text govuk-!-margin-bottom-0">{hint}</p>}
       </div>
-      <FileButton label="Choose file" variant="secondary" onFiles={onFiles} />
+      <FileButton label={buttonLabel} variant={primary ? undefined : "secondary"} onFiles={onFiles} />
     </div>
   );
 }

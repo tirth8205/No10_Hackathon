@@ -212,6 +212,7 @@ def direct() -> None:
             case = store.create_case(spec["applicant_name"], spec["other_party_name"], spec["case_type"], "provider", work_type=spec["work_type"],
                                      firm_name=FIRM, ask_label=spec.get("ask_label", "Letter from your support worker"),
                                      application_date=date.today().isoformat())
+            store.create_client_link(case["id"], 7)  # a code ready to type on the client's start screen
             ids = []
             for fn, data, text, para, pages in iter_docs(spec):
                 doc = store.add_document(case["id"], fn, "provider", para, data, text, pages=pages)
