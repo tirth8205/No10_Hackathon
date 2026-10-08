@@ -1,0 +1,3045 @@
+[
+  {
+    "file": "d01-provider-cases.png",
+    "url": "/provider",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 0,
+    "description": "Provider cases list (desktop, top). Drop zone to start a case; cases table begins.",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "page_heading": {
+        "x": 240,
+        "y": 202,
+        "w": 960,
+        "h": 50
+      },
+      "drop_zone": {
+        "x": 240,
+        "y": 397,
+        "w": 960,
+        "h": 114
+      },
+      "cases_table": {
+        "x": 240,
+        "y": 827,
+        "w": 960,
+        "h": 1026,
+        "partlyOffscreen": true
+      }
+    },
+    "notes": "Real capture taken before the weak letter was uploaded (no check results on screen)."
+  },
+  {
+    "file": "d01-provider-cases-full.png",
+    "url": "/provider",
+    "viewport": {
+      "width": 1440,
+      "height": 2306,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": true
+    },
+    "scrollY": 0,
+    "description": "Provider cases list, full page; Jane Doe row shows 'Waiting for the client to upload', status 'No evidence yet'.",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "jane_row": {
+        "x": 240,
+        "y": 1449,
+        "w": 960,
+        "h": 101
+      },
+      "page_heading": {
+        "x": 240,
+        "y": 202,
+        "w": 960,
+        "h": 50
+      },
+      "drop_zone": {
+        "x": 240,
+        "y": 397,
+        "w": 960,
+        "h": 114
+      },
+      "cases_table": {
+        "x": 240,
+        "y": 827,
+        "w": 960,
+        "h": 1026
+      }
+    },
+    "notes": "Real capture taken before the weak letter was uploaded (no check results on screen)."
+  },
+  {
+    "file": "d02-case-evidence-empty.png",
+    "url": "/provider/cases/30a14cc479f5cd2b",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 0,
+    "description": "Jane Doe's case, Evidence tab, before any letter: 'No documents yet'. 'Getting paid' box shows labelled estimates.",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "case_heading": {
+        "x": 240,
+        "y": 282,
+        "w": 213,
+        "h": 50
+      },
+      "status_tag": {
+        "x": 473,
+        "y": 293,
+        "w": 152,
+        "h": 30
+      },
+      "getting_paid_banner": {
+        "x": 240,
+        "y": 467,
+        "w": 960,
+        "h": 213
+      },
+      "no_documents_text": {
+        "x": 240,
+        "y": 890,
+        "w": 960,
+        "h": 25,
+        "partlyOffscreen": true
+      }
+    },
+    "flags": [
+      "mentions an estimate: check it is labelled"
+    ],
+    "notes": "Real capture taken before the weak letter was uploaded (no check results on screen)."
+  },
+  {
+    "file": "d02-case-evidence-empty-full.png",
+    "url": "/provider/cases/30a14cc479f5cd2b",
+    "viewport": {
+      "width": 1440,
+      "height": 1310,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": true
+    },
+    "scrollY": 0,
+    "description": "Jane Doe's case before any letter, full page.",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "case_heading": {
+        "x": 240,
+        "y": 282,
+        "w": 213,
+        "h": 50
+      },
+      "status_tag": {
+        "x": 473,
+        "y": 293,
+        "w": 152,
+        "h": 30
+      },
+      "getting_paid_banner": {
+        "x": 240,
+        "y": 467,
+        "w": 960,
+        "h": 213
+      },
+      "no_documents_text": {
+        "x": 240,
+        "y": 890,
+        "w": 960,
+        "h": 25
+      },
+      "continue_button": {
+        "x": 1018,
+        "y": 1094,
+        "w": 182,
+        "h": 38
+      }
+    },
+    "flags": [
+      "mentions an estimate: check it is labelled"
+    ],
+    "notes": "Real capture taken before the weak letter was uploaded (no check results on screen)."
+  },
+  {
+    "file": "d03-case-client-code.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/client",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 0,
+    "description": "Jane's case, Client tab: upload code F9JW-SAAY and link, Copy link / Copy code buttons (viewport may need scroll for code).",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "asking_for_row": {
+        "x": 240,
+        "y": 891,
+        "w": 630,
+        "h": 126,
+        "partlyOffscreen": true
+      },
+      "upload_link_heading": {
+        "x": 240,
+        "y": 841,
+        "w": 630,
+        "h": 30
+      }
+    },
+    "notes": "Real capture taken before the weak letter was uploaded (no check results on screen)."
+  },
+  {
+    "file": "d03-case-client-code-scrolled.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/client",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 721,
+    "description": "Client tab scrolled so the 'Upload link and code' section, code F9JW-SAAY and copy buttons are in view.",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "code": {
+        "x": 449,
+        "y": 307,
+        "w": 153,
+        "h": 27
+      },
+      "code_row": {
+        "x": 240,
+        "y": 296,
+        "w": 630,
+        "h": 131
+      },
+      "link_row": {
+        "x": 240,
+        "y": 427,
+        "w": 630,
+        "h": 71
+      },
+      "copy_link_button": {
+        "x": 240,
+        "y": 574,
+        "w": 102,
+        "h": 38
+      },
+      "copy_code_button": {
+        "x": 357,
+        "y": 574,
+        "w": 115,
+        "h": 38
+      },
+      "asking_for_row": {
+        "x": 240,
+        "y": 170,
+        "w": 630,
+        "h": 126
+      },
+      "upload_link_heading": {
+        "x": 240,
+        "y": 120,
+        "w": 630,
+        "h": 30
+      }
+    },
+    "notes": "Real capture taken before the weak letter was uploaded (no check results on screen)."
+  },
+  {
+    "file": "d03-case-client-code-full.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/client",
+    "viewport": {
+      "width": 1440,
+      "height": 1720,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": true
+    },
+    "scrollY": 0,
+    "description": "Client tab, full page.",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "code": {
+        "x": 449,
+        "y": 1028,
+        "w": 153,
+        "h": 27
+      },
+      "code_row": {
+        "x": 240,
+        "y": 1017,
+        "w": 630,
+        "h": 131
+      },
+      "link_row": {
+        "x": 240,
+        "y": 1148,
+        "w": 630,
+        "h": 71
+      },
+      "copy_link_button": {
+        "x": 240,
+        "y": 1295,
+        "w": 102,
+        "h": 38
+      },
+      "copy_code_button": {
+        "x": 357,
+        "y": 1295,
+        "w": 115,
+        "h": 38
+      },
+      "asking_for_row": {
+        "x": 240,
+        "y": 891,
+        "w": 630,
+        "h": 126
+      },
+      "upload_link_heading": {
+        "x": 240,
+        "y": 841,
+        "w": 630,
+        "h": 30
+      }
+    },
+    "notes": "Real capture taken before the weak letter was uploaded (no check results on screen)."
+  },
+  {
+    "file": "p01-client-enter-code-empty.png",
+    "url": "/client",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 3,
+      "mobile": true,
+      "fullPage": false
+    },
+    "scrollY": 0,
+    "description": "Phone: 'Enter your code' page, empty. Exit this page button at top.",
+    "units": "CSS px; multiply by 3 for image pixels",
+    "regions": {
+      "exit_this_page_button": {
+        "x": 15,
+        "y": 122,
+        "w": 360,
+        "h": 38
+      },
+      "heading": {
+        "x": 15,
+        "y": 205,
+        "w": 360,
+        "h": 30
+      },
+      "code_input": {
+        "x": 15,
+        "y": 340,
+        "w": 219,
+        "h": 40
+      },
+      "continue_button": {
+        "x": 15,
+        "y": 400,
+        "w": 360,
+        "h": 38
+      },
+      "no_code_details": {
+        "x": 15,
+        "y": 460,
+        "w": 360,
+        "h": 25
+      }
+    },
+    "notes": "Real capture taken before the weak letter was uploaded (no check results on screen)."
+  },
+  {
+    "file": "p02-client-enter-code-typed.png",
+    "url": "/client",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 3,
+      "mobile": true,
+      "fullPage": false
+    },
+    "scrollY": 0,
+    "description": "Phone: 'Enter your code' with F9JW-SAAY typed in.",
+    "units": "CSS px; multiply by 3 for image pixels",
+    "regions": {
+      "exit_this_page_button": {
+        "x": 15,
+        "y": 122,
+        "w": 360,
+        "h": 38
+      },
+      "heading": {
+        "x": 15,
+        "y": 205,
+        "w": 360,
+        "h": 30
+      },
+      "code_input": {
+        "x": 15,
+        "y": 340,
+        "w": 219,
+        "h": 40
+      },
+      "continue_button": {
+        "x": 15,
+        "y": 400,
+        "w": 360,
+        "h": 38
+      },
+      "no_code_details": {
+        "x": 15,
+        "y": 460,
+        "w": 360,
+        "h": 25
+      }
+    },
+    "notes": "Real capture taken before the weak letter was uploaded (no check results on screen)."
+  },
+  {
+    "file": "p1-03-client-upload.png",
+    "url": "/client/F9JWSAAY",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 3,
+      "mobile": true,
+      "fullPage": false
+    },
+    "scrollY": 0,
+    "description": "Phone: Jane's upload page 'Send your letter' (Hartley & Webb, asked for 'Letter from your support worker').",
+    "units": "CSS px; multiply by 3 for image pixels",
+    "regions": {
+      "exit_this_page_button": {
+        "x": 15,
+        "y": 122,
+        "w": 360,
+        "h": 38
+      },
+      "firm_caption": {
+        "x": 15,
+        "y": 205,
+        "w": 360,
+        "h": 25
+      },
+      "heading": {
+        "x": 15,
+        "y": 230,
+        "w": 360,
+        "h": 30
+      },
+      "greeting": {
+        "x": 15,
+        "y": 280,
+        "w": 360,
+        "h": 50
+      },
+      "ask_box": {
+        "x": 15,
+        "y": 345,
+        "w": 360,
+        "h": 284
+      },
+      "take_photos_button": {
+        "x": 31,
+        "y": 427,
+        "w": 328,
+        "h": 43
+      },
+      "choose_from_phone_button": {
+        "x": 31,
+        "y": 485,
+        "w": 328,
+        "h": 38
+      },
+      "add_it_here_link": {
+        "x": 15,
+        "y": 681,
+        "w": 92,
+        "h": 21
+      }
+    },
+    "notes": "Real capture taken before the weak letter was uploaded (no check results on screen)."
+  },
+  {
+    "file": "p1-03-client-upload-full.png",
+    "url": "/client/F9JWSAAY",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 3,
+      "mobile": true,
+      "fullPage": true
+    },
+    "scrollY": 0,
+    "description": "Phone: upload page, full length (includes 'What happens to my letter?' and link expiry).",
+    "units": "CSS px; multiply by 3 for image pixels",
+    "regions": {
+      "exit_this_page_button": {
+        "x": 15,
+        "y": 122,
+        "w": 360,
+        "h": 38
+      },
+      "firm_caption": {
+        "x": 15,
+        "y": 205,
+        "w": 360,
+        "h": 25
+      },
+      "heading": {
+        "x": 15,
+        "y": 230,
+        "w": 360,
+        "h": 30
+      },
+      "greeting": {
+        "x": 15,
+        "y": 280,
+        "w": 360,
+        "h": 50
+      },
+      "ask_box": {
+        "x": 15,
+        "y": 345,
+        "w": 360,
+        "h": 284
+      },
+      "take_photos_button": {
+        "x": 31,
+        "y": 427,
+        "w": 328,
+        "h": 43
+      },
+      "choose_from_phone_button": {
+        "x": 31,
+        "y": 485,
+        "w": 328,
+        "h": 38
+      },
+      "add_it_here_link": {
+        "x": 15,
+        "y": 681,
+        "w": 92,
+        "h": 21
+      }
+    },
+    "notes": "Real capture taken before the weak letter was uploaded (no check results on screen)."
+  },
+  {
+    "file": "p1-05-client-result-needs-change.png",
+    "url": "/client/F9JWSAAY/result/change?doc=7c665f74e9ff11c1",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 3,
+      "mobile": true,
+      "fullPage": false
+    },
+    "scrollY": 0,
+    "description": "Phone: weak letter result - 'Needs a change': what to add (specific matters relied on), copy-message button, upload-new-letter button.",
+    "units": "CSS px; multiply by 3 for image pixels",
+    "regions": {
+      "exit_this_page_button": {
+        "x": 15,
+        "y": 122,
+        "w": 360,
+        "h": 38
+      },
+      "needs_change_tag": {
+        "x": 15,
+        "y": 203,
+        "w": 154,
+        "h": 30
+      },
+      "heading": {
+        "x": 15,
+        "y": 248,
+        "w": 360,
+        "h": 60
+      },
+      "missing_requirement_inset": {
+        "x": 15,
+        "y": 398,
+        "w": 360,
+        "h": 135
+      },
+      "copy_message_button": {
+        "x": 15,
+        "y": 643,
+        "w": 360,
+        "h": 57
+      },
+      "upload_new_letter_button": {
+        "x": 15,
+        "y": 715,
+        "w": 360,
+        "h": 38
+      },
+      "read_message_details": {
+        "x": 15,
+        "y": 788,
+        "w": 360,
+        "h": 25,
+        "note": "closed <details> summary line"
+      }
+    },
+    "notes": "Weak letter (document 7c665f74e9ff11c1); result synthesised with pitch/tools/synth_result.py (model demo-synthesised), not the offline stub."
+  },
+  {
+    "file": "p1-05-client-result-needs-change-full.png",
+    "url": "/client/F9JWSAAY/result/change?doc=7c665f74e9ff11c1",
+    "viewport": {
+      "width": 390,
+      "height": 853,
+      "deviceScaleFactor": 3,
+      "mobile": true,
+      "fullPage": true
+    },
+    "scrollY": 0,
+    "description": "Phone: needs-a-change result, full page.",
+    "units": "CSS px; multiply by 3 for image pixels",
+    "regions": {
+      "exit_this_page_button": {
+        "x": 15,
+        "y": 122,
+        "w": 360,
+        "h": 38
+      },
+      "needs_change_tag": {
+        "x": 15,
+        "y": 203,
+        "w": 154,
+        "h": 30
+      },
+      "heading": {
+        "x": 15,
+        "y": 248,
+        "w": 360,
+        "h": 60
+      },
+      "missing_requirement_inset": {
+        "x": 15,
+        "y": 398,
+        "w": 360,
+        "h": 135
+      },
+      "copy_message_button": {
+        "x": 15,
+        "y": 643,
+        "w": 360,
+        "h": 57
+      },
+      "upload_new_letter_button": {
+        "x": 15,
+        "y": 715,
+        "w": 360,
+        "h": 38
+      },
+      "read_message_details": {
+        "x": 15,
+        "y": 788,
+        "w": 360,
+        "h": 25,
+        "note": "closed <details> summary line"
+      }
+    },
+    "notes": "Weak letter (document 7c665f74e9ff11c1); result synthesised with pitch/tools/synth_result.py (model demo-synthesised), not the offline stub."
+  },
+  {
+    "file": "p1-07-client-message-expanded.png",
+    "url": "/client/F9JWSAAY/result/change?doc=7c665f74e9ff11c1",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 3,
+      "mobile": true,
+      "fullPage": false
+    },
+    "scrollY": 284,
+    "description": "Phone: 'Read the message first' expanded, showing the ready-made message to the support worker.",
+    "units": "CSS px; multiply by 3 for image pixels",
+    "regions": {
+      "exit_this_page_button": {
+        "x": 15,
+        "y": 0,
+        "w": 360,
+        "h": 38
+      },
+      "heading": {
+        "x": 15,
+        "y": -36,
+        "w": 360,
+        "h": 60,
+        "partlyOffscreen": true
+      },
+      "missing_requirement_inset": {
+        "x": 15,
+        "y": 114,
+        "w": 360,
+        "h": 135
+      },
+      "copy_message_button": {
+        "x": 15,
+        "y": 359,
+        "w": 360,
+        "h": 57
+      },
+      "upload_new_letter_button": {
+        "x": 15,
+        "y": 431,
+        "w": 360,
+        "h": 38
+      },
+      "read_message_details": {
+        "x": 15,
+        "y": 504,
+        "w": 360,
+        "h": 380,
+        "partlyOffscreen": true
+      },
+      "message_text": {
+        "x": 40,
+        "y": 549,
+        "w": 335,
+        "h": 320,
+        "partlyOffscreen": true
+      }
+    },
+    "notes": "Weak letter (document 7c665f74e9ff11c1); result synthesised with pitch/tools/synth_result.py (model demo-synthesised), not the offline stub. Exit this page button is sticky at the top while scrolled."
+  },
+  {
+    "file": "p1-07-client-message-expanded-full.png",
+    "url": "/client/F9JWSAAY/result/change?doc=7c665f74e9ff11c1",
+    "viewport": {
+      "width": 390,
+      "height": 1208,
+      "deviceScaleFactor": 3,
+      "mobile": true,
+      "fullPage": true
+    },
+    "scrollY": 0,
+    "description": "Phone: result with the message to the writer expanded, full page.",
+    "units": "CSS px; multiply by 3 for image pixels",
+    "regions": {
+      "exit_this_page_button": {
+        "x": 15,
+        "y": 122,
+        "w": 360,
+        "h": 38
+      },
+      "needs_change_tag": {
+        "x": 15,
+        "y": 203,
+        "w": 154,
+        "h": 30
+      },
+      "heading": {
+        "x": 15,
+        "y": 248,
+        "w": 360,
+        "h": 60
+      },
+      "missing_requirement_inset": {
+        "x": 15,
+        "y": 398,
+        "w": 360,
+        "h": 135
+      },
+      "copy_message_button": {
+        "x": 15,
+        "y": 643,
+        "w": 360,
+        "h": 57
+      },
+      "upload_new_letter_button": {
+        "x": 15,
+        "y": 715,
+        "w": 360,
+        "h": 38
+      },
+      "read_message_details": {
+        "x": 15,
+        "y": 788,
+        "w": 360,
+        "h": 380
+      },
+      "message_text": {
+        "x": 40,
+        "y": 833,
+        "w": 335,
+        "h": 320
+      }
+    },
+    "notes": "Weak letter (document 7c665f74e9ff11c1); result synthesised with pitch/tools/synth_result.py (model demo-synthesised), not the offline stub. Exit this page button is sticky at the top while scrolled."
+  },
+  {
+    "file": "p1-08-client-copy-before.png",
+    "url": "/client/F9JWSAAY/result/change?doc=7c665f74e9ff11c1",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 3,
+      "mobile": true,
+      "fullPage": false
+    },
+    "scrollY": 220,
+    "description": "Phone: Copy-a-message button before tapping.",
+    "units": "CSS px; multiply by 3 for image pixels",
+    "regions": {
+      "exit_this_page_button": {
+        "x": 15,
+        "y": 0,
+        "w": 360,
+        "h": 38
+      },
+      "needs_change_tag": {
+        "x": 15,
+        "y": -17,
+        "w": 154,
+        "h": 30,
+        "partlyOffscreen": true
+      },
+      "heading": {
+        "x": 15,
+        "y": 28,
+        "w": 360,
+        "h": 60
+      },
+      "missing_requirement_inset": {
+        "x": 15,
+        "y": 178,
+        "w": 360,
+        "h": 135
+      },
+      "copy_message_button": {
+        "x": 15,
+        "y": 423,
+        "w": 360,
+        "h": 57
+      },
+      "upload_new_letter_button": {
+        "x": 15,
+        "y": 495,
+        "w": 360,
+        "h": 38
+      },
+      "read_message_details": {
+        "x": 15,
+        "y": 568,
+        "w": 360,
+        "h": 380,
+        "partlyOffscreen": true
+      },
+      "message_text": {
+        "x": 40,
+        "y": 613,
+        "w": 335,
+        "h": 320,
+        "partlyOffscreen": true
+      }
+    },
+    "notes": "Weak letter (document 7c665f74e9ff11c1); result synthesised with pitch/tools/synth_result.py (model demo-synthesised), not the offline stub. Exit this page button is sticky at the top while scrolled."
+  },
+  {
+    "file": "p1-09-client-copy-after.png",
+    "url": "/client/F9JWSAAY/result/change?doc=7c665f74e9ff11c1",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 3,
+      "mobile": true,
+      "fullPage": false
+    },
+    "scrollY": 220,
+    "description": "Phone: after tapping copy - button reads 'Copied'.",
+    "units": "CSS px; multiply by 3 for image pixels",
+    "regions": {
+      "exit_this_page_button": {
+        "x": 15,
+        "y": 0,
+        "w": 360,
+        "h": 38
+      },
+      "needs_change_tag": {
+        "x": 15,
+        "y": -17,
+        "w": 154,
+        "h": 30,
+        "partlyOffscreen": true
+      },
+      "heading": {
+        "x": 15,
+        "y": 28,
+        "w": 360,
+        "h": 60
+      },
+      "missing_requirement_inset": {
+        "x": 15,
+        "y": 178,
+        "w": 360,
+        "h": 135
+      },
+      "upload_new_letter_button": {
+        "x": 15,
+        "y": 476,
+        "w": 360,
+        "h": 38
+      },
+      "read_message_details": {
+        "x": 15,
+        "y": 549,
+        "w": 360,
+        "h": 380,
+        "partlyOffscreen": true
+      },
+      "message_text": {
+        "x": 40,
+        "y": 594,
+        "w": 335,
+        "h": 320,
+        "partlyOffscreen": true
+      },
+      "copied_button": {
+        "x": 15,
+        "y": 423,
+        "w": 360,
+        "h": 38
+      }
+    },
+    "notes": "Weak letter (document 7c665f74e9ff11c1); result synthesised with pitch/tools/synth_result.py (model demo-synthesised), not the offline stub. Exit this page button is sticky at the top while scrolled."
+  },
+  {
+    "file": "d1-01-case-evidence.png",
+    "url": "/provider/cases/30a14cc479f5cd2b",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 0,
+    "description": "Jane's case Evidence tab with the weak letter (7 of 8, missing specific matters relied on).",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "case_heading": {
+        "x": 240,
+        "y": 282,
+        "w": 213,
+        "h": 50
+      },
+      "status_tag": {
+        "x": 473,
+        "y": 293,
+        "w": 154,
+        "h": 30
+      },
+      "getting_paid_banner": {
+        "x": 240,
+        "y": 467,
+        "w": 960,
+        "h": 213
+      },
+      "choose_heading": {
+        "x": 240,
+        "y": 730,
+        "w": 960,
+        "h": 40
+      }
+    },
+    "flags": [
+      "mentions an estimate: check it is labelled"
+    ]
+  },
+  {
+    "file": "d1-01-case-evidence-full.png",
+    "url": "/provider/cases/30a14cc479f5cd2b",
+    "viewport": {
+      "width": 1440,
+      "height": 1551,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": true
+    },
+    "scrollY": 0,
+    "description": "Jane's case Evidence tab, full page, with the weak letter (7 of 8, missing specific matters relied on).",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "case_heading": {
+        "x": 240,
+        "y": 282,
+        "w": 213,
+        "h": 50
+      },
+      "status_tag": {
+        "x": 473,
+        "y": 293,
+        "w": 154,
+        "h": 30
+      },
+      "getting_paid_banner": {
+        "x": 240,
+        "y": 467,
+        "w": 960,
+        "h": 213
+      },
+      "choose_heading": {
+        "x": 240,
+        "y": 730,
+        "w": 960,
+        "h": 40
+      },
+      "document_rows": {
+        "x": 240,
+        "y": 986,
+        "w": 960,
+        "h": 44
+      },
+      "weak_letter_row": {
+        "x": 240,
+        "y": 966,
+        "w": 960,
+        "h": 170
+      },
+      "see_the_check_link": {
+        "x": 465,
+        "y": 1095,
+        "w": 101,
+        "h": 20
+      },
+      "continue_button": {
+        "x": 1018,
+        "y": 1335,
+        "w": 182,
+        "h": 38
+      }
+    },
+    "flags": [
+      "mentions an estimate: check it is labelled"
+    ]
+  },
+  {
+    "file": "d1-01-case-evidence-documents.png",
+    "url": "/provider/cases/30a14cc479f5cd2b",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 651,
+    "description": "Evidence tab scrolled to 'Choose what to submit' document list (weak letter (7 of 8, missing specific matters relied on)).",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "getting_paid_banner": {
+        "x": 240,
+        "y": -184,
+        "w": 960,
+        "h": 213,
+        "partlyOffscreen": true
+      },
+      "choose_heading": {
+        "x": 240,
+        "y": 79,
+        "w": 960,
+        "h": 40
+      },
+      "document_rows": {
+        "x": 240,
+        "y": 335,
+        "w": 960,
+        "h": 44
+      },
+      "weak_letter_row": {
+        "x": 240,
+        "y": 315,
+        "w": 960,
+        "h": 170
+      },
+      "see_the_check_link": {
+        "x": 465,
+        "y": 444,
+        "w": 101,
+        "h": 20
+      },
+      "continue_button": {
+        "x": 1018,
+        "y": 684,
+        "w": 182,
+        "h": 38
+      }
+    },
+    "flags": [
+      "mentions an estimate: check it is labelled"
+    ]
+  },
+  {
+    "file": "d1-02-document-check.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/documents/7c665f74e9ff11c1",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 0,
+    "description": "Document check page, top (weak letter (7 of 8, missing specific matters relied on)).",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "heading": {
+        "x": 240,
+        "y": 282,
+        "w": 786,
+        "h": 40
+      },
+      "verdict_tag": {
+        "x": 240,
+        "y": 330,
+        "w": 154,
+        "h": 30
+      },
+      "getting_paid_banner": {
+        "x": 240,
+        "y": 412,
+        "w": 960,
+        "h": 531,
+        "partlyOffscreen": true
+      },
+      "what_to_ask_box": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 2820,
+        "partlyOffscreen": true
+      },
+      "drop_corrected_zone": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 2820,
+        "partlyOffscreen": true
+      }
+    },
+    "flags": [
+      "mentions an estimate: check it is labelled",
+      "Wording rule: 'get paid ... sooner' appears (Getting paid box: d1-02 headline 'Get paid at least 10 working days sooner'; submit page aside sentence 'should get you paid at least 10 working days sooner'). Crop it out or avoid that region."
+    ]
+  },
+  {
+    "file": "d1-02-document-check-full.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/documents/7c665f74e9ff11c1",
+    "viewport": {
+      "width": 1440,
+      "height": 2820,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": true
+    },
+    "scrollY": 0,
+    "description": "Document check page, full (weak letter (7 of 8, missing specific matters relied on)), details closed.",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "heading": {
+        "x": 240,
+        "y": 282,
+        "w": 786,
+        "h": 40
+      },
+      "verdict_tag": {
+        "x": 240,
+        "y": 330,
+        "w": 154,
+        "h": 30
+      },
+      "getting_paid_banner": {
+        "x": 240,
+        "y": 412,
+        "w": 960,
+        "h": 531
+      },
+      "summary_heading": {
+        "x": 240,
+        "y": 993,
+        "w": 630,
+        "h": 40
+      },
+      "missing_requirement_heading": {
+        "x": 240,
+        "y": 1183,
+        "w": 630,
+        "h": 25
+      },
+      "what_letter_says_quote": {
+        "x": 240,
+        "y": 1348,
+        "w": 630,
+        "h": 75
+      },
+      "what_to_ask_box": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 2820
+      },
+      "copy_request_button": {
+        "x": 240,
+        "y": 1568,
+        "w": 326,
+        "h": 38
+      },
+      "download_request_button": {
+        "x": 581,
+        "y": 1568,
+        "w": 177,
+        "h": 38
+      },
+      "preview_request_details": {
+        "x": 240,
+        "y": 1638,
+        "w": 630,
+        "h": 440
+      },
+      "request_letter_text": {
+        "x": 265,
+        "y": 1683,
+        "w": 605,
+        "h": 380
+      },
+      "drop_corrected_zone": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 2820
+      },
+      "all_requirements_details": {
+        "x": 240,
+        "y": 2355,
+        "w": 630,
+        "h": 25
+      },
+      "submit_warning": {
+        "x": 240,
+        "y": 2480,
+        "w": 630,
+        "h": 95
+      }
+    },
+    "flags": [
+      "mentions an estimate: check it is labelled",
+      "Wording rule: 'get paid ... sooner' appears (Getting paid box: d1-02 headline 'Get paid at least 10 working days sooner'; submit page aside sentence 'should get you paid at least 10 working days sooner'). Crop it out or avoid that region."
+    ]
+  },
+  {
+    "file": "d1-03-document-check-missing.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/documents/7c665f74e9ff11c1",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 1123,
+    "description": "Document check scrolled to the missing requirement, what the letter says, and what to ask for.",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "missing_requirement_heading": {
+        "x": 240,
+        "y": 60,
+        "w": 630,
+        "h": 25
+      },
+      "what_letter_says_quote": {
+        "x": 240,
+        "y": 225,
+        "w": 630,
+        "h": 75
+      },
+      "what_to_ask_box": {
+        "x": 0,
+        "y": -1123,
+        "w": 1440,
+        "h": 2820,
+        "partlyOffscreen": true
+      },
+      "copy_request_button": {
+        "x": 240,
+        "y": 445,
+        "w": 326,
+        "h": 38
+      },
+      "download_request_button": {
+        "x": 581,
+        "y": 445,
+        "w": 177,
+        "h": 38
+      },
+      "preview_request_details": {
+        "x": 240,
+        "y": 515,
+        "w": 630,
+        "h": 440,
+        "partlyOffscreen": true
+      },
+      "request_letter_text": {
+        "x": 265,
+        "y": 560,
+        "w": 605,
+        "h": 380,
+        "partlyOffscreen": true
+      },
+      "drop_corrected_zone": {
+        "x": 0,
+        "y": -1123,
+        "w": 1440,
+        "h": 2820,
+        "partlyOffscreen": true
+      }
+    },
+    "flags": [
+      "mentions an estimate: check it is labelled",
+      "Wording rule: 'get paid ... sooner' appears (Getting paid box: d1-02 headline 'Get paid at least 10 working days sooner'; submit page aside sentence 'should get you paid at least 10 working days sooner'). Crop it out or avoid that region."
+    ]
+  },
+  {
+    "file": "d1-04-document-check-request-letter.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/documents/7c665f74e9ff11c1",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 1438,
+    "description": "'Preview the request' expanded: drafted request letter to Lee Morgan at Riverside Outreach.",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "what_to_ask_box": {
+        "x": 0,
+        "y": -1438,
+        "w": 1440,
+        "h": 2820,
+        "partlyOffscreen": true
+      },
+      "copy_request_button": {
+        "x": 240,
+        "y": 130,
+        "w": 326,
+        "h": 38
+      },
+      "download_request_button": {
+        "x": 581,
+        "y": 130,
+        "w": 177,
+        "h": 38
+      },
+      "preview_request_details": {
+        "x": 240,
+        "y": 200,
+        "w": 630,
+        "h": 440
+      },
+      "request_letter_text": {
+        "x": 265,
+        "y": 245,
+        "w": 605,
+        "h": 380
+      },
+      "drop_corrected_zone": {
+        "x": 0,
+        "y": -1438,
+        "w": 1440,
+        "h": 2820,
+        "partlyOffscreen": true
+      }
+    },
+    "flags": [
+      "mentions an estimate: check it is labelled",
+      "Wording rule: 'get paid ... sooner' appears (Getting paid box: d1-02 headline 'Get paid at least 10 working days sooner'; submit page aside sentence 'should get you paid at least 10 working days sooner'). Crop it out or avoid that region."
+    ]
+  },
+  {
+    "file": "d1-04b-document-check-request-copied.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/documents/7c665f74e9ff11c1",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 1438,
+    "description": "After clicking 'Copy request' (button reads 'Copied').",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "what_to_ask_box": {
+        "x": 0,
+        "y": -1438,
+        "w": 1440,
+        "h": 2820,
+        "partlyOffscreen": true
+      },
+      "download_request_button": {
+        "x": 339,
+        "y": 130,
+        "w": 177,
+        "h": 38
+      },
+      "preview_request_details": {
+        "x": 240,
+        "y": 200,
+        "w": 630,
+        "h": 440
+      },
+      "request_letter_text": {
+        "x": 265,
+        "y": 245,
+        "w": 605,
+        "h": 380
+      },
+      "drop_corrected_zone": {
+        "x": 0,
+        "y": -1438,
+        "w": 1440,
+        "h": 2820,
+        "partlyOffscreen": true
+      },
+      "copied_button": {
+        "x": 240,
+        "y": 130,
+        "w": 84,
+        "h": 38
+      }
+    },
+    "flags": [
+      "mentions an estimate: check it is labelled",
+      "Wording rule: 'get paid ... sooner' appears (Getting paid box: d1-02 headline 'Get paid at least 10 working days sooner'; submit page aside sentence 'should get you paid at least 10 working days sooner'). Crop it out or avoid that region."
+    ]
+  },
+  {
+    "file": "d1-04c-crop-request-letter.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/documents/7c665f74e9ff11c1",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "crop": true
+    },
+    "description": "Zoomed crop: drafted request letter to the writer.",
+    "units": "crop image at 2x; clip (CSS px, document coords) given",
+    "clip": {
+      "x": 241,
+      "y": 1659,
+      "width": 653,
+      "height": 428,
+      "scale": 1
+    },
+    "regions": {}
+  },
+  {
+    "file": "d1-04d-crop-missing-requirement.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/documents/7c665f74e9ff11c1",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "crop": true
+    },
+    "description": "Zoomed crop: the missing requirement block (Specific matters relied on, what the letter says, explanation).",
+    "units": "crop image at 2x; clip (CSS px, document coords) given",
+    "clip": {
+      "x": 216,
+      "y": 1159,
+      "width": 678,
+      "height": 288,
+      "scale": 1
+    },
+    "regions": {}
+  },
+  {
+    "file": "d1-05-document-check-requirements.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/documents/7c665f74e9ff11c1",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 2275,
+    "description": "'All 8 requirements for paragraph 17' expanded (weak letter (7 of 8, missing specific matters relied on)).",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "what_to_ask_box": {
+        "x": 0,
+        "y": -2275,
+        "w": 1440,
+        "h": 3683,
+        "partlyOffscreen": true
+      },
+      "drop_corrected_zone": {
+        "x": 0,
+        "y": -2275,
+        "w": 1440,
+        "h": 3683,
+        "partlyOffscreen": true
+      },
+      "all_requirements_details": {
+        "x": 240,
+        "y": 80,
+        "w": 630,
+        "h": 888,
+        "partlyOffscreen": true
+      }
+    },
+    "flags": [
+      "mentions an estimate: check it is labelled",
+      "Wording rule: 'get paid ... sooner' appears (Getting paid box: d1-02 headline 'Get paid at least 10 working days sooner'; submit page aside sentence 'should get you paid at least 10 working days sooner'). Crop it out or avoid that region."
+    ]
+  },
+  {
+    "file": "d1-05-document-check-expanded-full.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/documents/7c665f74e9ff11c1",
+    "viewport": {
+      "width": 1440,
+      "height": 3683,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": true
+    },
+    "scrollY": 0,
+    "description": "Document check page, full, with details expanded (weak letter (7 of 8, missing specific matters relied on)).",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "heading": {
+        "x": 240,
+        "y": 282,
+        "w": 786,
+        "h": 40
+      },
+      "verdict_tag": {
+        "x": 240,
+        "y": 330,
+        "w": 154,
+        "h": 30
+      },
+      "getting_paid_banner": {
+        "x": 240,
+        "y": 412,
+        "w": 960,
+        "h": 531
+      },
+      "summary_heading": {
+        "x": 240,
+        "y": 993,
+        "w": 630,
+        "h": 40
+      },
+      "missing_requirement_heading": {
+        "x": 240,
+        "y": 1183,
+        "w": 630,
+        "h": 25
+      },
+      "what_letter_says_quote": {
+        "x": 240,
+        "y": 1348,
+        "w": 630,
+        "h": 75
+      },
+      "what_to_ask_box": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 3683
+      },
+      "download_request_button": {
+        "x": 339,
+        "y": 1568,
+        "w": 177,
+        "h": 38
+      },
+      "preview_request_details": {
+        "x": 240,
+        "y": 1638,
+        "w": 630,
+        "h": 440
+      },
+      "request_letter_text": {
+        "x": 265,
+        "y": 1683,
+        "w": 605,
+        "h": 380
+      },
+      "drop_corrected_zone": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 3683
+      },
+      "all_requirements_details": {
+        "x": 240,
+        "y": 2355,
+        "w": 630,
+        "h": 888
+      },
+      "submit_warning": {
+        "x": 240,
+        "y": 3343,
+        "w": 630,
+        "h": 95
+      }
+    },
+    "flags": [
+      "mentions an estimate: check it is labelled",
+      "Wording rule: 'get paid ... sooner' appears (Getting paid box: d1-02 headline 'Get paid at least 10 working days sooner'; submit page aside sentence 'should get you paid at least 10 working days sooner'). Crop it out or avoid that region."
+    ]
+  },
+  {
+    "file": "d1-06-document-pdf-marks.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/documents/7c665f74e9ff11c1/file",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 482,
+    "description": "Document view: the PDF with numbered marks on each sentence the check relied on, findings list alongside (weak letter (7 of 8, missing specific matters relied on)).",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "pdf_page": {
+        "x": 266,
+        "y": 140,
+        "w": 497,
+        "h": 703
+      },
+      "problem_mark": {
+        "x": 329,
+        "y": 491,
+        "w": 356,
+        "h": 13
+      },
+      "all_marks_first": {
+        "x": 329,
+        "y": 427,
+        "w": 371,
+        "h": 13
+      },
+      "findings_panel": {
+        "x": 803,
+        "y": 45,
+        "w": 371,
+        "h": 2586,
+        "partlyOffscreen": true
+      },
+      "verdict_tag": {
+        "x": 803,
+        "y": 148,
+        "w": 154,
+        "h": 30
+      }
+    }
+  },
+  {
+    "file": "d1-07-document-pdf-problem-mark.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/documents/7c665f74e9ff11c1/file",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 530,
+    "description": "PDF view scrolled to the highlighted problem sentence ('Victim testimony and referral').",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "pdf_page": {
+        "x": 266,
+        "y": 92,
+        "w": 497,
+        "h": 703
+      },
+      "problem_mark": {
+        "x": 329,
+        "y": 443,
+        "w": 356,
+        "h": 13
+      },
+      "all_marks_first": {
+        "x": 329,
+        "y": 379,
+        "w": 371,
+        "h": 13
+      },
+      "findings_panel": {
+        "x": 803,
+        "y": -3,
+        "w": 371,
+        "h": 2586,
+        "partlyOffscreen": true
+      },
+      "verdict_tag": {
+        "x": 803,
+        "y": 100,
+        "w": 154,
+        "h": 30
+      },
+      "highlight_key": {
+        "x": 266,
+        "y": 865,
+        "w": 497,
+        "h": 65,
+        "partlyOffscreen": true
+      }
+    }
+  },
+  {
+    "file": "d1-07b-crop-pdf-problem-sentence.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/documents/7c665f74e9ff11c1/file",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "crop": true
+    },
+    "description": "Zoomed crop: the highlighted problem sentence on the PDF.",
+    "units": "crop image at 2x; clip (CSS px, document coords) given",
+    "clip": {
+      "x": 249.171875,
+      "y": 893.234375,
+      "width": 515.859375,
+      "height": 172.59375,
+      "scale": 1
+    },
+    "regions": {}
+  },
+  {
+    "file": "d1-06-document-pdf-marks-full.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/documents/7c665f74e9ff11c1/file",
+    "viewport": {
+      "width": 1440,
+      "height": 3359,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": true
+    },
+    "scrollY": 0,
+    "description": "Document view, full page (weak letter (7 of 8, missing specific matters relied on)).",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "heading": {
+        "x": 240,
+        "y": 282,
+        "w": 960,
+        "h": 40
+      },
+      "pdf_page": {
+        "x": 266,
+        "y": 622,
+        "w": 497,
+        "h": 703
+      },
+      "problem_mark": {
+        "x": 329,
+        "y": 973,
+        "w": 356,
+        "h": 13
+      },
+      "all_marks_first": {
+        "x": 329,
+        "y": 909,
+        "w": 371,
+        "h": 13
+      },
+      "findings_panel": {
+        "x": 803,
+        "y": 527,
+        "w": 371,
+        "h": 2586
+      },
+      "findings_problem_item": {
+        "x": 803,
+        "y": 1458,
+        "w": 371,
+        "h": 291
+      },
+      "verdict_tag": {
+        "x": 803,
+        "y": 630,
+        "w": 154,
+        "h": 30
+      },
+      "highlight_key": {
+        "x": 266,
+        "y": 1395,
+        "w": 497,
+        "h": 65
+      }
+    }
+  },
+  {
+    "file": "d1-06b-crop-pdf-page.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/documents/7c665f74e9ff11c1/file",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "crop": true
+    },
+    "description": "Zoomed crop: the PDF page with all marks (weak letter (7 of 8, missing specific matters relied on)).",
+    "units": "crop image at 2x; clip (CSS px, document coords) given",
+    "clip": {
+      "x": 258,
+      "y": 614,
+      "width": 513,
+      "height": 718.890625,
+      "scale": 1
+    },
+    "regions": {}
+  },
+  {
+    "file": "p2-03-client-upload.png",
+    "url": "/client/F9JWSAAY",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 3,
+      "mobile": true,
+      "fullPage": false
+    },
+    "scrollY": 0,
+    "description": "Phone: Jane's upload page 'Send your letter' (Hartley & Webb, asked for 'Letter from your support worker'), before uploading the corrected letter.",
+    "units": "CSS px; multiply by 3 for image pixels",
+    "regions": {
+      "exit_this_page_button": {
+        "x": 15,
+        "y": 122,
+        "w": 360,
+        "h": 38
+      },
+      "firm_caption": {
+        "x": 15,
+        "y": 205,
+        "w": 360,
+        "h": 25
+      },
+      "heading": {
+        "x": 15,
+        "y": 230,
+        "w": 360,
+        "h": 30
+      },
+      "greeting": {
+        "x": 15,
+        "y": 280,
+        "w": 360,
+        "h": 50
+      },
+      "ask_box": {
+        "x": 15,
+        "y": 345,
+        "w": 360,
+        "h": 284
+      },
+      "take_photos_button": {
+        "x": 31,
+        "y": 427,
+        "w": 328,
+        "h": 43
+      },
+      "choose_from_phone_button": {
+        "x": 31,
+        "y": 485,
+        "w": 328,
+        "h": 38
+      },
+      "add_it_here_link": {
+        "x": 15,
+        "y": 681,
+        "w": 92,
+        "h": 21
+      }
+    }
+  },
+  {
+    "file": "p2-05-client-result-ready.png",
+    "url": "/client/F9JWSAAY/result/ready?doc=9e481b8f79deb1bc",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 3,
+      "mobile": true,
+      "fullPage": false
+    },
+    "scrollY": 0,
+    "description": "Phone: corrected letter result - ready.",
+    "units": "CSS px; multiply by 3 for image pixels",
+    "regions": {
+      "exit_this_page_button": {
+        "x": 15,
+        "y": 122,
+        "w": 360,
+        "h": 38
+      },
+      "heading": {
+        "x": 35,
+        "y": 225,
+        "w": 320,
+        "h": 35
+      },
+      "panel": {
+        "x": 15,
+        "y": 205,
+        "w": 360,
+        "h": 135
+      },
+      "upload_another_link": {
+        "x": 15,
+        "y": 597,
+        "w": 219,
+        "h": 21
+      }
+    },
+    "notes": "Corrected letter (document 9e481b8f79deb1bc); result synthesised (demo-synthesised), not the offline stub."
+  },
+  {
+    "file": "p2-04-client-checking.png",
+    "url": "/client/F9JWSAAY/checking?doc=9e481b8f79deb1bc",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 3,
+      "mobile": true,
+      "fullPage": false
+    },
+    "scrollY": 0,
+    "description": "Phone: 'Checking your document' screen (spinner, task list).",
+    "units": "CSS px; multiply by 3 for image pixels",
+    "regions": {
+      "exit_this_page_button": {
+        "x": 15,
+        "y": 122,
+        "w": 360,
+        "h": 38
+      },
+      "heading": {
+        "x": 15,
+        "y": 230,
+        "w": 360,
+        "h": 30
+      },
+      "file_card": {
+        "x": 15,
+        "y": 321,
+        "w": 360,
+        "h": 88
+      },
+      "task_list": {
+        "x": 15,
+        "y": 439,
+        "w": 360,
+        "h": 164
+      },
+      "checking_tag": {
+        "x": 280,
+        "y": 494,
+        "w": 95,
+        "h": 30
+      }
+    },
+    "notes": "Rendered by the real page with the document API response held at 'no result yet' (CDP interception): live, this screen shows for under a second because the check finished inside the upload request."
+  },
+  {
+    "file": "p1-04-client-checking.png",
+    "url": "/client/F9JWSAAY/checking?doc=7c665f74e9ff11c1",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 3,
+      "mobile": true,
+      "fullPage": false
+    },
+    "scrollY": 0,
+    "description": "Phone: 'Checking your document' screen (spinner, task list).",
+    "units": "CSS px; multiply by 3 for image pixels",
+    "regions": {
+      "exit_this_page_button": {
+        "x": 15,
+        "y": 122,
+        "w": 360,
+        "h": 38
+      },
+      "heading": {
+        "x": 15,
+        "y": 230,
+        "w": 360,
+        "h": 30
+      },
+      "file_card": {
+        "x": 15,
+        "y": 321,
+        "w": 360,
+        "h": 88
+      },
+      "task_list": {
+        "x": 15,
+        "y": 439,
+        "w": 360,
+        "h": 164
+      },
+      "checking_tag": {
+        "x": 280,
+        "y": 494,
+        "w": 95,
+        "h": 30
+      }
+    },
+    "notes": "Rendered by the real page with the document API response held at 'no result yet' (CDP interception): live, this screen shows for under a second because the check finished inside the upload request. Weak letter (document 7c665f74e9ff11c1); result synthesised with pitch/tools/synth_result.py (model demo-synthesised), not the offline stub."
+  },
+  {
+    "file": "d3-01-evidence-choose-corrected.png",
+    "url": "/provider/cases/30a14cc479f5cd2b",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 938,
+    "description": "Evidence tab: corrected letter ticked to submit, weak letter unticked, Continue to submit.",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "fixed_checkbox": {
+        "x": 240,
+        "y": 296,
+        "w": 960,
+        "h": 44
+      },
+      "weak_checkbox": {
+        "x": 240,
+        "y": 491,
+        "w": 960,
+        "h": 44
+      },
+      "continue_button": {
+        "x": 1018,
+        "y": 880,
+        "w": 182,
+        "h": 38,
+        "partlyOffscreen": true
+      },
+      "choose_heading": {
+        "x": 240,
+        "y": 40,
+        "w": 960,
+        "h": 40
+      }
+    },
+    "flags": [
+      "mentions an estimate: check it is labelled"
+    ],
+    "notes": "Corrected letter (document 9e481b8f79deb1bc); result synthesised (demo-synthesised), not the offline stub."
+  },
+  {
+    "file": "d3-02-submit.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/submit?selected=9e481b8f79deb1bc",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 0,
+    "description": "Submit page: 'Ready to submit', the corrected letter, 'Download for Civil Apply' button.",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "heading": {
+        "x": 240,
+        "y": 282,
+        "w": 960,
+        "h": 50
+      },
+      "ready_panel": {
+        "x": 240,
+        "y": 382,
+        "w": 630,
+        "h": 280
+      },
+      "evidence_summary": {
+        "x": 240,
+        "y": 677,
+        "w": 630,
+        "h": 30
+      },
+      "getting_paid_aside": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 1431,
+        "partlyOffscreen": true
+      },
+      "sooner_sentence": {
+        "x": 900,
+        "y": 619,
+        "w": 300,
+        "h": 75
+      },
+      "estimate_label": {
+        "x": 900,
+        "y": 714,
+        "w": 300,
+        "h": 40
+      },
+      "pilot_aside": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 1431,
+        "partlyOffscreen": true
+      }
+    },
+    "flags": [
+      "mentions an estimate: check it is labelled",
+      "Wording rule: 'get paid ... sooner' appears (Getting paid box: d1-02 headline 'Get paid at least 10 working days sooner'; submit page aside sentence 'should get you paid at least 10 working days sooner'). Crop it out or avoid that region."
+    ],
+    "notes": "Corrected letter (document 9e481b8f79deb1bc); result synthesised (demo-synthesised), not the offline stub."
+  },
+  {
+    "file": "d3-02-submit-full.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/submit?selected=9e481b8f79deb1bc",
+    "viewport": {
+      "width": 1440,
+      "height": 1431,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": true
+    },
+    "scrollY": 0,
+    "description": "Submit page, full.",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "heading": {
+        "x": 240,
+        "y": 282,
+        "w": 960,
+        "h": 50
+      },
+      "ready_panel": {
+        "x": 240,
+        "y": 382,
+        "w": 630,
+        "h": 280
+      },
+      "evidence_summary": {
+        "x": 240,
+        "y": 677,
+        "w": 630,
+        "h": 30
+      },
+      "download_button": {
+        "x": 260,
+        "y": 1103,
+        "w": 229,
+        "h": 38
+      },
+      "getting_paid_aside": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 1431
+      },
+      "sooner_sentence": {
+        "x": 900,
+        "y": 619,
+        "w": 300,
+        "h": 75
+      },
+      "estimate_label": {
+        "x": 900,
+        "y": 714,
+        "w": 300,
+        "h": 40
+      },
+      "pilot_aside": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 1431
+      }
+    },
+    "flags": [
+      "mentions an estimate: check it is labelled",
+      "Wording rule: 'get paid ... sooner' appears (Getting paid box: d1-02 headline 'Get paid at least 10 working days sooner'; submit page aside sentence 'should get you paid at least 10 working days sooner'). Crop it out or avoid that region."
+    ],
+    "notes": "Corrected letter (document 9e481b8f79deb1bc); result synthesised (demo-synthesised), not the offline stub."
+  },
+  {
+    "file": "d3-03-submit-download-button.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/submit?selected=9e481b8f79deb1bc",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 531,
+    "description": "Submit page with the Download for Civil Apply button centred.",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "ready_panel": {
+        "x": 240,
+        "y": -149,
+        "w": 630,
+        "h": 280,
+        "partlyOffscreen": true
+      },
+      "evidence_summary": {
+        "x": 240,
+        "y": 146,
+        "w": 630,
+        "h": 30
+      },
+      "download_button": {
+        "x": 260,
+        "y": 572,
+        "w": 229,
+        "h": 38
+      },
+      "getting_paid_aside": {
+        "x": 0,
+        "y": -531,
+        "w": 1440,
+        "h": 1431,
+        "partlyOffscreen": true
+      },
+      "sooner_sentence": {
+        "x": 900,
+        "y": 88,
+        "w": 300,
+        "h": 75
+      },
+      "estimate_label": {
+        "x": 900,
+        "y": 183,
+        "w": 300,
+        "h": 40
+      },
+      "pilot_aside": {
+        "x": 0,
+        "y": -531,
+        "w": 1440,
+        "h": 1431,
+        "partlyOffscreen": true
+      }
+    },
+    "flags": [
+      "mentions an estimate: check it is labelled",
+      "Wording rule: 'get paid ... sooner' appears (Getting paid box: d1-02 headline 'Get paid at least 10 working days sooner'; submit page aside sentence 'should get you paid at least 10 working days sooner'). Crop it out or avoid that region."
+    ],
+    "notes": "Corrected letter (document 9e481b8f79deb1bc); result synthesised (demo-synthesised), not the offline stub."
+  },
+  {
+    "file": "d3-04-submitted-confirmation.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/submit?selected=9e481b8f79deb1bc",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 0,
+    "description": "After Download for Civil Apply: confirmation that the evidence pack was created/submitted.",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "heading": {
+        "x": 240,
+        "y": 485,
+        "w": 960,
+        "h": 50
+      },
+      "confirmation_panel": {
+        "x": 240,
+        "y": 585,
+        "w": 630,
+        "h": 280
+      },
+      "success_banner": {
+        "x": 240,
+        "y": 252,
+        "w": 960,
+        "h": 153
+      }
+    },
+    "flags": [
+      "mentions an estimate: check it is labelled",
+      "Wording rule: 'get paid ... sooner' appears (Getting paid box: d1-02 headline 'Get paid at least 10 working days sooner'; submit page aside sentence 'should get you paid at least 10 working days sooner'). Crop it out or avoid that region."
+    ],
+    "notes": "Corrected letter (document 9e481b8f79deb1bc); result synthesised (demo-synthesised), not the offline stub. Yellow outline on the Success banner is the GOV.UK focus ring (the page focuses the banner)."
+  },
+  {
+    "file": "d3-04-submitted-confirmation-full.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/submit?selected=9e481b8f79deb1bc",
+    "viewport": {
+      "width": 1440,
+      "height": 1634,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": true
+    },
+    "scrollY": 0,
+    "description": "Submitted confirmation, full page.",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "heading": {
+        "x": 240,
+        "y": 485,
+        "w": 960,
+        "h": 50
+      },
+      "confirmation_panel": {
+        "x": 240,
+        "y": 585,
+        "w": 630,
+        "h": 280
+      },
+      "success_banner": {
+        "x": 240,
+        "y": 252,
+        "w": 960,
+        "h": 153
+      },
+      "download_again": {
+        "x": 260,
+        "y": 1306,
+        "w": 229,
+        "h": 38
+      }
+    },
+    "flags": [
+      "mentions an estimate: check it is labelled",
+      "Wording rule: 'get paid ... sooner' appears (Getting paid box: d1-02 headline 'Get paid at least 10 working days sooner'; submit page aside sentence 'should get you paid at least 10 working days sooner'). Crop it out or avoid that region."
+    ],
+    "notes": "Corrected letter (document 9e481b8f79deb1bc); result synthesised (demo-synthesised), not the offline stub. Yellow outline on the Success banner is the GOV.UK focus ring (the page focuses the banner)."
+  },
+  {
+    "file": "c01-caseworker-queue.png",
+    "url": "/caseworker",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 0,
+    "description": "LAA caseworker evidence queue (reference). Jane Doe L597743 listed as Meets the requirements, 3 of 3 checks agreed.",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "heading": {
+        "x": 80,
+        "y": 232,
+        "w": 365,
+        "h": 50
+      },
+      "jane_row": {
+        "x": 80,
+        "y": 574,
+        "w": 1280,
+        "h": 71
+      },
+      "queue_table": {
+        "x": 80,
+        "y": 432,
+        "w": 1280,
+        "h": 426
+      },
+      "review_next_button": {
+        "x": 1187,
+        "y": 244,
+        "w": 173,
+        "h": 38
+      }
+    },
+    "notes": "Corrected letter (document 9e481b8f79deb1bc); result synthesised (demo-synthesised), not the offline stub."
+  },
+  {
+    "file": "c01-caseworker-queue-full.png",
+    "url": "/caseworker",
+    "viewport": {
+      "width": 1440,
+      "height": 1058,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": true
+    },
+    "scrollY": 0,
+    "description": "Caseworker queue, full page.",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "heading": {
+        "x": 80,
+        "y": 232,
+        "w": 365,
+        "h": 50
+      },
+      "jane_row": {
+        "x": 80,
+        "y": 574,
+        "w": 1280,
+        "h": 71
+      },
+      "queue_table": {
+        "x": 80,
+        "y": 432,
+        "w": 1280,
+        "h": 426
+      },
+      "review_next_button": {
+        "x": 1187,
+        "y": 244,
+        "w": 173,
+        "h": 38
+      }
+    },
+    "notes": "Corrected letter (document 9e481b8f79deb1bc); result synthesised (demo-synthesised), not the offline stub."
+  },
+  {
+    "file": "c02-caseworker-review.png",
+    "url": "/caseworker/cases/a34dece2310ff78f",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 0,
+    "description": "Caseworker review page for Jane Doe (L597743): embedded PDF with numbered marks, tool verdict, findings (reference).",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "heading": {
+        "x": 80,
+        "y": 277,
+        "w": 485,
+        "h": 50
+      },
+      "verdict": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 3163,
+        "partlyOffscreen": true
+      },
+      "pdf_page": {
+        "x": 106,
+        "y": 494,
+        "w": 689,
+        "h": 974,
+        "partlyOffscreen": true
+      },
+      "independent_check": {
+        "x": 835,
+        "y": 524,
+        "w": 499,
+        "h": 80
+      },
+      "findings": {
+        "x": 835,
+        "y": 419,
+        "w": 499,
+        "h": 2138,
+        "partlyOffscreen": true
+      }
+    },
+    "notes": "Corrected letter (document 9e481b8f79deb1bc); result synthesised (demo-synthesised), not the offline stub."
+  },
+  {
+    "file": "c02-caseworker-review-pdf.png",
+    "url": "/caseworker/cases/a34dece2310ff78f",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 374,
+    "description": "Caseworker review scrolled to the embedded PDF with highlights and the findings list; independent LAA check agrees.",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "verdict": {
+        "x": 0,
+        "y": -374,
+        "w": 1440,
+        "h": 3163,
+        "partlyOffscreen": true
+      },
+      "pdf_page": {
+        "x": 106,
+        "y": 120,
+        "w": 689,
+        "h": 974,
+        "partlyOffscreen": true
+      },
+      "specific_matters_mark": {
+        "x": 194,
+        "y": 607,
+        "w": 473,
+        "h": 16
+      },
+      "independent_check": {
+        "x": 835,
+        "y": 150,
+        "w": 499,
+        "h": 80
+      },
+      "findings": {
+        "x": 835,
+        "y": 45,
+        "w": 499,
+        "h": 2138,
+        "partlyOffscreen": true
+      }
+    },
+    "notes": "Corrected letter (document 9e481b8f79deb1bc); result synthesised (demo-synthesised), not the offline stub."
+  },
+  {
+    "file": "c02-caseworker-review-full.png",
+    "url": "/caseworker/cases/a34dece2310ff78f",
+    "viewport": {
+      "width": 1440,
+      "height": 3163,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": true
+    },
+    "scrollY": 0,
+    "description": "Caseworker review page, full (includes author verification and decision buttons).",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "heading": {
+        "x": 80,
+        "y": 277,
+        "w": 485,
+        "h": 50
+      },
+      "verdict": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 3163
+      },
+      "pdf_page": {
+        "x": 106,
+        "y": 494,
+        "w": 689,
+        "h": 974
+      },
+      "specific_matters_mark": {
+        "x": 194,
+        "y": 981,
+        "w": 473,
+        "h": 16
+      },
+      "independent_check": {
+        "x": 835,
+        "y": 524,
+        "w": 499,
+        "h": 80
+      },
+      "findings": {
+        "x": 835,
+        "y": 419,
+        "w": 499,
+        "h": 2138
+      },
+      "verifying_author": {
+        "x": 835,
+        "y": 1850,
+        "w": 499,
+        "h": 25
+      },
+      "decision_heading": {
+        "x": 80,
+        "y": 2633,
+        "w": 860,
+        "h": 40
+      },
+      "accept_button": {
+        "x": 257,
+        "y": 2883,
+        "w": 163,
+        "h": 38
+      }
+    },
+    "notes": "Corrected letter (document 9e481b8f79deb1bc); result synthesised (demo-synthesised), not the offline stub."
+  },
+  {
+    "file": "d2-01-case-evidence.png",
+    "url": "/provider/cases/30a14cc479f5cd2b",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 0,
+    "description": "Jane's case Evidence tab with the corrected letter (all 8 included).",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "case_heading": {
+        "x": 240,
+        "y": 282,
+        "w": 213,
+        "h": 50
+      },
+      "status_tag": {
+        "x": 473,
+        "y": 293,
+        "w": 216,
+        "h": 30
+      },
+      "getting_paid_banner": {
+        "x": 240,
+        "y": 467,
+        "w": 960,
+        "h": 461,
+        "partlyOffscreen": true
+      }
+    },
+    "flags": [
+      "mentions an estimate: check it is labelled"
+    ],
+    "notes": "Corrected letter (document 9e481b8f79deb1bc); result synthesised (demo-synthesised), not the offline stub. No separate version-comparison view exists for this pair: client uploads are not linked as replacements (replacesDocumentId null), so the evidence list shows 'Newer version. Replaces the letter of 29 September' / 'Older version' labels instead."
+  },
+  {
+    "file": "d2-01-case-evidence-full.png",
+    "url": "/provider/cases/30a14cc479f5cd2b",
+    "viewport": {
+      "width": 1440,
+      "height": 2049,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": true
+    },
+    "scrollY": 0,
+    "description": "Jane's case Evidence tab, full page, with the corrected letter (all 8 included).",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "case_heading": {
+        "x": 240,
+        "y": 282,
+        "w": 213,
+        "h": 50
+      },
+      "status_tag": {
+        "x": 473,
+        "y": 293,
+        "w": 216,
+        "h": 30
+      },
+      "getting_paid_banner": {
+        "x": 240,
+        "y": 467,
+        "w": 960,
+        "h": 461
+      },
+      "choose_heading": {
+        "x": 240,
+        "y": 978,
+        "w": 960,
+        "h": 40
+      },
+      "document_rows": {
+        "x": 240,
+        "y": 1234,
+        "w": 960,
+        "h": 44
+      },
+      "weak_letter_row": {
+        "x": 240,
+        "y": 1409,
+        "w": 960,
+        "h": 195
+      },
+      "see_the_check_link": {
+        "x": 465,
+        "y": 1368,
+        "w": 101,
+        "h": 20
+      },
+      "continue_button": {
+        "x": 1018,
+        "y": 1818,
+        "w": 182,
+        "h": 38
+      }
+    },
+    "flags": [
+      "mentions an estimate: check it is labelled"
+    ],
+    "notes": "Corrected letter (document 9e481b8f79deb1bc); result synthesised (demo-synthesised), not the offline stub. No separate version-comparison view exists for this pair: client uploads are not linked as replacements (replacesDocumentId null), so the evidence list shows 'Newer version. Replaces the letter of 29 September' / 'Older version' labels instead."
+  },
+  {
+    "file": "d2-01-case-evidence-documents.png",
+    "url": "/provider/cases/30a14cc479f5cd2b",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 938,
+    "description": "Evidence tab scrolled to 'Choose what to submit' document list (corrected letter (all 8 included)).",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "choose_heading": {
+        "x": 240,
+        "y": 40,
+        "w": 960,
+        "h": 40
+      },
+      "document_rows": {
+        "x": 240,
+        "y": 296,
+        "w": 960,
+        "h": 44
+      },
+      "weak_letter_row": {
+        "x": 240,
+        "y": 471,
+        "w": 960,
+        "h": 195
+      },
+      "see_the_check_link": {
+        "x": 465,
+        "y": 430,
+        "w": 101,
+        "h": 20
+      },
+      "continue_button": {
+        "x": 1018,
+        "y": 880,
+        "w": 182,
+        "h": 38,
+        "partlyOffscreen": true
+      }
+    },
+    "flags": [
+      "mentions an estimate: check it is labelled"
+    ],
+    "notes": "Corrected letter (document 9e481b8f79deb1bc); result synthesised (demo-synthesised), not the offline stub. No separate version-comparison view exists for this pair: client uploads are not linked as replacements (replacesDocumentId null), so the evidence list shows 'Newer version. Replaces the letter of 29 September' / 'Older version' labels instead."
+  },
+  {
+    "file": "d2-02-document-check.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/documents/9e481b8f79deb1bc",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 0,
+    "description": "Document check page, top (corrected letter (all 8 included)).",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "heading": {
+        "x": 240,
+        "y": 282,
+        "w": 786,
+        "h": 40
+      },
+      "verdict_tag": {
+        "x": 240,
+        "y": 330,
+        "w": 216,
+        "h": 30
+      },
+      "all_requirements_details": {
+        "x": 240,
+        "y": 622,
+        "w": 630,
+        "h": 888,
+        "partlyOffscreen": true
+      }
+    },
+    "notes": "Corrected letter (document 9e481b8f79deb1bc); result synthesised (demo-synthesised), not the offline stub. No separate version-comparison view exists for this pair: client uploads are not linked as replacements (replacesDocumentId null), so the evidence list shows 'Newer version. Replaces the letter of 29 September' / 'Older version' labels instead."
+  },
+  {
+    "file": "d2-02-document-check-full.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/documents/9e481b8f79deb1bc",
+    "viewport": {
+      "width": 1440,
+      "height": 1710,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": true
+    },
+    "scrollY": 0,
+    "description": "Document check page, full (corrected letter (all 8 included)), details closed.",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "heading": {
+        "x": 240,
+        "y": 282,
+        "w": 786,
+        "h": 40
+      },
+      "verdict_tag": {
+        "x": 240,
+        "y": 330,
+        "w": 216,
+        "h": 30
+      },
+      "all_requirements_details": {
+        "x": 240,
+        "y": 622,
+        "w": 630,
+        "h": 888
+      }
+    },
+    "notes": "Corrected letter (document 9e481b8f79deb1bc); result synthesised (demo-synthesised), not the offline stub."
+  },
+  {
+    "file": "d2-05-document-check-requirements.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/documents/9e481b8f79deb1bc",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 542,
+    "description": "'All 8 requirements for paragraph 17' expanded (corrected letter (all 8 included)).",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "all_requirements_details": {
+        "x": 240,
+        "y": 80,
+        "w": 630,
+        "h": 888,
+        "partlyOffscreen": true
+      }
+    },
+    "notes": "Corrected letter (document 9e481b8f79deb1bc); result synthesised (demo-synthesised), not the offline stub."
+  },
+  {
+    "file": "d2-05-document-check-expanded-full.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/documents/9e481b8f79deb1bc",
+    "viewport": {
+      "width": 1440,
+      "height": 1710,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": true
+    },
+    "scrollY": 0,
+    "description": "Document check page, full, with details expanded (corrected letter (all 8 included)).",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "heading": {
+        "x": 240,
+        "y": 282,
+        "w": 786,
+        "h": 40
+      },
+      "verdict_tag": {
+        "x": 240,
+        "y": 330,
+        "w": 216,
+        "h": 30
+      },
+      "all_requirements_details": {
+        "x": 240,
+        "y": 622,
+        "w": 630,
+        "h": 888
+      }
+    },
+    "notes": "Corrected letter (document 9e481b8f79deb1bc); result synthesised (demo-synthesised), not the offline stub."
+  },
+  {
+    "file": "d2-06-document-pdf-marks.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/documents/9e481b8f79deb1bc/file",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": false
+    },
+    "scrollY": 482,
+    "description": "Document view: the PDF with numbered marks on each sentence the check relied on, findings list alongside (corrected letter (all 8 included)).",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "pdf_page": {
+        "x": 266,
+        "y": 140,
+        "w": 497,
+        "h": 703
+      },
+      "all_marks_first": {
+        "x": 329,
+        "y": 427,
+        "w": 371,
+        "h": 13
+      },
+      "findings_panel": {
+        "x": 803,
+        "y": 45,
+        "w": 371,
+        "h": 2486,
+        "partlyOffscreen": true
+      },
+      "verdict_tag": {
+        "x": 803,
+        "y": 148,
+        "w": 176,
+        "h": 55
+      }
+    },
+    "notes": "Corrected letter (document 9e481b8f79deb1bc); result synthesised (demo-synthesised), not the offline stub."
+  },
+  {
+    "file": "d2-06-document-pdf-marks-full.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/documents/9e481b8f79deb1bc/file",
+    "viewport": {
+      "width": 1440,
+      "height": 3259,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "fullPage": true
+    },
+    "scrollY": 0,
+    "description": "Document view, full page (corrected letter (all 8 included)).",
+    "units": "CSS px; multiply by 2 for image pixels",
+    "regions": {
+      "heading": {
+        "x": 240,
+        "y": 282,
+        "w": 960,
+        "h": 40
+      },
+      "pdf_page": {
+        "x": 266,
+        "y": 622,
+        "w": 497,
+        "h": 703
+      },
+      "all_marks_first": {
+        "x": 329,
+        "y": 909,
+        "w": 371,
+        "h": 13
+      },
+      "findings_panel": {
+        "x": 803,
+        "y": 527,
+        "w": 371,
+        "h": 2486
+      },
+      "verdict_tag": {
+        "x": 803,
+        "y": 630,
+        "w": 176,
+        "h": 55
+      },
+      "highlight_key": {
+        "x": 266,
+        "y": 1395,
+        "w": 497,
+        "h": 65
+      }
+    },
+    "notes": "Corrected letter (document 9e481b8f79deb1bc); result synthesised (demo-synthesised), not the offline stub."
+  },
+  {
+    "file": "d2-06b-crop-pdf-page.png",
+    "url": "/provider/cases/30a14cc479f5cd2b/documents/9e481b8f79deb1bc/file",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 2,
+      "mobile": false,
+      "crop": true
+    },
+    "description": "Zoomed crop: the PDF page with all marks (corrected letter (all 8 included)).",
+    "units": "crop image at 2x; clip (CSS px, document coords) given",
+    "clip": {
+      "x": 258,
+      "y": 614,
+      "width": 513,
+      "height": 718.890625,
+      "scale": 1
+    },
+    "regions": {},
+    "notes": "Corrected letter (document 9e481b8f79deb1bc); result synthesised (demo-synthesised), not the offline stub."
+  },
+  {
+    "file": "pack/verification-summary.png",
+    "source": "pack/verification-summary.txt",
+    "url": "/web/submissions/a34dece2310ff78f/pack.zip",
+    "viewport": {
+      "width": 900,
+      "deviceScaleFactor": 2
+    },
+    "description": "Submission pack: verification-summary.txt rendered as a clean text-file view (what the caseworker opens from the existing portal). All 8 requirements [x] with quotes.",
+    "regions": {}
+  },
+  {
+    "file": "pack/jane-support-letter-fixed-txt.png",
+    "source": "pack/jane-support-letter-fixed.txt",
+    "url": "/web/submissions/a34dece2310ff78f/pack.zip",
+    "viewport": {
+      "width": 900,
+      "deviceScaleFactor": 2
+    },
+    "description": "Submission pack: the letter as packed. The server no longer held the PDF bytes in memory, so the pack carries the frozen text as jane-support-letter-fixed.txt (app behaviour), rendered here as a text-file view.",
+    "regions": {}
+  },
+  {
+    "file": "pack/reference-jane-support-letter-fixed-pdf-1.png",
+    "source": "pitch/assets/jane-support-letter-fixed.pdf",
+    "viewport": {
+      "dpi": 144
+    },
+    "description": "Reference only: the corrected letter PDF rendered with pdftoppm at 2x (NOT in the zip - the zip has the .txt above). Use if a scene wants the letter as a document.",
+    "regions": {}
+  }
+]

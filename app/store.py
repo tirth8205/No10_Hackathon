@@ -336,7 +336,7 @@ class Store:
         link = self._one("SELECT * FROM client_links WHERE token=? AND revoked=0", (token,))
         if not link:
             link = self._one("SELECT * FROM client_links WHERE token=? AND revoked=0", (normalise_client_code(token),))
-        if not link or link["expires_at"] < now():
+        if not link or (link["expires_at"] and link["expires_at"] < now()):
             return None
         return link
 

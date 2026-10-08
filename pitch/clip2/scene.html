@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Clip 2 · The admin ledger</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; }
+  body { font-family: Arial, "Helvetica Neue", sans-serif; color: #0b0c0c; background: #f3f2f1; position: relative; }
+
+  .chip { position: absolute; left: 96px; top: 60px; font-size: 36px; font-weight: 700; color: #fff; background: #0b0c0c;
+          padding: 10px 22px; letter-spacing: .02em; }
+  .footer { position: absolute; right: 96px; top: 70px; font-size: 30px; color: #505a5f; }
+
+  /* ---------- Left: Jane's returned letter (continuity from clip 1) ---------- */
+  .thumb { position: absolute; left: 96px; top: 170px; width: 420px; height: 594px; background: #fff; overflow: hidden;
+           box-shadow: 0 2px 6px rgba(0,0,0,.18), 0 18px 48px rgba(0,0,0,.12); }
+  .thumb img { width: 420px; height: 594px; display: block; }
+  .stamp { position: absolute; left: 50px; top: 470px; width: 480px; padding: 14px 0; border: 8px solid #d4351c; color: #d4351c;
+           font-size: 64px; font-weight: 700; line-height: 1; text-transform: uppercase; letter-spacing: .04em; text-align: center;
+           background: rgba(255,255,255,.92); transform: rotate(-8deg); }
+
+  /* ---------- Right: one ledger column at a time ---------- */
+  .panel { position: absolute; left: 640px; top: 170px; width: 1184px; background: #fff; border-top: 12px solid #0b0c0c;
+           box-shadow: 0 2px 6px rgba(0,0,0,.08); padding: 0 40px 10px; }
+  .panel .hd { font-size: 64px; font-weight: 700; letter-spacing: .04em; padding: 24px 0 20px; border-bottom: 4px solid #0b0c0c; }
+  .panel .row { position: relative; display: flex; align-items: center; gap: 28px; height: 112px; font-size: 64px;
+                border-bottom: 2px solid #b1b4b6; }
+  .panel .row:last-child { border-bottom: 0; }
+  .panel .row i { flex: none; width: 60px; height: 60px; border-radius: 50%; background: #d4351c; color: #fff; font-style: normal;
+                  font-size: 48px; font-weight: 700; line-height: 60px; text-align: center; }
+
+  .panel.cw  { animation: rise .5s ease-out .3s both, out .5s ease-in 5.1s forwards; }
+  .panel.sol { animation: rise .5s ease-out 5.5s both, out .5s ease-in 10.9s forwards; }
+  .panel .row { animation: lineIn .45s cubic-bezier(.2,.8,.2,1) both, flash 1.4s ease-out both; }
+  .r1 { animation-delay: 1.2s, 1.2s !important; }
+  .r2 { animation-delay: 2.1s, 2.1s !important; }
+  .r3 { animation-delay: 3.0s, 3.0s !important; }
+  .r4 { animation-delay: 4.0s, 4.0s !important; }
+  .s1 { animation-delay: 6.4s, 6.4s !important; }
+  .s2 { animation-delay: 7.3s, 7.3s !important; }
+  .s3 { animation-delay: 8.3s, 8.3s !important; }
+  .s4 { animation-delay: 9.6s, 9.6s !important; }
+
+  /* ---------- Final: what firms told MoJ ---------- */
+
+  .quote { position: absolute; left: 640px; top: 250px; width: 1184px; background: #0b0c0c; color: #fff; padding: 56px 64px 72px;
+           border-left: 18px solid #ffdd00; animation: pop .6s cubic-bezier(.2,.8,.2,1) 11.4s both; }
+  .quote .k { font-size: 64px; color: #ffdd00; font-weight: 700; }
+  .quote .q { font-size: 150px; font-weight: 700; line-height: 1.05; margin-top: 24px; }
+
+  /* Caption bar */
+  .caption { position: absolute; left: 0; right: 0; bottom: 0; height: 180px; background: #0b0c0c; color: #fff;
+             display: flex; align-items: center; padding: 0 96px; gap: 32px; }
+  .caption b { font-size: 64px; position: absolute; left: 96px; }
+  .caption .w { animation: out .4s ease-in 5.2s forwards; }
+  .caption .y { color: #ffdd00; animation: fade .6s ease-out 5.6s both; }
+
+  @keyframes fade { from { opacity: 0 } to { opacity: 1 } }
+  @keyframes rise { from { opacity: 0; transform: translateY(30px) } to { opacity: 1; transform: none } }
+  @keyframes out { to { opacity: 0; transform: translateY(-20px) } }
+  @keyframes pop { from { opacity: 0; transform: translateY(30px) scale(.96) } to { opacity: 1; transform: none } }
+  @keyframes lineIn { from { opacity: 0; transform: translateX(40px) } to { opacity: 1; transform: none } }
+  @keyframes flash { from { background: rgba(255,221,0,.6) } to { background: rgba(255,221,0,0) } }
+</style>
+</head>
+<body>
+  <div class="chip">THE ADMIN</div>
+  <div class="footer">Example letter. Names fictional.</div>
+
+  <div class="thumb"><img src="letter.png" alt="Jane's support letter"></div>
+  <div class="stamp">Returned</div>
+
+  <div class="panel cw">
+    <div class="hd">CASEWORKER</div>
+    <div class="row r1"><i>+</i>Another review</div>
+    <div class="row r2"><i>+</i>Return note</div>
+    <div class="row r3"><i>+</i>Second decision</div>
+    <div class="row r4"><i>+</i>“Why?” emails</div>
+  </div>
+
+  <div class="panel sol">
+    <div class="hd">SOLICITOR</div>
+    <div class="row s1"><i>+</i>Unpaid rework</div>
+    <div class="row s2"><i>+</i>Chasing Jane</div>
+    <div class="row s3"><i>+</i>Chasing support worker</div>
+    <div class="row s4"><i>+</i>Fee held up</div>
+  </div>
+
+  <div class="quote">
+    <div class="k">Firms told MoJ:</div>
+    <div class="q">Too much<br>admin.</div>
+  </div>
+
+  <div class="caption"><b class="w">One returned letter.</b><b class="y">Admin on both sides.</b></div>
+</body>
+</html>

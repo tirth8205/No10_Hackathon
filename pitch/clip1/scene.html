@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Clip 1 · Jane, today</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; }
+  body { font-family: Arial, "Helvetica Neue", sans-serif; color: #0b0c0c; background: #f3f2f1; position: relative; }
+
+  /* Top strip, product-demo style */
+  .chip { position: absolute; left: 96px; top: 72px; font-size: 26px; font-weight: 700; color: #fff; background: #0b0c0c;
+          padding: 8px 18px; letter-spacing: .02em; animation: fade .6s ease-out .2s both; }
+
+  /* The letter */
+  .letter-wrap { position: absolute; left: 96px; top: 150px; width: 640px; height: 905px; animation: rise 1s cubic-bezier(.2,.8,.2,1) .1s both; }
+  .letter { position: relative; width: 640px; height: 905px; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.18), 0 18px 48px rgba(0,0,0,.12); overflow: hidden; }
+  .letter img { width: 640px; height: 905px; display: block; }
+  /* weak sentence: x 76.9-500.7pt, y 425.5-435.9pt on A4; scale 640/595.28 = 1.0751 */
+  .hl { position: absolute; left: 81px; top: 455px; height: 15px; width: 0; background: rgba(255,221,0,.55);
+        box-shadow: inset 0 -2px 0 #594d00; mix-blend-mode: multiply; animation: sweep 1.4s ease-in-out 2.4s both; }
+  .stamp { position: absolute; left: 70px; top: 560px; width: 500px; padding: 18px 22px; border: 6px solid #d4351c; color: #d4351c;
+           font-size: 38px; font-weight: 700; line-height: 1.1; text-transform: uppercase; letter-spacing: .03em; text-align: center;
+           background: rgba(255,255,255,.75); transform: rotate(-8deg); animation: stamp .45s cubic-bezier(.3,1.6,.5,1) 8.6s both; }
+  .stamp small { display: block; font-size: 22px; text-transform: none; letter-spacing: 0; margin-top: 6px; }
+
+  /* Right-hand story */
+  .side { position: absolute; left: 860px; top: 150px; width: 960px; }
+  .eyebrow { font-size: 24px; color: #505a5f; animation: fade .6s ease-out 1s both; }
+  .title { font-size: 56px; font-weight: 700; line-height: 1.1; margin-top: 10px; animation: fade .6s ease-out 1.2s both; }
+
+  .quote { margin-top: 44px; border-left: 10px solid #b1b4b6; padding: 18px 26px; background: #fff; animation: slide .6s ease-out 4.1s both; }
+  .quote .q { font-size: 34px; line-height: 1.3; }
+  .quote .q mark { background: rgba(255,221,0,.55); box-shadow: inset 0 -3px 0 #594d00; padding: 0 4px; color: inherit; }
+  .quote .why { font-size: 24px; color: #505a5f; margin-top: 12px; }
+
+  .steps { margin-top: 44px; list-style: none; position: relative; }
+  .steps li { position: relative; padding: 0 0 26px 58px; font-size: 32px; line-height: 1.25; }
+  .steps li::before { content: ""; position: absolute; left: 6px; top: 6px; width: 26px; height: 26px; border-radius: 50%; background: #b1b4b6; }
+  .steps li::after { content: ""; position: absolute; left: 17px; top: 34px; width: 4px; height: calc(100% - 30px); background: #b1b4b6; }
+  .steps li:last-child::after { display: none; }
+  .steps li:last-child::before { background: #d4351c; }
+  .steps li span { display: block; font-size: 22px; color: #505a5f; margin-top: 4px; }
+  .s1 { animation: slide .5s ease-out 5.6s both; }
+  .s2 { animation: slide .5s ease-out 6.6s both; }
+  .s3 { animation: slide .5s ease-out 7.6s both; }
+
+  /* Caption bar */
+  .caption { position: absolute; left: 0; right: 0; bottom: 0; height: 150px; background: #0b0c0c; color: #fff;
+             display: flex; align-items: center; padding: 0 96px; gap: 40px; animation: up .6s cubic-bezier(.2,.8,.2,1) 10s both; }
+  .caption b { font-size: 44px; }
+  .caption .waits { font-size: 44px; color: #ffdd00; font-weight: 700; margin-left: auto; animation: fade .6s ease-out 11.6s both; }
+  .footer { position: absolute; right: 96px; top: 84px; font-size: 18px; color: #505a5f; animation: fade .6s ease-out 1.4s both; }
+
+  @keyframes fade { from { opacity: 0 } to { opacity: 1 } }
+  @keyframes rise { from { opacity: 0; transform: translateY(40px) } to { opacity: 1; transform: none } }
+  @keyframes slide { from { opacity: 0; transform: translateX(30px) } to { opacity: 1; transform: none } }
+  @keyframes up { from { transform: translateY(150px) } to { transform: none } }
+  @keyframes sweep { from { width: 0 } to { width: 459px } }
+  @keyframes stamp { from { opacity: 0; transform: rotate(-8deg) scale(2.2) } to { opacity: 1; transform: rotate(-8deg) scale(1) } }
+</style>
+</head>
+<body>
+  <div class="chip">TODAY</div>
+  <div class="footer">Based on an MoJ example letter. All names fictional.</div>
+
+  <div class="letter-wrap">
+    <div class="letter">
+      <img src="letter.png" alt="Jane's support letter">
+      <div class="hl"></div>
+      <div class="stamp">Returned<small>More information needed</small></div>
+    </div>
+  </div>
+
+  <div class="side">
+    <div class="eyebrow">Jane Doe · legal aid for child arrangements</div>
+    <div class="title">Her support worker's letter goes in as it is.</div>
+
+    <div class="quote">
+      <div class="q">“The matter I have relied upon … are: <mark>Victim testimony and referral.</mark>”</div>
+      <div class="why">One sentence short of what the rules ask for. Nobody can tell yet.</div>
+    </div>
+
+    <ul class="steps">
+      <li class="s1">Solicitor submits to the Legal Aid Agency<span>Day 1</span></li>
+      <li class="s2">A caseworker reviews it<span>Weeks later</span></li>
+      <li class="s3">Returned for more information<span>Back to the start</span></li>
+    </ul>
+  </div>
+
+  <div class="caption"><b>Today, the gap is found weeks after submission.</b><span class="waits">Jane waits.</span></div>
+</body>
+</html>

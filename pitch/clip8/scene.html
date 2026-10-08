@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Clip 8 · The total, and the ask</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; }
+  body { font-family: Arial, "Helvetica Neue", sans-serif; color: #0b0c0c; background: #f3f2f1; position: relative; }
+
+  .chip { position: absolute; left: 96px; top: 56px; font-size: 36px; font-weight: 700; color: #fff; background: #0b0c0c;
+          padding: 10px 22px; letter-spacing: .02em; }
+  .c1 { animation: fade .6s ease-out .2s both, out .4s ease-in 8.6s forwards; }
+  .c2 { opacity: 0; animation: fade .5s ease-out 9.0s both; }
+  .footer { position: absolute; right: 96px; top: 70px; font-size: 30px; color: #505a5f; animation: fade .6s ease-out 1.4s both; }
+
+  /* Part 1: opening line, then the three payoffs */
+  .lead { position: absolute; left: 96px; top: 280px; width: 1728px; font-size: 150px; font-weight: 700; line-height: 1.05;
+          animation: fade .6s ease-out .3s both, away .5s ease-in 3.1s forwards; }
+
+  .tiles { position: absolute; left: 96px; top: 210px; display: flex; gap: 48px;
+           animation: away .6s cubic-bezier(.5,0,.7,.4) 8.4s forwards; }
+  .tile { width: 544px; height: 600px; background: #fff; border-top: 14px solid #00703c; padding: 64px 40px 0;
+          box-shadow: 0 2px 6px rgba(0,0,0,.14), 0 14px 36px rgba(0,0,0,.10); position: relative; }
+  .t1 { animation: rise .6s cubic-bezier(.2,.8,.2,1) 3.5s both; }
+  .t2 { animation: rise .6s cubic-bezier(.2,.8,.2,1) 5.9s both; }
+  .t3 { animation: rise .6s cubic-bezier(.2,.8,.2,1) 7.2s both; }
+  .n { position: absolute; top: -40px; left: -24px; width: 80px; height: 80px; border-radius: 50%; background: #0b0c0c; color: #fff;
+       font-size: 44px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .lbl { font-size: 104px; font-weight: 700; line-height: 1.02; }
+  .who { position: absolute; left: 40px; right: 40px; bottom: 44px; font-size: 52px; line-height: 1.1; font-weight: 700; color: #fff; background: #1d70b8;
+         padding: 8px 18px; }
+
+  /* Part 2: the ask */
+  .ask { position: absolute; left: 96px; top: 170px; width: 1728px; height: 690px; background: #fff;
+         border-top: 14px solid #1d70b8; padding: 80px 80px 0;
+         box-shadow: 0 2px 6px rgba(0,0,0,.16), 0 22px 56px rgba(0,0,0,.14);
+         animation: rise .8s cubic-bezier(.2,.8,.2,1) 8.9s both; }
+  .pilot { font-size: 160px; font-weight: 700; line-height: 1.0; animation: slide .6s ease-out 9.7s both; }
+  .free { font-size: 132px; font-weight: 700; color: #00703c; margin-top: 60px; position: relative; display: inline-block;
+          animation: slide .6s ease-out 12.0s both; }
+  .free::after { content: ""; position: absolute; left: 0; bottom: -14px; height: 12px; background: #00703c; width: 0; animation: grow .7s ease-in-out 12.4s both; }
+
+  .caption { position: absolute; left: 0; right: 0; bottom: 0; height: 180px; background: #0b0c0c; color: #fff;
+             display: flex; align-items: center; padding: 0 96px; gap: 40px; animation: up .6s cubic-bezier(.2,.8,.2,1) 1.2s both; }
+  .caption b { font-size: 72px; }
+  .caption .gc { font-size: 72px; color: #ffdd00; font-weight: 700; margin-left: auto; animation: fade .6s ease-out 13.0s both; }
+
+  @keyframes fade { from { opacity: 0 } to { opacity: 1 } }
+  @keyframes out { from { opacity: 1 } to { opacity: 0 } }
+  @keyframes rise { from { opacity: 0; transform: translateY(40px) } to { opacity: 1; transform: none } }
+  @keyframes slide { from { opacity: 0; transform: translateX(30px) } to { opacity: 1; transform: none } }
+  @keyframes up { from { transform: translateY(180px) } to { transform: none } }
+  @keyframes away { from { opacity: 1; transform: none } to { opacity: 0; transform: scale(.94) translateY(-20px) } }
+  @keyframes grow { from { width: 0 } to { width: 100% } }
+</style>
+</head>
+<body>
+  <div class="chip c1">THE PAYOFF</div>
+  <div class="chip c2">OUR ASK</div>
+  <div class="footer">All names fictional.</div>
+
+  <div class="lead">Every letter fixed at source</div>
+
+  <div class="tiles">
+    <div class="tile t1"><div class="n">1</div><div class="lbl">Less<br>admin</div><div class="who">Caseworker + solicitor</div></div>
+    <div class="tile t2"><div class="n">2</div><div class="lbl">Weeks<br>back</div><div class="who">Jane</div></div>
+    <div class="tile t3"><div class="n">3</div><div class="lbl">Nothing<br>to build</div><div class="who">MoJ</div></div>
+  </div>
+
+  <div class="ask">
+    <div class="pilot">Six-week pilot,<br>five firms</div>
+    <div class="free">No cost to MoJ</div>
+  </div>
+
+  <div class="caption"><b>One fewer return.</b><span class="gc">Gateway Check</span></div>
+</body>
+</html>

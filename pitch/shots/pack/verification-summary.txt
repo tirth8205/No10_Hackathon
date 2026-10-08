@@ -1,0 +1,35 @@
+GATEWAY CHECK – VERIFICATION SUMMARY
+
+Client: Jane Doe
+Other party: John Doe
+Case: L597743
+Firm: Hartley & Webb Solicitors
+
+jane-support-letter-fixed.pdf
+  Evidence type: Schedule 1, paragraph 17
+  Result: Meets the requirements
+  Agreement: 3 of 3 checks agreed
+  Rules: schedule1-v15-2026-06-15
+  [x] Applicant named
+      "I can confirm that we have provided Jane Doe with support in relation to their needs as a victim,"
+  [x] Organisation is in the UK
+      "I can confirm that our organisation is situated in England and Wales"
+  [x] Operating for six months or more
+      "an uninterrupted period of six months or more."
+  [x] Confirms support was provided to the applicant
+      "I can confirm that we have provided Jane Doe with support in relation to their needs as a victim,"
+  [x] Professional judgement that the applicant is a victim
+      "In my reasonable professional judgement Jane Doe is, or is at risk of being, a victim of domestic
+violence."
+  [x] Specific matters relied on
+      "Jane's disclosures to me of
+emotional, physical and psychological abuse by her ex-partner, John Doe, including coercive
+and controlling behaviour, and the referral from her GP describing injuries she reported."
+  [x] Support described
+      "We have provided the following support: safety planning, signposting to relevant agencies,
+advocacy and ongoing support and guidance."
+  [x] Why the applicant needed support
+      "Jane Doe need this support because they have been in an abusive relationship and requires
+professional support and guidance to end the cycle of abuse."
+
+This summary supports the caseworker's decision. The decision is theirs.
