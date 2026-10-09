@@ -759,3 +759,31 @@ $app-light-grey: govuk.govuk-colour("black", $variant: "tint-95");
 #main-content[tabindex="-1"]:focus {
   outline: none;
 }
+
+// The front door's six steps: a numbered badge beside each step, like the marks on a letter.
+.app-steps {
+  margin: 0 0 govuk.govuk-spacing(6);
+  padding: 0;
+  list-style: none;
+}
+
+.app-steps__item {
+  display: flex;
+  gap: govuk.govuk-spacing(3);
+  margin-bottom: govuk.govuk-spacing(5);
+}
+
+.app-steps__number {
+  @include govuk.govuk-font($size: 19, $weight: bold);
+  flex: none;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  color: govuk.govuk-colour("white");
+  background: govuk.govuk-colour("blue");
+}
+
+.app-steps__body {
+  min-width: 0;
+}

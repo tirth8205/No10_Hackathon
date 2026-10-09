@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
-import { Navigate, Route, Routes, useLocation } from "react-router";
+import { Route, Routes, useLocation } from "react-router";
 import { HowTheCheckWorks, NotFound } from "./pages/HowTheCheckWorks";
 import { ScreensIndex } from "./pages/ScreensIndex";
+import { Welcome } from "./pages/Welcome";
 import { ClientExpired } from "./pages/client/ClientExpired";
 import { Stage } from "./pages/Stage";
 import * as live from "./api/routes";
@@ -34,7 +35,7 @@ export function App() {
     <>
     <Routes>
       <Route path="/stage" element={<Stage />} />
-      <Route path="/" element={SAMPLE ? <ScreensIndex /> : <Navigate to="/provider" replace />} />
+      <Route path="/" element={SAMPLE ? <ScreensIndex /> : <Welcome />} />
       <Route path="/screens" element={<ScreensIndex />} />
       <Route path="/how-the-check-works" element={<HowTheCheckWorks />} />
 
