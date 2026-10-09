@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { DocumentText, HighlightKey } from "../../components/DocumentText";
 import { PdfView } from "../../components/PdfView";
 import { VerificationList } from "../../components/Verification";
-import { BackLink, Details, ElementTag, WarningText } from "../../components/govuk";
+import { BackLink, Details, ElementTag, InsetText, WarningText } from "../../components/govuk";
 import { ProviderLayout } from "../../components/layout";
 import { useTitle } from "../../hooks/govuk";
 import { when } from "../../lib/dates";
@@ -49,7 +49,7 @@ export function DocumentFile({ c, doc }: { c: Case; doc: CaseDocument }) {
         ))}
       </ul>
 
-      {r && doc.text ? (
+      {r ? (
         <div className="app-doc-panel">
           <div className="app-split">
             <section aria-labelledby="doc-text-title" className="app-split__document">
@@ -67,12 +67,18 @@ export function DocumentFile({ c, doc }: { c: Case; doc: CaseDocument }) {
               {photoPages.map((page) => (
                 <img key={page.filename} className="app-doc-photo" src={page.url} alt={`${page.filename}, as uploaded`} />
               ))}
-              {pdfPage && pdfHasText !== false ? (
+              {!doc.text && !pdfPage && photoPages.length === 0 && (
+                <InsetText>
+                  The file and the text read from it are no longer held: documents are kept for a limited time and then
+                  removed. The result of the check is kept and is shown here.
+                </InsetText>
+              )}
+              {doc.text && pdfPage && pdfHasText !== false ? (
                 <Details summary="Text we read from the document">
                   <DocumentText text={doc.text} elements={r.elements} />
                 </Details>
               ) : (
-                <DocumentText text={doc.text} elements={r.elements} />
+                doc.text && <DocumentText text={doc.text} elements={r.elements} />
               )}
               <HighlightKey />
             </section>
